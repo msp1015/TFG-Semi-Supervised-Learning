@@ -3,23 +3,118 @@
 En esta sección se resumirán los conceptos teóricos básicos y necesarios para comprender el trabajo. Principalmente se hablará de aprendizaje automático y luego se profundizará en el aprendizaje semi-supervisado.
 
 \section{Aprendizaje automático}
+El aprendizaje automático (\textit{Machine Learning} en inglés) es el campo de la inteligencia artificial (IA) que se centra en el uso de datos y en el desarrollo de algoritmos para imitar la manera de aprender de los humanos \cite{ML:ibm}. La esencia radica en la capacidad de los sistemas informáticos para aprender de datos y realizar tareas sin intervención humana directa, si no descubriendo patrones y tendencias en los mismos. A estos sistemas se les conoce como \textbf{modelos}, los cuales pueden mejorar su rendimiento y adaptarse a nuevas situaciones basándose en la experiencia pasada.
 
+Según \cite{ML:DataScientest}, existen cuatro etapas principales en el desarrollo de un modelo. El primer paso consiste en seleccionar y preparar el conjunto de datos (\textit{dataset}) que utilizará el modelo para aprender a resolver el problema para el que se ha diseñado. En el segundo paso se selecciona el algoritmo para ejecutar sobre el \textit{dataset}. Este dependerá del tamaño y el tipo de los datos de entrada y del tipo de problema que se está resolviendo. El tercer paso consiste en entrenar el algoritmo hasta que la mayoría de los resultados sean los esperados. El cuarto y último paso trata de usar el modelo sobre nuevos datos y hacer una evaluación para una posible mejora.
 
+Según los datos que se seleccionen en el primer paso, podemos tener dos ramas distintas en el aprendizaje automático \cite{ML:SisInt}:
+\begin{itemize}
+	\item \textbf{Predictiva}: también caracterizada por utilizar el aprendizaje supervisado, es decir, datos de entrada etiquetados.
+	\item \textbf{Descriptiva}: al contrario, utiliza el aprendizaje no supervisado, con datos de entrada no etiquetados.
+\end{itemize}
 
+ 
 \subsection{Aprendizaje supervisado}
+El aprendizaje supervisado es un tipo de aprendizaje automático en el que los modelos son entrenados utilizando conjuntos de datos etiquetados, en los que se basarán las decisiones y predicciones. Los conjuntos de datos contienen ejemplos emparejados de variables de entrada (o características) y de salida (o etiquetas). La esencia de este tipo de aprendizaje se basa en la capacidad del modelo para aprender la relación funcional entre las entradas y las salidas, permitiéndole hacer predicciones precisas sobre nuevos datos no vistos \cite{SL:guide}. De ahí su clasificación como \guillemetleft predictiva\guillemetright ~en la sección anterior.
+Se puede clasificar este tipo de aprendizaje en dos tipos:
+\begin{itemize}
+	\item \textbf{Clasificación}: los modelos asignan categorías o clases a las entradas no etiquetadas. Dentro de este tipo se puede encontrar la clasificación binaria y la multi-clase. La primera se ve en un caso como la clasificación de correos electrónicos marcadas como spam o no spam (solo una etiqueta). Y la segunda se puede ver en cualquier ejemplo en el que haya mas de dos clases, como al establecer si un paciente tiene alto, medio o bajo riesgo de muerte ante una operación.
+	\item \textbf{Regresión}: es similar a la clasificación, pero en vez de asignar un valor discreto, ahora es un valor continuo. Un ámbito común en el que se suele dar es en la economía, con la predicción de acciones o ventas.
+\end{itemize}
+
+También es importante comentar las principales fases que forman este aprendizaje y los posibles problemas o desafíos que pueden surgir, ya que pueden servir para tener en cuenta en los algoritmos concretos a implementar.
+En la mayoría de algoritmos que utilizan datos etiquetados, estos se dividen en tres conjuntos: entrenamiento, validación y prueba. El conjunto de entrenamiento se utiliza para ajustar los parámetros del modelo, el conjunto de validación para ajustar los hiperparámetros y prevenir el sobreajuste y el conjunto de prueba apra evaluar el rendimiento final.
+El sobreajuste o \textit{\textbf{overfitting}} es uno de los principales problemas del aprendizaje automático y ocurre cuando el modelo se ajusta demasiado a los datos de entrenamiento, es decir, los memoriza en vez de generalizar.
 
 \subsection{Aprendizaje no supervisado}
+Para explicar este apredizaje se usará el artículo \cite{USL:guide}. El aprendizaje no supervisado hace referencia a los tipos de problemas en los que se utiliza un modelo para caracterizar o extraer relaciones en los datos.
+A diferencia del aprendizaje supervisado, estos algoritmos descubren la estructura implícita de un conjunto de datos utilizando únicamente características de entrada y no clases o categorías. 
+Ya que no existen etiquetas en los datos, los métodos no supervisados se utilizan normalmente para crear una representación concisa de los datos, posibilitando la generación de contenido creativo a partir de ellos. Por ejemplo, si tenemos una gran cantidad de fotografías sin clasificar, un modelo no supervisado encontraría relaciones entre las caracteristicas para poder organizar automáticamente las imágenes en grupos.
+Se pueden clasificar en tres diferentes categorías:
+\begin{itemize}
+	\item \textbf{Clustering}: segmentación o agrupamiento. Consiste en la identificación de grupos o \textit{clusters} en función de sus similitudes y diferencias. Dentro de este tipo, se puede diferenciar un agrupamiento exclusivo, donde los datos pertenencen a un unico grupo, y un agrupamiento superpuesto, donde los datos pueden perteneces a varias agrupaciones. El ejemplo de las fotografías entra dentro de esta categoría.
+	\item \textbf{Reglas de asociación}: utiliza una medida de interés para obtener un conjunto de reglas sólidas que permitan descubrir asociaciones interesantes entre las características de un conjunto de datos. La principal aplicación es el \guillemetleft análisis de cestas de compra\guillemetright, que se usa para determinar los patrones de compra de los clientes en funcion de las relaciones entre productos.
+	\item \textbf{Reducción de dimensionalidad}: estos algoritmos buscan reducir la complejidad de un conjunto de datos de alta dimensión a espacios de baja dimensión sin perder propiedades fundamentales de los datos originales. Este tipo de algoritmos se utiliza en la fase de análisis de datos, facilitando la representación gráfica. Se puede ver un ejemplo a continuación.
+\end{itemize}
+
+%TODO: ORGANIZAR ESTA PARTE
+
+\imagen{../img/memoria/ML-ReduceDimension.png}{Reducción de dimensionalidad}{1} 
 
 
-\section{Aprendizaje semisupervisado}
-Mostrar y explicar division y profundizar despues:
+%https://www.wolfram.com/language/introduction-machine-learning/machine-learning-par%adigms/img/2-machine-learning-paradigms-Print-6.en.png
+
+En la siguiente tabla se resumen las principales diferencias entre aprendizaje supervisado y no supervisado:
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{@{}p{2.5cm} p{5cm} p{5cm}@{}}
+		\toprule
+			 & \textbf{Supervisado} & \textbf{No supervisado} \\
+		\midrule
+		\textbf{Objetivo} & Aproximar una función que asigna entradas a salidas a partir de un conjunto de datos clasificados. & Crear una representación concisa de los datos, posibilitando la generación de contenido creativo a partir de ellos. \\
+		\addlinespace[0.5em]
+		\textbf{Complejidad} & Complejidad simple. & Complejidad computacional mayor.\\
+		\addlinespace[0.5em]
+		\textbf{Entrada} & Se conoce el número de clases (datos etiquetados). & No se conoce el número de clases (datos no etiquetados). \\
+		\addlinespace[0.5em]
+		\textbf{Salida} & Genera un valor de salida esperado. & No se tienen valores de salida asociados \\
+		\addlinespace[0.5em]
+		\textbf{Tipos} & Clasificación, Regresión & Clustering, Reglas de asociación, Reducción de dimensionalidad \\
+		\bottomrule
+	\end{tabular}
+	\caption{Comparación aprendizaje supervisado y no supervisado ~\cite{USL:guide}.}
+	\label{supervisado_VS_noSupervisado}
+\end{table}
+\newpage
+
+
+\section{Aprendizaje semi-supervisado}
+Como el nombre sugiere, el aprendizaje semi-supervisado se encuentra entre los dos tipos vistos anteriormente. Los algoritmos dentro de esta estrategia se basan en extender cualquiera de los aprendizajes, supervisado o no supervisado, para añadir información adicional que el otro no proporciona ~\cite{Intro:SemiSupervised}.
+
+Los métodos de clasificación semi-supervisada intentan utilizar puntos de datos no etiquetados para generar un modelo cuyo rendimiento supere el de los modelos obtenidos al utilizar solo datos etiquetados ~\cite{Engelen:semi-supervised}. \\Por ejemplo, imaginemos que se esta trabajando en la clasificación de imágenes médicas para identificar diferentes tipos de enfermedades. En este caso, consideramos específicamente la detección temprana de ciertos tipos de cáncer a partir de imágenes de tomografías. En un enfoque supervisado, podríamos entrenar un modelo utilizando un conjunto de datos etiquetado que incluye imágenes con diagnósticos de cáncer y sin cáncer. Sin embargo, la obtención de un gran conjunto de datos etiquetado puede ser costosa y consume tiempo. En un escenario de aprendizaje semi-supervisado, además de los datos etiquetados, podríamos tener un conjunto de datos mucho más grande que incluye imágenes no etiquetadas. Algunas de estas pueden contener señales sutiles o características asociadas con el cáncer que no han sido previamente etiquetadas.\\El modelo de aprendizaje semi-supervisado  podría analizar estas imágenes no etiquetadas y descubrir patrones que podrian indicar la presencia temprana de cáncer. Por ejemplo, podría aprender a reconocer características microscopicas especificas de las imagenes que no son evidentes para el ojo humano. Cuando se encuentra con nuevas imágenes no etiquetadas que comparten estas características, el modelo podría clasificarlas como indicativas de la presencia de cáncer, incluso si no ha visto exactamente esas características en el conjunto de datos etiquetado.
+Existe una condición necesaria en el aprendizaje semi-supervisado: la distribución marginal subyacente $p(x)$ sobre el espacio de entrada debe contener información acerca de la distribución posterior $p(x|y)$ ~\cite{Engelen:semi-supervised}. Es decir, la naturaleza de los datos no etiquetados debe contener información útil para inferir las etiquetas correspondientes.
+Esta suposición es básica y en la mayoría de los ejemplos se cumple. Aún asi, como la manera de interactuar entre $p(x)$ y  $p(x|y)$ no es siempre la misma, se pueden tomar malas decisiones que conllevarían un rendimiento cada vez peor. Por esta razón, existen tres principales suposiciones que todo algoritmo semi-supervisado debe cumplir para funcionar correctamente.
+\begin{itemize}
+	\item \textit{\textbf{Smoothness assumption}}: traducida como suposición de suavidad, consiste en que para dos puntos $x_{1}$ y $x_{2}$ que están cerca en una región densa, entonces sus correspodientes salidas (o etiquetas) $y_{1}$ y $y_{2}$ deben ser las mismas. Esto es útil sobretodo con datos no eitquetados, ya que por la propiedad transitiva, dos puntos que no estén relativamente cerca, pueden ser de la misma clase.
+	\item \textit{\textbf{Low-density assumption}}: esta suposición está definida sobre la distribución de datos de entrada $p(x)$ y dice que el límite de decisión en la clasificación debe pasar antes por un área de poca densidad que por una de mayor densidad. Esto se puede observar en la figura \ref{fig:../img/memoria/Smoothness-LowDensity.png}.
+
+	\imagen{../img/memoria/Smoothness-LowDensity.png}{\textit{Smoothness assumption} y \textit{Low-density assumption}~\cite{Engelen:semi-supervised}}{0.5}
+	
+	\item \textit{\textbf{Manifold assumption}}: esta suposición afirma que los datos utilizados se encuentran en un \textit{manifold} de baja dimensión incrustado en un espacio de mayor dimensión. En otras palabras, los datos, en lugar de proceder de cualquier parte del espacio, deben proceder de estos \textit{manifolds} de dimensiones más bajas ~\cite{web:assumptions}.
+	\imagen{../img/memoria/ManifoldAssumption.png}{\textit{Manifold assumption}~\cite{web:assumptions}}{0.45}
+\end{itemize}
+
+En algunas ocasiones, aparece una cuarta suposición: \textit{\textbf{cluster assumption}}. Esta indica que dos datos que pertenecen a un mismo \textit{cluster}, pertenecen también a la misma clase. Se tomará esta suposición como una generalización de las tres anteriores ~\cite{Engelen:semi-supervised}.
+
+\imagen{../img/memoria/ClusterAssumption.png}{\textit{Cluster assumption}~\cite{web:assumptions}}{1}.
+
+No hay una clasificación oficial de algoritmos de aprendizaje semi-supervisado, pero si se pueden encontrar aproximaciones teniendo en cuenta las suposiciones en las que estan basadas los algoritmos y en como se relacionan con los algoritmos supervisados y no supervisados.
+\imagen{../img/memoria/Clasificacion-SemiSupervised}{Clasificación de los diferentes algoritmos que pretenden incorporar datos no etiquetados a métodos de clasificación. Basado en ~\cite{Engelen:semi-supervised}}{1}.
+
+\subsection{Métodos inductivos}
+Los métodos inductivos pretenden construir un clasificador que pueda generar predicciones para cualquier objeto del espacio de entrada. En el entrenamiento de este clasificador o modelo se pueden utilizar datos no etiquetados, pero las predicciones cuando hay varios son independientes entre sí una vez finalizado el entrenamiento.
+\begin{itemize}
+	\item \textbf{\textit{Wrapper methods}}: Estos métodos entrenan inicialmente clasificadores con datos etiquetados y luego utilizan las predicciones para generar datos adicionales etiquetados. Los clasificadores se vuelven a entrenar con estos datos pseudo-etiquetados.
+	\item \textbf{\textit{Unsupervised preprocessing}}: Estos métodos extraen características útiles, pre-agrupan datos o determinan parámetros iniciales de aprendizaje de manera no supervisada, pero solo se aplican a datos originalmente etiquetados. Mejoran el rendimiento de clasificadores supervisados al utilizar información de datos no etiquetados durante la etapa de preprocesamiento.
+	\item \textbf{\textit{Intrinsecally semi-supervised}}: Incorporan directamente datos no etiquetados en la función objetivo o procedimiento de optimización. Son extensiones de métodos supervisados al entorno semi-supervisado. Maximizan la información obtenida de datos no etiquetados durante el proceso de aprendizaje.
+	
+\end{itemize}
+\subsection{Métodos transductivos}
+A diferencia de los métodos inductivos, los métodos transductivos no construyen un clasificador para todo el espacio de entrada. En su lugar, su poder predictivo se limita exactamente a los objetos que encuentra durante la fase de entrenamiento. Por lo tanto, los métodos transductivos no tienen fases de entrenamiento y prueba distintas.
+Los métodos transductivos suelen definir un grafo sobre todos los puntos de datos, etiquetados y no etiquetados, codificando la similitud entre pares de puntos de datos con aristas posiblemente ponderadas. Posteriormente se profundizará en este ámbito.
+
 \subsection{Ensembles}
+\cite{ensembles}
 Boosting, bagging
 \subsection{Grafos}
-
+\cite{Engelen:semi-supervised}
 
 
 \section{\textit{Random Forest}}
+/// Ejemplo de estructura
+\section{\textit{Adaboost}}
+
+\section{Diseño web}
 
 
 
