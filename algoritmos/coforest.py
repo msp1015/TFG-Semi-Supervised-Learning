@@ -61,14 +61,14 @@ class CoForest:
             
             for i, Hi in self.forest.items():
                 e[i].append(self.estimate_error(Hi, L, y_l, self.datos_arbol_ind[i]))
-                
+                W[i].append(0)
                 pseudo_datos = [] # Para cada arbol se almacenan los datos que se etiquetaran
                 pseudo_etiquetas_datos = [] # Etiquetas que acompañan a los datos que se etiquetaran
                 pseudo_datos_etiquetados = {} # Diccionario para los datos que se etiquetaran
                 hay_cambios_en_arbol = [False] * self.n
                 
                 if e[i][t] < e[i][t-1]:
-                    U_samples = self.sub_sample(Hi, U, e[i][t-1] * W[i][t-1] / e[i][t])
+                    U_samples = self.subsample(Hi, U, e[i][t-1] * W[i][t-1] / e[i][t])
                     
                     for x_u in U_samples:
                         confidence, most_agreed_class = self.confidence(Hi, U[x_u, :])
@@ -76,15 +76,18 @@ class CoForest:
                             hay_cambios_en_arbol[i] = True
                             pseudo_datos.append(U[x_u, :])
                             pseudo_etiquetas_datos.append(most_agreed_class)
+                            
                             W[i][t] += confidence
                             
-                    pseudo_datos_etiquetados[i] = {pseudo_datos, pseudo_etiquetas_datos}
+                    pseudo_datos_etiquetados[i] = (pseudo_datos, pseudo_etiquetas_datos)
                     
             for i, Hi in self.forest.items():
                 if hay_cambios_en_arbol[i]:
                     if e[i][t] * W[i][t] < e[i][t-1] * W[i][t-1]:
                         self.learn_random_tree(i, L, y_l, pseudo_datos_etiquetados, self.datos_arbol_ind[i])
-                    
+            
+            if not any(hay_cambios_en_arbol):
+                hay_cambios = False        
         self.errores = e
         self.confianzas = W
         
@@ -97,16 +100,16 @@ class CoForest:
         aleatoriamente una muestra de datos de un conjunto de datos, con reemplazamiento.
         '''
         #generar indices aleatorios con reemplazamiento
-        print("Antes del bootstrapping")
-        print(L)
-        print(y_l)
+        # print("Antes del bootstrapping")
+        # print(L)
+        # print(y_l)
         datos_random = np.random.choice(L.shape[0], size=int(p*L.shape[0]), replace=True)
         L_i = L[datos_random, :]
         y_l_i = y_l[datos_random]
         
-        print("Despues del bootstrapping")
-        print(L_i)
-        print(y_l_i)
+        # print("Despues del bootstrapping")
+        # print(L_i)
+        # print(y_l_i)
         
         return L_i, y_l_i, datos_random
     
@@ -116,16 +119,16 @@ class CoForest:
         '''
         errors = []
         L = np.array(L)
-        print("L: ", L)
+        # print("L: ", L)
         for sample, tag in zip(L, y_l):
-            print("Sample: ", sample)
+            #print("Sample: ", sample)
             n_votes = 0
             n_hits = 0
 
             for i, tree in self.forest.items():
                 rows_training = L[datos_arbol_indiv[i]]
-                print("Rows training: ", rows_training)
-                used_training = np.any(np.all(sample == rows_training, axis=1))
+                #print("Rows training: ", rows_training)
+                used_training = np.any(np.all(sample.reshape(1, -1) == rows_training, axis=1))
 
                 if tree is not Hi and not used_training:
                     if tree.predict([sample])[0] == tag:
@@ -146,15 +149,15 @@ class CoForest:
 
         while W_i < W:
             rand_row = np.random.choice(U.shape[0])
-            W_i += self.concomitant_confidence(Hi, U[rand_row, :])[0]
+            W_i += self.confidence(Hi, U[rand_row, :])[0]
             U_subsampled.append(rand_row)
 
         return np.array(U_subsampled)
     
     
     def confidence(self, Hi, sample):
-        
-        if not self.clases:
+        #comprobar si hay elementos en el vector clases
+        if not np.any(self.clases):
             raise ValueError("No se ha ajustado el modelo")
         count = {i: 0 for i in self.clases}
 
@@ -165,15 +168,16 @@ class CoForest:
         max_agreement = max(count.values())
         most_agreed_class = max(count, key=count.get)
 
-        return max_agreement / (len(self.ensemble) - 1), most_agreed_class
+        return max_agreement / (len(self.forest) - 1), most_agreed_class
     
-    def learn_random_tree(self, i, L, y_l, pseudo_data, pseudo_labels, datos_arbol_indiv):
+    def learn_random_tree(self, i, L, y_l, pseudo_datos_etiquetados, datos_arbol_indiv):
         '''
         Reeduca el arbol i con nuevos pseudo datos
         '''
-        X = np.concatenate((L[datos_arbol_indiv[i]], pseudo_data))
-        Y = np.concatenate((y_l[datos_arbol_indiv[i]], pseudo_labels))
-        self.forest[i] = self.forest[i].fit(X, Y)
+        # X = np.concatenate((L[datos_arbol_indiv[i]], pseudo_data))
+        # Y = np.concatenate((y_l[datos_arbol_indiv[i]], pseudo_labels))
+        # self.forest[i] = self.forest[i].fit(X, Y)
+        pass
         
         
     def single_predict(self, sample):
