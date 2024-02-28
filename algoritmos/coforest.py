@@ -8,7 +8,6 @@
 import numpy as np
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
-from pandas import DataFrame
 
 class CoForest:
     '''
@@ -27,10 +26,14 @@ class CoForest:
             theta: float
                 Umbral de confianza
         '''
-        self.n = n
-        self.theta = theta
-        self.forest = {}
-        self.clases = []
+        self.n = n  #numero de arboles de decision
+        self.theta = theta #umbral de confianza
+        self.forest = {} #diccionario para el random forest
+        self.clases = [] #lista de clases unicas
+        self.datos_arbol_ind = {} #diccionario para los datos de entrenamiento de cada arbol
+        self.errores = {} #diccionario para los errores de cada arbol
+        self.confianzas = {} #diccionario para las confianzas de cada arbol
+        
         
     def fit(self, L, y_l, U):
         '''
@@ -38,45 +41,54 @@ class CoForest:
         '''
         #segun los datos en y_l podemos sacar el numero de clases
         self.clases = np.unique(y_l)
-        
-        datos_arbol_individuales = {}
-        e_init = [0.5] * self.n
-        W_init = [min(0.1 * len(L), 100)] * self.n
+    
         for i in range(self.n):
             # Se inicializa el bosque con n arboles de decision
             self.forest[i] = DecisionTreeClassifier()
             L_i, y_l_i, indices_datos= self.bootstrap(L, y_l)
-            datos_arbol_individuales[i] = indices_datos
+            self.datos_arbol_ind[i] = indices_datos
             
             self.forest[i].fit(L_i, y_l_i)
-        
+            self.errores[i] = [0.5]
+            self.confianzas[i] = [min(0.1 * len(L), 100)]
+        print(self.datos_arbol_ind)   
         t = 0
-        e = e_init
-        W = [0] * self.n
+        e = self.errores
+        W = self.confianzas
         hay_cambios = True
         while hay_cambios:
             t = t + 1
             
             for i, Hi in self.forest.items():
-                e[i] = self.estimate_error(Hi, L, y_l, datos_arbol_individuales[i])
-                W[i] = W_init[i]
-                pseudo_datos = []
-                pseudo_etiquetas_datos = []
-                if e[i] < e_init[i]:
-                    U_samples = self.sub_sample(Hi, U, e_init[i] * W_init[i] / e[i])
+                e[i].append(self.estimate_error(Hi, L, y_l, self.datos_arbol_ind[i]))
+                
+                pseudo_datos = [] # Para cada arbol se almacenan los datos que se etiquetaran
+                pseudo_etiquetas_datos = [] # Etiquetas que acompañan a los datos que se etiquetaran
+                pseudo_datos_etiquetados = {} # Diccionario para los datos que se etiquetaran
+                hay_cambios_en_arbol = [False] * self.n
+                
+                if e[i][t] < e[i][t-1]:
+                    U_samples = self.sub_sample(Hi, U, e[i][t-1] * W[i][t-1] / e[i][t])
                     
                     for x_u in U_samples:
                         confidence, most_agreed_class = self.confidence(Hi, U[x_u, :])
-                        if confidence > self.theta:
+                        if confidence > self.theta:  
+                            hay_cambios_en_arbol[i] = True
                             pseudo_datos.append(U[x_u, :])
                             pseudo_etiquetas_datos.append(most_agreed_class)
-                            W[i] += confidence
-            for i, Hi in self.forest.items():
-                if e[i] * W[i] < e_init[i] * W_init[i]:
-                    self.learn_random_tree(i, L, y_l, pseudo_datos, pseudo_etiquetas_datos, datos_arbol_individuales)
+                            W[i][t] += confidence
+                            
+                    pseudo_datos_etiquetados[i] = {pseudo_datos, pseudo_etiquetas_datos}
                     
-            e_init = e
-            W_init = W
+            for i, Hi in self.forest.items():
+                if hay_cambios_en_arbol[i]:
+                    if e[i][t] * W[i][t] < e[i][t-1] * W[i][t-1]:
+                        self.learn_random_tree(i, L, y_l, pseudo_datos_etiquetados, self.datos_arbol_ind[i])
+                    
+        self.errores = e
+        self.confianzas = W
+        
+        
         return self.forest    
         
     def bootstrap(self, L, y_l, random_state=None, p=0.75):
@@ -85,9 +97,16 @@ class CoForest:
         aleatoriamente una muestra de datos de un conjunto de datos, con reemplazamiento.
         '''
         #generar indices aleatorios con reemplazamiento
+        print("Antes del bootstrapping")
+        print(L)
+        print(y_l)
         datos_random = np.random.choice(L.shape[0], size=int(p*L.shape[0]), replace=True)
         L_i = L[datos_random, :]
         y_l_i = y_l[datos_random]
+        
+        print("Despues del bootstrapping")
+        print(L_i)
+        print(y_l_i)
         
         return L_i, y_l_i, datos_random
     
@@ -96,13 +115,16 @@ class CoForest:
         Estima el error del arbol Hi
         '''
         errors = []
-
+        L = np.array(L)
+        print("L: ", L)
         for sample, tag in zip(L, y_l):
+            print("Sample: ", sample)
             n_votes = 0
             n_hits = 0
 
             for i, tree in self.forest.items():
                 rows_training = L[datos_arbol_indiv[i]]
+                print("Rows training: ", rows_training)
                 used_training = np.any(np.all(sample == rows_training, axis=1))
 
                 if tree is not Hi and not used_training:
@@ -132,6 +154,8 @@ class CoForest:
     
     def confidence(self, Hi, sample):
         
+        if not self.clases:
+            raise ValueError("No se ha ajustado el modelo")
         count = {i: 0 for i in self.clases}
 
         for tree in self.forest.values():
@@ -218,27 +242,58 @@ x = load_iris().data
 y = load_iris().target
 scores = []
 
-unlabeled_size = [0.4, 0.5, 0.6, 0.7, 0.8]
-for i in unlabeled_size:
-    #separamos los datos en train y test
-    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size= 0.15, stratify=y)
-    #X_test e y_test se queda como esta para hacer el score despues (datos desconocidos)
+# unlabeled_size = [0.4, 0.5, 0.6, 0.7, 0.8]
+# for i in unlabeled_size:
+#     #separamos los datos en train y test
+#     X_train, X_test, y_train, y_test = train_test_split(x, y, test_size= 0.15, stratify=y)
+#     #X_test e y_test se queda como esta para hacer el score despues (datos desconocidos)
     
-    #La siguiente distincion es para que el algoritmo coja gran parte de datos y no los etiquete (U)
-    L, U, y_l, y_u = train_test_split(X_train, y_train, test_size=i, stratify=y_train)
-    coforest = CoForest(n=30, theta=0.75)
-    coforest.fit(L, y_l, U)
-    print(coforest.score(X_test, y_test))
-    scores.append(coforest.score(X_test, y_test))
+#     #La siguiente distincion es para que el algoritmo coja gran parte de datos y no los etiquete (U)
+#     L, U, y_l, y_u = train_test_split(X_train, y_train, test_size=i, stratify=y_train)
+#     coforest = CoForest(n=30, theta=0.75)
+#     coforest.fit(L, y_l, U)
+#     print(coforest.score(X_test, y_test))
+#     scores.append(coforest.score(X_test, y_test))
 
 
-#construimos un grafico con los resultados
-#ajustar eje y
+# #construimos un grafico con los resultados
+# #ajustar eje y
 
-plt.plot(unlabeled_size, scores)
-plt.ylim(0.7, 1)
-plt.xlabel('Unlabeled size')
-plt.ylabel('Accuracy')
-plt.title('Accuracy vs Unlabeled size')
-plt.show()
+# plt.plot(unlabeled_size, scores)
+# plt.ylim(0.7, 1)
+# plt.xlabel('Unlabeled size')
+# plt.ylabel('Accuracy')
+# plt.title('Accuracy vs Unlabeled size')
+# plt.show()
+
+
+ #separamos los datos en train y test
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size= 0.15, stratify=y)
+#X_test e y_test se queda como esta para hacer el score despues (datos desconocidos)
+
+#La siguiente distincion es para que el algoritmo coja gran parte de datos y no los etiquete (U)
+L, U, y_l, y_u = train_test_split(X_train, y_train, test_size=0.8, stratify=y_train)
+
+for i,j in zip(load_iris().data, load_iris().target):
+    print(i,j)
+print("****************************************")
+print("****************************************")
+print("Datos para testear el algoritmo")
+for i, j in zip(X_test, y_test):
+    print(i,j)
+
+print("****************************************")
+print("****************************************")
+print("Datos para entrenar el algoritmo (etiquetados)")
+for i, j in zip(L, y_l):
+    print(i,j)
+print("****************************************")
+
+
+alg = CoForest(n=10, theta=0.75)
+for i in range(50,100,5):
+    alg.fit(L, y_l, U)
+    scores.append(alg.score(X_test, y_test))
+    print(alg.score(X_test, y_test))
+    
 
