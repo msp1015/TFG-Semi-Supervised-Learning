@@ -41,7 +41,7 @@ class CoForest:
         #Para probar la validez del algoritmo
         self.accuracy_por_iteracion = []
         
-    def fit(self, L, y_l, U):
+    def fit(self, L, y_l, U, X_test, y_test):
         '''
         Ajusta el modelo a los datos de entrenamiento
         '''
@@ -116,7 +116,7 @@ class CoForest:
         
         return self.forest   
         
-    def bootstrap(self, L, y_l, random_state=None, p=0.75):
+    def bootstrap(self, L, y_l, p=0.65):
         '''
         La tecnica del bootstrapping es una tecnica de remuestreo que consiste en seleccionar
         aleatoriamente una muestra de datos de un conjunto de datos, con reemplazamiento.
@@ -126,12 +126,11 @@ class CoForest:
         L_i = L[datos_random, :]
         y_l_i = y_l[datos_random]
         
-        
         return L_i, y_l_i, datos_random
     
     def estimate_error(self, Hi, L, y_l, datos_arbol_indiv):
         '''
-        Estima el error del arbol Hi
+        Estima el error del arbol Hi. Out Of Bag Error
         '''
         errors = []
         L = np.array(L)
@@ -139,15 +138,16 @@ class CoForest:
             n_votes = 0
             n_hits = 0
 
-            for i, tree in self.forest.items():
+            for tree in self.forest.values():
                 rows_training = L[datos_arbol_indiv]
+                
                 used_training = np.any(np.all(sample.reshape(1, -1) == rows_training, axis=1))
-
+                
                 if tree is not Hi and not used_training:
                     if tree.predict([sample])[0] == tag:
                         n_hits += 1
                     n_votes += 1
-
+           
             if n_votes > 0:
                 errors.append(1 - (n_hits / n_votes))
 
@@ -221,54 +221,62 @@ class CoForest:
     
 
 
-from sklearn.model_selection import train_test_split
-from sklearn.datasets import load_iris
-import matplotlib.pyplot as plt
+# from sklearn.model_selection import train_test_split
+# from sklearn.datasets import load_iris, load_breast_cancer, load_digits
+# import matplotlib.pyplot as plt
 
-# #separamos los datos en X y Y
-x = load_iris().data
-y = load_iris().target
+# # #separamos los datos en X y Y
+# # x = load_iris().data
+# # y = load_iris().target
 
-#separamos los datos en train y test
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size= 0.2, stratify=y)
-#X_test e y_test se queda como esta para hacer el score despues (datos desconocidos)
+# x = load_breast_cancer().data
+# y = load_breast_cancer().target
 
-#La siguiente distincion es para que el algoritmo coja gran parte de datos y no los etiquete (U)
-L, U, y_l, y_u = train_test_split(X_train, y_train, test_size=0.8, stratify=y_train)
+# # x = load_digits().data
+# # y = load_digits().target
 
-alg = CoForest(n=20, theta=0.75)
-alg.fit(L, y_l, U)
-error = alg.get_errores()
-confianzas = alg.get_confianzas()
-accuracies = alg.get_accuracy_por_iteracion()
 
-print(error)
-print(confianzas)
-print(accuracies)
+# #separamos los datos en train y test
+# X_train, X_test, y_train, y_test = train_test_split(x, y, test_size= 0.2, stratify=y)
+# #X_test e y_test se queda como esta para hacer el score despues (datos desconocidos)
 
-#dibujamos las 3 graficas
-plt.plot(range(len(accuracies)), accuracies, label='CoForest', marker='o')
-plt.ylim(0.75,1)
-plt.xlabel('Iteraciones')
-plt.ylabel('Accuracy')
-plt.title('Accuracy por iteracion')
-plt.legend()
-plt.show()
+# #La siguiente distincion es para que el algoritmo coja gran parte de datos y no los etiquete (U)
+# L, U, y_l, y_u = train_test_split(X_train, y_train, test_size=0.8, stratify=y_train)
 
-for i, vector in error.items():
-    plt.plot(range(len(vector)), vector, label='Arbol {}'.format(i), marker='o')
-plt.xlabel('Iteraciones')
-plt.ylabel('Error')
-plt.ylim(0,0.1)
-plt.title('Error por iteracion')
-plt.legend()
-plt.show()
+# alg = CoForest(n=6, theta=0.75)
+# alg.fit(L, y_l, U)
+# error = alg.get_errores()
+# confianzas = alg.get_confianzas()
+# accuracies = alg.get_accuracy_por_iteracion()
+
+# print(error)
+# print(confianzas)
+# print(accuracies)
+
+# #dibujamos las 3 graficas
+# plt.plot(range(len(accuracies)), accuracies, label='CoForest', marker='o')
+# plt.ylim(0.75,1)
+# plt.xticks(range(len(accuracies)))
+# plt.xlabel('Iteraciones')
+# plt.ylabel('Accuracy')
+# plt.title('Accuracy por iteracion')
+# plt.legend()
+# plt.show()
+
+# # for i, vector in error.items():
+# #     plt.plot(range(len(vector)), vector, label='Arbol {}'.format(i), marker='o')
+# # plt.xlabel('Iteraciones')
+# # plt.ylabel('Error')
+# # plt.ylim(0,0.1)
+# # plt.title('Error por iteracion')
+# # plt.legend()
+# # plt.show()
       
-for i, vector in confianzas.items():
-    plt.plot(range(len(vector)), vector, label='Arbol {}'.format(i), marker='o')
-plt.xlabel('Iteraciones')
-plt.ylabel('Confianza')
-plt.title('Confianza por iteracion')
-plt.legend()
-plt.show()
+# # for i, vector in confianzas.items():
+# #     plt.plot(range(len(vector)), vector, label='Arbol {}'.format(i), marker='o')
+# # plt.xlabel('Iteraciones')
+# # plt.ylabel('Confianza')
+# # plt.title('Confianza por iteracion')
+# # plt.legend()
+# # plt.show()
 
