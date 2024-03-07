@@ -3,26 +3,64 @@
 \section{Introducción}
 
 \section{Planificación temporal}
-Como se explica en la sección 4 de la docucmentación, la metodología a seguir es la de scrum, salvando las distancias con el número de personas que desarrollan.
-El proyecto se elige antes de empezar el curso, unicamente para poder informarse y leer articulos relacionados con el tema. Empezando por \cite{Engelen:semi-supervised} e investigando los trabajos anteriores de otros compañeros.
+Como se explica en la sección 4 de la documentación, la metodología a seguir es la de scrum, salvando las distancias con el número de personas que suele haber en un contexto habitual, ya que únicamente habrá un desarrollador.
+El proyecto se elige antes de empezar el curso, unicamente para poder informarse y leer articulos relacionados con el tema del aprendizaje semi supervisado. Empezando por \cite{Engelen:semi-supervised} e investigando los trabajos anteriores de otros compañeros, como son los trabajos de Patricia Hernando, \cite{TFG:Patricia} , y David Martinez, \cite{TFG:David}.
 \subsection{Sprint 1}
-Este sprint corresponde a las fechas entre el 7 de noviembre y el 18 de diciembre. Se comenzó con una reunion en la que se establecieron las siguientes tareas:\\
-Crear un repositorio en GitHub donde poder subir los cambios del proyecto, más concretamente, la plantilla de documentación. También se mandó terminar de leer el artículo \cite{Engelen:semi-supervised} y se asignó una nueva lectura acerca de ensembles, \cite{ensembles}.
-Tambien se asigna la tarea de encontrar un programa util para el seguimiento del proyecto que soporte scrum, seleccionando finalmente \textit{Taiga}.
+Este sprint corresponde a las fechas entre el 7 de noviembre y el 18 de diciembre. Se comienza con una reunión en la que se establecen las siguientes tareas:\\
+\begin{itemize}
+	\item Crear un repositorio en GitHub, \cite{Repo:Github} donde poder subir los cambios del proyecto, más concretamente, la plantilla de documentación inicial para ir familiarizándose con LaTex.
+	\item También se manda terminar de leer el artículo \cite{Engelen:semi-supervised} y se asigna una nueva lectura acerca de ensembles, \cite{ensembles}. Esto es necesario ya que de entre los algoritmos a implementar, alguno de ellos será un ensemble, que es un método de aprendizaje automático que combina las predicciones de múltiples modelos para mejorar la precisión, estabilidad y robustez de las predicciones en comparación con los modelos individuales. Concepto que se desconocía antes de iniciar la lectura.
+	\item Encontrar un programa útil para el seguimiento del proyecto que soporte SCRUM.
+\end{itemize}
+
+El repositorio se crea siguiendo la plantilla de documentación ya creada en 2016 y publicada en Github. Para poder empezar a familiarizarse con LaTex es necesario instalar los programas necesarios en el equipo local. Se prueban TeXstudio y TeXworks como editores, y por gusto y comodidad se elige TeXstudio como editor de archivos. Tambien se instala MiKTex, que es una distribución de TeX/LaTeX para sistemas operativos Windows.
+Se continua con la lectura establecida, adquiriendo conceptos de ensembles, estos son, ¿Qué es el boosting?, ¿Qué es el bagging?, ¿Qué posibilidades hay de combinar varios modelos? entre otros.
+En cuanto al programa utilizado para el seguimiento de las tareas y sprints, se prueban varios como Zenhub (descartado por ser de pago), Jira y Taiga. El primero era la mejor opcion dado su relacion con Github, pero al ser de pago se descarta. Entre Jira y Taiga se elige la segunda por su accesibilidad, los numerosos problemas de Jira hacen que la plataforma de Taiga sea la elegida.
+Esta herramienta se explica en el apartado cuatro de la memoria, pero su sencillez y el hecho de poder comunicarse con GitHub hacen facil su uso. Aun asi, queda abierto a cambiar debido a que no es la herramienta que ofrece mas posibilidades.
 \subsection{Sprint 2}
 Sprint correspondiente a las fechas entre el 18 de noviembre y el 15 de enero. Se inicia con una reunión previa para establecer las tareas: 
-finalizar la lectura de \cite{ensembles}, comenzar la documentación con conceptos teoricos acerca del aprendizaje automático vistos hasta el momento. Ponerse en contexto con el entorno de flask en python, que con ayuda de otras asignaturas se termina cumpliendo.
+\begin{itemize}
+	\item Finalizar la lectura de \cite{ensembles}.
+	\item Comenzar la documentación con conceptos teoricos acerca del aprendizaje automático vistos hasta el momento.
+	\item  Aprender a usar el entorno de flask en python.
+\end{itemize}
+
+La lectura y documentacion se realiza durante el periodo de vacaciones, mientras que el aprendizaje de flask, se lleva a cabo con la ayuda de la asignatura cursada de Diseño y Mantenimiento del Software, en la que se realiza una web que se implementa con este \textit{framework}.
+
+Se encuentra una aplicación llamada Zappier, la cual permite construir triggers entre aplicaciones. En este caso sirve para que cada vez que se cree una \textit{issue} en github, se cree como historia de usuario en el product backlog de Taiga, donde despues se gestionará independientemente. Esta aplicación está de nuevo explicada en el apartado 4 de la memoria. 
 \subsection{Sprint 3}
-Sprint correspondiente a las fechas entre el 15 de enero y el 1 de febrero. Se tiene una reunion previa para asignar las tareas de: lectura del algoritmo Co-Forest, busqueda de trabajos relacionados para coger ideas propias para el proyecto y continuar documentando los conceptos teoricos (ensembles, Co-Forest). Se realiza la implementacion de la tecnica de scrum y una amplia bisqueda de paginas web relacionadas. Se actualiza documentacion
+Sprint correspondiente a las fechas entre el 15 de enero y el 1 de febrero. Se tiene una reunion previa para asignar las tareas de: 
+\begin{itemize}
+	\item Lectura del algoritmo Co-Forest y su pseudocódigo.
+	\item Búsqueda de trabajos relacionados para coger ideas propias para el proyecto.
+	\item Continuar documentando los conceptos teoricos (ensembles, Co-Forest).
+\end{itemize}
 
-\subsection{Sprint 4}
-Sprint correspondiente a las fechas entre el 1 de febrero y el 14 de febrero.. Primera implementacion del algoritmo Co-forest. Importante utilizar el estudio realizado por Patricia el año pasado para ayudar en la implementacion. Primeras veces los resultados no son muy buenos. Ademas de la busqueda de pafginas anteriores, se encuentra una muy buena opcion, la cual es https://ml-visualizer.herokuapp.com/. Se actualiza documentacion incluyendo este apartado.
+En este periodo se completa la lectura del artículo del algoritmo Co-Forest y del apartado del trabajo de Patricia y sus estudios relacionados con este algoritmo. El principal estudio que realiza consiste en resolver un error del pseudocódigo, donde un valor podía coger el valor 0 cuando se utiliza como divisor. Mediante tres propuestas, se inicializa este valor con diferentes operaciones y se muestran varias gráficas para poder evaluar la mejor opción.  %TODO Completar referencias
 
-\subsection{Sprint 5}
+Se realiza una busqueda amplia de aplicaciones web para visualización de algoritmos, apuntando y explicando las más interesantes en el apartado 6 de la memoria.
+Se realiza la implementación de la técnica de SCRUM en el apartado 4 de la memoria.
+Se deja para sprint posteriores la documentación del CoForest, ya que puede que los conceptos adquiridos no sean los correctos hasta que no se haga su implementación y se vean los resultados.
+
+\subsection{Sprint 4 (RESUMIDO, HAY QUE COMPETAR)}
+Sprint correspondiente a las fechas entre el 1 de febrero y el 14 de febrero.. 
+Primera implementacion del algoritmo Co-forest. Importante utilizar el estudio realizado por Patricia el año pasado para ayudar en la implementacion(COMPLETAR CON SU ESTUDIO REAL)%TODO.
+(ESTA RESUMIDO, EXPLICAR EXTENSO)
+Primeras veces los resultados no son muy buenos. Ademas de la busqueda de paginas anteriores, se encuentra una muy buena opcion, la cual es https://ml-visualizer.herokuapp.com/. Se actualiza documentacion incluyendo este apartado.
+
+\subsection{Sprint 5 (RESUMIDO, HAY QUE COMPETAR)}
 Otras dos semanas aproximadamente(algo mas). Se meustra al tutor la pagina encontrada, se acuerda que puede ser una buena idea para la web y comenzar a mirar opciones de relacionar algoritmo con visualizacion en pantalla, ayudado del trabajo de david del año anterior, la cual realiza una llamada donde calcula todo y devuelve un json que luego interpreta. Se resuelven dudas del algoritmo Coforest y se realiza un estudio para compararlo con el de patricia, comprobando asi su eficiencia.
 
-\subsection{Sprint 6}
-Principios de marzo. 
+\subsection{Sprint 6 (RESUMIDO, HAY QUE COMPETAR)}
+Se inicia con una reunión el 7 de marzo, surge un cambio de planes, dejando las siguientes tareas por hacer:
+\begin{itemize}
+	\item Continuar documentacion (coforest, trabajos relacionados)
+	\item El trabajo sera una version 2.0 del trabajo de David, para no tener que realizar una web que ya esta hecha. Complicaciones fork con github
+	\item Esto implica tener que familiarizarse con el trabajo de David, su estructura, web, etcetera.
+	\item corregir estilo de programacion. Estandarizar mediante la guia de estilo de python.
+	\item Revisar coforest debido a que la comparacion con el de patricia no es del todo buena. randomstate.
+	
+\end{itemize} 
 
 \section{Estudio de viabilidad}
 
