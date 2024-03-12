@@ -1,0 +1,88 @@
+{% extends "usuarios/base_user.html" %}
+{% block title %}{{ gettext('My Profile') }}{% endblock %}
+{% block title_content %}{{ gettext('My Profile') }}{% endblock %}
+{% block funcion %}
+    <div class="text-center">
+        <h4>{{ gettext('Edit profile') }}</h4>
+        <hr class="separacion w-8"/>
+    </div>
+    <form id="form_perfil" method="POST">
+        {{ form.csrf_token }}
+        <div class="form-group mt-3 mx-5">
+            {{ form.name.label }}
+            {{ form.name(class_="form-control", value_=usuario.name) }}
+            {% if form.name.errors %}
+                <div class="alert alert-danger text-break">
+                    {% for error in form.name.errors %}
+                        {{ error }}<br>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group mt-3 mx-5">
+            {{ form.email.label }}
+            {{ form.email(class_="form-control", value_=usuario.email) }}
+            {% if form.email.errors %}
+                <div class="alert alert-danger text-break">
+                    {% for error in form.email.errors %}
+                        {{ error }}<br>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        {% if current_user.is_admin and 'perfil' in request.path or not current_user.is_admin %}
+            <div class="form-group mt-3 mx-5">
+                {{ form.current_password.label }}
+                {{ form.current_password(class_="form-control") }}
+                {% if form.current_password.errors %}
+                    <div class="alert alert-danger text-break">
+                        {% for error in form.current_password.errors %}
+                            {{ error }}<br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+        <div class="form-group mt-3 mx-5">
+            {{ form.new_password.label }}
+            {{ form.new_password(class_="form-control") }}
+            {% if form.new_password.errors %}
+                <div class="alert alert-danger text-break">
+                    {% for error in form.new_password.errors %}
+                        {{ error }}<br>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="d-flex justify-content-center mt-3">
+            <button type="submit" class="btn btn-primary">{{ gettext('Submit') }}</button>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('inicio_tutorial').addEventListener('click', function () {
+            this.style.animation = "none";
+            introJs().setOptions({
+                steps: [
+                    {
+                        title: "{{ gettext("Profile") }}",
+                        intro: "{{ gettext("This is your profile.") }}"
+                    },
+                    {
+                        element: '#resumen_perfil',
+                        intro: "{{ gettext("Here you can see a summary of your profile.") }}"
+                    },
+                    {
+                        element: '#form_perfil',
+                        intro: "{{ gettext("Here you can modify the basic data of your profile.") }}"
+                    }
+                ],
+                'nextLabel': "{{ gettext("Next") }}",
+                'prevLabel': "{{ gettext("Previous") }}",
+                'doneLabel': "{{ gettext("Done") }}",
+            }).start();
+        });
+    </script>
+{% endblock %}
+
+

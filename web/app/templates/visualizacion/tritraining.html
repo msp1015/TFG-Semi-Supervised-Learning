@@ -1,0 +1,22 @@
+{% extends "visualizacion/singleview.html" %}
+{% block title %}Tri-Training{% endblock %}
+{% block pseudocodigo %}
+    <img src="{{ gettext('/pseudocodigos/en/TriTraining.png') }}" width="75%" alt="{{ gettext('Tri-Training Pseudocode') }}"/>
+{% endblock %}
+{% block mas_scripts %}
+    {% if ejecutar %}
+        <script>
+            inicializar_con_peticion("/datos/{{ session['ALGORITMO'] }}",
+                elementos,
+                preparardataset_tritraining,
+                grafico_tritaining, true);
+        </script>
+    {% else %}
+        <script>
+            let datos = {{ json_data|tojson }};
+            inicializar_sin_peticion(datos,
+                preparardataset_tritraining,
+                grafico_tritaining, true);
+        </script>
+    {% endif %}
+{% endblock %}

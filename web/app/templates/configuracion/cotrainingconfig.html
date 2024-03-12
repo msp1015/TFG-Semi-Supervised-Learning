@@ -1,0 +1,91 @@
+{% extends "configuracion/base_configuracion.html" %}
+{%  from "macros.html" import tooltip %}
+{% block parametros %}
+    <div class="mb-3">
+        {{ form.clasificador1.label }}
+        {{ form.clasificador1(class_="form-select") }}
+    </div>
+    <div class="parametros" id="parametros1"></div>
+    <br>
+    <div class="mb-3">
+        {{ form.clasificador2.label }}
+        {{ form.clasificador2(class_="form-select") }}
+    </div>
+    <div class="parametros" id="parametros2"></div>
+    <br>
+    <div class="mb-3">
+        {{ form.p.label }} (p)
+        {{ form.p(class_="form-control", oninput="check_p_n_nulos()") }}
+    </div>
+    <div class="mb-3">
+        {{ form.n.label }} (n)
+        {{ form.n(class_="form-control", oninput="check_p_n_nulos()") }}
+    </div>
+    <div class="mb-3">
+        {{ form.u.label }}{{ tooltip(gettext('If it is larger than the total, it will be limited to it (the total)')) }}
+        {{ form.u(class_="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.n_iter.label }}{{ tooltip(gettext('Enter 0 to not limit the number of iterations')) }}
+        {{ form.n_iter(class_="form-control") }}
+    </div>
+{% endblock %}
+{% block form_scripts %}
+    <script>
+        const clasificador1 = document.querySelector('#clasificador1');
+        const clasificador2 = document.querySelector('#clasificador2');
+
+        const div_parametros1 = document.querySelector('#parametros1');
+        const div_parametros2 = document.querySelector('#parametros2');
+
+        const todos_parametros = {{ parametros|tojson }};
+
+        clasificador1.addEventListener('change', (event) => {
+            generarFormParametros(event.target.value, div_parametros1, "clasificador1");
+        });
+
+        clasificador2.addEventListener('change', (event) => {
+            generarFormParametros(event.target.value, div_parametros2, "clasificador2");
+        });
+
+        generarFormParametros(clasificador1.value, div_parametros1, "clasificador1");
+        generarFormParametros(clasificador2.value, div_parametros2, "clasificador2");
+
+        /**
+         *
+         * Asegura que los positivos y negativos no sean nulos
+         * a la vez impidiendo que el usuario pueda enviar el formulario.
+         *
+         */
+        function check_p_n_nulos() {
+            let p = document.getElementById('p');
+            let n = document.getElementById('n');
+
+            if (p.value === '0' && n.value === '0') {
+                if (locale === 'es') {
+                   n.setCustomValidity('Los positivos y negativos no pueden ser a la vez nulos.');
+                } else {
+                   n.setCustomValidity('Positives and negatives cannot be null at the same time.');
+                }
+            } else {
+                n.setCustomValidity('');
+            }
+        }
+
+    </script>
+{% endblock %}
+{% block explicaciones %}
+    <p>{{ gettext('Strongly based on Self-Training but in this case, several classifiers (usually two)
+    handle the process and "interact" with each other. As Self-Training, once classifiers are trained,
+    they predict the labels of the those unlabelled instances, and all classifiers add the best predictions.
+    Co-Training works with two views of the data ("multi-view"). These views correspond not to subsets
+    of instances, but to subsets of instance´s atributtes (characteristics). Each classifier
+    will train considering different characteristics. Ideally, these views are independent and can
+    predict the label on their own (although this doesn´t always happen). When classifiers predict
+    labels on the data, they select the most confident data of both and build the new training set for
+    the next iteration.')}}
+    </p>
+{% endblock %}
+{% block pseudocodigo %}
+    <img src="{{ gettext('/pseudocodigos/en/CoTraining.png') }}" width="75%" alt="{{ gettext('Co-Training Pseudocode') }}"/>
+{% endblock %}

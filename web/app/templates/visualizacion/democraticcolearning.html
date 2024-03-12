@@ -1,0 +1,23 @@
+{% extends "visualizacion/singleview.html" %}
+{% block title %}Democratic Co-Learning{% endblock %}
+{% block pseudocodigo %}
+    <img src="{{ gettext('/pseudocodigos/en/DemocraticCoLearningFit.png') }}" width="75%" alt="{{ gettext('Democratic Co-Learning Fit Pseudocode') }}"/>
+    <img src="{{ gettext('/pseudocodigos/en/DemocraticCoLearningCombine.png') }}" width="75%" alt="{{ gettext('Democratic Co-Learning Combine Pseudocode') }}"/>
+{% endblock %}
+{% block mas_scripts %}
+    {% if ejecutar %}
+        <script>
+            inicializar_con_peticion("/datos/{{ session['ALGORITMO'] }}",
+                elementos,
+                preparardataset_democraticcolearning,
+                grafico_democraticcolearning, true);
+        </script>
+    {% else %}
+        <script>
+            let datos = {{ json_data|tojson }};
+            inicializar_sin_peticion(datos,
+                preparardataset_democraticcolearning,
+                grafico_democraticcolearning, true);
+        </script>
+    {% endif %}
+{% endblock %}

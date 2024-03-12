@@ -1,0 +1,17 @@
+{% extends "visualizacion/base_visualizacion.html" %}
+{% block title %}Self-Training{% endblock %}
+{% block pseudocodigo %}
+    <img src="{{ gettext('/pseudocodigos/en/SelfTraining.png') }}" width="75%" alt="{{ gettext('Self-Training Pseudocode') }}"/>
+{% endblock %}
+{% block mas_scripts %}
+    {% if ejecutar %}
+        <script>
+            inicializar_con_peticion("/datos/{{ session['ALGORITMO'] }}", elementos, preparardataset_selftraining, grafico_selftraining);
+        </script>
+    {% else %}
+        <script>
+            let datos = {{ json_data|tojson }};
+            inicializar_sin_peticion(datos, preparardataset_selftraining, grafico_selftraining)
+        </script>
+    {% endif %}
+{% endblock %}
