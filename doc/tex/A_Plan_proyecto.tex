@@ -1,27 +1,31 @@
 \apendice{Plan de Proyecto Software}
 
 \section{Introducción}
+Este apéndice tiene como propósito proporcionar una visión detallada del proceso de planificación y estudio de viabilidad que ha sido fundamental en el desarrollo del proyecto de software presentado. A través de una metodología estructurada, se han abordado las diferentes tareas a lo largo del tiempo, asegurando un seguimiento exhaustivo y adaptativo de cada fase del proyecto.
+Además, este documento explora en profundidad el estudio de viabilidad realizado, abarcando aspectos tanto legales como económicos. El análisis legal es crucial para asegurar que el proyecto cumpla con todas las normativas y legislaciones aplicables, minimizando así posibles riesgos legales. Por otro lado, el estudio económico proporciona una evaluación detallada de la viabilidad financiera del proyecto, incluyendo estimaciones de costos, análisis de retorno de inversión y proyecciones de rentabilidad a largo plazo.
 
 \section{Planificación temporal}
-Como se explica en la sección 4 de la documentación, la metodología a seguir es la de scrum, salvando las distancias con el número de personas que suele haber en un contexto habitual, ya que únicamente habrá un desarrollador.
-El proyecto se elige antes de empezar el curso, unicamente para poder informarse y leer articulos relacionados con el tema del aprendizaje semi supervisado. Empezando por \cite{Engelen:semi-supervised} e investigando los trabajos anteriores de otros compañeros, como son los trabajos de Patricia Hernando, \cite{TFG:Patricia} , y David Martinez, \cite{TFG:David}.
+Como se explica en la sección 4 de la memoria, la metodología a seguir es Scrum, salvando las distancias con el número de personas que suele haber en un contexto habitual, ya que únicamente habrá un desarrollador.
+El proyecto se elige antes de empezar el curso, únicamente para poder informarse y leer articulos relacionados con el tema del aprendizaje semi supervisado. Al inicio con sprint más largos y a medida que se avanza en el desarrollo los sprints se reducen a una o dos semanas de duración, realizando una reunión al inicio de cada uno.
+
+
 \subsection{Sprint 1}
 Este sprint corresponde a las fechas entre el 7 de noviembre y el 18 de diciembre. Se comienza con una reunión en la que se establecen las siguientes tareas:\\
 \begin{itemize}
-	\item Crear un repositorio en GitHub, \cite{Repo:Github} donde poder subir los cambios del proyecto, más concretamente, la plantilla de documentación inicial para ir familiarizándose con LaTex.
-	\item También se manda terminar de leer el artículo \cite{Engelen:semi-supervised} y se asigna una nueva lectura acerca de ensembles, \cite{ensembles}. Esto es necesario ya que de entre los algoritmos a implementar, alguno de ellos será un ensemble, que es un método de aprendizaje automático que combina las predicciones de múltiples modelos para mejorar la precisión, estabilidad y robustez de las predicciones en comparación con los modelos individuales. Concepto que se desconocía antes de iniciar la lectura.
-	\item Encontrar un programa útil para el seguimiento del proyecto que soporte SCRUM.
+	\item Crear un repositorio en GitHub~\cite{Repo:Github} donde poder subir los cambios del proyecto, más concretamente, la plantilla de documentación inicial para ir familiarizándose con \LaTeX.
+	\item También se manda terminar de leer el artículo \cite{Engelen:semi-supervised} y se asigna una nueva lectura acerca de ensembles~\cite{ensembles}. Esto es necesario ya que de entre los algoritmos a implementar, alguno de ellos será un ensemble. Concepto que se desconocía antes de iniciar la lectura.
+	\item Encontrar un programa adecuado para el seguimiento del proyecto que soporte Scrum.
 \end{itemize}
 
-El repositorio se crea siguiendo la plantilla de documentación ya creada en 2016 y publicada en Github. Para poder empezar a familiarizarse con LaTex es necesario instalar los programas necesarios en el equipo local. Se prueban TeXstudio y TeXworks como editores, y por gusto y comodidad se elige TeXstudio como editor de archivos. Tambien se instala MiKTex, que es una distribución de TeX/LaTeX para sistemas operativos Windows.
+El repositorio se crea siguiendo la plantilla de documentación ya creada en 2016 y publicada en Github. Para poder empezar a familiarizarse con \LaTeX{} es necesario instalar los programas necesarios en el equipo local. Se prueban TeXstudio y TeXworks como editores, y por gusto y comodidad se elige TeXstudio como editor de archivos. Tambien se instala MiKTex, que es una distribución de TeX/LaTeX para sistemas operativos Windows.
 Se continua con la lectura establecida, adquiriendo conceptos de ensembles, estos son, ¿Qué es el boosting?, ¿Qué es el bagging?, ¿Qué posibilidades hay de combinar varios modelos? entre otros.
-En cuanto al programa utilizado para el seguimiento de las tareas y sprints, se prueban varios como Zenhub (descartado por ser de pago), Jira y Taiga. El primero era la mejor opcion dado su relacion con Github, pero al ser de pago se descarta. Entre Jira y Taiga se elige la segunda por su accesibilidad, los numerosos problemas de Jira hacen que la plataforma de Taiga sea la elegida.
+En cuanto al programa utilizado para el seguimiento de las tareas y sprints, se prueban varios como Zenhub (descartado por ser de pago), Jira y Taiga. El primero era la mejor opción dado su relacion con Github, pero al ser de pago se descarta. Entre Jira y Taiga se elige la segunda por su accesibilidad, los numerosos problemas de Jira hacen que la plataforma de Taiga sea la elegida.
 Esta herramienta se explica en el apartado cuatro de la memoria, pero su sencillez y el hecho de poder comunicarse con GitHub hacen facil su uso. Aun asi, queda abierto a cambiar debido a que no es la herramienta que ofrece mas posibilidades.
 \subsection{Sprint 2}
 Sprint correspondiente a las fechas entre el 18 de noviembre y el 15 de enero. Se inicia con una reunión previa para establecer las tareas: 
 \begin{itemize}
 	\item Finalizar la lectura de \cite{ensembles}.
-	\item Comenzar la documentación con conceptos teoricos acerca del aprendizaje automático vistos hasta el momento.
+	\item Comenzar la documentación con conceptos teóricos acerca del aprendizaje automático vistos hasta el momento.
 	\item  Aprender a usar el entorno de flask en python.
 \end{itemize}
 
@@ -29,17 +33,17 @@ La lectura y documentacion se realiza durante el periodo de vacaciones, mientras
 
 Se encuentra una aplicación llamada Zappier, la cual permite construir triggers entre aplicaciones. En este caso sirve para que cada vez que se cree una \textit{issue} en github, se cree como historia de usuario en el product backlog de Taiga, donde despues se gestionará independientemente. Esta aplicación está de nuevo explicada en el apartado 4 de la memoria. 
 \subsection{Sprint 3}
-Sprint correspondiente a las fechas entre el 15 de enero y el 1 de febrero. Se tiene una reunion previa para asignar las tareas de: 
+Sprint correspondiente a las fechas entre el 15 de enero y el 1 de febrero. Se tiene una reunión previa para asignar las tareas de: 
 \begin{itemize}
-	\item Lectura del algoritmo Co-Forest y su pseudocódigo.
+	\item Lectura del algoritmo Co-Forest~\cite{IEEE:CoForest} y su pseudocódigo.
 	\item Búsqueda de trabajos relacionados para coger ideas propias para el proyecto.
-	\item Continuar documentando los conceptos teoricos (ensembles, Co-Forest).
+	\item Continuar documentando los conceptos teóricos (ensembles, Co-Forest).
 \end{itemize}
 
 En este periodo se completa la lectura del artículo del algoritmo Co-Forest y del apartado del trabajo de Patricia y sus estudios relacionados con este algoritmo. El principal estudio que realiza consiste en resolver un error del pseudocódigo, donde un valor podía coger el valor 0 cuando se utiliza como divisor. Mediante tres propuestas, se inicializa este valor con diferentes operaciones y se muestran varias gráficas para poder evaluar la mejor opción.  %TODO Completar referencias
 
-Se realiza una busqueda amplia de aplicaciones web para visualización de algoritmos, apuntando y explicando las más interesantes en el apartado 6 de la memoria.
-Se realiza la implementación de la técnica de SCRUM en el apartado 4 de la memoria.
+Se realiza una búsqueda amplia de aplicaciones web para visualización de algoritmos, apuntando y explicando las más interesantes en el apartado 6 de la memoria.
+Se realiza la implementación de la técnica de Scrum en el apartado 4 de la memoria.
 Se deja para sprint posteriores la documentación del CoForest, ya que puede que los conceptos adquiridos no sean los correctos hasta que no se haga su implementación y se vean los resultados.
 
 \subsection{Sprint 4 (RESUMIDO, HAY QUE COMPETAR)}
