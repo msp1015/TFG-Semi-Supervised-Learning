@@ -160,8 +160,7 @@ cython_debug/
 #.idea/
 
 #evitar algoritmo temporal .py de la carpeta algoritmos
-algoritmos/tmp.py
+**/tmp.py
+alg/algPatri/*
 
-
-algPatri/*
-
+**/tempCodeRunnerFile.py
