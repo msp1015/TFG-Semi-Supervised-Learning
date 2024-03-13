@@ -74,14 +74,17 @@ for i in range(2):
         El siguiente código es para graficar las curvas de aprendizaje de los algoritmos.
         Implementado con un error bar para mostrar la varianza de los resultados.
         '''
-        axes[i, j].errorbar(range(1, len(resultadosMario[i*2+j])+1), resultadosMario[i*2+j], yerr=varianzasMario[i*2+j], label="Mario", marker='o')
-        axes[i, j].errorbar(range(1, len(resultadosPatri[i*2+j])+1), resultadosPatri[i*2+j], yerr=varianzasPatri[i*2+j], label="Patri", marker = 'o')
+        axes[i, j].errorbar(range(len(resultadosMario[i*2+j])), resultadosMario[i*2+j], yerr=varianzasMario[i*2+j], label="Mario", marker='.')
+        axes[i, j].errorbar(range(len(resultadosPatri[i*2+j])), resultadosPatri[i*2+j], yerr=varianzasPatri[i*2+j], label="Patri", marker = '.')
         axes[i, j].set_title(list(conjuntos_de_datos.keys())[i*2+j])
+        axes[i, j].set_ylim(0.8, 1)
         axes[i, j].set_xlabel("Iteraciones")
         axes[i, j].set_ylabel("Accuracy")
-        axes[i, j].legend()
-        
+ 
+plt.legend()       
 plt.show()
+
+
     
 
 
