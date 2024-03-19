@@ -33,11 +33,16 @@ def seleccionar_algoritmo(algoritmo):
     :param algoritmo: nombre del algoritmo seleccionado.
     :return: función de redirección a la carga del conjunto de datos.
     """
-
+    if algoritmo == "coforest":
+        return render_template('coforest.html')
     if algoritmo not in current_app.config['ALGORITMOS_SELECCIONABLES']:
         abort(404)
     session['ALGORITMO'] = algoritmo
     return redirect(url_for('main_bp.subida'))
+
+
+
+
 
 
 @main_bp.route('/seleccionar/<algoritmo>/<fichero>', methods=['GET'])

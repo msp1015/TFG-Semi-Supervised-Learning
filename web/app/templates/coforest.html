@@ -49,7 +49,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/seleccionar/coforest">Co-Forest</a>
-                        </li>
                     </ul>
                     <hr>
                     <ul class="navbar-nav ml-auto">
@@ -179,36 +178,133 @@
             {% endif %}
         {% endwith %}
 
-        {% block content %}{% endblock %}
-        <div class="main-footer widgets-dark typo-light d-flex">
-            <div class="container">
-                <div class="row align-items-center shadow-lg rounded-4 mb-2" id="logos">
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <a target="_blank" rel="noopener noreferrer"
-                           href="https://ec.europa.eu/regional_policy/es/funding/erdf/">
-                            <img class="img-fluid" alt="FEDER" src="/FEDER.svg">
-                        </a>
+        {% block content %}
+        
+        <div class="d-flex justify-content-center align-items-center">
+            <h1 class="title-mulish">{{ gettext('Co-Forest') }}</h1>
+            <button id="teoria-button" class="btn btn-primary ms-3">{{ gettext('Ver teoría') }}</button>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-3">
+                <div id="parameters-card" class="rounded-4 p-3 m-2 shadow-lg">
+                    <div class="d-flex justify-content-end">
+                        <form id="parameters-form" method="post">
+                            <button class="btn btn-primary" type="submit" form="parameters-form">{{ gettext('Ejecutar') }}</button> <!-- Botón de ejecutar -->
+                        </form>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <a target="_blank" rel="noopener noreferrer"
-                           href="http://www.mineco.gob.es/portal/site/mineco/">
-                            <img class="img-fluid" alt="MEC" src="/MEC.svg">
-                        </a>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <a target="_blank" rel="noopener noreferrer" href="https://www.jcyl.es/">
-                            <img class="img-fluid" alt="JCYL" src="/JCYL.svg">
-                        </a>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <a target="_blank" rel="noopener noreferrer"
-                           href="https://www.educa.jcyl.es/universidad/es/fondos-europeos/fondo-europeo-desarrollo-regional-feder/">
-                            <img class="img-fluid" alt="JCYL_impulsa" src="/JCYL_impulsa.svg">
-                        </a>
-                    </div>
+                        <h3> <h3>{{ gettext('Parámetros de los datos') }}</h3>
+                        <div class="mb-3">
+                            <label for="dataset" class="form-label">{{ gettext('Selecciona el dataset') }}</label>
+                            <select class="form-control" id="dataset" name="dataset" required>
+                                <option selected disabled value="">{{ gettext('Por favor selecciona un dataset') }}</option>
+                                <option value="dataset1">Iris</option>
+                                <option value="dataset2">Breast cancer</option>
+                                <option value="dataset3">Digits</option>
+                                <option value="dataset4">Wine</option>
+                                <option value="custom">Cargar dataset personalizado</option>
+                            </select>
+                        </div>
+                        <div class="mb-3" id="customDataset" style="display: none;">
+                            <label for="customFile" class="form-label">{{ gettext('Carga tu propio dataset') }}</label>
+                            <input type="file" class="form-control" id="customFile" name="customFile">
+                        </div>
+
+                        <script>
+                            document.getElementById('dataset').addEventListener('change', function() {
+                                if (this.value === 'custom') {
+                                    document.getElementById('customDataset').style.display = 'block';
+                                } else {
+                                    document.getElementById('customDataset').style.display = 'none';
+                                }
+                            });
+                        </script>
+                        <div class="mb-3">
+                        <label for="classAttribute" class="form-label">{{ gettext('Selecciona el atributo de la clase') }}</label>
+                        <input type="text" class="form-control" id="classAttribute" name="classAttribute" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="usePCA" class="form-label">{{ gettext('Utilizar PCA') }}</label>
+                            <input type="checkbox" class="form-control" id="usePCA" name="usePCA">
+                        </div>
+                        <div class="mb-3">
+                            <label for="unlabeledPercentage" class="form-label">{{ gettext('Porcentaje de no etiquetados') }}</label>
+                            <input type="number" class="form-control" id="unlabeledPercentage" name="unlabeledPercentage" min="0" max="100" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="testPercentage" class="form-label">{{ gettext('Porcentaje de test') }}</label>
+                            <input type="number" class="form-control" id="testPercentage" name="testPercentage" min="0" max="100" required>
+                        </div>
+                        <h3>{{ gettext('Parámetros del clasificador') }}</h3>
+                        <!-- Entradas existentes y nuevas para el clasificador -->
+                        <div class="mb-3">
+                            <label for="n_trees" class="form-label">{{ gettext('Selecciona el número de arboles') }}</label>
+                            <input type="range" class="form-range" id="n_trees" name="n_trees" min="1" max="100" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="criterion" class="form-label">{{ gettext('Criterio de los árboles') }}</label>
+                            <select class="form-control" id="criterion" name="criterion" required>
+                                <option value="gini">{{ gettext('Gini') }}</option>
+                                <option value="entropy">{{ gettext('Entropy') }}</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="max_features" class="form-label">{{ gettext('Número máximo de características') }}</label>
+                            <input type="number" class="form-control" id="max_features" name="max_features" min="1" required>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+            <div class="col-md-6">
+                <div id="parameters-card" class="rounded-4 p-3 m-2 shadow-lg">
+                    <img src="/coforest.png" alt="Imagen de relleno" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div id="parameters-card" class="rounded-4 p-3 m-2 shadow-lg">
+                    <h2 class="title-mulish">{{ gettext('Resultados') }}</h2>
+                    <form id="parameters-form" method="post">
+                        <!-- Existing code here -->
+
+                        <!-- Dropdown for displaying execution results -->
+                        <div class="mb-3">
+                            <label for="execution-results" class="form-label">{{ gettext('Resultados de la ejecución') }}</label>
+                            <select class="form-control" id="execution-results" name="execution-results">
+                                <option selected disabled value="">{{ gettext('Selecciona los resultados') }}</option>
+                                <option value="graph1">{{ gettext('Gráfica 1') }}</option>
+                                <option value="graph2">{{ gettext('Gráfica 2') }}</option>
+                                <option value="graph3">{{ gettext('Gráfica 3') }}</option>
+                            </select>
+                        </div>
+
+                        <!-- Existing code here -->
+                    </form>
                 </div>
             </div>
         </div>
+        {% endblock %}
+
+        
+        <div class="row">
+            <div class="col-sm-4">
+                <!-- Left component -->
+            </div>
+            <div class="col-sm-4">
+                <!-- Middle component -->
+            </div>
+            <div class="col-sm-4">
+                <!-- Right component -->
+            </div>
+        </div>
+       
+
+
+
+
+
+
+
         </div>
         <footer class="D d-flex text-center title-mulish text-white">
             <p class="m-auto">© 2024 David Martínez Acha - Mario Sanz Pérez 

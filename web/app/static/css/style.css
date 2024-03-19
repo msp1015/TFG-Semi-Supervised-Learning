@@ -288,6 +288,12 @@ footer {
         width: 95vw;
         margin: 1rem auto !important;
     }
+    #parameters-desp-card{
+        width: 95vw;
+        margin: 1rem auto !important;
+        overflow-y: scroll;
+        max-height: 300px;
+    }
 }
 
 .cargando {
