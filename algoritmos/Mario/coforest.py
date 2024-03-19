@@ -41,8 +41,10 @@ class CoForest:
         self.y_l = None
         self.U = None
 
-        self.estado_aleatorio = random_state
-        self.rng = np.random.RandomState(self.estado_aleatorio)
+        if random_state is None:
+            self.rng = np.random.RandomState()
+        else:
+            self.rng = np.random.RandomState(random_state)
         #Para probar la validez del algoritmo
         self.accuracy_por_iteracion = []
 
@@ -104,11 +106,11 @@ class CoForest:
                     U_muestras = self.submuestrear(arbol_Hi, U, Wmax)
                     W_actual = 0
                     for x_u in U_muestras:
-                        confianza, most_agreed_class = self.calcula_confianza(arbol_Hi, U[x_u, :])
+                        confianza, clase_mas_votada = self.calcula_confianza(arbol_Hi, U[x_u, :])
                         if confianza > self.theta:
                             hay_cambios_en_arbol[i] = True
                             pseudo_datos.append(U[x_u, :])
-                            pseudo_etiquetas_datos.append(most_agreed_class)
+                            pseudo_etiquetas_datos.append(clase_mas_votada)
                             W_actual += confianza
 
                 e[i].append(error_actual)

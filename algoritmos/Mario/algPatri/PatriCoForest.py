@@ -52,6 +52,7 @@ class coforest(SSLEnsemble):
         self.ensemble = {}
         #MARIO
         self.accuracy_por_iteracion = []
+        self.errores_por_arbol = {}
     def create_trees(self, L, y, percentage=0.7):
         """
         Generates a dict containing co-forest's trees.
@@ -93,7 +94,7 @@ class coforest(SSLEnsemble):
             )
         
             ensemble[i] = h.fit(L[rand_rows, :], y[rand_rows])
-
+            self.errores_por_arbol[i] = [0.5]
         self.ensemble = ensemble
         return mask_L
 
@@ -129,6 +130,8 @@ class coforest(SSLEnsemble):
         new_data = True
 
         while new_data:
+            self.accuracy_por_iteracion.append(self.score(X_test, y_test))
+            
             tree_changes = np.array([False] * self.n)
             tree_pseudo_updates = [() for i in range(self.n)]
 
@@ -168,7 +171,7 @@ class coforest(SSLEnsemble):
                     np.array(pseudo_labeled_tags),
                 )
                 #print("Errores y pesos en el arbol ", i, ":\t", e, W) #TODO REMOVE
-
+                self.errores_por_arbol[i].append((e[i], W[i]))
             for i in np.fromiter(self.ensemble.keys(), dtype=int)[tree_changes]:
                 if e[i] * W[i] < previous_e[i] * previous_W[i]:
                     self.retrain_tree(
@@ -186,8 +189,9 @@ class coforest(SSLEnsemble):
             if tree_changes.sum() == 0:
                 new_data = False
 
-            self.accuracy_por_iteracion.append(self.score(X_test, y_test))
             
+    def get_errores_por_arbol(self):
+        return self.errores_por_arbol        
     def get_accuracy_por_iteracion(self):
         return self.accuracy_por_iteracion
             

@@ -1,7 +1,6 @@
 import time
 from algPatri.PatriCoForest import coforest
 from coforest import CoForest
-import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -35,14 +34,14 @@ for nombre, dataset in conjuntos_de_datos.items():
     #std_patri = np.std(scoresPatri)
     #Iniciar contador de tiempo para algoritmo de Mario
     t_inicio_mario = time.time()
-    random_state = 42
-    alg = CoForest(n=20, theta=0.75, random_state=random_state)
+    semilla = 42
+    alg = CoForest(n=15, theta=0.75, random_state=semilla)
     alg.fit(L, y_l, U, X_test, y_test)
     t_final_mario = time.time()
 
     #Iniciar contador de tiempo para algoritmo de Patri
     t_inicio_patri = time.time()
-    algPatri = coforest(n=20, theta=0.75, random_state=random_state)
+    algPatri = coforest(n=15, theta=0.75, random_state=semilla)
     algPatri.fit(L, y_l, U, X_test, y_test)
     t_final_patri = time.time()
 
@@ -64,9 +63,7 @@ for nombre, dataset in conjuntos_de_datos.items():
     
     
     print("Accuracy Mario para " + nombre + ": ", marioAcc)
-    print("Accuracy Patri para " + nombre + ": ", patriAcc)
-    
-
+    print("Accuracy Patricia para " + nombre + ": ", patriAcc)
     
 for i in range(2):
     for j in range(2):
@@ -74,14 +71,16 @@ for i in range(2):
         El siguiente código es para graficar las curvas de aprendizaje de los algoritmos.
         Implementado con un error bar para mostrar la varianza de los resultados.
         '''
-        axes[i, j].errorbar(range(len(resultadosMario[i*2+j])), resultadosMario[i*2+j], yerr=varianzasMario[i*2+j], label="Mario", marker='.')
-        axes[i, j].errorbar(range(len(resultadosPatri[i*2+j])), resultadosPatri[i*2+j], yerr=varianzasPatri[i*2+j], label="Patri", marker = '.')
+        axes[i, j].errorbar(range(len(resultadosMario[i*2+j])), resultadosMario[i*2+j], yerr=varianzasMario[i*2+j], label="Mario", linestyle='-', marker='.')
+        axes[i, j].errorbar(range(len(resultadosPatri[i*2+j])), resultadosPatri[i*2+j], yerr=varianzasPatri[i*2+j], label="Patricia", linestyle='--', marker = '.')
         axes[i, j].set_title(list(conjuntos_de_datos.keys())[i*2+j])
-        axes[i, j].set_ylim(0.8, 1)
+        axes[i, j].set_ylim(0.75, 1.05)
+        #axes[i, j].legend()
         axes[i, j].set_xlabel("Iteraciones")
         axes[i, j].set_ylabel("Accuracy")
- 
-plt.legend()       
+        
+fig.suptitle("Comparación de algoritmos")
+fig.legend(["Mario", "Patricia"], loc='upper right')       
 plt.show()
 
 
