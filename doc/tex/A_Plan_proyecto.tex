@@ -46,25 +46,59 @@ Se realiza una búsqueda amplia de aplicaciones web para visualización de algor
 Se realiza la implementación de la técnica de Scrum en el apartado 4 de la memoria.
 Se deja para sprint posteriores la documentación del CoForest, ya que puede que los conceptos adquiridos no sean los correctos hasta que no se haga su implementación y se vean los resultados.
 
-\subsection{Sprint 4 (RESUMIDO, HAY QUE COMPETAR)}
-Sprint correspondiente a las fechas entre el 1 de febrero y el 14 de febrero.. 
-Primera implementacion del algoritmo Co-forest. Importante utilizar el estudio realizado por Patricia el año pasado para ayudar en la implementacion(COMPLETAR CON SU ESTUDIO REAL)%TODO.
-(ESTA RESUMIDO, EXPLICAR EXTENSO)
-Primeras veces los resultados no son muy buenos. Ademas de la busqueda de paginas anteriores, se encuentra una muy buena opcion, la cual es https://ml-visualizer.herokuapp.com/. Se actualiza documentacion incluyendo este apartado.
+\subsection{Sprint 4}
+Sprint correspondiente a las fechas entre el 1 de febrero y el 14 de febrero. Las tareas asignadas para este sprint son:
+\begin{itemize}
+	\item Primera implementacion del algoritmo Co-forest, basado en ~\cite{IEEE:CoForest}.
+	\item Evaluar esta primera implementación.
+	\item Actualizar documentación, incluyendo este apartado.
+	\item Continuar con la búsqueda de trabajos relacionados en la web.
+\end{itemize}
 
-\subsection{Sprint 5 (RESUMIDO, HAY QUE COMPETAR)}
-Otras dos semanas aproximadamente(algo mas). Se meustra al tutor la pagina encontrada, se acuerda que puede ser una buena idea para la web y comenzar a mirar opciones de relacionar algoritmo con visualizacion en pantalla, ayudado del trabajo de david del año anterior, la cual realiza una llamada donde calcula todo y devuelve un json que luego interpreta. Se resuelven dudas del algoritmo Coforest y se realiza un estudio para compararlo con el de patricia, comprobando asi su eficiencia.
+Para la primera tarea, es importante comentar que se utiliza como referencia el pseudocódigo del articulo mencionado pero también la implementación de Patricia Hernando, \cite{TFG:Patricia}. 
+Una vez se tiene la primera implementación del algoritmo, se compara con el algoritmo de Patricia, el cual se considera una solución muy buena como ensemble.
+El estudio realizado se explica mejor en el apartado de aspectos relevantes de la memoria, pero cabe mencionar que los primeros resultados no son muy fiables, lo que hace pensar que algo está mal implementado.
+Además de la búsqueda de páginas anteriores, se encuentra una muy buena opción: https://ml-visualizer.herokuapp.com/. Esta página tiene algo diferente, ya que permite configurar y ver el resultado del algoritmo en la misma ventana. Este será uno de los objetivos en la web.
 
-\subsection{Sprint 6 (RESUMIDO, HAY QUE COMPETAR)}
+\subsection{Sprint 5}
+Sprint que corresponde a las dos semanas siguientes, se asignan las tareas:
+\begin{itemize}
+	\item Corregir fallos en la implementación del Co-forest.
+	\item Comenzar a mirar el código correspondiente a la web del trabajo de David, el cual podría resultar interesante para el futuro.
+	\item Evaluar correctamente el Co-forest.
+	\item Continuar con la documentación.
+\end{itemize}
+
+Se muestra al tutor la página encontrada, se acuerda que puede ser una buena idea para la web, pero antes hay que familiarizarse con el entorno de la web y su código. Esto incluye decidir si las llamadas a la web, una vez ejecutas el algoritmo, se realizan de una en una, devolviendo un gráfico en cada iteración, o una sola llamada que calcule todo el algoritmo y que reciba un diccionario con toda la información necesaria para su representación. Se resuelven dudas del algoritmo Coforest, como la necesidad del uso de \textit{random state} para tener un estudio reproducible. El estudio sigue teniendo bastantes diferencias en comparación con el de Patricia, lo que hace pensar de nuevo que algo en el código no esta bien programado.
+
+\subsection{Sprint 6}
 Se inicia con una reunión el 7 de marzo, surge un cambio de planes, dejando las siguientes tareas por hacer:
 \begin{itemize}
-	\item Continuar documentacion (coforest, trabajos relacionados)
-	\item El trabajo sera una version 2.0 del trabajo de David, para no tener que realizar una web que ya esta hecha. Complicaciones fork con github
-	\item Esto implica tener que familiarizarse con el trabajo de David, su estructura, web, etcetera.
-	\item corregir estilo de programacion. Estandarizar mediante la guia de estilo de python.
-	\item Revisar coforest debido a que la comparacion con el de patricia no es del todo buena. randomstate.
+	\item Continuar documentación (coforest, trabajos relacionados)
+	\item El trabajo será una versión 2.0 del desarrollo de David.
+	\item Esto implica tener que familiarizarse con el trabajo de David, su estructura, web, etc.
+	\item Corregir estilo de programación. Estandarizar mediante la guía de estilo de python, PEP8 \cite{PEP8}. %TODO
+	\item Revisar coforest debido a que la comparación con el de Patricia no es del todo buena.
 	
 \end{itemize} 
+La decisión de continuar el trabajo de David se da ya que la idea original para esta implementación iba a ser prácticamente igual. Por ello, se aprovecha la base de este trabajo, sobretodo el de la web, ya que los algoritmos serán diferentes. La idea es seguir con un estilo propio en la configuración de la web, pero todo sobre la plantilla ya creada por David. 
+En cuanto al código implementado hasta el momento, se considera que está bastante desordenado, sin documentar y sin seguir una guía de estilos. Por ello, se establece el idioma español para nombrar a todas las variables, se documentan todos los métodos de la manera correspondiente en python, y con la auyda de librerias como \textit{pylint} y \textit{mypy} se sigue la guía de estilo PEP8.
+El error que se estaba cometiendo en cuanto a la implementación del Co-forest estaba en el calculo del error, ya que uno de los parámetros (los índices de los datos de entrenamiento que se usan en cada árbol) se estaba repitiendo en cada ejecución, cuando cada árbol debería tener los suyos. Es decir, el error se estaba calculando de manera incorrecta. Una vez corregido esto, el algoritmo se considera eficiente.
+
+\subsection{Sprint 7}
+Este sprint es aún más reducido debido a las condiciones dadas, correspondiente entre los días 14 y 20 de marzo. Se utiliza para avanzar en todas aquellas tareas retrasadas, asignando las tareas:
+\begin{itemize}
+	\item Documentación de conceptos teóricos: tanto teoría de ensembles como el propio algoritmo Co-forest.
+	\item Documentación de trabajos relacionados.
+	\item Documentación de aspectos relevantes.
+	\item Dccumentación de anexos.
+	\item Prototipo de ventana pensada para la configuración del algoritmo.
+	
+\end{itemize}
+Sin mucha más explicación, se avanza todo lo que se puede en la documentación y, una vez visto y entendido la mayor parte del proyecto web de David, se empieza el prototipo de una nueva ventana. Como ya se habia pensado, no tiene porque ser igual al resto de ventanas ya implementadas.
+
+\subsection{Sprint 8}
+Debido a que el calendario corresponde con la semana santa, este Sprint es más largo de lo debido, entre 
 
 \section{Estudio de viabilidad}
 
