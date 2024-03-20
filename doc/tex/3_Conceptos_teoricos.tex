@@ -80,6 +80,7 @@ Esta suposición es básica y en la mayoría de los ejemplos se cumple. Aún asi
 
 	\imagen{../img/memoria/Smoothness-LowDensity.png}{\textit{Smoothness assumption} y \textit{Low-density assumption}~\cite{Engelen:semi-supervised}}{0.5}
 	
+	
 	\item \textit{\textbf{Manifold assumption}}: esta suposición afirma que los datos utilizados se encuentran en un \textit{manifold} de baja dimensión incrustado en un espacio de mayor dimensión. En otras palabras, los datos, en lugar de proceder de cualquier parte del espacio, deben proceder de estos \textit{manifolds} de dimensiones más bajas ~\cite{web:assumptions}.
 	\imagen{../img/memoria/ManifoldAssumption.png}{\textit{Manifold assumption}~\cite{web:assumptions}}{0.45}
 \end{itemize}
@@ -128,13 +129,19 @@ Existen diferentes maneras de llevar a cabo esta fase:
 
 
 \subsection{Ensembles}
-\cite{ensembles}
-Boosting, bagging
+Los sistemas basados en \textit{ensembles} se refieren al proceso de combinar las opiniones de un conjunto de modelos diferentes para tomar una decisión final. Se ha descubierto que los \textit{ensembles} pueden producir resultados más favorables en comparación con los sistemas de un solo experto en una amplia gama de aplicaciones. La creación de un \textit{ensemble} implica generar componentes individuales del sistema y luego combinar sus clasificaciones. En este contexto, se destacan dos técnicas principales: el \textit{bagging} y el \textit{boosting}~\cite{ensembles}.
 
+\subsubsection{Bagging}
+El \textit{Bagging}, o \textit{Bootstrap Aggregating}, es una técnica que mejora la estabilidad y precisión de los algoritmos de aprendizaje automático. Funciona mediante la creación de múltiples versiones de un predictor y utilizando estos para obtener un conjunto agregado. Se generan diferentes conjuntos de entrenamiento, cada uno mediante muestreo con reemplazo del conjunto original, y se entrena un modelo en cada uno de ellos. La decisión final se toma por mayoría de votos para clasificación o el promedio en regresión. Esta técnica es particularmente efectiva con modelos que tienen alta varianza.
+\imagen{../img/memoria/bagging.png}{Concepto de bagging \cite{web:boostingvsbaging}}{1}
 
-
+\subsubsection{Boosting}
+El \textit{Boosting} es un enfoque que construye secuencialmente un conjunto de modelos; cada nuevo modelo se enfoca en corregir los errores cometidos por los modelos anteriores. AdaBoost, uno de los algoritmos de \textit{boosting} más conocidos, ajusta los pesos de las instancias incorrectamente clasificadas para que modelos posteriores se enfoquen más en ellas. A diferencia del \textit{bagging}, el \textit{boosting} puede aumentar el riesgo de sobreajuste si el conjunto de datos es ruidoso, pero generalmente produce modelos más precisos.
+\imagen{../img/memoria/boosting.png}{Concepto de boosting \cite{web:boostingvsbaging}}{1}
 
 \section{\textit{Co-Forest}}
+El Co-Forest trabaja al entrenar un conjunto de clasificadores en un conjunto de datos etiquetado, L, y luego refinar cada clasificador con ejemplos seleccionados por su ensamble concomitante de clasificadores en un conjunto de datos no etiquetado, U. A través de iteraciones, este proceso aprovecha los datos no etiquetados para mejorar el rendimiento del modelo en tareas de diagnóstico.
+
 
 
 
