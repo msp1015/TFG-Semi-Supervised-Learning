@@ -1,27 +1,28 @@
 \capitulo{4}{Técnicas y herramientas}
 
 En este apartado se tratará de presentar las técnicas llevadas a cabo para desarrollar el proyecto y también las herramientas utilizadas durante todo el proceso.
-
-\section{SCRUM}
+\section{Técnicas}
+En el ámbito del desarrollo de software, la selección adecuada de técnicas es fundamental para la eficacia y la sostenibilidad del proyecto. Este apartado se enfoca en las técnicas específicas implementadas en este trabajo.
+\subsection{SCRUM}
 Para explicar esta sección se utilizará el manual de la certificación oficial Scrum Master de Scrum Manager, ~\cite{SCRUM}.
 
 \imagen{../img/memoria/cicloSCRUM.png}{Procedimiento en la metodología SCRUM ~\cite{SCRUM}}{1.1}.
 
 La metodología ágil Scrum se diferencia de las metodologías clásicas en su enfoque iterativo y flexible hacia la gestión de proyectos. Mientras que las metodologías clásicas, como el modelo en cascada, siguen un enfoque secuencial y predeterminado, Scrum promueve la adaptabilidad y la colaboración continua. Facilita respuestas rápidas a los cambios a través de ciclos cortos de desarrollo llamados Sprints, permitiendo a los equipos evaluar el progreso y ajustar el rumbo con frecuencia.
-\subsection{Roles}
+\subsubsection{Roles}
 \begin{itemize}
 	\item \textbf{Desarrolladores}: Encargados de crear el producto, los desarrolladores son fundamentales para la ejecución técnica del proyecto, aportando habilidades específicas para alcanzar los objetivos del Sprint.
 	\item \textbf{Propietario del producto(\textit{Product Owner})}: Define el alcance y las prioridades del proyecto, manteniendo la pila del producto actualizada para reflejar las necesidades del negocio, asegurando que el trabajo del equipo de desarrollo aporte el máximo valor.
 	\item \textbf{\textit{Scrum Master}}: Facilitador y guía del equipo Scrum, el Scrum Master ayuda a implementar Scrum, asegurándose de que se sigan las prácticas y procesos, y trabaja para eliminar obstáculos que puedan impedir el progreso del equipo.
 \end{itemize}
-\subsection{Artefactos}
+\subsubsection{Artefactos}
 \begin{itemize}
 	\item \textbf{Pila del producto(\textit{Product Backlog})}: Lista ordenada de todo lo necesario para el producto, gestionada por el \textit{Product Owner}, que establece los requisitos y prioridades.
 	\item \textbf{Pila del sprint(\textit{Sprint Backlog})}: Conjunto de elementos seleccionados de la pila del producto para ser desarrollados durante el sprint, junto con un plan para entregar el incremento del producto y lograr el objetivo del Sprint.
 	\item \textbf{Incremento}: La suma de todos los elementos de la pila del producto completados durante un sprint y todos los sprints anteriores, que cumple con los criterios de aceptación y asegura que el producto es potencialmente entregable.
 \end{itemize}
 
-\subsection{Eventos}
+\subsubsection{Eventos}
 \begin{itemize}
 	\item \textbf{\textit{Sprint}}: un periodo fijo durante el cual se crea un incremento del producto potencialmente entregable. Suele ser entre una y cuatro semanas.
 	\item \textbf{Planificación del sprint}: sesion al inicio del sprint donde el equipo selecciona trabajo de la pila del producto para completar durante el sprint.
@@ -30,5 +31,71 @@ La metodología ágil Scrum se diferencia de las metodologías clásicas en su e
 	\item \textbf{Retrospectiva del sprint}: oportunidad para el equipo scrum de inspeccionarse a sí mismo y crear un plan de mejoras para el proximo sprint.
 \end{itemize}
 
+\subsubsection{PEP 8}
+En el desarrollo de este proyecto, se ha seguido la guía de estilo \textbf{\textit{PEP8}} para el lenguaje de programación Python,~\cite{Guia:PEP8}. \textit{PEP8} es un documento que proporciona convenciones para el código Python. El cumplimiento de estas convenciones es crucial para garantizar una base de código coherente, legible y eficiente.  
+Entre sus características, esta guía de estilo cobra importancia en:
+\begin{itemize}
+	\item Legibilidad: La claridad y la simplicidad del código se priorizan, haciendo que sea más fácil de leer y entender para cualquier desarrollador que lo lea.
+	\item Consistencia: Seguir una guía de estilo común promueve la uniformidad en la base de código, lo que facilita la colaboración entre múltiples desarrolladores (pensando en posibles modificaciones futuras).
+	\item Mantenibilidad: Un código bien estructurado y formateado según \textit{PEP8} es más sencillo de mantener, depurar y ampliar.
+\end{itemize}
+Los aspectos clave de PEP8 adoptados en el proyecto son:
+\begin{itemize}
+	\item Formato de Código: Se ha prestado especial atención al uso adecuado de espacios en blanco, sangrías y alineaciones para mejorar la legibilidad. Manteniendo un límite de línea máximo de 80.
+	\item Convenciones de Nomenclatura: Las variables, funciones, clases y módulos se nombran siguiendo las recomendaciones de \textit{PEP8}, lo que facilita la comprensión de su propósito y alcance.
+	\item Guía de Importaciones: Los módulos se importan de una manera ordenada y coherente, evitando conflictos y facilitando la identificación de dependencias.
+	\item Comentarios y \textit{Docstrings}: Se utilizan comentarios y cadenas de documentación para explicar el propósito y el funcionamiento de todos los bloques de código, mejorando así la comprensibilidad del código.
+\end{itemize}
+\subsubsection{Principios SOLID y Patrones de diseño}
+Se ha adoptado los principios SOLID como fundamentos clave para un diseño de software eficiente y mantenible. Estos principios orientan la estructura de nuestro código, asegurando que sea flexible ante cambios y extensiones futuras. 
+\begin{mdframed}[linewidth=1pt, linecolor=black, leftmargin=10, rightmargin=10, backgroundcolor=gray!10, roundcorner=30pt]
+		\begin{itemize}
+		\item \textbf{S} (Responsabilidad Única): Cada componente tiene un solo propósito, facilitando las pruebas y minimizando las dependencias.
+		\item \textbf{O} (Abierto/Cerrado): El código está preparado para la expansión sin necesidad de modificar lo existente, reduciendo los errores al introducir nuevas funcionalidades.
+		\item \textbf{L} (Sustitución de Liskov): Las clases derivadas pueden sustituir a sus clases base sin alterar el comportamiento esperado, garantizando la consistencia del sistema.
+		\item \textbf{I} (Segregación de Interfaces): Se utilizan interfaces específicas para evitar la implementación de métodos innecesarios, promoviendo un código más limpio y modular.
+		\item \textbf{D} (Inversión de Dependencias): se debe depender de abstracciones en lugar de implementaciones concretas, lo que disminuye el acoplamiento y mejora la testabilidad.
+	\end{itemize}
+\end{mdframed}
+Posibilidad de añadir algun patron
 \section{Herramientas}
-Taiga, visual studio code, zappier, 
+En este proyecto, se ha empleado una variedad de herramientas esenciales que han facilitado un desarrollo eficiente y efectivo. A continuación, se detallan las herramientas clave utilizadas y cómo han ayudado en los resultados finales.
+\subsection{Programas}
+En esta sección se comentarán todos aquellos programas que se han utilizado durante el desarrollo, ya sea de código, documentación o planificación. Se inlcuyen aplicaciones tanto de escritorio como web.
+
+\subsubsection{Visual Studio Code}
+Visual Studio Code, ha sido el IDE principal utilizado en el proyecto, abarcando tanto el desarrollo web como la creación de algoritmos. Su amplia gama de extensiones lo convierte en una herramienta extremadamente versátil y potente, capaz de adaptarse a diversas necesidades de programación. Las funcionalidades como el resaltado de sintaxis, la depuración integrada, el control de versiones Git, la personalización a través de extensiones, como soporte para diferentes lenguajes de programación y herramientas de desarrollo, y la posibilidad de uso de \LaTeX, han sido las claves para que sea el entorno de programación elegido. 
+\subsubsection{TeXstudio}
+Para la documentación del proyecto, se ha utilizado TeXstudio, un editor especializado en \LaTeX. Su interfaz intuitiva y las características como la vista previa en tiempo real, la comprobación ortográfica, el resaltado de sintaxis y los atajos de teclado para una escritura más rápida, hacen que sea una aplicación fácil de usar para principantes en el lenguaje.
+
+\subsubsection{Git (GitHub)}
+El control de versiones y la planificación del proyecto se han gestionado a través de Git, utilizando GitHub como plataforma de hospedaje para el código fuente.
+
+\subsubsection{Taiga}
+Taiga se ha utilizado para la planificación de sprints y la gestión ágil del proyecto. Esta herramienta permite organizar tareas, priorizar actividades y seguir el progreso de forma clara y estructurada. Quizá no sea la que más funcionalidades de, pero al tratarse de un único desarrollador, cumple con lo que se buscaba.
+
+\subsubsection{Zapier}
+\textit{Zapier} se ha utilzada para conectar aplicaciones como GitHub y Taiga para agilizar el proceso de planificación. Mediante la creación de \textit{'triggers}', se puede crear un \textit{issue} en GitHub y que aparezca automáticamente en Taiga o vicebersa.
+
+\subsubsection{Excalidraw}
+Excalidraw ha sido utilizado para crear dibujos y diagramas de forma amena y sencilla. Esta herramienta web ofrece la capacidad de diseñar tanto diagramas que parecen hechos a mano como figuras más formales.
+
+\subsubsection{w3schools}
+Para la resolución de dudas específicas y el aprendizaje de nuevas tecnologías, se ha recurrido a menudo a w3schools. Esta plataforma en línea ha sido una fuente de tutoriales, ejemplos de código y referencias, facilitando el rápido entendimiento de nuevas técnicas de desarrollo web.
+
+
+\subsection{Bibliotecas}
+El desarrollo de este proyecto se ha apoyado en una serie de bibliotecas esenciales tanto para el \textit{backend} como para el \textit{frontend}, proporcionando una amplia gama de funcionalidades, desde el desarrollo web hasta el análisis de datos. A continuación, se detalla una lista de las principales bibliotecas empleadas:
+
+\begin{itemize}
+	\item \textbf{Babel}: utilizada para las traducciones en la web, compilando en los lenguajes correspondientes.
+	\item \textbf{Flask}: framework de Python para el desarrollo de aplicaciones web.
+	\item \textbf{Mypy}: herramienta de verificación de tipos estáticos para Python, permite un desarrollo más seguro al detectar incompatibilidades de tipo.
+	\item \textbf{Pylint}: analiza el código Python en busca de errores, permite un código más limpio y estándar. Ayuda a seguir la guía de estilo \textit{PEP8} antes comentada.
+	\item \textbf{SQLAlchemy}: ORM(Object-Relational Mapping) de Python que facilita la interacción con bases de datos mediante código Python en lugar de SQL puro.
+	\item \textbf{Scikit-learn}: Biblioteca de aprendizaje automático para Python, incluye una amplia variedad de algoritmos y herramientas para análisis de datos.
+	\item \textbf{Numpy}: Proporciona soporte para arrays y matrices grandes y multidimensionales, junto con una colección de funciones matemáticas para operar con estos objetos.
+	\item \textbf{Pandas}: Ofrece estructuras de datos y herramientas de análisis de datos de alto rendimiento y fácil de usar para Python.
+	\item \textbf{Bootstrap}: Framework de desarrollo web para diseño de sitios y aplicaciones web \textless\textless responsive\textgreater\textgreater, incluye tanto CSS como componentes de JavaScript.
+	\item \textbf{D3.js}: Biblioteca de JavaScript para producir visualizaciones de datos dinámicas y interactivas en navegadores web.
+\end{itemize}
