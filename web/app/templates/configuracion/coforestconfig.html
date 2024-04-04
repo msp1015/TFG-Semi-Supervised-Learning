@@ -1,0 +1,26 @@
+{% extends "configuracion/base_configuracion.html" %} {% from "macros.html"
+import selector %} {% block parametros %} {% endblock %} {% block form_scripts
+%}
+<script></script>
+{% endblock %} {% block explicaciones %}
+<p>
+  {{ gettext('Esta técnica se basa en la idea de utilizar múltiples
+  clasificadores (árboles de decisión, en este caso), los cuales se entrenan de
+  forma iterativa con un conjunto inicial de datos etiquetados. A medida que el
+  algoritmo avanza, cada árbol intenta clasificar los datos no etiquetados y las
+  predicciones más confiables se añaden al conjunto de entrenamiento como si
+  fueran etiquetas reales. Este proceso de "enseñanza mutua" entre los
+  clasificadores permite mejorar progresivamente el rendimiento del modelo a
+  medida que se incorpora más información de los datos no etiquetados. Co-forest
+  aprovecha la diversidad entre los árboles de decisión para mejorar la
+  generalización del modelo frente a datos nuevos o desconocidos, haciéndolo
+  especialmente útil en escenarios donde las etiquetas son escasas o costosas de
+  obtener.')}}
+</p>
+{% endblock %} {% block pseudocodigo %}
+<img
+  src="{{ gettext('/pseudocodigos/en/CoForest.png') }}"
+  width="75%"
+  alt="{{ gettext('Co-Forest Pseudocode') }}"
+/>
+{% endblock %}

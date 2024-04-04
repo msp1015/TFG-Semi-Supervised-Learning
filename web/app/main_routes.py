@@ -33,16 +33,12 @@ def seleccionar_algoritmo(algoritmo):
     :param algoritmo: nombre del algoritmo seleccionado.
     :return: función de redirección a la carga del conjunto de datos.
     """
-    if algoritmo == "coforest":
-        return render_template('coforest.html')
+    # if algoritmo == "coforest":
+    #     return render_template('coforest.html')
     if algoritmo not in current_app.config['ALGORITMOS_SELECCIONABLES']:
         abort(404)
     session['ALGORITMO'] = algoritmo
     return redirect(url_for('main_bp.subida'))
-
-
-
-
 
 
 @main_bp.route('/seleccionar/<algoritmo>/<fichero>', methods=['GET'])
@@ -68,7 +64,8 @@ def seleccionar_algoritmo_ejecutar(algoritmo, fichero):
         abort(401)
 
     session['ALGORITMO'] = algoritmo
-    session['FICHERO'] = os.path.join(current_app.config['CARPETA_DATASETS_REGISTRADOS'], fichero)
+    session['FICHERO'] = os.path.join(
+        current_app.config['CARPETA_DATASETS_REGISTRADOS'], fichero)
     return redirect(url_for('configuration_bp.configurar_algoritmo', algoritmo=algoritmo))
 
 
@@ -113,12 +110,15 @@ def subida():
         if file_received.filename == '':
             return redirect(request.url)
         if file_received:
-            filename = secure_filename(file_received.filename) + "-" + str(int(datetime.now().timestamp()))
+            filename = secure_filename(
+                file_received.filename) + "-" + str(int(datetime.now().timestamp()))
             if current_user.is_authenticated:
-                complete_path = os.path.join(current_app.config['CARPETA_DATASETS_REGISTRADOS'], filename)
+                complete_path = os.path.join(
+                    current_app.config['CARPETA_DATASETS_REGISTRADOS'], filename)
                 session['FICHERO'] = complete_path
             else:
-                complete_path = os.path.join(current_app.config['CARPETA_DATASETS_ANONIMOS'], filename)
+                complete_path = os.path.join(
+                    current_app.config['CARPETA_DATASETS_ANONIMOS'], filename)
                 session['FICHERO'] = complete_path
 
             if file_received.filename.upper().endswith('.ARFF') or file_received.filename.upper().endswith('.CSV'):
