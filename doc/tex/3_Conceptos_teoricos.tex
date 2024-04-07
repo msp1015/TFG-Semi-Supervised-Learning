@@ -16,7 +16,7 @@ Según los datos que se seleccionen en el primer paso, podemos tener dos ramas d
  
 \subsection{Aprendizaje supervisado}
 El aprendizaje supervisado es un tipo de aprendizaje automático en el que los modelos son entrenados utilizando conjuntos de datos etiquetados, en los que se basarán las decisiones y predicciones. Los conjuntos de datos contienen ejemplos emparejados de variables de entrada (o características) y de salida (o etiquetas). La esencia de este tipo de aprendizaje se basa en la capacidad del modelo para aprender la relación funcional entre las entradas y las salidas, permitiéndole hacer predicciones precisas sobre nuevos datos no vistos \cite{SL:guide}. De ahí su clasificación como \guillemetleft predictiva\guillemetright ~en la sección anterior.
-Se puede clasificar este tipo de aprendizaje en dos tipos:
+Dos tareas habituales dentro del aprendizaje supervisado son:
 \begin{itemize}
 	\item \textbf{Clasificación}: los modelos asignan categorías o clases a las entradas no etiquetadas. Dentro de este tipo se puede encontrar la clasificación binaria y la multi-clase. La primera se ve en un caso como la clasificación de correos electrónicos marcadas como spam o no spam (solo una etiqueta). Y la segunda se puede ver en cualquier ejemplo en el que haya mas de dos clases, como al establecer si un paciente tiene alto, medio o bajo riesgo de muerte ante una operación.
 	\item \textbf{Regresión}: es similar a la clasificación, pero en vez de asignar un valor discreto, ahora es un valor continuo. Un ámbito común en el que se suele dar es en la economía, con la predicción de acciones o ventas.
@@ -24,13 +24,13 @@ Se puede clasificar este tipo de aprendizaje en dos tipos:
 
 También es importante comentar las principales fases que forman este aprendizaje y los posibles problemas o desafíos que pueden surgir, ya que pueden servir para tener en cuenta en los algoritmos concretos a implementar.
 En la mayoría de algoritmos que utilizan datos etiquetados, estos se dividen en tres conjuntos: entrenamiento, validación y prueba. El conjunto de entrenamiento se utiliza para ajustar los parámetros del modelo, el conjunto de validación para ajustar los hiperparámetros y prevenir el sobreajuste y el conjunto de prueba apra evaluar el rendimiento final.
-El sobreajuste o \textit{\textbf{overfitting}} es uno de los principales problemas del aprendizaje automático y ocurre cuando el modelo se ajusta demasiado a los datos de entrenamiento, es decir, los memoriza en vez de generalizar.
+El sobreajuste u \textit{\textbf{overfitting}} es uno de los principales problemas del aprendizaje automático y ocurre cuando el modelo se ajusta demasiado a los datos de entrenamiento, es decir, los memoriza en vez de generalizar.
 
 \subsection{Aprendizaje no supervisado}
-Para explicar este apredizaje se usará el artículo \cite{USL:guide}. El aprendizaje no supervisado hace referencia a los tipos de problemas en los que se utiliza un modelo para caracterizar o extraer relaciones en los datos.
+El aprendizaje no supervisado hace referencia a los tipos de problemas en los que se utiliza un modelo para caracterizar o extraer relaciones en los datos.
 A diferencia del aprendizaje supervisado, estos algoritmos descubren la estructura implícita de un conjunto de datos utilizando únicamente características de entrada y no clases o categorías. 
-Ya que no existen etiquetas en los datos, los métodos no supervisados se utilizan normalmente para crear una representación concisa de los datos, posibilitando la generación de contenido creativo a partir de ellos. Por ejemplo, si tenemos una gran cantidad de fotografías sin clasificar, un modelo no supervisado encontraría relaciones entre las caracteristicas para poder organizar automáticamente las imágenes en grupos.
-Se pueden clasificar en tres diferentes categorías:
+Ya que no existen etiquetas en los datos, los métodos no supervisados se utilizan normalmente para crear una representación concisa de los datos, posibilitando la generación de contenido creativo a partir de ellos. Por ejemplo, si tenemos una gran cantidad de fotografías sin clasificar, un modelo no supervisado encontraría relaciones entre las caracteristicas para poder organizar automáticamente las imágenes en grupos, ~\cite{USL:guide}.
+Se pueden clasificar en tres diferentes tareas:
 \begin{itemize}
 	\item \textbf{Clustering}: segmentación o agrupamiento. Consiste en la identificación de grupos o \textit{clusters} en función de sus similitudes y diferencias. Dentro de este tipo, se puede diferenciar un agrupamiento exclusivo, donde los datos pertenencen a un unico grupo, y un agrupamiento superpuesto, donde los datos pueden perteneces a varias agrupaciones. El ejemplo de las fotografías entra dentro de esta categoría.
 	\item \textbf{Reglas de asociación}: utiliza una medida de interés para obtener un conjunto de reglas sólidas que permitan descubrir asociaciones interesantes entre las características de un conjunto de datos. La principal aplicación es el \guillemetleft análisis de cestas de compra\guillemetright, que se usa para determinar los patrones de compra de los clientes en funcion de las relaciones entre productos.
@@ -53,13 +53,13 @@ En la siguiente tabla se resumen las principales diferencias entre aprendizaje s
 		\midrule
 		\textbf{Objetivo} & Aproximar una función que asigna entradas a salidas a partir de un conjunto de datos clasificados. & Crear una representación concisa de los datos, posibilitando la generación de contenido creativo a partir de ellos. \\
 		\addlinespace[0.5em]
-		\textbf{Complejidad} & Complejidad simple. & Complejidad computacional mayor.\\
+		\textbf{Complejidad} & Simple & Mayor\\
 		\addlinespace[0.5em]
 		\textbf{Entrada} & Se conoce el número de clases (datos etiquetados). & No se conoce el número de clases (datos no etiquetados). \\
 		\addlinespace[0.5em]
 		\textbf{Salida} & Genera un valor de salida esperado. & No se tienen valores de salida asociados \\
 		\addlinespace[0.5em]
-		\textbf{Tipos} & Clasificación, Regresión & Clustering, Reglas de asociación, Reducción de dimensionalidad \\
+		\textbf{Tareas} & Clasificación, Regresión & Clustering, Reglas de asociación, Reducción de dimensionalidad \\
 		\bottomrule
 	\end{tabular}
 	\caption{Comparación aprendizaje supervisado y no supervisado ~\cite{USL:guide}.}
@@ -69,9 +69,13 @@ En la siguiente tabla se resumen las principales diferencias entre aprendizaje s
 
 
 \section{Aprendizaje semi-supervisado}
-Como el nombre sugiere, el aprendizaje semi-supervisado se encuentra entre los dos tipos vistos anteriormente. Los algoritmos dentro de esta estrategia se basan en extender cualquiera de los aprendizajes, supervisado o no supervisado, para añadir información adicional que el otro no proporciona ~\cite{Intro:SemiSupervised}.
+Como el nombre sugiere, el aprendizaje semi-supervisado se encuentra entre los dos tipos vistos anteriormente. Los algoritmos dentro de esta estrategia se basan en extender cualquiera de los aprendizajes, supervisado o no supervisado, para añadir información adicional que el otro no proporciona~\cite{Intro:SemiSupervised}.
 
-Los métodos de clasificación semi-supervisada intentan utilizar puntos de datos no etiquetados para generar un modelo cuyo rendimiento supere el de los modelos obtenidos al utilizar solo datos etiquetados ~\cite{Engelen:semi-supervised}. \\Por ejemplo, imaginemos que se esta trabajando en la clasificación de imágenes médicas para identificar diferentes tipos de enfermedades. En este caso, consideramos específicamente la detección temprana de ciertos tipos de cáncer a partir de imágenes de tomografías. En un enfoque supervisado, podríamos entrenar un modelo utilizando un conjunto de datos etiquetado que incluye imágenes con diagnósticos de cáncer y sin cáncer. Sin embargo, la obtención de un gran conjunto de datos etiquetado puede ser costosa y consume tiempo. En un escenario de aprendizaje semi-supervisado, además de los datos etiquetados, podríamos tener un conjunto de datos mucho más grande que incluye imágenes no etiquetadas. Algunas de estas pueden contener señales sutiles o características asociadas con el cáncer que no han sido previamente etiquetadas.\\El modelo de aprendizaje semi-supervisado  podría analizar estas imágenes no etiquetadas y descubrir patrones que podrian indicar la presencia temprana de cáncer. Por ejemplo, podría aprender a reconocer características microscopicas especificas de las imagenes que no son evidentes para el ojo humano. Cuando se encuentra con nuevas imágenes no etiquetadas que comparten estas características, el modelo podría clasificarlas como indicativas de la presencia de cáncer, incluso si no ha visto exactamente esas características en el conjunto de datos etiquetado.
+Los métodos de clasificación semi-supervisada intentan utilizar puntos de datos no etiquetados para generar un modelo cuyo rendimiento supere el de los modelos obtenidos al utilizar solo datos etiquetados ~\cite{Engelen:semi-supervised}. 
+
+Por ejemplo, imaginemos que se esta trabajando en la clasificación de imágenes médicas para identificar diferentes tipos de enfermedades. En este caso, consideramos específicamente la detección temprana de ciertos tipos de cáncer a partir de imágenes de tomografías. En un enfoque supervisado, podríamos entrenar un modelo utilizando un conjunto de datos etiquetado que incluye imágenes con diagnósticos de cáncer y sin cáncer. Sin embargo, la obtención de un gran conjunto de datos etiquetado puede ser costosa y consume tiempo. En un escenario de aprendizaje semi-supervisado, además de los datos etiquetados, podríamos tener un conjunto de datos mucho más grande que incluye imágenes no etiquetadas. Algunas de estas pueden contener señales sutiles o características asociadas con el cáncer que no han sido previamente etiquetadas.
+
+El modelo de aprendizaje semi-supervisado  podría analizar estas imágenes no etiquetadas y descubrir patrones que podrian indicar la presencia temprana de cáncer. Por ejemplo, podría aprender a reconocer características microscopicas especificas de las imagenes que no son evidentes para el ojo humano. Cuando se encuentra con nuevas imágenes no etiquetadas que comparten estas características, el modelo podría clasificarlas como indicativas de la presencia de cáncer, incluso si no ha visto exactamente esas características en el conjunto de datos etiquetado.
 Existe una condición necesaria en el aprendizaje semi-supervisado: la distribución marginal subyacente $p(x)$ sobre el espacio de entrada debe contener información acerca de la distribución posterior $p(x|y)$ ~\cite{Engelen:semi-supervised}. Es decir, la naturaleza de los datos no etiquetados debe contener información útil para inferir las etiquetas correspondientes.
 Esta suposición es básica y en la mayoría de los ejemplos se cumple. Aún asi, como la manera de interactuar entre $p(x)$ y  $p(x|y)$ no es siempre la misma, se pueden tomar malas decisiones que conllevarían un rendimiento cada vez peor. Por esta razón, existen tres principales suposiciones que todo algoritmo semi-supervisado debe cumplir para funcionar correctamente.
 \begin{itemize}
@@ -87,10 +91,10 @@ Esta suposición es básica y en la mayoría de los ejemplos se cumple. Aún asi
 
 En algunas ocasiones, aparece una cuarta suposición: \textit{\textbf{cluster assumption}}. Esta indica que dos datos que pertenecen a un mismo \textit{cluster}, pertenecen también a la misma clase. Se tomará esta suposición como una generalización de las tres anteriores ~\cite{Engelen:semi-supervised}.
 
-\imagen{../img/memoria/ClusterAssumption.png}{\textit{Cluster assumption}~\cite{web:assumptions}}{1}.
+\imagen{../img/memoria/ClusterAssumption.png}{\textit{Cluster assumption}~\cite{web:assumptions}}{1}
 
-No hay una clasificación oficial de algoritmos de aprendizaje semi-supervisado, pero si se pueden encontrar aproximaciones teniendo en cuenta las suposiciones en las que estan basadas los algoritmos y en como se relacionan con los algoritmos supervisados y no supervisados.
-\imagen{../img/memoria/Clasificacion-SemiSupervised}{Clasificación de los diferentes algoritmos que pretenden incorporar datos no etiquetados a métodos de clasificación. Basado en ~\cite{Engelen:semi-supervised}}{1}.
+No hay una clasificación oficial de algoritmos de aprendizaje semi-supervisado, pero sí se pueden encontrar aproximaciones teniendo en cuenta las suposiciones en las que estan basadas los algoritmos y en cómo se relacionan con los algoritmos supervisados y no supervisados.
+\imagen{../img/memoria/Clasificacion-SemiSupervised}{Clasificación de los diferentes algoritmos que pretenden incorporar datos no etiquetados a métodos de clasificación. Basado en ~\cite{Engelen:semi-supervised}}{1}
 
 \subsection{Métodos inductivos}
 Los métodos inductivos pretenden construir un clasificador que pueda generar predicciones para cualquier objeto del espacio de entrada. En el entrenamiento de este clasificador o modelo se pueden utilizar datos no etiquetados, pero las predicciones cuando hay varios son independientes entre sí una vez finalizado el entrenamiento.
@@ -109,7 +113,7 @@ El primer paso es la construcción de la matriz de adyacencia, que indica la pre
 \begin{itemize}
 	\item $\varepsilon$ neighbourhood: conecta cada nodo a todos los nodos a los que la distancia es como máximo $\varepsilon$. La medida de distancia normal suele ser euclídea. La estructura depende en gran medida de la elección de $\varepsilon$ y de la medida de distancia.
 	
-	\item K - nearest neighbours: cada nodo se conecta a sus k vecinos más cercanos según alguna medida de distancia. Ocurre un problema que tiene dos soluciones: symmetric k nearest neighbours, que construye una arista si i o j estan en el “vecindario” de k y mutual k-nearest neighbours que la construye si ambos están en la k vecindad del otro.
+	\item K - nearest neighbours: cada nodo se conecta a sus $k$ vecinos más cercanos según alguna medida de distancia. Ocurre un problema que tiene dos soluciones: symmetric k nearest neighbours, que construye una arista si $i$ o $j$ estan en el “vecindario” de k y mutual k-nearest neighbours que la construye si ambos están en la k vecindad del otro.
 	
 	\item b-matching: el anterior método suele originar grafos en los que cada nodo no tiene k vecinos, lo que está demostrado que afecta al rendimiento del clasificador. El objetivo del b-matching es encontrar el subconjunto de aristas en el grafo completo de forma que cada nodo tenga grado b y la suma de los pesos de las aristas sea máxima.
 \end{itemize}
@@ -120,7 +124,7 @@ El algoritmo LNP asume una estructura del grafo conocida y fija. Sin embargo, en
 \subsubsection{Fase de inferencia}
 Existen diferentes maneras de llevar a cabo esta fase:
 \begin{itemize}
-	\item Asignación de etiquetas duras: grafo min-cut: se añade un único nodo fuente v+, conectado con peso infinito a los puntos de datos positivos y un único nodo v- conectado con peso infinito a los puntos de datos negativos. Por lo tanto, determinar el corte mínimo consiste en encontrar un conjunto de aristas con un peso combinado mínimo que, cuando se eliminan, dan como resultado un grafo sin rutas desde el nodo de origen hasta el noso de destino. Los nodos conectados a v+ se etiquetan como positivos y los conectados a v- como negativos. Este enfoque puede conducir a que casi todos los datos se etiqueten con la misma.
+	\item Asignación de etiquetas duras: grafo min-cut: se añade un único nodo fuente $v$+, conectado con peso infinito a los puntos de datos positivos y un único nodo $v$- conectado con peso infinito a los puntos de datos negativos. Por lo tanto, determinar el corte mínimo consiste en encontrar un conjunto de aristas con un peso combinado mínimo que, cuando se eliminan, dan como resultado un grafo sin rutas desde el nodo de origen hasta el noso de destino. Los nodos conectados a v+ se etiquetan como positivos y los conectados a v- como negativos. Este enfoque puede conducir a que casi todos los datos se etiqueten con la misma.
 	\item Asignación probabilística de etiquetas: campos aleatorios de Markov: el anterior método solo produce etiquetas de clase y no probabilidades, lo que es una gran desventaja. La idea principal detrás de los CRF es calcular la probabilidad conjunta de todas las etiquetas dadas las observaciones y las relaciones entre etiquetas vecinas. Esto se hace utilizando una función de energía que mide cuán compatibles son las etiquetas y las características observadas. Luego, se utiliza una distribución exponencial para traducir la función de energía en una distribución de probabilidad.
 	\item Asignación probabilística eficiente de etiquetas: campos aleatorios gaussianos: La principal mejora de los GRFs con respecto a los MRFs es que los GRFs permiten una estimación más eficiente de las probabilidades de asignación de etiquetas.
 	\item Local and global consistency: La última propuesta no maneja bien el ruido de las etiquetas ya que las etiquetas verdaderas se fijan a los puntos de datos etiquetados. En segundo lugar, en los grafos irregulares, la influencia de los nodos con un grado alto es relativamente grande. La solución es el método LGC. El primer problema se resuelve penalizando el error cuadratico entre la etiqueta verdadera y la etiqueta estimada. El segundo problema se resuelve regularizando el termino de penalización para los puntos de datos no etiquetados mediante los grados de los nodos.
@@ -140,10 +144,7 @@ El \textit{Boosting} es un enfoque que construye secuencialmente un conjunto de 
 \imagen{../img/memoria/boosting.png}{Concepto de boosting \cite{web:boostingvsbaging}}{1}
 
 \section{\textit{Co-Forest}}
-El Co-Forest trabaja al entrenar un conjunto de clasificadores en un conjunto de datos etiquetado, L, y luego refinar cada clasificador con ejemplos seleccionados por su ensamble concomitante de clasificadores en un conjunto de datos no etiquetado, U. A través de iteraciones, este proceso aprovecha los datos no etiquetados para mejorar el rendimiento del modelo en tareas de diagnóstico.
-
-
-\cite{IEEE:CoForest}
+El Co-Forest trabaja al entrenar un conjunto de clasificadores en un conjunto de datos etiquetado, L, y luego refinar cada clasificador con ejemplos seleccionados por su ensamble concomitante de clasificadores en un conjunto de datos no etiquetado, U. A través de iteraciones, este proceso aprovecha los datos no etiquetados para mejorar el rendimiento del modelo en tareas de diagnóstico~\cite{IEEE:CoForest}.
 
 \section{Diseño web}
 
