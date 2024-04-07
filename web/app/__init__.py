@@ -29,8 +29,10 @@ def create_app():
     app.config['CARPETA_DATASETS_ANONIMOS'] = os.path.join(os.path.basename(os.path.dirname(__file__)),
                                                            'datasets',
                                                            'anonimos')
-    app.config['CARPETA_RUNS'] = os.path.join(os.path.basename(os.path.dirname(__file__)), 'runs')
-    app.config['ALGORITMOS_SELECCIONABLES'] = ["selftraining", "cotraining", "democraticcolearning", "tritraining", "coforest"]
+    app.config['CARPETA_RUNS'] = os.path.join(
+        os.path.basename(os.path.dirname(__file__)), 'runs')
+    app.config['ALGORITMOS_SELECCIONABLES'] = ["selftraining",
+                                               "cotraining", "democraticcolearning", "tritraining", "coforest"]
     db.init_app(app)
 
     def get_locale():
@@ -109,7 +111,7 @@ def create_app():
         if not admin:
             admin = User()
             admin.name = 'Admin'
-            admin.password = 'sha256$c1Z5RKttVOGiVMVX$36f02e0dc282437fbe547ad0efdf02b94479ec7f0cd310a31fe2b3b7d06dd62a'
+            admin.password = 'pbkdf2:sha256:600000$KZpGx9NV4Y8Qp7Ct$4e6f1333477946598d46f88b65717c28e843d25f9a67973dbe780395e5c39829'
             admin.email = 'admin@admin.es'
             admin.admin = True
             db.session.add(admin)
@@ -117,7 +119,8 @@ def create_app():
 
     login_manager = LoginManager()
     login_manager.login_view = 'users_bp.login'
-    login_manager.login_message = lazy_gettext('Please log in to access this page.')
+    login_manager.login_message = lazy_gettext(
+        'Please log in to access this page.')
     login_manager.init_app(app)
 
     @login_manager.user_loader

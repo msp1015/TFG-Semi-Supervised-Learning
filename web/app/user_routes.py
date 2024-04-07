@@ -101,7 +101,7 @@ def registrar():
         usuario = User()
         usuario.email = email
         usuario.name = name
-        usuario.password = generate_password_hash(password, method='sha256')
+        usuario.password = generate_password_hash(password, method='pbkdf2')
         usuario.last_login = datetime.now()
 
         try:
@@ -166,7 +166,8 @@ def editar(user_id, redirect_page):
 
         if not current_user.is_admin:
             if not check_password_hash(usuario.password, current_password):
-                form.current_password.errors.append(gettext('Incorrect current password'))
+                form.current_password.errors.append(
+                    gettext('Incorrect current password'))
                 errores = True
 
         check_email = User.query.filter_by(email=new_email).first()
@@ -184,7 +185,8 @@ def editar(user_id, redirect_page):
         usuario.email = new_email
         usuario.name = new_name
         if new_password:
-            usuario.password = generate_password_hash(new_password, method='sha256')
+            usuario.password = generate_password_hash(
+                new_password, method='sha256')
         db.session.commit()
         if redirect_page == 'main_bp.inicio':
             login_user(usuario)
@@ -276,7 +278,8 @@ def eliminar_dataset():
             "error": "bad request"
         }), 400
 
-    if int(json_request['id']) != current_user.id and not current_user.is_admin:  # Solo el propio usuario o
+    # Solo el propio usuario o
+    if int(json_request['id']) != current_user.id and not current_user.is_admin:
         # administrador puede eliminar
         return jsonify({
             "status": "error",
@@ -284,9 +287,11 @@ def eliminar_dataset():
         }), 401
 
     try:
-        Dataset.query.filter(Dataset.filename == json_request['fichero']).delete()
+        Dataset.query.filter(Dataset.filename ==
+                             json_request['fichero']).delete()
         db.session.commit()
-        os.remove(os.path.join(current_app.config['CARPETA_DATASETS_REGISTRADOS'], json_request['fichero']))
+        os.remove(os.path.join(
+            current_app.config['CARPETA_DATASETS_REGISTRADOS'], json_request['fichero']))
         session.pop('ALGORITMO', None)
         session.pop('FICHERO', None)
     except Exception as e:
@@ -346,7 +351,8 @@ def eliminar_historial():
     try:
         Run.query.filter(Run.jsonfile == json_request['fichero']).delete()
         db.session.commit()
-        os.remove(os.path.join(current_app.config['CARPETA_RUNS'], json_request['fichero']))
+        os.remove(os.path.join(
+            current_app.config['CARPETA_RUNS'], json_request['fichero']))
     except Exception as e:
         return jsonify({
             "status": "error",
@@ -482,7 +488,8 @@ def eliminar_usuario():
 
     try:
         # Eliminar todos los ficheros
-        datasets = Dataset.query.filter(Dataset.user_id == json_request['user_id']).all()
+        datasets = Dataset.query.filter(
+            Dataset.user_id == json_request['user_id']).all()
         datasets_filenames = []
         for dataset in datasets:
             datasets_filenames.append(dataset.filename)
@@ -498,10 +505,12 @@ def eliminar_usuario():
         db.session.commit()
 
         for filename in datasets_filenames:
-            os.remove(os.path.join(current_app.config['CARPETA_DATASETS_REGISTRADOS'], filename))
+            os.remove(os.path.join(
+                current_app.config['CARPETA_DATASETS_REGISTRADOS'], filename))
 
         for filename in runs_filenames:
-            os.remove(os.path.join(current_app.config['CARPETA_RUNS'], filename))
+            os.remove(os.path.join(
+                current_app.config['CARPETA_RUNS'], filename))
 
     except SQLAlchemyError as se:
         db.session.rollback()
