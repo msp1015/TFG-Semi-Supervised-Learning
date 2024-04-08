@@ -2,7 +2,8 @@ from flask_babel import lazy_gettext
 from flask_wtf import FlaskForm
 from wtforms import (StringField, EmailField, PasswordField, SelectField, IntegerField, DecimalField, BooleanField,
                      IntegerRangeField)
-from wtforms.validators import (DataRequired, InputRequired, Length, EqualTo, NumberRange, Optional)
+from wtforms.validators import (
+    DataRequired, InputRequired, Length, EqualTo, NumberRange, Optional)
 
 
 class RegistrationForm(FlaskForm):
@@ -27,7 +28,8 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField(lazy_gettext('Confirm password'),
                                      name="confirm_password",
                                      id="confirm_password",
-                                     validators=[DataRequired(), EqualTo('password')],
+                                     validators=[
+                                         DataRequired(), EqualTo('password')],
                                      render_kw={"placeholder": lazy_gettext('Password')})
 
 
@@ -54,7 +56,8 @@ class UserForm(FlaskForm):
     current_password = PasswordField(lazy_gettext('Current password'),
                                      name="current_password",
                                      id="current_password",
-                                     validators=[DataRequired(), Length(min=8)],
+                                     validators=[
+                                         DataRequired(), Length(min=8)],
                                      render_kw={"placeholder": lazy_gettext('Current password')})
 
     new_password = PasswordField(lazy_gettext('New password'),
@@ -177,3 +180,22 @@ class FormConfiguracionSingleView(FormConfiguracionBase):
                                 name="clasificador3",
                                 id="clasificador3",
                                 validators=[InputRequired()])
+
+
+class FormConfiguracionCoForest(FormConfiguracionBase):
+    n_arboles = IntegerField(lazy_gettext('Number of trees'),
+                             name="n_arboles",
+                             id="n_arboles",
+                             default=10,
+                             validators=[InputRequired(), NumberRange(min=1)])
+    W_inicial = SelectField(lazy_gettext('Initial weight'),
+                            name="W_inicial",
+                            id="W_inicial",
+                            choices=[('uniform', 'uniform'),
+                                     ('random', 'random')],
+                            validators=[InputRequired()])
+    theta = IntegerRangeField(lazy_gettext('Threshold'),
+                              name="theta",
+                              id="theta",
+                              default=75,
+                              validators=[InputRequired(), NumberRange(min=0, max=100)])

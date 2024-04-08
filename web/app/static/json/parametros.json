@@ -71,6 +71,12 @@
       "type": "select",
       "options": ["best", "random"],
       "default": "best"
+    },
+    "max_features": {
+      "label": "Max features",
+      "type": "select",
+      "options": ["auto", "sqrt", "log2"],
+      "default": "log2"
     }
   },
   "GaussianNB": {

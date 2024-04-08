@@ -21,7 +21,8 @@ def visualizar_algoritmo(algoritmo):
     """
 
     if 'target' not in request.form:
-        flash(gettext("You must select the parameters of the algorithm"), category='error')
+        flash(gettext("You must select the parameters of the algorithm"),
+              category='error')
         return redirect(url_for('configuration_bp.configurar_algoritmo', algoritmo="None"))
 
     # En este punto se deben recoger todos los parámetros
@@ -35,6 +36,8 @@ def visualizar_algoritmo(algoritmo):
         params = parametros_democraticcolearning_tritraining()
     elif session['ALGORITMO'] == "tritraining":
         params = parametros_democraticcolearning_tritraining()
+    elif session['ALGORITMO'] == "coforest":
+        params = parametros_coforest()
 
     """En params se encontrarán todos los datos necesarios para ejecutar el algoritmo.
     Realmente no se le pasa la información ejecutada, se realiza una petición POST
@@ -67,7 +70,8 @@ def visualizar_algoritmo_json(algoritmo, run_id):
         abort(401)
 
     session['ALGORITMO'] = algoritmo
-    session['FICHERO'] = os.path.join(current_app.config['CARPETA_DATASETS_REGISTRADOS'], run.filename)
+    session['FICHERO'] = os.path.join(
+        current_app.config['CARPETA_DATASETS_REGISTRADOS'], run.filename)
 
     with open(os.path.join(current_app.config['CARPETA_RUNS'], run.jsonfile)) as f:
         json_data = json.load(f)
@@ -93,7 +97,8 @@ def parametros_selftraining():
     # Estos son los parámetros concretos de Self-Training
     params = [
         {"nombre": "clasificador1", "valor": request.form['clasificador1']},
-        {"nombre": "n", "valor": request.form.get('n', -1) if not request.form.get('n', -1) == "" else -1},
+        {"nombre": "n", "valor": request.form.get(
+            'n', -1) if not request.form.get('n', -1) == "" else -1},
         {"nombre": "th", "valor": request.form.get('th', -1)},
         {"nombre": "n_iter", "valor": request.form.get('n_iter')},
         {"nombre": "target", "valor": request.form.get('target')},
@@ -179,8 +184,36 @@ def parametros_democraticcolearning_tritraining():
     incorporar_clasificadores_params(lista_clasificadores, params)
 
     if len(set(lista_clasificadores)) != len(lista_clasificadores) and session['ALGORITMO'] == "democraticcolearning":
-        flash(gettext("Classifiers must be different (diverse) to ensure proper execution"), category='warning')
+        flash(gettext(
+            "Classifiers must be different (diverse) to ensure proper execution"), category='warning')
 
+    return params
+
+
+def parametros_coforest():
+    """
+    Función auxiliar que obtiene todos los campos
+    obtenidos del formulario de Co-Forest
+
+    :return: lista de parámetros (en forma de diccionario).
+    """
+
+    clasificador = "DecisionTreeClassifier"
+
+    # Estos son los parámetros concretos de Co-Forest
+    params = [
+        {"nombre": "n_arboles", "valor": request.form.get('n_arboles')},
+        {"nombre": "W_inicial", "valor": request.form.get('W_inicial')},
+        {"nombre": "theta", "valor": request.form.get('theta')},
+        {"nombre": "target", "valor": request.form.get('target')},
+        {"nombre": "cx", "valor": request.form.get('cx', 'C1')},
+        {"nombre": "cy", "valor": request.form.get('cy', 'C2')},
+        {"nombre": "pca", "valor": request.form.get('pca', 'n')},
+        {"nombre": "stand", "valor": request.form.get('stand', 'n')},
+        {"nombre": "p_unlabelled", "valor": request.form.get('p_unlabelled')},
+        {"nombre": "p_test", "valor": request.form.get('p_test')},
+    ]
+    incorporar_clasificadores_params([clasificador], params)
     return params
 
 

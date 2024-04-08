@@ -1,10 +1,36 @@
 {% extends "configuracion/base_configuracion.html" %} {% from "macros.html"
-import selector %} {% block parametros %} {% endblock %} {% block form_scripts
-%}
-<script></script>
+import selector %} {% block parametros %}
+
+<div class="mb-3">
+  {{ form.n_arboles.label }} {{ form.n_arboles(class_="form-control") }}
+</div>
+<div class="mb-3">
+  {{ form.W_inicial.label }} {{ form.W_inicial(class_="form-control") }}
+</div>
+<div class="mb-3">
+  {{ form.theta.label }}
+  <div class="d-flex">
+    {{ form.theta(class_="form-range w-75",
+    oninput="actualizarBadgePorcentaje(this.value,'p_th_badge')",
+    disabled=False) }}
+    <span id="p_th_badge" class="badge bg-primary px-3 mx-auto">75%</span>
+  </div>
+</div>
+<div class="title-mulish text-bold">
+  {{ gettext("Decision Tree parameters") }}
+</div>
+<div class="parametros" id="parametros"></div>
+{% endblock %} {% block form_scripts %}
+<script>
+  const div_parametros= document.querySelector('#parametros');
+
+  const todos_parametros = {{ parametros|tojson }};
+
+  generarFormParametros("DecisionTreeClassifier", div_parametros, "DecisionTreeClassifier");
+</script>
 {% endblock %} {% block explicaciones %}
 <p>
-  {{ gettext('Esta técnica se basa en la idea de utilizar múltiples
+  {{ gettext('_Esta técnica se basa en la idea de utilizar múltiples
   clasificadores (árboles de decisión, en este caso), los cuales se entrenan de
   forma iterativa con un conjunto inicial de datos etiquetados. A medida que el
   algoritmo avanza, cada árbol intenta clasificar los datos no etiquetados y las
@@ -15,7 +41,7 @@ import selector %} {% block parametros %} {% endblock %} {% block form_scripts
   aprovecha la diversidad entre los árboles de decisión para mejorar la
   generalización del modelo frente a datos nuevos o desconocidos, haciéndolo
   especialmente útil en escenarios donde las etiquetas son escasas o costosas de
-  obtener.')}}
+  obtener._')}}
 </p>
 {% endblock %} {% block pseudocodigo %}
 <img
