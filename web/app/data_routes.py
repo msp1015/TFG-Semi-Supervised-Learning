@@ -10,7 +10,7 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sqlalchemy.exc import SQLAlchemyError
 
-from algoritmos import SelfTraining, CoTraining, DemocraticCoLearning, TriTraining
+from algoritmos import SelfTraining, CoTraining, DemocraticCoLearning, TriTraining, CoForest
 from algoritmos.utilidades.datasetloader import DatasetLoader
 from algoritmos.utilidades.datasplitter import data_split
 from algoritmos.utilidades.dimreduction import log_pca_reduction, log_cxcy_reduction
@@ -36,10 +36,47 @@ def datosselftraining():
 
     try:
         st = SelfTraining(
-            clf=obtener_clasificador(clasificador, obtener_parametros_clasificador(clasificador, "clasificador1")),
+            clf=obtener_clasificador(clasificador, obtener_parametros_clasificador(
+                clasificador, "clasificador1")),
             n=n if n != -1 else None,
             th=th/100 if th != -1 else None,
             n_iter=int(request.form['n_iter']))
+
+        info = obtener_info(st)
+    except ValueError as e:
+        return jsonify({
+            "status": "warning",
+            "error": str(e)
+        }), 500
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "error": str(e)
+        }), 500
+
+    return json.dumps(info)
+
+
+@data_bp.route('/coforest', methods=['POST'])
+def datoscoforest():
+    """
+    Obtiene los datos de la ejecución de Co-Forest
+
+    :return: json con la información de ejecución.
+    """
+
+    # clasificador = request.form['clasificador1']
+
+    # Este form se construye desde inicializar.js con FormData
+    n_arboles = int(request.form['n_arboles'])
+    theta = int(request.form['theta'])
+    W_inicial = request.form['W_inicial']
+
+    try:
+        params_arbol_decision = obtener_parametros_clasificador(
+            "DecisionTreeClassifier", "DecisionTreeClassifier")
+        print(params_arbol_decision)
+        st = CoForest(n_arboles, theta, W_inicial, params_arbol_decision)
 
         info = obtener_info(st)
     except ValueError as e:
@@ -69,8 +106,10 @@ def datoscotraining():
 
     try:
         ct = CoTraining(
-            clf1=obtener_clasificador(clasificador1, obtener_parametros_clasificador(clasificador1, "clasificador1")),
-            clf2=obtener_clasificador(clasificador2, obtener_parametros_clasificador(clasificador2, "clasificador2")),
+            clf1=obtener_clasificador(clasificador1, obtener_parametros_clasificador(
+                clasificador1, "clasificador1")),
+            clf2=obtener_clasificador(clasificador2, obtener_parametros_clasificador(
+                clasificador2, "clasificador2")),
             p=int(request.form['p']),
             n=int(request.form['n']),
             u=int(request.form['u']),
@@ -103,9 +142,12 @@ def datossingleview(is_democratic):
     clasificador2 = request.form['clasificador2']
     clasificador3 = request.form['clasificador3']
 
-    clf1 = obtener_clasificador(clasificador1, obtener_parametros_clasificador(clasificador1, "clasificador1"))
-    clf2 = obtener_clasificador(clasificador2, obtener_parametros_clasificador(clasificador2, "clasificador2"))
-    clf3 = obtener_clasificador(clasificador3, obtener_parametros_clasificador(clasificador3, "clasificador3"))
+    clf1 = obtener_clasificador(
+        clasificador1, obtener_parametros_clasificador(clasificador1, "clasificador1"))
+    clf2 = obtener_clasificador(
+        clasificador2, obtener_parametros_clasificador(clasificador2, "clasificador2"))
+    clf3 = obtener_clasificador(
+        clasificador3, obtener_parametros_clasificador(clasificador3, "clasificador3"))
     try:
         if is_democratic:
             svclf = DemocraticCoLearning([clf1, clf2, clf3])
@@ -166,14 +208,17 @@ def obtener_info(algoritmo):
     (x, y, x_test, y_test) = data_split(x,
                                         y,
                                         is_unlabelled,
-                                        p_unlabelled=int(request.form['p_unlabelled']) / 100,
+                                        p_unlabelled=int(
+                                            request.form['p_unlabelled']) / 100,
                                         p_test=int(request.form['p_test']) / 100)
 
     specific_stats = None
     if isinstance(algoritmo, SelfTraining):
-        log, stats, iteration = algoritmo.fit(x, y, x_test, y_test, datasetloader.get_only_features())
+        log, stats, iteration = algoritmo.fit(
+            x, y, x_test, y_test, datasetloader.get_only_features())
     else:
-        log, stats, specific_stats, iteration = algoritmo.fit(x, y, x_test, y_test, datasetloader.get_only_features())
+        log, stats, specific_stats, iteration = algoritmo.fit(
+            x, y, x_test, y_test, datasetloader.get_only_features())
 
     stand = True if request.form['stand'] == 'y' else False
 
@@ -192,7 +237,8 @@ def obtener_info(algoritmo):
             'mapa': json.dumps(mapa)}
 
     if not isinstance(algoritmo, SelfTraining):
-        info = info | {'specific_stats': {key: specific_stats[key].to_json() for key in specific_stats}}
+        info = info | {'specific_stats': {
+            key: specific_stats[key].to_json() for key in specific_stats}}
 
     if current_user.is_authenticated:
         date = int(datetime.now().timestamp())
@@ -218,7 +264,8 @@ def obtener_info(algoritmo):
             db.session.add(run)
         except SQLAlchemyError:
             db.session.rollback()
-            os.remove(os.path.join(current_app.config['CARPETA_RUNS'], f'run-{current_user.id}-{date}.json'))
+            os.remove(os.path.join(
+                current_app.config['CARPETA_RUNS'], f'run-{current_user.id}-{date}.json'))
         else:
             db.session.commit()
 
@@ -285,9 +332,12 @@ def generar_json_parametros():
 
     formulario = dict(request.form)
 
-    claves_clasificadores = [k for k, _ in request.form.items() if 'clasificador' in k and "_" not in k]
-    clasificadores_reales = [v for k, v in request.form.items() if 'clasificador' in k and "_" not in k]
-    resto_de_parametros = [k for k, _ in request.form.items() if "clasificador" not in k]
+    claves_clasificadores = [
+        k for k, _ in request.form.items() if 'clasificador' in k and "_" not in k]
+    clasificadores_reales = [
+        v for k, v in request.form.items() if 'clasificador' in k and "_" not in k]
+    resto_de_parametros = [
+        k for k, _ in request.form.items() if "clasificador" not in k]
 
     pre_json = dict()
 

@@ -9,6 +9,7 @@
 import numpy as np
 from sklearn.tree import DecisionTreeClassifier
 
+
 class CoForest:
     """Algoritmo CoForest para el aprendizaje semi-supervisado.
     Basado en el estudio realizado por Zhou y Li en 2007:
@@ -16,7 +17,7 @@ class CoForest:
     Using Undiagnosed Samples"
     """
 
-    def __init__(self, n, theta, random_state=None):
+    def __init__(self, n, theta, W_inicial, params_arbol_decision, random_state=None):
         """Constructor de la clase CoForest
         Inicializa los parámetros necesarios para su ejecución.
         También se inicializan las variables necesarias para el seguimiento de
@@ -28,9 +29,12 @@ class CoForest:
             random_state (int, optional): semilla para la generación de números
             aleatorios. Por defecto, None.
         """
+        # TODO Completar la documentación de los parámetros
 
         self.n = n
         self.theta = theta
+        self.W_inicial = W_inicial
+        self.params_arbol_decision = params_arbol_decision
 
         self.errores = {}
         self.confianzas = {}
@@ -42,10 +46,11 @@ class CoForest:
         self.U = None
 
         if random_state is None:
+            # Semilla aleatoria por defecto
             self.rng = np.random.RandomState()
         else:
             self.rng = np.random.RandomState(random_state)
-        #Para probar la validez del algoritmo
+        # Para probar la validez del algoritmo
         self.accuracy_por_iteracion = []
 
     def fit(self, L, y_l, U, X_test, y_test):
@@ -62,7 +67,7 @@ class CoForest:
         Returns:
             dict: Un diccionario que contiene los árboles de decisión entrenados.
         """
-        #segun los datos en y_l podemos sacar el numero de clases únicas
+        # segun los datos en y_l podemos sacar el numero de clases únicas
         self.clases = np.unique(y_l)
         self.L = L
         self.y_l = y_l
@@ -71,9 +76,9 @@ class CoForest:
         for i in range(self.n):
             # Se inicializa el bosque con n arboles de decision
             self.bosque[i] = DecisionTreeClassifier(
-                max_features="log2",
+                **self.params_arbol_decision,
                 random_state=self.rng)
-            L_i, y_l_i, indices_datos= self.bootstrap(L, y_l)
+            L_i, y_l_i, indices_datos = self.bootstrap(L, y_l)
             self.datos_arbol_ind[i] = indices_datos
             self.bosque[i].fit(L_i, y_l_i)
             self.errores[i] = [0.5]
@@ -85,7 +90,7 @@ class CoForest:
         hay_cambios = True
 
         while hay_cambios:
-            #Seguimiento de los resultados, empezando en la iteración t=0
+            # Seguimiento de los resultados, empezando en la iteración t=0
             self.accuracy_por_iteracion.append(self.score(X_test, y_test))
             t = t + 1
             hay_cambios_en_arbol = [False] * self.n
@@ -106,7 +111,8 @@ class CoForest:
                     U_muestras = self.submuestrear(arbol_Hi, U, Wmax)
                     W_actual = 0
                     for x_u in U_muestras:
-                        confianza, clase_mas_votada = self.calcula_confianza(arbol_Hi, U[x_u, :])
+                        confianza, clase_mas_votada = self.calcula_confianza(
+                            arbol_Hi, U[x_u, :])
                         if confianza > self.theta:
                             hay_cambios_en_arbol[i] = True
                             pseudo_datos.append(U[x_u, :])
@@ -115,7 +121,8 @@ class CoForest:
 
                 e[i].append(error_actual)
                 W[i].append(W_actual)
-                pseudo_datos_etiquetados[i] = (pseudo_datos, pseudo_etiquetas_datos)
+                pseudo_datos_etiquetados[i] = (
+                    pseudo_datos, pseudo_etiquetas_datos)
 
             for i, arbol_Hi in self.bosque.items():
                 if hay_cambios_en_arbol[i]:
@@ -147,7 +154,8 @@ class CoForest:
             seleccionados (datos_aleatorios) sobre el conjunto L.
         """
 
-        datos_aleatorios = self.rng.choice(L.shape[0], size=int(p*L.shape[0]), replace=True)
+        datos_aleatorios = self.rng.choice(
+            L.shape[0], size=int(p*L.shape[0]), replace=True)
         L_i = L[datos_aleatorios, :]
         y_l_i = y_l[datos_aleatorios]
 
@@ -175,7 +183,7 @@ class CoForest:
             for i, arbol in self.bosque.items():
                 filas_entrenadas = L[datos_arbol_indiv[i]]
                 usado_en_entrenamiento = np.any(np.all(muestra == filas_entrenadas,
-                                                        axis=1))
+                                                       axis=1))
                 if arbol is not Hi and not usado_en_entrenamiento:
                     if arbol.predict([muestra])[0] == etiqueta:
                         n_aciertos += 1
@@ -223,7 +231,7 @@ class CoForest:
             float: El valor de confianza de la predicción de Hi.
             int: La clase más predicha por los árboles del bosque.
         """
-        #comprobar si hay elementos en el vector clases
+        # comprobar si hay elementos en el vector clases
         if not np.any(self.clases):
             raise ValueError("No se ha ajustado el modelo")
         contador = {i: 0 for i in self.clases}
@@ -251,7 +259,8 @@ class CoForest:
         """
 
         X = np.concatenate((L[datos_arbol_indiv], pseudo_datos_etiquetados[0]))
-        Y = np.concatenate((y_l[datos_arbol_indiv], pseudo_datos_etiquetados[1]))
+        Y = np.concatenate(
+            (y_l[datos_arbol_indiv], pseudo_datos_etiquetados[1]))
         self.bosque[i] = self.bosque[i].fit(X, Y)
 
     def obtener_errores(self):

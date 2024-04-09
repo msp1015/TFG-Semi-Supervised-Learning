@@ -1059,6 +1059,14 @@ function grafico_tritaining(dataset) {
     }
 }
 
+function preparardataset_coforest(datos) {
+    // pass
+
+}
+
+function grafico_coforest(dataset) {
+    // pass
+}
 
 /*
 ###############################
