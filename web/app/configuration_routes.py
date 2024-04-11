@@ -4,9 +4,11 @@ import sys
 
 from flask import flash, render_template, redirect, session, url_for, Blueprint, current_app, abort
 from flask_babel import gettext
-
-from algoritmos.utilidades.datasetloader import DatasetLoader
 from .forms import FormConfiguracionSelfTraining, FormConfiguracionCoTraining, FormConfiguracionSingleView, FormConfiguracionCoForest
+
+src_path = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+sys.path.append(src_path)
+from algoritmos.utilidades.datasetloader import DatasetLoader
 
 configuration_bp = Blueprint('configuration_bp', __name__)
 
