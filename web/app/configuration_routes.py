@@ -61,10 +61,14 @@ def configurar_algoritmo(algoritmo):
         form.clasificador2.choices = clasificadores_keys
         form.clasificador3.choices = clasificadores_keys
 
-    form.sel_target.choices = [""] + caracteristicas
+    form.sel_target.choices = caracteristicas
+    form.sel_target.default = caracteristicas[-1]
     form.cx.choices = caracteristicas
     form.cy.choices = caracteristicas
-
+    
+    # Aplica los valores por defecto que han sido definidos 
+    # después de cargar el formulario
+    form.process()
     return render_template('configuracion/' + algoritmo + 'config.html',
                            parametros=clasificadores,
                            form=form)
