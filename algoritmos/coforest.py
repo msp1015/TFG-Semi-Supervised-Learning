@@ -1,15 +1,17 @@
-"""Este módulo contiene la implementación del algoritmo CoForest
+# -*- coding: utf-8 -*-
+# """Este módulo contiene la implementación del algoritmo CoForest
 
-@Autor:     Mario Sanz Pérez
-@Fecha:     13/03/2024
-@Versión:   1.1
-@Nombre:    CoForest.py
-"""
+# @Autor:     Mario Sanz Pérez
+# @Fecha:     13/03/2024
+# @Versión:   1.1
+# @Nombre:    CoForest.py
+# """""
 
 import numpy as np
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from algoritmos.utilidades.common import obtain_train_unlabelled, calculate_log_statistics
+
 
 class CoForest:
     """Algoritmo CoForest para el aprendizaje semi-supervisado.
@@ -70,12 +72,11 @@ class CoForest:
         """
         
         L, y_l, U = obtain_train_unlabelled(X_train, Y_train)
-
         log = pd.DataFrame(L, columns=features)
         log['iters'] = [[0]] * len(log)
         log['targets'] = [[lab] for lab in y_l]
         log['clfs'] = [['inicio']] * len(log)
-
+        
         rest = pd.DataFrame(U, columns=features)
         rest['iters'] = [[-1] * self.n_arboles for _ in range(len(rest))]
         rest['targets'] = [[-1] * self.n_arboles
@@ -83,7 +84,7 @@ class CoForest:
         rest['clfs'] = [[f"CLF{i + 1}" for i in range(self.n_arboles)]] * len(rest)
 
         log = pd.concat([log, rest], ignore_index=True)
-
+        print(len(log)) 
         stat_columns = ['Accuracy', 'Precision', 'Error', 'F1_score', 'Recall']
         stats = pd.DataFrame(columns=stat_columns)
 
@@ -141,10 +142,14 @@ class CoForest:
 
                     U_muestras = self.submuestrear(arbol_Hi, U, Wmax)
                     W_actual = 0
+                    print(len(U_muestras), t, len(U))
                     for x_u in U_muestras:
+                        
                         confianza, clase_mas_votada = self.calcula_confianza(
                             arbol_Hi, U[x_u, :])
                         if confianza > self.theta:
+                            log.loc[len(L) + x_u, 'iters'][i] = t
+                            log.loc[len(L) + x_u, 'targets'][i] = clase_mas_votada
                             hay_cambios_en_arbol[i] = True
                             pseudo_datos.append(U[x_u, :])
                             pseudo_etiquetas_datos.append(clase_mas_votada)

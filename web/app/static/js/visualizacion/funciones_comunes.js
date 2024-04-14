@@ -11,7 +11,7 @@
  */
 function inicializar_con_peticion(rutadatos,elementos, preparadataset, grafico, flag_especificas=false) {
     inicializar(rutadatos, elementos).then(function (datos) {
-        inicializarGrafico(datos, preparadataset,grafico);
+        inicializarGrafico(datos, preparadataset, grafico);
 
         let stats = Object.keys(JSON.parse(datos.stats));
         generargraficoestadistico("estadisticas_generales", JSON.parse(datos.stats), stats);

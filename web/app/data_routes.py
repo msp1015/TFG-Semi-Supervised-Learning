@@ -74,8 +74,7 @@ def datoscoforest():
 
     try:
         params_arbol_decision = obtener_parametros_clasificador(
-            "DecisionTreeClassifier", "DecisionTreeClassifier")
-        print(params_arbol_decision)
+            "DecisionTreeClassifier", "clasificador1")
         st = CoForest(n_arboles, theta, W_inicial, params_arbol_decision)
 
         info = obtener_info(st)
@@ -268,7 +267,7 @@ def obtener_info(algoritmo):
                 current_app.config['CARPETA_RUNS'], f'run-{current_user.id}-{date}.json'))
         else:
             db.session.commit()
-
+    print(info)
     return info
 
 

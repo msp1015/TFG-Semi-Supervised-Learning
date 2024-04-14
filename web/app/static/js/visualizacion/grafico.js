@@ -639,12 +639,12 @@ function grafico_cotraining(dataset) {
 /**
  *
  * Prepara el conjunto de datos conforme al formato
- * de Democratic Co-Learning.
+ * de Democratic Co-Learning y CoForest.
  *
  * @param datos - datos de la visualización principal
  * @returns {*[]} - array de arrays
  */
-function preparardataset_democraticcolearning(datos) {
+function preparardataset_democraticcolearning_coforest(datos) {
     let dataset = [];
     let xs = datos[cx];
     let ys = datos[cy];
@@ -668,7 +668,7 @@ function preparardataset_democraticcolearning(datos) {
             }
         }
     }
-
+    console.log(dataset)
     clf_forma = Array.from(clasificadores)
     return dataset;
 }
@@ -681,6 +681,118 @@ function preparardataset_democraticcolearning(datos) {
  *
  */
 function grafico_democraticcolearning(dataset) {
+    nexit.on("click", next_co);
+    previt.on("click", prev_co);
+    rep.on("click", reproducir);
+
+    function alguno_clasificado(puntos_posicion) {
+        for (let punto_posicion of puntos_posicion) {
+            if (punto_posicion.__data__[3] <= cont){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function alguno_clasificado_con_id(puntos_posicion, id_duplicado) {
+        for (let punto_posicion of puntos_posicion) {
+            if (punto_posicion.__data__[3] <= cont &&
+                punto_posicion.__data__[punto_posicion.__data__.length-1] === id_duplicado){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    const mousemove_democraticcolearning = function(e, dot) {
+        d3.select(".tooltip")
+            .html(function() {
+                let puntos_posicion = puntos_en_x_y(dot[0], dot[1])._groups[0];
+                let cadena_tooltip = "<strong>" + traducir('Position') + "</strong><br>"
+                    + cx +": " + dot[0] +"<br>" + cy + ": " + dot[1] + "<br><br>";
+                if (cuantos_duplicados(dot[0], dot[1]) > 1) {
+                    cadena_tooltip += "<strong>" + cuantos_duplicados(dot[0], dot[1]).toString() + " " + traducir("overlapping points") + ":</strong><br>";
+                }
+
+                if (alguno_clasificado(puntos_posicion)) {
+                    let puntos_vistos = new Set();
+                    for (let i = 0; i < puntos_posicion.length; i++) {
+                        let p_data = puntos_posicion[i].__data__;
+                        if (p_data[3] <= cont && p_data[2] !== -1) {
+                            if (puntos_vistos.size > 0) {
+                                cadena_tooltip += "<br>-------<br>";
+                            }
+                            puntos_vistos.add(p_data[p_data.length - 1]);
+                            if (p_data[3] === 0) {
+                                cadena_tooltip += tooltip_dato_inicial(p_data);
+                            } else {
+                                cadena_tooltip += escribir_duplicados(p_data[0], p_data[1], p_data[p_data.length - 1]) +
+                                    tooltip_dato_no_inicial(p_data) +
+                                    "<span style='color:" + color(parseInt(p_data[2])) + "'>" + mapa[p_data[2]] + "</span>" +
+                                    "<span> (" + traducir('Iteration') + ": " + p_data[3] + ")</span>";
+                            }
+                        } else { // Aquellos que no están etiquetados todavía o nunca (maxit+1)
+                            if ((!(puntos_vistos.has(p_data[p_data.length - 1])) && //Que no se haya visto
+                                    !alguno_clasificado_con_id(puntos_posicion, p_data[p_data.length - 1])) //Y que no haya uno con misma id que ya esté clasificado
+                                || p_data[3] === maxit+1) {
+                                if (puntos_vistos.size > 0) {
+                                    cadena_tooltip += "<br>-------<br>";
+                                }
+                                puntos_vistos.add(p_data[p_data.length - 1]);
+                                cadena_tooltip += escribir_duplicados(p_data[0], p_data[1], p_data[p_data.length - 1]) +
+                                    un_clasificador_return_no_clasificado();
+                            }
+                        }
+                    }
+                } else { // No hay ningún punto etiquetado
+                    // Solo debe mostrarse un único texto exponiendo esa información
+                    let puntos_vistos = new Set();
+                    for (let i = 0; i < puntos_posicion.length; i++) {
+                        let p_data = puntos_posicion[i].__data__;
+                        if (!(puntos_vistos.has(p_data[p_data.length-1]))) {
+                            if (puntos_vistos.size > 0) {
+                                cadena_tooltip += "<br>-------<br>";
+                            }
+                            puntos_vistos.add(p_data[p_data.length-1]);
+                            cadena_tooltip += escribir_duplicados(p_data[0], p_data[1], p_data[p_data.length - 1]) +
+                                un_clasificador_return_no_clasificado();
+                        }
+                    }
+                }
+                return cadena_tooltip;
+            })
+    };
+
+    puntos = declarar_puntos_svg(dataset)
+        .style("fill", function (d) {
+            if (d[4] === "inicio") {
+                return color(d[2]);
+            } else {
+                return "grey";
+            }
+        })
+        .on("mousemove", function (e) {
+            posicionartooltip(e);
+            mousemove_democraticcolearning(e, d3.select(this).datum());
+        })
+        .on("mouseleave", mouseleave)
+
+    // Los iniciales llevarlos al frente
+    puntos.filter(function (d) {
+        return d[4] === "inicio";
+    }).each(function (){
+        this.parentNode.appendChild(this);
+    })
+
+    document.addEventListener('next_reproducir', next_co);
+}
+
+/**
+ * 
+ * Genera los puntos dentro del gráfico SVG, exclusivo
+ * para CoForest
+ */
+function grafico_coforest(dataset) {
     nexit.on("click", next_co);
     previt.on("click", prev_co);
     rep.on("click", reproducir);
@@ -1057,15 +1169,6 @@ function grafico_tritaining(dataset) {
             actualizaProgreso("next");
         }
     }
-}
-
-function preparardataset_coforest(datos) {
-    // pass
-
-}
-
-function grafico_coforest(dataset) {
-    // pass
 }
 
 /*
