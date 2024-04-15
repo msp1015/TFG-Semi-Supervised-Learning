@@ -84,7 +84,6 @@ class CoForest:
         rest['clfs'] = [[f"CLF{i + 1}" for i in range(self.n_arboles)]] * len(rest)
 
         log = pd.concat([log, rest], ignore_index=True)
-        print(len(log)) 
         stat_columns = ['Accuracy', 'Precision', 'Error', 'F1_score', 'Recall']
         stats = pd.DataFrame(columns=stat_columns)
 
@@ -142,7 +141,6 @@ class CoForest:
 
                     U_muestras = self.submuestrear(arbol_Hi, U, Wmax)
                     W_actual = 0
-                    print(len(U_muestras), t, len(U))
                     for x_u in U_muestras:
                         
                         confianza, clase_mas_votada = self.calcula_confianza(
@@ -274,7 +272,8 @@ class CoForest:
 
         for arbol in self.bosque.values():
             if arbol is not Hi:
-                contador[arbol.predict([sample])[0]] += 1
+                prediccion = arbol.predict([sample])[0]
+                contador[prediccion] += 1
 
         max_votos = max(contador.values())
         clase_mas_predicha = max(contador, key=contador.get)
