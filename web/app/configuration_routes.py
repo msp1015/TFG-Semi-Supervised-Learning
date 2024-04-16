@@ -4,9 +4,11 @@ import sys
 
 from flask import flash, render_template, redirect, session, url_for, Blueprint, current_app, abort
 from flask_babel import gettext
-
-from algoritmos.utilidades.datasetloader import DatasetLoader
 from .forms import FormConfiguracionSelfTraining, FormConfiguracionCoTraining, FormConfiguracionSingleView, FormConfiguracionCoForest
+
+src_path = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+sys.path.append(src_path)
+from algoritmos.utilidades.datasetloader import DatasetLoader
 
 configuration_bp = Blueprint('configuration_bp', __name__)
 
@@ -59,10 +61,14 @@ def configurar_algoritmo(algoritmo):
         form.clasificador2.choices = clasificadores_keys
         form.clasificador3.choices = clasificadores_keys
 
-    form.sel_target.choices = [""] + caracteristicas
+    form.sel_target.choices = caracteristicas
+    form.sel_target.default = caracteristicas[-1]
     form.cx.choices = caracteristicas
     form.cy.choices = caracteristicas
-
+    
+    # Aplica los valores por defecto que han sido definidos 
+    # después de cargar el formulario
+    form.process()
     return render_template('configuracion/' + algoritmo + 'config.html',
                            parametros=clasificadores,
                            form=form)

@@ -65,8 +65,6 @@ def datoscoforest():
     :return: json con la información de ejecución.
     """
 
-    # clasificador = request.form['clasificador1']
-
     # Este form se construye desde inicializar.js con FormData
     n_arboles = int(request.form['n_arboles'])
     theta = int(request.form['theta'])
@@ -74,9 +72,8 @@ def datoscoforest():
 
     try:
         params_arbol_decision = obtener_parametros_clasificador(
-            "DecisionTreeClassifier", "DecisionTreeClassifier")
-        print(params_arbol_decision)
-        st = CoForest(n_arboles, theta, W_inicial, params_arbol_decision)
+            "DecisionTreeClassifier", "clasificador1")
+        st = CoForest(n_arboles, theta/100, W_inicial, params_arbol_decision)
 
         info = obtener_info(st)
     except ValueError as e:
@@ -268,7 +265,10 @@ def obtener_info(algoritmo):
                 current_app.config['CARPETA_RUNS'], f'run-{current_user.id}-{date}.json'))
         else:
             db.session.commit()
-
+    #gaurdar en fichero
+    with open("obtener_info.txt", "w") as f:
+        f.write(str(info))
+    print(info)
     return info
 
 

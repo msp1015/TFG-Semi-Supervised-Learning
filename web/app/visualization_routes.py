@@ -197,7 +197,7 @@ def parametros_coforest():
 
     :return: lista de parámetros (en forma de diccionario).
     """
-
+    # El Co-Forest unicamente usa arbóles de decisión por lo que no hay un div en el formulario
     clasificador = "DecisionTreeClassifier"
 
     # Estos son los parámetros concretos de Co-Forest
@@ -214,6 +214,7 @@ def parametros_coforest():
         {"nombre": "p_test", "valor": request.form.get('p_test')},
     ]
     incorporar_clasificadores_params([clasificador], params)
+    print("params despues, ", params)
     return params
 
 

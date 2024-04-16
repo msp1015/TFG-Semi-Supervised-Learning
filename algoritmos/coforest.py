@@ -1,13 +1,16 @@
-"""Este módulo contiene la implementación del algoritmo CoForest
+# -*- coding: utf-8 -*-
+# """Este módulo contiene la implementación del algoritmo CoForest
 
-@Autor:     Mario Sanz Pérez
-@Fecha:     13/03/2024
-@Versión:   1.1
-@Nombre:    CoForest.py
-"""
+# @Autor:     Mario Sanz Pérez
+# @Fecha:     13/03/2024
+# @Versión:   1.1
+# @Nombre:    CoForest.py
+# """""
 
 import numpy as np
+import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
+from algoritmos.utilidades.common import obtain_train_unlabelled, calculate_log_statistics
 
 
 class CoForest:
@@ -31,7 +34,7 @@ class CoForest:
         """
         # TODO Completar la documentación de los parámetros
 
-        self.n = n
+        self.n_arboles = n
         self.theta = theta
         self.W_inicial = W_inicial
         self.params_arbol_decision = params_arbol_decision
@@ -53,7 +56,7 @@ class CoForest:
         # Para probar la validez del algoritmo
         self.accuracy_por_iteracion = []
 
-    def fit(self, L, y_l, U, X_test, y_test):
+    def fit(self,  X_train, Y_train, X_test, Y_test, features):
         """Entrena el algoritmo CoForest con los datos de entrenamiento,
         tanto etiquetados como no etiquetados.
 
@@ -67,13 +70,34 @@ class CoForest:
         Returns:
             dict: Un diccionario que contiene los árboles de decisión entrenados.
         """
+        
+        L, y_l, U = obtain_train_unlabelled(X_train, Y_train)
+        log = pd.DataFrame(L, columns=features)
+        log['iters'] = [[0]] * len(log)
+        log['targets'] = [[lab] for lab in y_l]
+        log['clfs'] = [['inicio']] * len(log)
+        
+        rest = pd.DataFrame(U, columns=features)
+        rest['iters'] = [[-1] * self.n_arboles for _ in range(len(rest))]
+        rest['targets'] = [[-1] * self.n_arboles
+                           for _ in range(len(rest))]
+        rest['clfs'] = [[f"CLF{i + 1}" for i in range(self.n_arboles)]] * len(rest)
+
+        log = pd.concat([log, rest], ignore_index=True)
+        stat_columns = ['Accuracy', 'Precision', 'Error', 'F1_score', 'Recall']
+        stats = pd.DataFrame(columns=stat_columns)
+
+        specific_stats = {
+            f"CLF{i + 1}": pd.DataFrame(columns=stat_columns) for i in range(self.n_arboles)}
+
+        
         # segun los datos en y_l podemos sacar el numero de clases únicas
         self.clases = np.unique(y_l)
         self.L = L
         self.y_l = y_l
         self.U = U
 
-        for i in range(self.n):
+        for i in range(self.n_arboles):
             # Se inicializa el bosque con n arboles de decision
             self.bosque[i] = DecisionTreeClassifier(
                 **self.params_arbol_decision,
@@ -91,12 +115,19 @@ class CoForest:
 
         while hay_cambios:
             # Seguimiento de los resultados, empezando en la iteración t=0
-            self.accuracy_por_iteracion.append(self.score(X_test, y_test))
+            self.accuracy_por_iteracion.append(self.score(X_test, Y_test))
+            self.accuracy_por_iteracion.append(self.score(X_test, Y_test))
+            stats.loc[len(stats)] = calculate_log_statistics(
+                Y_test, self.predict(X_test))
             t = t + 1
-            hay_cambios_en_arbol = [False] * self.n
+            hay_cambios_en_arbol = [False] * self.n_arboles
             pseudo_datos_etiquetados = {}
 
             for i, arbol_Hi in self.bosque.items():
+                # Antes de seguir se obtienen las estadísticas del árbol actual para cada iteracion
+                clf_stat = specific_stats[f"CLF{i + 1}"]
+                clf_stat.loc[len(clf_stat)] = calculate_log_statistics(
+                    Y_test, arbol_Hi.predict(X_test))
                 error_actual = self.estimar_error(arbol_Hi, L, y_l,
                                                   self.datos_arbol_ind)
                 W_actual = W[i][t-1]
@@ -111,9 +142,12 @@ class CoForest:
                     U_muestras = self.submuestrear(arbol_Hi, U, Wmax)
                     W_actual = 0
                     for x_u in U_muestras:
+                        
                         confianza, clase_mas_votada = self.calcula_confianza(
                             arbol_Hi, U[x_u, :])
                         if confianza > self.theta:
+                            log.loc[len(L) + x_u, 'iters'][i] = t
+                            log.loc[len(L) + x_u, 'targets'][i] = clase_mas_votada
                             hay_cambios_en_arbol[i] = True
                             pseudo_datos.append(U[x_u, :])
                             pseudo_etiquetas_datos.append(clase_mas_votada)
@@ -136,7 +170,7 @@ class CoForest:
         self.errores = e
         self.confianzas = W
 
-        return self.bosque
+        return log, stats, specific_stats, t
 
     def bootstrap(self, L, y_l, p=0.7):
         """Genera un conjunto de datos aleatorios con reemplazamiento.
@@ -238,7 +272,8 @@ class CoForest:
 
         for arbol in self.bosque.values():
             if arbol is not Hi:
-                contador[arbol.predict([sample])[0]] += 1
+                prediccion = arbol.predict([sample])[0]
+                contador[prediccion] += 1
 
         max_votos = max(contador.values())
         clase_mas_predicha = max(contador, key=contador.get)

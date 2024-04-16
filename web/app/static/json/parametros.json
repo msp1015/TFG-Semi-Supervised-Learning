@@ -75,7 +75,7 @@
     "max_features": {
       "label": "Max features",
       "type": "select",
-      "options": ["auto", "sqrt", "log2"],
+      "options": ["sqrt", "log2"],
       "default": "log2"
     }
   },

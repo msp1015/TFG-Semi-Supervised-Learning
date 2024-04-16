@@ -10,13 +10,14 @@
   inicializar_con_peticion(
     "/datos/{{ session['ALGORITMO'] }}",
     elementos,
-    preparardataset_coforest,
-    grafico_coforest
+    preparardataset_democraticcolearning_coforest,
+    grafico_coforest,
+    true
   );
 </script>
 {% else %}
 <script>
   let datos = {{ json_data|tojson }};
-  inicializar_sin_peticion(datos, preparardataset_coforest, grafico_coforest)
+  inicializar_sin_peticion(datos, preparardataset_democraticcolearning_coforest, grafico_coforest, true)
 </script>
 {% endif %} {% endblock %}
