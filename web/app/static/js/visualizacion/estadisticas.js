@@ -124,6 +124,47 @@ function seleccionarstat(id_div_estadisticas, stat_seleccionada, lista_stats) {
 function generarcheckboxes_clasificadores(id_div_objetivo, id_div_estadisticas, clasificadores) {
     let div_objetivo = document.querySelector("#" + id_div_objetivo);
 
+    // Crear checkbox para seleccionar todos
+    let selectAllCheckbox = document.createElement("input");
+    selectAllCheckbox.setAttribute("id", "chk_select_all");
+    selectAllCheckbox.setAttribute("type", "checkbox");
+    selectAllCheckbox.setAttribute("class", "form-check-input");
+    selectAllCheckbox.addEventListener("change", function() {
+        let checkboxes = div_objetivo.querySelectorAll("input[type='checkbox']");
+        checkboxes.forEach(checkbox => {
+            if (checkbox.id !== "chk_select_all" && checkbox.id !== "chk_deselect_all") {
+                checkbox.checked = true;
+                habilitar_clasificador(id_div_estadisticas, true, checkbox.id.replace("chk_", ""));
+            }
+        });
+        if (this.checked) {
+            deselectAllCheckbox.checked = false;
+        }
+    });
+    div_objetivo.appendChild(selectAllCheckbox);
+    div_objetivo.appendChild(document.createTextNode("_All_"));
+
+    // Crear checkbox para deseleccionar todos
+    let deselectAllCheckbox = document.createElement("input");
+    deselectAllCheckbox.setAttribute("id", "chk_deselect_all");
+    deselectAllCheckbox.setAttribute("type", "checkbox");
+    deselectAllCheckbox.setAttribute("class", "form-check-input");
+    deselectAllCheckbox.addEventListener("change", function() {
+        let checkboxes = div_objetivo.querySelectorAll("input[type='checkbox']");
+        checkboxes.forEach(checkbox => {
+            if (checkbox.id !== "chk_select_all" && checkbox.id !== "chk_deselect_all") {
+                checkbox.checked = false;
+                habilitar_clasificador(id_div_estadisticas, false, checkbox.id.replace("chk_", ""));
+            }
+        });
+        if (this.checked) {
+            selectAllCheckbox.checked = false;
+        }
+    });
+    div_objetivo.appendChild(deselectAllCheckbox);
+    div_objetivo.appendChild(document.createTextNode("_None_"));
+
+
     for (let index in clasificadores){
         let clasificador = clasificadores[index];
 
