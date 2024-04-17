@@ -91,7 +91,7 @@ Este sprint es aún más reducido debido a las condiciones dadas, correspondient
 	\item Documentación de conceptos teóricos: tanto teoría de ensembles como el propio algoritmo Co-forest.
 	\item Documentación de trabajos relacionados.
 	\item Documentación de aspectos relevantes.
-	\item Dccumentación de anexos.
+	\item Documentación de anexos.
 	\item Prototipo de ventana pensada para la configuración del algoritmo.
 	
 \end{itemize}
@@ -99,7 +99,40 @@ Sin mucha más explicación, se avanza todo lo que se puede en la documentación
 \imagen{../img/anexos/prototipo_coforest.png}{Prototipo de visualizacion de algoritmo Co-Forest}
 
 \subsection{Sprint 8}
-Debido a que el calendario corresponde con la semana santa, este Sprint es más largo de lo debido, entre 
+Debido a que el calendario corresponde con la semana santa, este Sprint corresponde entre los días 20 de marzo y 4 de abril. Se asignan las siguientes tareas:
+ \begin{itemize}
+ 	\item Continuación de toda la documentación del Sprint anterior.
+ 	\item Ver tutoriales de JavaScript y de BootStrap
+ 	\item Introducir correctamente el coforest en la web
+ 	\item Investigar la manera en la que se pasan los parametros de ejecución del algoritmo (JSON).
+ 	
+ \end{itemize}
+En cuanto a los tutoriales, se siguen los de la web \url{https://www.w3schools.com/} y también algún video de YouTube. HTML y css son dos lenguajes que se pueden ir aprendiendo sobre la marcha, pero javascript puede ser complicado de entender sin unos conceptos previos, y más cuando se trata de un proyecto complejo. Por esto se dedica gran parte del tiempo a aprender las bases del lenguaje. 
+En cuanto a la web, se integra gran parte del Co-Forest, permitiendo realizar todos los pasos hasta la visualización, donde surge un error de servidor.
+Para conseguir la comunicación entre la ejecución del algoritmo y su visualización se realizará siguiendo la misma técnica que David, para ello primero hay que comprender todo lo que recoge del propio algoritmo. Se decide fijarse en el algoritmo Democratic Co-Learning por su gran parecido con el CoForest.
+
+Además de todo esto, aparece un error en la parte de la gestión de usuarios, no permitiendo registrar ni logear usuarios. Esto se debe a algún problema con el método que se utiliza para la encriptación de las contraseñas, el cual se deja a resolver para el siguiente sprint.
+
+\subsection{Sprint 9}
+De nuevo se vuelven con las reuniones semanales, estableciendo las siguientes tareas:
+ \begin{itemize}
+	\item Introducir la parte de visualización del co-forest en la web.
+	\item Modificar el código del CoForest para tener el JSON.
+	
+\end{itemize}
+
+Ambas tareas están relacionadas, ya que para poder ver una visualizacion final, es necesario almacenar todos los datos de la ejecución. La tarea de conseguir la visualizacion consiste más bien en corregir el error mencionado anteriormente. Ya que un error 400 no da muchas pistas de donde puede estar el error, se hace un seguimiento de todo el proceso. Esto conlleva ir mostrando por consola los diferentes valores y resultados. Finalmente se localiza el error en la forma en la que se denominan los \textit{div} en los formularios. Para el caso del Co-Forest, se usa lo que ya existía de los árboles de decisión. Esto hace que no haya necesidad de crear un \textit{div} para seleccionador el clasificador. Sin embargo, para aprovechar el código de David, es necesario definir uno y darle el mismo nombre en los diferentes formularios para que funcione.
+El JSON se consigue basandose de nuevo en el Democratic Co-Learning. Puede que se guarden los mismos datos, pero la manera de recogerlos es distinta en cada algoritmo.
+
+\subsection{Sprint 10}
+Del 11 de abril al 16 de abril, se establecen las siguientes tareas de cara al siguiente sprint:
+ \begin{itemize}
+	\item Actualizar documentación.
+	\item Visualizar resultados del Co-Forest en la web
+	\item Crear un gráfico de tarta como tooltip en los datos.
+	
+\end{itemize}
+
 
 \section{Estudio de viabilidad}
 
