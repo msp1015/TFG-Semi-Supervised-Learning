@@ -144,7 +144,51 @@ El \textit{Boosting} es un enfoque que construye secuencialmente un conjunto de 
 \imagen{../img/memoria/boosting.png}{Concepto de boosting \cite{web:boostingvsbaging}}{1}
 
 \section{\textit{Co-Forest}}
-El Co-Forest trabaja al entrenar un conjunto de clasificadores en un conjunto de datos etiquetado, L, y luego refinar cada clasificador con ejemplos seleccionados por su ensamble concomitante de clasificadores en un conjunto de datos no etiquetado, U. A través de iteraciones, este proceso aprovecha los datos no etiquetados para mejorar el rendimiento del modelo en tareas de diagnóstico~\cite{IEEE:CoForest}.
+El co-forest es una versión semisupervisada del método de clasificación \textit{random forest}, diseñado para usar tanto datos etiquetados como no etiquetados. En este método, los árboles de decisión (que conforman el \textit{random forest}) se entrenan en un proceso iterativo utilizando subconjuntos de datos etiquetados junto con pseudo-etiquetas seleccionadas de los datos no etiquetados basadas en su alta confiabilidad. La confiabilidad de estas pseudo-etiquetas es evaluada por todos los árboles del ensemble excepto el árbol que está siendo entrenado en ese momento, denominado el conjunto concomitante. El entrenamiento continúa hasta que se alcanza un criterio de parada definido como el \textit{Out Of Bag Error}(OOBE), que mide el error de predicción del conjunto concomitante usando solo aquellos árboles que no incluyeron una muestra específica de los datos etiquetados en su entrenamiento.~\cite{IEEE:CoForest}. A continuación se muestra el pseudocódigo y una explicación más extensa:
+\begin{algorithm}
+	\label{alg:Co-Forest}
+	\KwIn{Conjunto de datos etiquetados $L$, conjunto de datos no etiquetados $U$, número de árboles $n$, umbral de confianza $\theta$, sumatorio de confianzas inicial $W_{inicial}$ y parámetros para los árboles de decision $p$}
+	\KwOut{\textit{Ensemble} de árboles entrenado $H$}
+	\BlankLine
+	\For{$i$ = 0, ..., $n-1$}{
+		$L_{i} \leftarrow$ \textit{Bootstrap}($L$)\\
+		$h_i$ = EntrenarArbol($L_{i}$)\\
+		$\hat{e}_{i,t} \leftarrow 0.5$\\
+		$W_{i,0} \leftarrow$ $W_{inicial}$  \\
+	}
+	
+	$t \leftarrow 0$\\
+	\While(){Algún árbol reciba pseudo-etiquetas}{
+		$t \leftarrow t + 1$\\
+		
+		\For{$i$ = 0, ..., $n-1$}{
+			$\hat{e}_{i,t} \leftarrow$ EstimateError($H_i, L$)\\
+			$L'_{i,t} \leftarrow \emptyset$\\
+			
+			\If{$\hat{e}_{i,t} < \hat{e}_{i,t-1}$}{
+				$W_{max} = \hat{e}_{i,t-1}W_{i,t-1}/\hat{e}_{i, t}$\\
+				$U'_{i,t} \leftarrow$ Submuestrear($U, H_i, W_{max}$)\\
+				$W_{i,t} \leftarrow 0$
+				
+				\ForEach{$x_j \in U'_{i,t}$}{
+					
+					\If{\text{Confianza}($H_i, x_j$) > $\theta$}{
+						$L'_{i,t} \leftarrow L'_{i,t} \cup {x_j, H_i(x_j)}$\\
+						$W_{i,t} \leftarrow W_{i,t} + \text{Confianza}(H_i, x_j)$
+					}
+				}
+			}
+		}
+		\For{$i$ = 0, ..., $n-1$}{
+			\If{$(e_{i,t} * W_{i,t} < e_{i, t-1} * W_{i, t-1})$}{
+				$h_i$ = ReentrenarArbol($L_{i} \cup L'_{i,t}$)\\
+			}
+		}
+	}
+	\Return{$H$}
+	\caption{\textit{Co-Forest Fit}}
+\end{algorithm}
+
 
 \section{Diseño web}
 
