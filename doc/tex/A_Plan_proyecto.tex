@@ -124,14 +124,20 @@ De nuevo se vuelven con las reuniones semanales, estableciendo las siguientes ta
 Ambas tareas están relacionadas, ya que para poder ver una visualizacion final, es necesario almacenar todos los datos de la ejecución. La tarea de conseguir la visualizacion consiste más bien en corregir el error mencionado anteriormente. Ya que un error 400 no da muchas pistas de donde puede estar el error, se hace un seguimiento de todo el proceso. Esto conlleva ir mostrando por consola los diferentes valores y resultados. Finalmente se localiza el error en la forma en la que se denominan los \textit{div} en los formularios. Para el caso del Co-Forest, se usa lo que ya existía de los árboles de decisión. Esto hace que no haya necesidad de crear un \textit{div} para seleccionador el clasificador. Sin embargo, para aprovechar el código de David, es necesario definir uno y darle el mismo nombre en los diferentes formularios para que funcione.
 El JSON se consigue basandose de nuevo en el Democratic Co-Learning. Puede que se guarden los mismos datos, pero la manera de recogerlos es distinta en cada algoritmo.
 
+Se resuelve el error del sprint anterior de la parte de gestión de usuarios. Una vez aislado el error se ve que lo que falla es un método de una librería utilizada para encriptar contraseñas, lo que da a pensar que alguno de los parámetros pasados deja de ser compatible con la versión de la biblioteca actual. Efectivamente la versión de este proyecto de la biblioteca \textit{werkzeug} no coincidía con la del trabajo base. En concreto el parámetro incompatible que se le estaba pasando a este método es la propia contraseña encriptada, la cual empezaba por \textit{sha256}. La neuva versión del método establece que para usar \textit{sha256} el texto debe empezar por \textit{pbkdf2:sha256}, por lo tanto se cambia esta opción y también el \textit{hash} definido para el administrador al inciar la aplicación.
+
 \subsection{Sprint 10}
 Del 11 de abril al 16 de abril, se establecen las siguientes tareas de cara al siguiente sprint:
  \begin{itemize}
 	\item Actualizar documentación.
 	\item Visualizar resultados del Co-Forest en la web
 	\item Crear un gráfico de tarta como tooltip en los datos.
-	
 \end{itemize}
+Se consigue la visualización del Co-Forest completa reutilizando gran parte del código de los otros algoritmos, dando pie también a posibles cambios futuros en la visualización. Finalmente se determina que el gráfico de tarta no es la mejor manera de representar este tipo de soluciones y se mantiene el estilo original. Esto tiene la desventaja de que en el Co-Forest existen muchos más clasificadores y en ocasiones provoca un \textit{tooltip} mucho más grande y que se sale de la pantalla. 
+
+Además se hacen pequeños cambios como dejar la opción de la etiqueta o clase por defecto al configurar el algoritmo y permitir desmarcar y marcar todas las opciones (clasificadores) en el gráfico de estadísticas específicas.
+
+\subsection{Sprint 11}
 
 
 \section{Estudio de viabilidad}
