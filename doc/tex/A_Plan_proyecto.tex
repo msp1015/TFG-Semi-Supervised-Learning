@@ -74,11 +74,11 @@ Se muestra al tutor la página encontrada, se acuerda que puede ser una buena id
 \subsection{Sprint 6}
 Se inicia con una reunión el 7 de marzo, surge un cambio de planes, dejando las siguientes tareas por hacer:
 \begin{itemize}
-	\item Continuar documentación (coforest, trabajos relacionados)
+	\item Continuar documentación (Co-Forest, trabajos relacionados)
 	\item El trabajo será una versión 2.0 del desarrollo de David.
 	\item Esto implica tener que familiarizarse con el trabajo de David, su estructura, web, etc.
 	\item Corregir estilo de programación. Estandarizar mediante la guía de estilo de python, PEP8 \cite{PEP8}. %TODO
-	\item Revisar coforest debido a que la comparación con el de Patricia no es del todo buena.
+	\item Revisar Co-Forest debido a que la comparación con el de Patricia no es del todo buena.
 	
 \end{itemize} 
 La decisión de continuar el trabajo de David se da ya que la idea original para esta implementación iba a ser prácticamente igual. Por ello, se aprovecha la base de este trabajo, sobretodo el de la web, ya que los algoritmos serán diferentes. La idea es seguir con un estilo propio en la configuración de la web, pero todo sobre la plantilla ya creada por David. 
@@ -95,21 +95,20 @@ Este sprint es aún más reducido debido a las condiciones dadas, correspondient
 	\item Prototipo de ventana pensada para la configuración del algoritmo.
 	
 \end{itemize}
-Sin mucha más explicación, se avanza todo lo que se puede en la documentación y, una vez visto y entendido la mayor parte del proyecto web de David, se empieza el prototipo de una nueva ventana. Como ya se habia pensado, no tiene porque ser igual al resto de ventanas ya implementadas, consiguiendo el siguiente resultado:
-\imagen{../img/anexos/prototipo_coforest.png}{Prototipo de visualizacion de algoritmo Co-Forest}
+Sin mucha más explicación, se avanza todo lo que se puede en la documentación y, una vez visto y entendido la mayor parte del proyecto web de David, se empieza el prototipo de una nueva ventana.
 
 \subsection{Sprint 8}
 Debido a que el calendario corresponde con la semana santa, este Sprint corresponde entre los días 20 de marzo y 4 de abril. Se asignan las siguientes tareas:
  \begin{itemize}
  	\item Continuación de toda la documentación del Sprint anterior.
  	\item Ver tutoriales de JavaScript y de BootStrap
- 	\item Introducir correctamente el coforest en la web
+ 	\item Introducir correctamente el Co-Forest en la web
  	\item Investigar la manera en la que se pasan los parametros de ejecución del algoritmo (JSON).
  	
  \end{itemize}
 En cuanto a los tutoriales, se siguen los de la web \url{https://www.w3schools.com/} y también algún video de YouTube. HTML y css son dos lenguajes que se pueden ir aprendiendo sobre la marcha, pero javascript puede ser complicado de entender sin unos conceptos previos, y más cuando se trata de un proyecto complejo. Por esto se dedica gran parte del tiempo a aprender las bases del lenguaje. 
 En cuanto a la web, se integra gran parte del Co-Forest, permitiendo realizar todos los pasos hasta la visualización, donde surge un error de servidor.
-Para conseguir la comunicación entre la ejecución del algoritmo y su visualización se realizará siguiendo la misma técnica que David, para ello primero hay que comprender todo lo que recoge del propio algoritmo. Se decide fijarse en el algoritmo Democratic Co-Learning por su gran parecido con el CoForest.
+Para conseguir la comunicación entre la ejecución del algoritmo y su visualización se realizará siguiendo la misma técnica que David, para ello primero hay que comprender todo lo que recoge del propio algoritmo. Se decide fijarse en el algoritmo Democratic Co-Learning por su gran parecido con el Co-Forest.
 
 Además de todo esto, aparece un error en la parte de la gestión de usuarios, no permitiendo registrar ni logear usuarios. Esto se debe a algún problema con el método que se utiliza para la encriptación de las contraseñas, el cual se deja a resolver para el siguiente sprint.
 
@@ -117,14 +116,14 @@ Además de todo esto, aparece un error en la parte de la gestión de usuarios, n
 De nuevo se vuelven con las reuniones semanales, estableciendo las siguientes tareas:
  \begin{itemize}
 	\item Introducir la parte de visualización del co-forest en la web.
-	\item Modificar el código del CoForest para tener el JSON.
+	\item Modificar el código del Co-Forest para tener el JSON.
 	
 \end{itemize}
 
 Ambas tareas están relacionadas, ya que para poder ver una visualizacion final, es necesario almacenar todos los datos de la ejecución. La tarea de conseguir la visualizacion consiste más bien en corregir el error mencionado anteriormente. Ya que un error 400 no da muchas pistas de donde puede estar el error, se hace un seguimiento de todo el proceso. Esto conlleva ir mostrando por consola los diferentes valores y resultados. Finalmente se localiza el error en la forma en la que se denominan los \textit{div} en los formularios. Para el caso del Co-Forest, se usa lo que ya existía de los árboles de decisión. Esto hace que no haya necesidad de crear un \textit{div} para seleccionador el clasificador. Sin embargo, para aprovechar el código de David, es necesario definir uno y darle el mismo nombre en los diferentes formularios para que funcione.
 El JSON se consigue basandose de nuevo en el Democratic Co-Learning. Puede que se guarden los mismos datos, pero la manera de recogerlos es distinta en cada algoritmo.
 
-Se resuelve el error del sprint anterior de la parte de gestión de usuarios. Una vez aislado el error se ve que lo que falla es un método de una librería utilizada para encriptar contraseñas, lo que da a pensar que alguno de los parámetros pasados deja de ser compatible con la versión de la biblioteca actual. Efectivamente la versión de este proyecto de la biblioteca \textit{werkzeug} no coincidía con la del trabajo base. En concreto el parámetro incompatible que se le estaba pasando a este método es la propia contraseña encriptada, la cual empezaba por \textit{sha256}. La neuva versión del método establece que para usar \textit{sha256} el texto debe empezar por \textit{pbkdf2:sha256}, por lo tanto se cambia esta opción y también el \textit{hash} definido para el administrador al inciar la aplicación.
+Se resuelve el error del sprint anterior de la parte de gestión de usuarios. Una vez aislado el error se ve que lo que falla es un método de una librería utilizada para encriptar contraseñas, lo que da a pensar que alguno de los parámetros pasados deja de ser compatible con la versión de la biblioteca actual. Efectivamente la versión de este proyecto de la biblioteca \textit{werkzeug} no coincidía con la del trabajo base. En concreto el parámetro incompatible que se le estaba pasando a este método es la propia contraseña encriptada, la cual empezaba por \textit{sha256}. La nueva versión del método establece que para usar \textit{sha256} el texto debe empezar por \textit{pbkdf2:sha256}, por lo tanto se cambia esta opción y también el \textit{hash} definido para el administrador al inciar la aplicación.
 
 \subsection{Sprint 10}
 Del 11 de abril al 16 de abril, se establecen las siguientes tareas de cara al siguiente sprint:

@@ -105,45 +105,35 @@ Los métodos inductivos pretenden construir un clasificador que pueda generar pr
 	
 \end{itemize}
 \subsection{Métodos transductivos} %TODO Reestructurar esta parte utilizando el otro articulo
-A diferencia de los métodos inductivos, los métodos transductivos no construyen un clasificador para todo el espacio de entrada. En su lugar, su poder predictivo se limita exactamente a los objetos que encuentra durante la fase de entrenamiento. Por lo tanto, los métodos transductivos no tienen fases de entrenamiento y prueba distintas \cite{Engelen:semi-supervised}.
-El aprendizaje transductivo puede ahorrar tiempo y es preferible cuando el objetivo se orienta a mejorar nuestro conocimiento sobre el conjunto de datos sin etiquetar. Sin embargo, como este escenario implica que el conocimiento del conjunto de datos etiquetados puede mejorar nuestro conocimiento del conjunto de datos sin etiquetar, no es ideal ni utilizable para procesos causales \cite{web:assumptions}.
-Los métodos transductivos suelen definir un grafo sobre todos los puntos de datos, etiquetados y no etiquetados, codificando la similitud entre pares de puntos de datos con aristas posiblemente ponderadas. Estos grafos se dividen en tres pasos: creación del grafo, ponderación del grafo (matriz de pesos) e inferencia (se refiere al proceso de asignar etiquetas o categorías a los nodos no etiquetados en un grafo utilizando la información de los nodos etiquetados y la estructura del grafo).
+A diferencia de los métodos inductivos, los métodos transductivos no construyen un modelo para todo el espacio de entrada. En su lugar, su poder predictivo se limita exactamente a los objetos que encuentra durante la fase de entrenamiento. Por lo tanto, los métodos transductivos no tienen fases de entrenamiento y predicción distintas \cite{Engelen:semi-supervised}.
+
+El aprendizaje transductivo puede ahorrar tiempo y es preferible cuando el objetivo se orienta a mejorar nuestro conocimiento sobre el conjunto de datos sin etiquetar. Sin embargo, este enfoque tiene limitaciones, especialmente cuando queremos entender causas y efectos dentro de los datos. Básicamente, aunque el aprendizaje transductivo es útil para hacer inferencias específicas sobre los datos no etiquetados basándose en los datos etiquetados, no es adecuado ni efectivo para estudiar o predecir relaciones causales, es decir, cómo un factor directamente provoca otro. Esto se debe a que el aprendizaje transductivo se centra sólo en los datos presentes durante el entrenamiento y no generaliza más allá de estos. \cite{web:assumptions}.
+Los métodos transductivos suelen definir un grafo sobre todos los puntos de datos, tanto etiquetados como no etiquetados, codificando la similitud entre pares de puntos de datos con aristas posiblemente ponderadas. Estos algoritmos se dividen en tres pasos: creación del grafo, ponderación del grafo (matriz de pesos) e inferencia (se refiere al proceso de asignar etiquetas o categorías a los nodos no etiquetados en un grafo utilizando la información de los nodos etiquetados y la estructura del grafo).
 \subsubsection{Construccion de grafos}
 El primer paso es la construcción de la matriz de adyacencia, que indica la presencia de aristas entre pares de nodos. Existen tres métodos posibles de construcción de grafos:
 \begin{itemize}
 	\item $\varepsilon$ neighbourhood: conecta cada nodo a todos los nodos a los que la distancia es como máximo $\varepsilon$. La medida de distancia normal suele ser euclídea. La estructura depende en gran medida de la elección de $\varepsilon$ y de la medida de distancia.
 	
-	\item K - nearest neighbours: cada nodo se conecta a sus $k$ vecinos más cercanos según alguna medida de distancia. Ocurre un problema que tiene dos soluciones: symmetric k nearest neighbours, que construye una arista si $i$ o $j$ estan en el “vecindario” de k y mutual k-nearest neighbours que la construye si ambos están en la k vecindad del otro.
+	\item $k$ - nearest neighbours: cada nodo se conecta a sus $k$ vecinos más cercanos según alguna medida de distancia. Ocurre un problema que tiene dos soluciones: symmetric $k$ nearest neighbours, que construye una arista si $i$ o $j$ estan en el “vecindario” de $k$ y mutual $k$-nearest neighbours que la construye si ambos están en la $k$ vecindad del otro.
 	
-	\item b-matching: el anterior método suele originar grafos en los que cada nodo no tiene k vecinos, lo que está demostrado que afecta al rendimiento del clasificador. El objetivo del b-matching es encontrar el subconjunto de aristas en el grafo completo de forma que cada nodo tenga grado b y la suma de los pesos de las aristas sea máxima.
+	\item $b$-matching: el anterior método suele originar grafos en los que cada nodo no tiene $k$ vecinos, lo que está demostrado que afecta al rendimiento del clasificador. El objetivo del $b$-matching es encontrar el subconjunto de aristas en el grafo completo de forma que cada nodo tenga grado $b$ y la suma de los pesos de las aristas sea máxima.
 \end{itemize}
 
-El segundo paso de la construcción del grafo es ponderarlo (dar pesos a las aristas). En primer lugar, se construye una matriz de adyacencia completa utilizando una función k y después se obtiene la matriz de pesos W mediante sparsification (eliminar aristas de la matriz). Uno de los métodos más populares es el de ponderación de bordes gausiano. Otro es el de linear neighbourhood propagation (LNP) que se basa en que cualquier punto de datos pueda aproximarse como una combinación lineal de sus vecinos.
+El segundo paso de la construcción del grafo es ponderarlo (dar pesos a las aristas). En primer lugar, se construye una matriz de adyacencia completa utilizando una función k y después se obtiene la matriz de pesos W mediante \textit{sparsification}\footnote{Sparsification es el proceso de eliminar elementos menos significativos de una matriz o aristas en un grafo, con el fin de hacer la estructura más esparcida y eficiente en términos de almacenamiento y procesamiento.}. Uno de los métodos más populares es el de ponderación de bordes gausiano. Otro es el de linear neighbourhood propagation (LNP) que se basa en que cualquier punto de datos pueda aproximarse como una combinación lineal de sus vecinos.
 El algoritmo LNP asume una estructura del grafo conocida y fija. Sin embargo, en lugar de fijar la estructura del grafo, también se puede inferir simultáneamente la estructura del grafo y los pesos de las aristas reconstruyendo linealmente los nodos basándose en todos los demás nodos.
 
 \subsubsection{Fase de inferencia}
 Existen diferentes maneras de llevar a cabo esta fase:
 \begin{itemize}
-	\item Asignación de etiquetas duras: grafo min-cut: se añade un único nodo fuente $v$+, conectado con peso infinito a los puntos de datos positivos y un único nodo $v$- conectado con peso infinito a los puntos de datos negativos. Por lo tanto, determinar el corte mínimo consiste en encontrar un conjunto de aristas con un peso combinado mínimo que, cuando se eliminan, dan como resultado un grafo sin rutas desde el nodo de origen hasta el noso de destino. Los nodos conectados a v+ se etiquetan como positivos y los conectados a v- como negativos. Este enfoque puede conducir a que casi todos los datos se etiqueten con la misma.
+	\item Asignación de etiquetas duras: grafo min-cut: se añade un único nodo fuente $v+$, conectado con peso infinito a los puntos de datos positivos y un único nodo $v-$ conectado con peso infinito a los puntos de datos negativos. Por lo tanto, determinar el corte mínimo consiste en encontrar un conjunto de aristas con un peso combinado mínimo que, cuando se eliminan, dan como resultado un grafo sin rutas desde el nodo de origen hasta el noso de destino. Los nodos conectados a $v+$ se etiquetan como positivos y los conectados a $v-$ como negativos. Este enfoque puede conducir a que casi todos los datos se etiqueten con la misma.
 	\item Asignación probabilística de etiquetas: campos aleatorios de Markov: el anterior método solo produce etiquetas de clase y no probabilidades, lo que es una gran desventaja. La idea principal detrás de los CRF es calcular la probabilidad conjunta de todas las etiquetas dadas las observaciones y las relaciones entre etiquetas vecinas. Esto se hace utilizando una función de energía que mide cuán compatibles son las etiquetas y las características observadas. Luego, se utiliza una distribución exponencial para traducir la función de energía en una distribución de probabilidad.
 	\item Asignación probabilística eficiente de etiquetas: campos aleatorios gaussianos: La principal mejora de los GRFs con respecto a los MRFs es que los GRFs permiten una estimación más eficiente de las probabilidades de asignación de etiquetas.
-	\item Local and global consistency: La última propuesta no maneja bien el ruido de las etiquetas ya que las etiquetas verdaderas se fijan a los puntos de datos etiquetados. En segundo lugar, en los grafos irregulares, la influencia de los nodos con un grado alto es relativamente grande. La solución es el método LGC. El primer problema se resuelve penalizando el error cuadratico entre la etiqueta verdadera y la etiqueta estimada. El segundo problema se resuelve regularizando el termino de penalización para los puntos de datos no etiquetados mediante los grados de los nodos.
+	\item\textit{ Local and global consistency}: La última propuesta no maneja bien el ruido de las etiquetas ya que las etiquetas verdaderas se fijan a los puntos de datos etiquetados. En segundo lugar, en los grafos irregulares, la influencia de los nodos con un grado alto es relativamente grande. La solución es el método LGC. El primer problema se resuelve penalizando el error cuadratico entre la etiqueta verdadera y la etiqueta estimada. El segundo problema se resuelve regularizando el termino de penalización para los puntos de datos no etiquetados mediante los grados de los nodos.
 	
 \end{itemize}
 
 
-\subsection{Ensembles}
-Los sistemas basados en \textit{ensembles} se refieren al proceso de combinar las opiniones de un conjunto de modelos diferentes para tomar una decisión final. Se ha descubierto que los \textit{ensembles} pueden producir resultados más favorables en comparación con los sistemas de un solo experto en una amplia gama de aplicaciones. La creación de un \textit{ensemble} implica generar componentes individuales del sistema y luego combinar sus clasificaciones. En este contexto, se destacan dos técnicas principales: el \textit{bagging} y el \textit{boosting}~\cite{ensembles}.
-
-\subsubsection{Bagging}
-El \textit{Bagging}, o \textit{Bootstrap Aggregating}, es una técnica que mejora la estabilidad y precisión de los algoritmos de aprendizaje automático. Funciona mediante la creación de múltiples versiones de un predictor y utilizando estos para obtener un conjunto agregado. Se generan diferentes conjuntos de entrenamiento, cada uno mediante muestreo con reemplazo del conjunto original, y se entrena un modelo en cada uno de ellos. La decisión final se toma por mayoría de votos para clasificación o el promedio en regresión. Esta técnica es particularmente efectiva con modelos que tienen alta varianza.
-\imagen{../img/memoria/bagging.png}{Concepto de bagging \cite{web:boostingvsbaging}}{1}
-
-\subsubsection{Boosting}
-El \textit{Boosting} es un enfoque que construye secuencialmente un conjunto de modelos; cada nuevo modelo se enfoca en corregir los errores cometidos por los modelos anteriores. AdaBoost, uno de los algoritmos de \textit{boosting} más conocidos, ajusta los pesos de las instancias incorrectamente clasificadas para que modelos posteriores se enfoquen más en ellas. A diferencia del \textit{bagging}, el \textit{boosting} puede aumentar el riesgo de sobreajuste si el conjunto de datos es ruidoso, pero generalmente produce modelos más precisos.
-\imagen{../img/memoria/boosting.png}{Concepto de boosting \cite{web:boostingvsbaging}}{1}
-
-\section{\textit{Co-Forest}}
+\subsection{\textit{Co-Forest}}
 El co-forest es una versión semisupervisada del método de clasificación \textit{random forest}, diseñado para usar tanto datos etiquetados como no etiquetados. En este método, los árboles de decisión (que conforman el \textit{random forest}) se entrenan en un proceso iterativo utilizando subconjuntos de datos etiquetados junto con pseudo-etiquetas seleccionadas de los datos no etiquetados basadas en su alta confiabilidad. La confiabilidad de estas pseudo-etiquetas es evaluada por todos los árboles del ensemble excepto el árbol que está siendo entrenado en ese momento, denominado el conjunto concomitante. El entrenamiento continúa hasta que se alcanza un criterio de parada definido como el \textit{Out Of Bag Error}(OOBE), que mide el error de predicción del conjunto concomitante usando solo aquellos árboles que no incluyeron una muestra específica de los datos etiquetados en su entrenamiento.~\cite{IEEE:CoForest}. A continuación se muestra el pseudocódigo y una explicación más extensa:
 \begin{algorithm}
 	\label{alg:Co-Forest}
@@ -152,7 +142,7 @@ El co-forest es una versión semisupervisada del método de clasificación \text
 	\BlankLine
 	\For{$i$ = 0, ..., $n-1$}{
 		$L_{i} \leftarrow$ \textit{Bootstrap}($L$)\\
-		$h_i$ = EntrenarArbol($L_{i}$)\\
+		$h_i$ = EntrenarArbol($L_{i}$, $p$)\\
 		$\hat{e}_{i,t} \leftarrow 0.5$\\
 		$W_{i,0} \leftarrow$ $W_{inicial}$  \\
 	}
@@ -186,11 +176,23 @@ El co-forest es una versión semisupervisada del método de clasificación \text
 		}
 	}
 	\Return{$H$}
-	\caption{\textit{Co-Forest Fit}}
+	\caption{\textit{Co-Forest}}
 \end{algorithm}
 
+\clearpage
 
-\section{Diseño web}
+\section{Ensembles}
+Los sistemas basados en \textit{ensembles} se refieren al proceso de combinar las opiniones de un conjunto de modelos diferentes para tomar una decisión final. Se ha descubierto que los \textit{ensembles} pueden producir resultados más favorables en comparación con los sistemas de un solo experto en una amplia gama de aplicaciones. La creación de un \textit{ensemble} implica generar componentes individuales del sistema y luego combinar sus clasificaciones. En este contexto, se destacan dos técnicas principales: el \textit{bagging} y el \textit{boosting}~\cite{ensembles}.
+
+\subsection{Bagging}
+El \textit{Bagging}, o \textit{Bootstrap Aggregating}, es una técnica que mejora la estabilidad y precisión de los algoritmos de aprendizaje automático. Funciona mediante la creación de múltiples versiones de un predictor y utilizando estos para obtener un conjunto agregado. Se generan diferentes conjuntos de entrenamiento, cada uno mediante muestreo con reemplazo del conjunto original, y se entrena un modelo en cada uno de ellos. La decisión final se toma por mayoría de votos para clasificación o el promedio en regresión. Esta técnica es particularmente efectiva con modelos que tienen alta varianza.
+\imagen{../img/memoria/bagging.png}{Concepto de bagging \cite{web:boostingvsbaging}}{1}
+
+\subsection{Boosting}
+El \textit{Boosting} es un enfoque que construye secuencialmente un conjunto de modelos; cada nuevo modelo se enfoca en corregir los errores cometidos por los modelos anteriores. AdaBoost, uno de los algoritmos de \textit{boosting} más conocidos, ajusta los pesos de las instancias incorrectamente clasificadas para que modelos posteriores se enfoquen más en ellas. A diferencia del \textit{bagging}, el \textit{boosting} puede aumentar el riesgo de sobreajuste si el conjunto de datos es ruidoso, pero generalmente produce modelos más precisos.
+\imagen{../img/memoria/boosting.png}{Concepto de boosting \cite{web:boostingvsbaging}}{1}
+
+
 
 
 
