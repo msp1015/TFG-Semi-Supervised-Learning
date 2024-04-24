@@ -4,13 +4,13 @@ En la sección que sigue, se abordan los aspectos más significativos que han ma
 \section{Trabajo Preexistente}
 La elección de este trabajo se realiza por el gran interés en la inteligencia artificial y el aprendizaje automático, pero también por el hecho de que ya existía un trabajo realizado por otro alumno un año atrás (David Martínez Acha -- \url{https://vass.dmacha.dev/}). Esto ayudaría mucho en el desarrollo ya que serviría como referencia para muchas dudas.
 
-El plan original era hacer mi propia página web educativa desde cero, pero mostrando otra serie de algoritmos (ensembles y grafos) en lugar de los ya existentes. Con el desarrollo del primer algoritmo surge la idea por parte del tutor de basar el proyecto en esta otra página desarrollada por David Martinez. De esta manera, el tiempo que hubiera empleado en aprender e implementar la web desde cero, se emplea en comprender todo el código hecho por David, aprovechando también la gestión de cuentas de usuarios. Aún así, se deja total libertad para cambiar e implementar lo que haga falta para mejorar el proyecto original.
+El plan original era hacer mi propia página web educativa desde cero, pero mostrando otra serie de algoritmos (ensembles y grafos) en lugar de los ya existentes. Con el desarrollo del primer algoritmo surge la idea por parte del tutor de basar el proyecto en esta otra página desarrollada por David Martínez. De esta manera, el tiempo que hubiera empleado en aprender e implementar la web desde cero, se emplea en comprender todo el código programado por David, aprovechando también la gestión de cuentas de usuarios. Aún así, se deja total libertad para cambiar e implementar lo que haga falta para mejorar el proyecto original.
 
 El tiempo empleado en ajustarse al nuevo código fue de dos sprints, ya que no solo trataba de leer código, sino de comprender las técnicas de HTML, css y javascript que se utilizan, junto con bibliotecas como \textit{Bootstrap}.
 Aún así, el tiempo ganado es considerable y da pie a poder implementar más algoritmos y pensar en ideas que mejoran la web.
 Inicialmente se piensa que con un fork a su repositorio de GitHub,~\cite{GH:VASS}, se puede trabajar mejor, pero de esta manera se perderían las tareas y commits hechos hasta la fecha en el repositorio de este proyecto. Por esto se decide descargar el contenido y copiarlo a el proyecto ya en desarrollo.
 
-La documentación de David, \cite{TFG:David}, sirve de gran ayuda y también se heredan partes de ella, como los trabajos relacionados y conceptos teóricos. También se tiene en cuenta las líneas de trabajo futuras desarrolladas para poder implementarlas en este trabajo.
+La documentación de David~\cite{TFG:David}, sirve de gran ayuda y también se heredan partes de ella, como los trabajos relacionados y conceptos teóricos. También se tiene en cuenta las líneas de trabajo futuras desarrolladas para poder implementarlas en este trabajo.
 \subsubsection{Cambios en la web}
 Gran parte de la web se reutiliza, pero a medida que se desarrolla el proyecto surgen nuevas ideas que modifican parte del comportamiento de la web que ya existía. Esta sección servirá para remarcar esas pequeñas o grandes modificaciones que sufre el diseño inicial y cual es la idea de esta nueva funcionalidad. 
 La primera idea de cambio que surge es la de modificar la funcionalidad de configuración de un algoritmo. Visualizando páginas web, se da con una página que muestra algoritmos de aprendizaje automático~ \cite{web:ml-visualizer}, pero no de la misma manera que David. En esta página se permite configurar y ver resultados y estadísticas en una única ventana, con la gran diferencia de que no muetra el paso a paso en cada algoritmo, sino directamente el resultado final de la clasificación.
@@ -28,5 +28,59 @@ En esta sección se comentarán los aspectos más relevantes en la implementaci�
 \subsection{Co-Forest}
 En la implementación de este algoritmo de nuevo se parte con una gran ventaja. El año anterior otra alumna había implementado el mismo algoritmo para otro proyecto. Dentro de esta aplicación, Patricia Hernando, hizo sus propios estudios, los cuales se han aprovechado en este trabajo.
 Basado fuertemente en el pseudocodigo del artículo \cite{IEEE:CoForest}, la implementación se ve alterada por el parámetro W, el cual establece la confianza en las muestras para ser seleccionada o no. Resumiendo el estudio de Patricia, como se puede ver en el pseudocodigo del articulo, hay una ecuación donde el valor de W esta dividiendo. Esto es un problema ya que según establece el algoritmo puede llegar a valer cero, provocando así una indeterminación. Uno de los estudios de Patricia determina que una de las mejores soluciones a esto es iniciar el parámetro W al minimo entre 100 y el 10\% de la cantidad de muestras etiquetadas que hay. Como se puede ver en el pseudocodigo de la sección tres, esto se aprovecha, evitando así posibles problemas.
-Para determinar si el algoritmo definitivo es bueno, se compara con el de Patricia, evaluando como varía el valor de \textit{accuracy} en cada iteración del algoritmo. Los resultados se muestran en las siguientes gráficas:
+Para determinar si el algoritmo definitivo es bueno, se compara con el de Patricia, evaluando como varía el valor de \textit{accuracy} en cada iteración del algoritmo. Los resultados se muestran en la figura \ref{fig:../img/memoria/ComparacionCoForest.png}
 \imagenflotante{../img/memoria/ComparacionCoForest.png}{Comparación algoritmo CoForest utilizando diversos datasets}{1}
+
+\section{Comparativa de bibliotecas de grafos}
+Cuando se quiere implementar un algoritmo basado en grafos, lo ideal es utilizar una biblioteca que ayude a automatizar y mejorar el código. En \textit{Python}, existen varias bibliotecas que ayudan en esta tarea, tres de ellas son: \textit{\textbf{NetworkX}}, \textit{\textbf{igraph}} y \textit{\textbf{graph-tool}}. En esta sección se resumirá el estudio realizado para elegir la opción que mejor se adapte a las especificaciones.
+
+Todas ellas ayudan en la construcción de grafos, pero para empezar es necesario dejar claro para que se va a utilizar esta biblioteca. En cuanto al tamaño de los grafos, no necesariamente se necesita algo que maneje grafos muy grandes (más de 10000 nodos) de manera efectiva. La mayoría de \textit{datasets} utilizados tendrán muchas menos entradas de datos. En cuanto a la velocidad, se busca algo que sea efectivo pero sin necesidad de buscar lo mejor o más rápido, ya que los datos de entrada no van a suponer un gran esfuerzo. También hay que tener en cuenta la integración que se llevará a cabo posteriormente en la web, posiblemente con herramientas como \textit{d3.js}.
+
+Tras una primera búsqueda queda claro que la herramienta de \textit{graph-tool} tiene un objetivo mucho más amplio y está pensado para proyectos con grafos grandes. De hecho es una herramienta que no se instala con \textit{pip} sino que necesita otra instalación.
+
+Por lo tanto, descartada una opción, se realizará una pequeña prueba para llegar a una conclusión. A continuación se muestra el pseudocódigo utilizado para la comparación de herramientas.
+\clearpage
+\begin{algorithm}
+	\label{testGraph}
+	\KwIn{Dataset de prueba $L$ \textit{(digits)}}
+	\KwOut{Grafo $G$ en formato \textit{JSON}}
+	\BlankLine
+	\textit{timer} $\leftarrow$ \textit{startTimer}()\\
+	$G \leftarrow \emptyset$\\
+	$D \leftarrow$ \textit{pairwiseDistances}($L$) // Matriz de distancias\\
+	\For{$i = 0$ \KwTo $|L|-1$}{
+		// Agregar vértices al grafo para cada muestra de $L$\\
+		$G \leftarrow$ \textit{addNode}($i$)\\
+	}
+	$k \leftarrow 5$\\
+	\For{$i = 0$ \KwTo $|L|-1$}{
+		$kNN \leftarrow$ \textit{getKNearestNeighbors}($D[i]$, $k$)\\
+		\For{$j \in kNN$}{
+			// Añadir arista entre $i$ y $j$ con el peso de la distancia\\
+			$G \leftarrow$ \textit{addEdge}($i$, $j$, $D[i][j]$)\\
+		}
+	}
+	\textit{timer} $\leftarrow$ \textit{stopTimer}()\\
+	\textit{print}("Tiempo de construcción y kNN: ", \textit{timer})\\
+	$JSONGraph \leftarrow$ \textit{convertToJSON}($G$)\\
+	\Return{$G$}
+	\caption{\textit{NetworkX vs igraph}}
+\end{algorithm}
+
+Lo que se ha querido representar es el tiempo que tarda en construir el grafo y calcular los $k$ vecinos más cercanos \textit{(kNN)} para cada nodo. A su vez también se ha estudiado cuánta facilidad existe a la hora de convertir el grafo a formato \textit{JSON}, para que pueda ser procesado después por herramientas como \textit{d3.js}.
+
+Los resultados obtenidos han sido los siguientes:
+\begin{verbatim}
+	Ejecución 1:
+	NetworkX: Construction and kNN time: 0.0044 seconds
+	igraph: Construction and kNN time: 0.0134 seconds
+	
+	Ejecución 2:
+	NetworkX: Construction and kNN time: 0.0020 seconds
+	igraph: Construction and kNN time: 0.0111 seconds
+\end{verbatim}
+
+A su vez, en el uso del formato \textit{JSON} se encuentra más útil el uso de NetworkX ya que incluye un método propio de exportación (\textit{nx.readwrite.json\_graph}).
+Por el contrario, con \textit{igraph}, habría que constuir un diccionario recorriendo los nodos y enlaces y posteriormente pasarlo a formato \textit{JSON}.
+
+En conclusión, se va a utilizar la libería \textit{\textbf{NetworkX}} por las ligeras mejoras en las pruebas realizadas y porque la curva de aprendizaje es algo menor que en el resto de casos.
