@@ -3,9 +3,12 @@ import networkx as nx
 from collections import deque, defaultdict
 import numpy as np
 from scipy.spatial import distance_matrix
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
 
 class Gbili:
-    def __init__( self, datos_se, datos_e, etiquetas_e, K):
+    def __init__( self, datos_se, datos_e, etiquetas_e, list_colors, K):
         self.datos_sin_etiquetar = datos_se
         self.datos_etiquetados = datos_e
         self.K = K
@@ -17,6 +20,7 @@ class Gbili:
         print("MATRIZ DE DISTANCIAS: ", self.matriz_distancias)
         self.grafo = {}
         
+        self.etiquetas_modificadas = list_colors
         #Inferencia
         self.etiquetas_etiquetados = etiquetas_e
         self.n_categorias = len(np.unique(self.etiquetas_etiquetados))
@@ -45,16 +49,19 @@ class Gbili:
         print()        
         self.conectar_componentes(componentes, lista_knn)
         print("GRAFO CON COMPONENTES CONECTADOS: ", self.grafo)
-        grafo_2 = self.grafo
-        
+        grafo_2 = self.grafo.copy()
+        print("Componentes despues de conectar: ", self.encontrar_componentes())
         if grafo_1 == grafo_2:
             print("Los grafos son iguales antes y despues  de conectar los componentes")
         
         # Configurar la figura y los ejes
         fig, axs = plt.subplots(1, 2, figsize=(12, 6))  # 1 fila, 2 columnas
         
-        self.dibujar_grafo(grafo_1, axs[0], "Grafo antes de conectar componentes")
-        self.dibujar_grafo(grafo_2, axs[1], "Grafo después de conectar componentes")
+        # convertir vertices en array
+        colores_map = np.array(self.etiquetas_modificadas)
+        print("COLORES MAP: ", colores_map)
+        self.dibujar_grafo(grafo_1, colores_map, axs[0],  "Grafo antes de conectar componentes")
+        self.dibujar_grafo(grafo_2, colores_map, axs[1], "Grafo después de conectar componentes")
         plt.show()
         return self.grafo
         
@@ -101,6 +108,10 @@ class Gbili:
             lista_mknn (dict): contiene los pares mutuos de vecinos más cercanos.
         """
         for i in lista_mknn:
+            # Si el nodo no tiene vecinos mutuos, se agregan como elementos solitarios
+            if not lista_mknn[i]:
+                self.grafo[i] = []
+                continue
             for j in lista_mknn[i]:
                 min_distancia = float('inf')
                 min_enlace = None
@@ -192,7 +203,7 @@ class Gbili:
                             print("Conectando nodos: ", v, vk)
 
            
-    def dibujar_grafo(self, grafo, ax, titulo):
+    def dibujar_grafo(self, grafo, colores_map, ax, titulo):
         # Crear un objeto grafo de NetworkX
         G = nx.Graph()
 
@@ -202,10 +213,16 @@ class Gbili:
             for vecino in vecinos:
                 G.add_edge(nodo, vecino)
                 
-        import matplotlib.pyplot as plt
+        colors = list(map(lambda x: 'grey' if x==-1 else 'red' if x==0 else 'blue' if x==1 else 'green', colores_map))        # Dibujar el grafo
+        nx.draw(G, ax=ax, with_labels=True, node_color=colors, edge_color='gray', node_size=30, font_size=10, font_weight='bold')
+            
+        # Crear una leyenda
+        custom_lines = [Line2D([0], [0], color='red', lw=3),
+                        Line2D([0], [0], color='blue', lw=3),
+                        Line2D([0], [0], color='green', lw=3),
+                        Line2D([0], [0], color='grey', lw=3)]
 
-        # Dibujar el grafo
-        nx.draw(G, ax=ax, with_labels=True, node_color='lightblue', edge_color='gray', node_size=30, font_size=10, font_weight='bold')
+        ax.legend(custom_lines, ['0', '1', '2', 'Desconocido'])
         ax.set_title(titulo)
         
     def inicializar_Y(self):
@@ -218,12 +235,23 @@ class Gbili:
         return Y       
     
     def construir_matriz_afinidad(self, sigma=1):
+        matriz_distancias_grafo = self.construir_matriz_distancias_grafo()
         # sigma es el parámetro de escala para la función exponencial
-        W = np.exp(-self.matriz_distancias**2 / (2 * sigma**2))
+        W = np.exp(-matriz_distancias_grafo**2 / (2 * sigma**2))
         np.fill_diagonal(W, 0)  # Poner la diagonal a 0
         return W  
         
-    
+    def construir_matriz_distancias_grafo(self):
+        # Crear una matriz de ceros del tamaño correcto
+        matriz_distancias = np.zeros((len(self.grafo), len(self.grafo)))
+
+        # Rellenar la matriz con 1s donde hay una arista en el grafo
+        for nodo, vecinos in self.grafo.items():
+            for vecino in vecinos:
+                matriz_distancias[nodo][vecino] = 1
+        np.savetxt("matriz_distancias.txt", matriz_distancias, fmt="%d")
+        return matriz_distancias
+        
     def normalizar_afinidad(self, W):
         D = np.diag(W.sum(axis=1))
         D_inversa = np.diag(1 / np.sqrt(D.diagonal()))
@@ -250,8 +278,6 @@ class Gbili:
     
     
     
-    
-    
 ## Ejemplo de uso
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
@@ -259,15 +285,29 @@ iris = load_iris()
 
 x = iris.data
 y = iris.target
-K = 5
+K = 7
 
-L, U, L_, U_ = train_test_split(x, y, test_size=0.7, stratify=y)
-print(L_)
-solver = Gbili(U, L, L_, K)
+L, U, L_, U_ = train_test_split(x, y, test_size=0.5, stratify=y, random_state=42)
+U_labels = U_.copy()
+U_labels[:] = -1
+all_labels = np.concatenate((L_, U_labels))
+print("All labels: ", all_labels)
+print("L: ", L)
+print("U: ", U)
+print("L_: ", L_)
+print("U_: ", U_)
+
+
+
+solver = Gbili(U, L, L_,all_labels, K)
 grafo = solver.construir_grafo()
 predicciones = solver.inferir_etiquetas()
+
+
+# TODO Para comparar habria que quitar los que ya conoce
+predicciones = predicciones[len(L):]
 print("Predicciones: ", predicciones)
-e = np.concatenate((L_, U_))
-print("Etiquetas reales: ", e)
-print("Accuracy: ", np.mean(predicciones == e))
+#e = np.concatenate((L_, U_))
+print("Etiquetas reales: ", U_)
+print("Accuracy: ", np.mean(predicciones == U_))
 
