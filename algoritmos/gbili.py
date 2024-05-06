@@ -5,8 +5,7 @@ import numpy as np
 from scipy.spatial import distance_matrix
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-
-
+from copy import deepcopy
 class Gbili:
     def __init__( self, datos_se, datos_e, etiquetas_e, list_colors, K):
         self.datos_sin_etiquetar = datos_se
@@ -14,10 +13,10 @@ class Gbili:
         self.K = K
         #Union de los nodos etiquetados y no etiquetados
         self.vertices = np.concatenate((self.datos_etiquetados, self.datos_sin_etiquetar), axis=0)
-        
+        print("Vertices: ", self.vertices)
+        print()
         self.nodos_etiquetados = range(len(self.datos_etiquetados))
         self.matriz_distancias = distance_matrix(self.vertices, self.vertices)
-        print("MATRIZ DE DISTANCIAS: ", self.matriz_distancias)
         self.grafo = {}
         
         self.etiquetas_modificadas = list_colors
@@ -26,42 +25,50 @@ class Gbili:
         self.n_categorias = len(np.unique(self.etiquetas_etiquetados))
         print(np.unique(self.etiquetas_etiquetados))
         self.Y = self.inicializar_Y()
-        
+
+
     def construir_grafo(self):
         """_summary_
         """
+        # Configurar la figura y los ejes
+        fig, axs = plt.subplots(2, 2, figsize=(12, 6))  # 2 fila, 2 columnas
+        colores_map = np.array(self.etiquetas_modificadas)
+
         
         lista_knn = self.encuentra_knn()
         print("LISTA KNN: ", lista_knn)
         print()
+        self.dibujar_grafo(lista_knn, colores_map, axs[0, 0], "K-NN")
         lista_mknn = self.encuentra_mknn(lista_knn)
         print("LISTA MKNN: ", lista_mknn)
         print()
+        self.dibujar_grafo(lista_mknn, colores_map, axs[0, 1], "Mutual K-NN")
         self.conectar_minima_distancia(lista_mknn)
         #A esta altura debe haber varios subgrafos desconectados en el grafo
         print("GRAFO: ", self.grafo)
         print()
-        
-        grafo_1 = self.grafo.copy()
+        if self.grafo == lista_mknn:
+            print("El grafo es igual a lista_mknn")
+        grafo_1 = deepcopy(self.grafo)
         # Componente = subgrafo
         componentes = self.encontrar_componentes()
         print("COMPONENTES: ", componentes)
         print()        
         self.conectar_componentes(componentes, lista_knn)
         print("GRAFO CON COMPONENTES CONECTADOS: ", self.grafo)
-        grafo_2 = self.grafo.copy()
+        print()        
+        grafo_2 = deepcopy(self.grafo)
         print("Componentes despues de conectar: ", self.encontrar_componentes())
-        if grafo_1 == grafo_2:
-            print("Los grafos son iguales antes y despues  de conectar los componentes")
         
-        # Configurar la figura y los ejes
-        fig, axs = plt.subplots(1, 2, figsize=(12, 6))  # 1 fila, 2 columnas
-        
-        # convertir vertices en array
-        colores_map = np.array(self.etiquetas_modificadas)
-        print("COLORES MAP: ", colores_map)
-        self.dibujar_grafo(grafo_1, colores_map, axs[0],  "Grafo antes de conectar componentes")
-        self.dibujar_grafo(grafo_2, colores_map, axs[1], "Grafo después de conectar componentes")
+        self.dibujar_grafo(grafo_1, colores_map, axs[1, 0], "Grafo antes de conectar componentes")
+        self.dibujar_grafo(grafo_2, colores_map, axs[1, 1], "Grafo después de conectar componentes")
+        # Crear una leyenda
+        custom_lines = [Line2D([0], [0], color='yellow', lw=3),
+                        Line2D([0], [0], color='blue', lw=3),
+                        Line2D([0], [0], color='green', lw=3),
+                        Line2D([0], [0], color='grey', lw=3)]
+
+        fig.legend(custom_lines, ['0', '1', '2', 'Desconocido'])
         plt.show()
         return self.grafo
         
@@ -120,13 +127,19 @@ class Gbili:
                     if d < min_distancia:
                         min_distancia = d
                         min_enlace = (i, j)
-                if min_enlace:
-                    # Si el nodo no está en el grafo, se agrega
-                    if min_enlace[0] not in self.grafo:
-                        self.grafo[min_enlace[0]] = []
-                    # Se conectan los nodos
+            if min_enlace:
+                # Si el nodo no está en el grafo, se agrega
+                if min_enlace[0] not in self.grafo:
+                    self.grafo[min_enlace[0]] = []
+                if min_enlace[1] not in self.grafo:
+                    self.grafo[min_enlace[1]] = []
+                # Se conectan los nodos
+                if min_enlace[1] not in self.grafo[min_enlace[0]]:
                     self.grafo[min_enlace[0]].append(min_enlace[1])
-        
+                if min_enlace[0] not in self.grafo[min_enlace[1]]:
+                    self.grafo[min_enlace[1]].append(min_enlace[0])
+                    
+                    
     def encontrar_componentes(self):
         """ Encuentra los componentes del grafo.
         Utiliza BFS (Breadth First Search) o busqueda en anchura 
@@ -195,13 +208,12 @@ class Gbili:
                     componente_vk = comp[vk]
                     # Verificar si la componente de vk tiene nodos etiquetados
                     if comp_etiquetados[componente_vk]:
-                        # Asegurarse de que ambos nodos estén en el grafo y conectarlos
-                        if v not in self.grafo:
-                            self.grafo[v] = []
+                            
                         if vk not in self.grafo[v]:
                             self.grafo[v].append(vk)
                             print("Conectando nodos: ", v, vk)
-
+                        if v not in self.grafo[vk]:
+                            self.grafo[vk].append(v)
            
     def dibujar_grafo(self, grafo, colores_map, ax, titulo):
         # Crear un objeto grafo de NetworkX
@@ -213,16 +225,10 @@ class Gbili:
             for vecino in vecinos:
                 G.add_edge(nodo, vecino)
                 
-        colors = list(map(lambda x: 'grey' if x==-1 else 'red' if x==0 else 'blue' if x==1 else 'green', colores_map))        # Dibujar el grafo
-        nx.draw(G, ax=ax, with_labels=True, node_color=colors, edge_color='gray', node_size=30, font_size=10, font_weight='bold')
+        colors = list(map(lambda x: 'grey' if x==-1 else 'yellow' if x==0 else 'blue' if x==1 else 'green', colores_map))        # Dibujar el grafo
+        nx.draw(G, ax=ax, with_labels=True, node_color=colors, edge_color='gray', node_size=50, font_size=10, font_weight='bold')
             
-        # Crear una leyenda
-        custom_lines = [Line2D([0], [0], color='red', lw=3),
-                        Line2D([0], [0], color='blue', lw=3),
-                        Line2D([0], [0], color='green', lw=3),
-                        Line2D([0], [0], color='grey', lw=3)]
-
-        ax.legend(custom_lines, ['0', '1', '2', 'Desconocido'])
+        
         ax.set_title(titulo)
         
     def inicializar_Y(self):
@@ -259,7 +265,7 @@ class Gbili:
         return S   
         
     def iterar_F(self, S, alpha=0.5, tol=1e-6):
-        F = self.Y.copy()
+        F = deepcopy(self.Y)
         while True: # TODO agregar condición de parada, ya que puede no converger o tardar mucho
             F_next = alpha * S @ F + (1 - alpha) * self.Y
             if np.linalg.norm(F_next - F) < tol:
@@ -288,26 +294,45 @@ y = iris.target
 K = 7
 
 L, U, L_, U_ = train_test_split(x, y, test_size=0.5, stratify=y, random_state=42)
-U_labels = U_.copy()
+U_labels = deepcopy(U_)
 U_labels[:] = -1
 all_labels = np.concatenate((L_, U_labels))
-print("All labels: ", all_labels)
+# print("All labels: ", all_labels)
+# print("L: ", L)
+# print("U: ", U)
+# print("L_: ", L_)
+# print("U_: ", U_)
+print("X: ", x)
 print("L: ", L)
 print("U: ", U)
-print("L_: ", L_)
-print("U_: ", U_)
 
+def encontrar_indices_multiples(vectores, subconjuntos):
+    # Inicializar una máscara de False con longitud igual al número de filas en vectores
+    mask_total = np.zeros(len(vectores), dtype=bool)
+    # Iterar sobre cada subconjunto
+    for subconjunto in subconjuntos:
+        # Crear una máscara para cada subconjunto
+        mask = np.all(np.equal(vectores, subconjunto), axis=1)
+        # Combinar la máscara con la máscara total usando OR lógico
+        mask_total = np.logical_or(mask_total, mask)
+    # Obtener los índices donde hay coincidencias
+    indices = np.where(mask_total)[0]
+    return indices
 
+# Llamar a la función y obtener el resultado
+indices = encontrar_indices_multiples(x, L)
+print("Índices de los subconjuntos:", indices)
 
 solver = Gbili(U, L, L_,all_labels, K)
 grafo = solver.construir_grafo()
-predicciones = solver.inferir_etiquetas()
+# predicciones = solver.inferir_etiquetas()
 
 
-# TODO Para comparar habria que quitar los que ya conoce
-predicciones = predicciones[len(L):]
-print("Predicciones: ", predicciones)
-#e = np.concatenate((L_, U_))
-print("Etiquetas reales: ", U_)
-print("Accuracy: ", np.mean(predicciones == U_))
+# # TODO Para comparar habria que quitar los que ya conoce
+# predicciones = predicciones[len(L):]
+# print("Predicciones: ", predicciones)
+# #e = np.concatenate((L_, U_))
+# print("Etiquetas reales: ", U_)
+# print("Accuracy: ", np.mean(predicciones == U_))
+
 
