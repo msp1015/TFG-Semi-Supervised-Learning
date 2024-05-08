@@ -14,6 +14,7 @@ from scipy.spatial import distance_matrix
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from copy import deepcopy
+from localglobalconsistency import LGC
 class Gbili:
     """ Algoritmo de construccion de grafos GBILI basado en el artículo:
     'Graph construction based on labeled instances for
@@ -59,8 +60,9 @@ class Gbili:
         self.matriz_distancias = distance_matrix(self.nodos, self.nodos)
         self.grafo = {}
 
-        # TODO: borrar
+        
         self.etiquetas_etiquetados = etiquetas[:len(datos_e)]
+        # TODO: borrar
         self.etiquetas_modificadas = np.concatenate((self.etiquetas_etiquetados, np.full(len(datos_se), -1)))
     def construir_grafo(self):
         """
@@ -93,9 +95,9 @@ class Gbili:
         print("Componentes antes de conectar: ", componentes) 
         self.conectar_componentes(componentes, lista_knn)
         print("GRAFO CON COMPONENTES CONECTADOS: ", self.grafo)
-        print()        
+        print()
         grafo_2 = deepcopy(self.grafo)
-        print("Componentes despues de conectar: ", self.encontrar_componentes())
+        # print("Componentes despues de conectar: ", self.encontrar_componentes())
 
         self.dibujar_grafo(grafo_1, colores_map, axs[1, 0], "Grafo antes de conectar componentes")
         self.dibujar_grafo(grafo_2, colores_map, axs[1, 1], "Grafo después de conectar componentes")
@@ -246,7 +248,6 @@ class Gbili:
 
                         if vk not in self.grafo[v]:
                             self.grafo[v].append(vk)
-                            print("Conectando nodos: ", v, vk)
                         if v not in self.grafo[vk]:
                             self.grafo[vk].append(v)
 
@@ -272,13 +273,13 @@ class Gbili:
     
     
 ## Ejemplo de uso
-from sklearn.datasets import load_iris
+from sklearn.datasets import load_iris, load_breast_cancer
 from sklearn.model_selection import train_test_split
 iris = load_iris()
-
-x = iris.data
-y = iris.target
-K = 5
+breast_cancer = load_breast_cancer()
+x = breast_cancer.data
+y = breast_cancer.target
+K = 7
 
 L, U, L_, U_ = train_test_split(x, y, test_size=0.7, stratify=y, random_state=42)
 
@@ -288,5 +289,12 @@ todas_etiquetas = np.concatenate((L_, U_))
 solver = Gbili(U, L,todas_etiquetas, K)
 grafo = solver.construir_grafo()
 
+inferecia = LGC(grafo, solver.nodos, solver.etiquetas_etiquetados, sigma=1, alpha=1, tol=1e-12)
+predicciones = inferecia.inferir_etiquetas()
 
-
+predicciones[len(L):]
+etiquetas_reales = todas_etiquetas[len(L):]
+accuracy = np.mean(predicciones[len(L):] == etiquetas_reales)
+print("Predicciones: ", predicciones[len(L):])
+print("Etiquetas reales: ", etiquetas_reales)
+print(f"Accuracy: {accuracy}")
