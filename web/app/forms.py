@@ -188,12 +188,6 @@ class FormConfiguracionCoForest(FormConfiguracionBase):
                              id="n_arboles",
                              default=10,
                              validators=[InputRequired(), NumberRange(min=1)])
-    W_inicial = SelectField(lazy_gettext('Initial weight'),
-                            name="W_inicial",
-                            id="W_inicial",
-                            choices=[('uniform', 'uniform'),
-                                     ('random', 'random')],
-                            validators=[InputRequired()])
     theta = IntegerRangeField(lazy_gettext('Threshold'),
                               name="theta",
                               id="theta",

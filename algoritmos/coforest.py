@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
-# """Este módulo contiene la implementación del algoritmo CoForest
+"""Este módulo contiene la implementación del algoritmo CoForest
 
-# @Autor:     Mario Sanz Pérez
-# @Fecha:     13/03/2024
-# @Versión:   1.1
-# @Nombre:    CoForest.py
-# """""
+@Autor:     Mario Sanz Pérez
+@Fecha:     23/04/2024
+@Versión:   1.2
+@Nombre:    CoForest.py
+"""""
 
 import numpy as np
 import pandas as pd
@@ -20,7 +19,7 @@ class CoForest:
     Using Undiagnosed Samples"
     """
 
-    def __init__(self, n, theta, W_inicial, params_arbol_decision, random_state=None):
+    def __init__(self, n, theta, params_arbol_decision, random_state=None):
         """Constructor de la clase CoForest
         Inicializa los parámetros necesarios para su ejecución.
         También se inicializan las variables necesarias para el seguimiento de
@@ -36,7 +35,6 @@ class CoForest:
 
         self.n_arboles = n
         self.theta = theta
-        self.W_inicial = W_inicial
         self.params_arbol_decision = params_arbol_decision
 
         self.errores = {}
@@ -47,7 +45,7 @@ class CoForest:
         self.L = None
         self.y_l = None
         self.U = None
-
+        
         if random_state is None:
             # Semilla aleatoria por defecto
             self.rng = np.random.RandomState()
@@ -106,7 +104,7 @@ class CoForest:
             self.datos_arbol_ind[i] = indices_datos
             self.bosque[i].fit(L_i, y_l_i)
             self.errores[i] = [0.5]
-            self.confianzas[i] = [min(0.1 * len(L), 100)]
+            self.confianzas[i] = [min(0.1 * len(self.L), 100)]
 
         t = 0
         e = self.errores
@@ -170,7 +168,7 @@ class CoForest:
         self.errores = e
         self.confianzas = W
 
-        return log, stats, specific_stats, t
+        return log, stats, specific_stats, t - 1
 
     def bootstrap(self, L, y_l, p=0.7):
         """Genera un conjunto de datos aleatorios con reemplazamiento.

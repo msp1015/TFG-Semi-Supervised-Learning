@@ -68,12 +68,10 @@ def datoscoforest():
     # Este form se construye desde inicializar.js con FormData
     n_arboles = int(request.form['n_arboles'])
     theta = int(request.form['theta'])
-    W_inicial = request.form['W_inicial']
-
     try:
         params_arbol_decision = obtener_parametros_clasificador(
             "DecisionTreeClassifier", "clasificador1")
-        st = CoForest(n_arboles, theta/100, W_inicial, params_arbol_decision)
+        st = CoForest(n_arboles, theta/100, params_arbol_decision)
 
         info = obtener_info(st)
     except ValueError as e:
