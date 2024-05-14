@@ -104,7 +104,7 @@ Los métodos inductivos pretenden construir un clasificador que pueda generar pr
 	\item \textbf{\textit{Intrinsecally semi-supervised}}: Incorporan directamente datos no etiquetados en la función objetivo o procedimiento de optimización. Son extensiones de métodos supervisados al entorno semi-supervisado. Maximizan la información obtenida de datos no etiquetados durante el proceso de aprendizaje.
 	
 \end{itemize}
-\subsection{Métodos transductivos} %TODO Reestructurar esta parte utilizando el otro articulo
+\subsection{Métodos transductivos} \label{sec3:transductivo} %TODO Reestructurar esta parte utilizando el otro articulo
 A diferencia de los métodos inductivos, los métodos transductivos no construyen un modelo para todo el espacio de entrada. En su lugar, su poder predictivo se limita exactamente a los objetos que encuentra durante la fase de entrenamiento. Por lo tanto, los métodos transductivos no tienen fases de entrenamiento y predicción distintas \cite{Engelen:semi-supervised}.
 
 El aprendizaje transductivo puede ahorrar tiempo y es preferible cuando el objetivo se orienta a mejorar nuestro conocimiento sobre el conjunto de datos sin etiquetar. Sin embargo, este enfoque tiene limitaciones, especialmente cuando queremos entender causas y efectos dentro de los datos. Básicamente, aunque el aprendizaje transductivo es útil para hacer inferencias específicas sobre los datos no etiquetados basándose en los datos etiquetados, no es adecuado ni efectivo para estudiar o predecir relaciones causales, es decir, cómo un factor directamente provoca otro. Esto se debe a que el aprendizaje transductivo se centra sólo en los datos presentes durante el entrenamiento y no generaliza más allá de estos. \cite{web:assumptions}.
@@ -129,7 +129,6 @@ Existen diferentes maneras de llevar a cabo esta fase:
 	\item Asignación probabilística de etiquetas: campos aleatorios de Markov: el anterior método solo produce etiquetas de clase y no probabilidades, lo que es una gran desventaja. La idea principal detrás de los CRF es calcular la probabilidad conjunta de todas las etiquetas dadas las observaciones y las relaciones entre etiquetas vecinas. Esto se hace utilizando una función de energía que mide cuán compatibles son las etiquetas y las características observadas. Luego, se utiliza una distribución exponencial para traducir la función de energía en una distribución de probabilidad.
 	\item Asignación probabilística eficiente de etiquetas: campos aleatorios gaussianos: La principal mejora de los GRFs con respecto a los MRFs es que los GRFs permiten una estimación más eficiente de las probabilidades de asignación de etiquetas.
 	\item\textit{ Local and global consistency}: La última propuesta no maneja bien el ruido de las etiquetas ya que las etiquetas verdaderas se fijan a los puntos de datos etiquetados. En segundo lugar, en los grafos irregulares, la influencia de los nodos con un grado alto es relativamente grande. La solución es el método LGC. El primer problema se resuelve penalizando el error cuadratico entre la etiqueta verdadera y la etiqueta estimada. El segundo problema se resuelve regularizando el termino de penalización para los puntos de datos no etiquetados mediante los grados de los nodos.
-	
 \end{itemize}
 
 
@@ -181,6 +180,76 @@ El co-forest es una versión semisupervisada del método de clasificación \text
 
 \clearpage
 
+Inicialización de Variables:
+\begin{itemize}
+	\item Cada árbol del \textit{ensemble}, $h_i$, se inicializa entrenándolo con una muestra \textit{bootstrap} del conjunto etiquetado $L$.
+	\item Se establece un error estimado inicial, $\hat{e}_{i,t}$, a 0.5 para cada árbol.
+	\item Se asigna el sumatorio de confianzas inicial a cada árbol. Basado en el estudio comentado en la sección \ref{sec5:coforest}.
+\end{itemize}
+
+Proceso iterativo:
+\begin{itemize}
+	\item El bucle continúa mientras al menos un árbol pueda recibir nuevas pseudo-etiquetas para entrenamiento.
+	\item Se estima el error actual (\textit{OOBE}) del árbol usando el conjunto etiquetado.
+	\item Se inicializa un conjunto temporal $L'_{i,t}$ para acumular nuevas pseudo-etiquetas aceptadas.
+	\item Si el error estimado del árbol mejora (disminuye respecto a la iteración anterior), se procede a submuestrear el conjunto no etiquetado $U$ basándose en el peso máximo $W_{max}$, que ajusta la cantidad de datos a submuestrear en función de la mejora en el error.
+	\item Cada dato submuestreado se evalúa, y si la confianza en su pseudo-etiqueta supera el umbral $\theta$, se añade al conjunto temporal $L'_{i,t}$ con su correspondiente pseudo-etiqueta, y se actualiza el sumatorio de confianzas para ese árbol.
+\end{itemize}
+
+Reentrenamiento de árboles:
+Después de evaluar y potencialmente agregar nuevas pseudo-etiquetas, se decide si reentrenar el árbol. Esto se basa en una comparación del producto de error y sumatorio de confianzas actual contra el de la iteración anterior. Si el producto actual es menor, se procede a reentrenar el árbol incorporando las nuevas pseudo-etiquetas. Esto ayuda a mantener la calidad del modelo y a evitar el sobreajuste.
+
+\subsection{\textit{ Graph-based on informativeness of
+labeled instances}(GBILI)}
+El algoritmo \textit{GBILI} o Construcción de Grafos Basada en la Informatividad de Instancias Etiquetadas, en español, es un método de construcción de grafos para el aprendizaje semisupervisado. Su principal característica es que se basa en la informatividad de las instancias etiquetadas para relacionar nodos dentro del grafo, pudiendo aprovechar después esta conectividad para predecir las etiquetas de los datos no etiquetados. Se utilizan los métodos de $k$-vecinos más cercanos y  $k$-vecinos más cercanos mutuos para inicializar el grafo. En el pseudocódigo \ref{alg:Gbili} se puede ver el proceso detallado.
+
+\begin{algorithm}
+	\label{alg:Gbili}
+	\KwIn{Conjunto de datos etiquetados $L$, conjunto de datos no etiquetados $U$, número de vecinos más cercanos $K$}
+	\KwOut{Grafo $G$}
+	\BlankLine
+	generar matriz de distancias $D$ entre todos los puntos de datos\\
+	establecer el parametro K\\
+	\For{$i$ = 1; $i < |V|$; $i++$}{
+		}{
+		
+	}
+	\Return{$G$}
+	\caption{\textit{GBILI}}
+\end{algorithm}
+
+\subsubsection{Metodología}
+El algoritmo aprovecha la información de las etiquetas disponibles para priorizar las conexiones entre los vértices, especialmente aquellos que están más cerca de un punto etiquetado, convirtiendo así estos puntos etiquetados en hubs a medida que aumenta el valor de k.
+Los pasos que sigue son:
+\begin{enumerate}
+	\item Generación de la Matriz de Distancias: Se crea una matriz de distancias $D$ usando la distancia euclidiana para determinar los k vecinos más cercanos de cada elemento.
+	\item Configuración de Parámetros: Se establece el parámetro $k$ con un valor natural y se genera una lista de puntos etiquetados	$L$.
+	\item Búsqueda de Vecinos Más Cercanos: Para cada vértice $v_i$, se encuentran sus k vecinos más cercanos.
+	\item Determinación de Vecinos Mutuos: Se identifican los k vecinos mutuos para $v_i$.
+	\item Cálculo de la Informatividad: Se calcula la suma de las distancias desde $v_i$ a cada elemento fe vecinos mutuos y desde estos elementos hasta un punto etiquetado. Se establece una conexión entre $v_i$ y $v_j$ que minimice esta suma. Este aspecto puede verse confuso y por ello se comenta en la sección \ref{alg:Gbili} %TODO referencia
+	\item Post-procesamiento del Grafo: Se conectan los componentes aislados mediante una búsqueda en anchura (BFS) para encontrar componentes en la red. Los componentes sin puntos etiquetados se conectan con componentes vecinos que tienen puntos etiquetados, limitando el número de nuevas conexiones para evitar una red demasiado densa.
+\end{enumerate}
+
+\subsection{\textit{Local and Global Consistency}} %TODO REFERENCIAS Y PESUDOCODIGO
+Este algoritmo aborda el problema general de aprender a partir de datos etiquetados y no etiquetados. Dado un conjunto de puntos $X$ y un conjunto de etiquetas $L$, los primeros $l$ puntos tienen etiquetas y los puntos restantes no están etiquetados. El objetivo es predecir las etiquetas de los puntos no etiquetados. Esta fuertemente basado en dos de las suposiciones comentadas previamente: Los puntos cercanos tienden a tener la misma etiqueta y
+los puntos en la misma estructura (como un clúster) probablemente tengan la misma etiqueta.
+
+La idea principal es que cada punto propague iterativamente su información de etiqueta a sus vecinos hasta que se alcance un estado global estable.
+
+\begin{algorithm}
+	\label{alg:LGC}
+	\KwIn{}
+	\KwOut{Grafo $G$}
+	\BlankLine
+	g\\
+	\For{}{
+	}{
+		
+	}
+	\Return{$G$}
+	\caption{\textit{Local and Global Consistency}}
+\end{algorithm}
+
 \section{Ensembles}
 Los sistemas basados en \textit{ensembles} se refieren al proceso de combinar las opiniones de un conjunto de modelos diferentes para tomar una decisión final. Se ha descubierto que los \textit{ensembles} pueden producir resultados más favorables en comparación con los sistemas de un solo experto en una amplia gama de aplicaciones. La creación de un \textit{ensemble} implica generar componentes individuales del sistema y luego combinar sus clasificaciones. En este contexto, se destacan dos técnicas principales: \textit{bagging} y \textit{boosting}~\cite{ensembles}.
 
@@ -191,9 +260,3 @@ El \textit{Bagging}, o \textit{Bootstrap Aggregating}, es una técnica que mejor
 \subsection{Boosting}
 El \textit{Boosting} es un enfoque que construye secuencialmente un conjunto de modelos; cada nuevo modelo se enfoca en corregir los errores cometidos por los modelos anteriores. AdaBoost, uno de los algoritmos de \textit{boosting} más conocidos, ajusta los pesos de las instancias incorrectamente clasificadas para que modelos posteriores se enfoquen más en ellas. A diferencia del \textit{bagging}, el \textit{boosting} puede aumentar el riesgo de sobreajuste si el conjunto de datos es ruidoso, pero generalmente produce modelos más precisos.
 \imagen{../img/memoria/boosting.png}{Concepto de boosting \cite{web:boostingvsbaging}}{1}
-
-
-
-
-
-

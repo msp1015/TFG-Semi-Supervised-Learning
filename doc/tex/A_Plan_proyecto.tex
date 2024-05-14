@@ -126,7 +126,7 @@ El JSON se consigue basandose de nuevo en el Democratic Co-Learning. Puede que s
 Se resuelve el error del sprint anterior de la parte de gestión de usuarios. Una vez aislado el error se ve que lo que falla es un método de una librería utilizada para encriptar contraseñas, lo que da a pensar que alguno de los parámetros pasados deja de ser compatible con la versión de la biblioteca actual. Efectivamente la versión de este proyecto de la biblioteca \textit{werkzeug} no coincidía con la del trabajo base. En concreto el parámetro incompatible que se le estaba pasando a este método es la propia contraseña encriptada, la cual empezaba por \textit{sha256}. La nueva versión del método establece que para usar \textit{sha256} el texto debe empezar por \textit{pbkdf2:sha256}, por lo tanto se cambia esta opción y también el \textit{hash} definido para el administrador al inciar la aplicación.
 
 \subsection{Sprint 10}
-Del 11 de abril al 16 de abril, se establecen las siguientes tareas de cara al siguiente sprint:
+Del 11 de abril al 18 de abril, se establecen las siguientes tareas de cara al siguiente sprint:
  \begin{itemize}
 	\item Actualizar documentación.
 	\item Visualizar resultados del Co-Forest en la web
@@ -137,7 +137,58 @@ Se consigue la visualización del Co-Forest completa reutilizando gran parte del
 Además se hacen pequeños cambios como dejar la opción de la etiqueta o clase por defecto al configurar el algoritmo y permitir desmarcar y marcar todas las opciones (clasificadores) en el gráfico de estadísticas específicas.
 
 \subsection{Sprint 11}
+Sprint correspondiente a los días entre el 18 y el 25 de abril, en la reunión se establecen las siguientes tareas:
+ \begin{itemize}
+	\item Finalizar tareas pendiente del Co-Forest. Estas son:
+	\begin{itemize}
+		\item Arreglar última iteración ya que no aporta información
+		\item Quitar parámetro de inicialización de pesos ya que realmente no afecta demasiado.
+		\item Cambiar la visualización del \textit{tooltip} para que se pueda ver toda la información.
+	\end{itemize}
+	\item Leer documentación de construcción de grafos.
+	\item Elegir biblioteca de \textit{python} para la construcción de grafos.
+\end{itemize}
 
+Este Sprint se utiliza sobretodo para leer e investigar acerca de los métodos transductivos o basados en grafos. Más concretamente se manda leer el artículo del algoritmo \textit{GBILI}, que será uno de ellos a implementar en cuánto a la construcción del grafo y el artículo de \textit{Local and Global Consistency (LGC)} como algoritmo de inferencia de etiquetas. En la memoria se especifican las características de ambos algoritmos.
+ 
+Se realiza un mini estudio para la elección de una biblioteca en el uso de grafos, que se puede encontrar en los aspectos relevantes. Finalmente se decide utilizar \textit{NetworkX} por su facilidad de uso y aprendizaje.
+
+En cuánto a los arreglos del Co-Forest, se realizan las dos primeras tareas marcadas y se deja para más adelante cambiar la visualización del \textit{tooltip}.
+
+\subsection{Sprint 12}
+Sprint correspondiente a la siguiente semana entre el 25 de abril y el 2 de mayo. Se mandan las siguientes tareas:
+\begin{itemize}
+	\item Implementar algoritmos: tanto el \textit{GBILI} como el \textit{LGC}.
+	\item Documentar los conceptos de cada algoritmo y los aspectos relevantes en su implementación.
+\end{itemize}
+En este sprint no hay mucho detalle que comentar ya que se trata de implementar el algoritmo. Finalmente no se utiliza la librería \textit{NetworkX} para almacenar los datos del grafo, si no que se utiliza para su visualización. La visualización en este caso ayuda a ver si realmente el grafo se está construyendo siguiendo los pasos establecidos y si tienen sentido o no. Por ejemplo, si se colorean todos los nodos que son etiquetados, se podra saber si la conexión basada en estos nodos es correcta o no.
+
+Finalmente no se consigue implementar ambos algoritmos de forma definitiva pero si se llega a una buena aproximación. El aspecto a destacar es que de la forma en que se implementa el algoritmo \textit{LGC} realmente no aprovecha la disposición física final del grafo, sino su matriz de distancias original. Se va con esta premisa a la reunión para tener en cuenta un posible cambio.
+
+\subsection{Sprint 13}
+Corresponde a los días entre el 2 y el 9 de mayo. Se comentan las siguientes tareas a realizar:
+\begin{itemize}
+	\item Depurar el código del algoritmo \textit{GBILI}.
+	\item Depurar el código del algoritmo \textit{LGC}.
+\end{itemize}
+
+Se trata de finalizar ambos algoritmos para poder empezar su integración con la web.
+
+El resumen de las correciones en el \textit{GBILI} (todas ellas comentadas en la sección 5 de la memoria) es: el grafo es no dirigido por lo que se deben almacenar enlances en ambas direcciones, el pseudocódigo se puede interpretar erróneamente y provocar fallos al almacenar las estructuras de datos necesarias y por último, la visualización debe ser con el grafo ordenado para que tenga sentido las nuevas conexiones.
+
+En cuánto a la inferencia se manda tener en cuenta la conexión entre nodos del grafo mediante una matriz de afinidad binaria (1 si hay conexión, 0 en caso contrario).
+
+Se consigue tener el algoritmo \textit{GBILI} bien implementado, pero al inferir etiquetas los resultados no son los esperados con la nueva matriz de afinidad.
+
+Se empieza a integrar en la web una nueva opción para seleccionar la visualización de grafos. La idea es tener una única opción y combinar la construcción del grafo junto con la fase de inferencia de etiquetas. A estas alturas se planea hacer dos algoritmos de construcción de grafos y dos de inferencia (ya teniendo uno de cada).
+
+\subsection{Sprint 14}
+Correspondiente a los días entre el 9 y el 16 de mayo. Se comentan las siguientes tareas:
+\begin{itemize}
+	\item Corregir definitivamente ambos algoritmos (\textit{LGC} sobretodo).
+	\item Integrar en la web, con la visualización por fases.
+\end{itemize}
+Este Sprint se utiliza para corregir el \textit{LGC} para que tome correctamente la matriz de afinidad que debe y también para ponerse al día con la documentación de estos métodos.
 
 \section{Estudio de viabilidad}
 
