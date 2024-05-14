@@ -201,22 +201,7 @@ Después de evaluar y potencialmente agregar nuevas pseudo-etiquetas, se decide 
 
 \subsection{\textit{ Graph-based on informativeness of
 labeled instances}(GBILI)}
-El algoritmo \textit{GBILI} o Construcción de Grafos Basada en la Informatividad de Instancias Etiquetadas, en español, es un método de construcción de grafos para el aprendizaje semisupervisado. Su principal característica es que se basa en la informatividad de las instancias etiquetadas para relacionar nodos dentro del grafo, pudiendo aprovechar después esta conectividad para predecir las etiquetas de los datos no etiquetados. Se utilizan los métodos de $k$-vecinos más cercanos y  $k$-vecinos más cercanos mutuos para inicializar el grafo. En el pseudocódigo \ref{alg:Gbili} se puede ver el proceso detallado.
-
-\begin{algorithm}
-	\label{alg:Gbili}
-	\KwIn{Conjunto de datos etiquetados $L$, conjunto de datos no etiquetados $U$, número de vecinos más cercanos $K$}
-	\KwOut{Grafo $G$}
-	\BlankLine
-	generar matriz de distancias $D$ entre todos los puntos de datos\\
-	establecer el parametro K\\
-	\For{$i$ = 1; $i < |V|$; $i++$}{
-		}{
-		
-	}
-	\Return{$G$}
-	\caption{\textit{GBILI}}
-\end{algorithm}
+El algoritmo \textit{GBILI} o Construcción de Grafos Basada en la Informatividad de Instancias Etiquetadas es un método de construcción de grafos para el aprendizaje semisupervisado. Su principal característica es que se basa en la informatividad de las instancias etiquetadas para relacionar nodos dentro del grafo, pudiendo aprovechar después esta conectividad para predecir las etiquetas de los datos no etiquetados. Se utilizan los métodos de $k$-vecinos más cercanos y  $k$-vecinos más cercanos mutuos para inicializar el grafo. En el pseudocódigo \ref{alg:Gbili}, propuesto en~\cite{gbili}, se puede ver el proceso detallado.
 
 \subsubsection{Metodología}
 El algoritmo aprovecha la información de las etiquetas disponibles para priorizar las conexiones entre los vértices, especialmente aquellos que están más cerca de un punto etiquetado, convirtiendo así estos puntos etiquetados en hubs a medida que aumenta el valor de k.
@@ -226,30 +211,108 @@ Los pasos que sigue son:
 	\item Configuración de Parámetros: Se establece el parámetro $k$ con un valor natural y se genera una lista de puntos etiquetados	$L$.
 	\item Búsqueda de Vecinos Más Cercanos: Para cada vértice $v_i$, se encuentran sus k vecinos más cercanos.
 	\item Determinación de Vecinos Mutuos: Se identifican los k vecinos mutuos para $v_i$.
-	\item Cálculo de la Informatividad: Se calcula la suma de las distancias desde $v_i$ a cada elemento fe vecinos mutuos y desde estos elementos hasta un punto etiquetado. Se establece una conexión entre $v_i$ y $v_j$ que minimice esta suma. Este aspecto puede verse confuso y por ello se comenta en la sección \ref{alg:Gbili} %TODO referencia
-	\item Post-procesamiento del Grafo: Se conectan los componentes aislados mediante una búsqueda en anchura (BFS) para encontrar componentes en la red. Los componentes sin puntos etiquetados se conectan con componentes vecinos que tienen puntos etiquetados, limitando el número de nuevas conexiones para evitar una red demasiado densa.
+	\item Cálculo de la Informatividad: Se calcula la suma de las distancias desde $v_i$ a cada elemento fe vecinos mutuos y desde estos elementos hasta un punto etiquetado. Se establece una conexión entre $v_i$ y $v_j$ que minimice esta suma. Este aspecto puede verse confuso y por ello se comenta en la sección \ref{sec5:gbili}
+	\item Post-procesamiento del Grafo: Se conectan los componentes aislados mediante una búsqueda en anchura (\textit{BFS}) para encontrar componentes en la red. Los componentes sin puntos etiquetados se conectan con componentes vecinos que tienen puntos etiquetados, limitando el número de nuevas conexiones para evitar una red demasiado densa.
 \end{enumerate}
 
-\subsection{\textit{Local and Global Consistency}} %TODO REFERENCIAS Y PESUDOCODIGO
-Este algoritmo aborda el problema general de aprender a partir de datos etiquetados y no etiquetados. Dado un conjunto de puntos $X$ y un conjunto de etiquetas $L$, los primeros $l$ puntos tienen etiquetas y los puntos restantes no están etiquetados. El objetivo es predecir las etiquetas de los puntos no etiquetados. Esta fuertemente basado en dos de las suposiciones comentadas previamente: Los puntos cercanos tienden a tener la misma etiqueta y
-los puntos en la misma estructura (como un clúster) probablemente tengan la misma etiqueta.
-
-La idea principal es que cada punto propague iterativamente su información de etiqueta a sus vecinos hasta que se alcance un estado global estable.
 
 \begin{algorithm}
-	\label{alg:LGC}
-	\KwIn{}
+	\label{alg:Gbili}
+	\KwIn{Conjunto de datos etiquetados $L$, conjunto de datos no etiquetados $U$, número de vecinos más cercanos $K$}
 	\KwOut{Grafo $G$}
 	\BlankLine
-	g\\
-	\For{}{
-	}{
-		
+	generar matriz de distancias $D$ entre todos los puntos de datos\\
+	establecer el parámetro K\\
+	\For{$i$=1; $i<|V|$; $i++$}{
+		\For{$k$=1; $k<K$; $k++$}{
+			\For{$j$=1; $j<|V|$; $j++$}{
+				\If{$D(v_i,v_j)$ es el $kNN$}{
+					$listakNN(v_i) \leftarrow v_j$
+				}
+			}
+		}
+		\For{$j$=1; $j<listakNN(v_i)$; $j++$}{
+			\For{$k$=1; $k<K$; $k++$}{
+				\If{$D(v_j,v_i)$ es el $kNN$}{
+					$listaMutuoskNN(v_i) \leftarrow v_j$
+				}
+			}
+		}
+		\For{$j$=1; $j<listaMutuoskNN(v_i)$; $j++$}{
+			\For{$l$=1; $l<L$; $l++$}{
+				\If{$D(v_i,v_j) + D(v_j, v_i)$ es mínima }{
+					$G \leftarrow e_{i,j}$
+				}
+			}
+		}
+	}
+	$Componentes = BFS(G)$\\
+	\For{$i=1$; $i<|V|$; $i++$}{
+		\If{$Componentes(v_i) \notin L$}{
+			\For{$k=1$;$k<listakNN(v_i)$; $k++$}{
+				\If{$Componentes(v_k) \in L$}{
+					$G \leftarrow e_{i,k}$
+				}
+			}
+		}
 	}
 	\Return{$G$}
-	\caption{\textit{Local and Global Consistency}}
+	\caption{\textit{GBILI}}
+\end{algorithm}
+\clearpage
+Como se comenta en uno de los pasos, hay ciertos puntos en este algoritmo que deben ser comentados para evitar confusión en la implementación. Además, para este trabajo en concreto, el algoritmo sufre ciertas modificaciones (con la misma idea teórica) que se comentan en la sección \ref{sec5:gbili}.
+
+\subsection{\textit{Local and Global Consistency}}
+Este algoritmo aborda el problema general de aprender a partir de datos etiquetados y no etiquetados. Dado un conjunto de puntos $X$ y un conjunto de etiquetas $L$, los primeros $l$ puntos tienen etiquetas y los puntos restantes no están etiquetados. El objetivo es predecir las etiquetas de los puntos no etiquetados. Esta fuertemente basado en dos de las suposiciones comentadas previamente: Los puntos cercanos tienden a tener la misma etiqueta y los puntos en la misma estructura (como un clúster) probablemente tengan la misma etiqueta.
+
+La idea principal es que cada punto propague iterativamente su información de etiqueta a sus vecinos hasta que se alcance un estado global estable. El pseudocódigo \ref{alg:LGC} y las aclaraciones siguientes están basados en el artículo \cite{LGC}.
+
+\begin{itemize}
+	\item Crear la matriz de afinidad: Calcula una matriz $W$ que mide la similitud entre cada par de puntos en $X$. Si dos puntos están muy cerca entre sí, su valor en la matriz $W$ será alto. Los valores en la diagonal de la matriz (que corresponden a la similitud de un punto consigo mismo) se establecen en cero.
+	\item Normalizar\footnote{\textbf{Normalizar} es un proceso en el que se ajustan los valores de una matriz o conjunto de datos para que sean más comparables y manejables} la matriz de afinidad: Ajusta la matriz	$W$ para obtener una nueva matriz $S$. Esto es necesario para asegurar que los valores se propaguen correctamente en los pasos siguientes.
+	\item Propagar la información de etiquetas: Comienza con una matriz inicial $F$ que contiene las etiquetas conocidas. Repite un proceso en el que cada punto actualiza su etiqueta basada en las etiquetas de sus puntos vecinos y sus etiquetas iniciales. Este proceso se repite hasta que las etiquetas dejan de cambiar significativamente.
+	\item Asignar etiquetas finales: Una vez que la propagación de etiquetas ha convergido (ya no cambia mucho), asigna a cada punto la etiqueta de la clase con la que tiene mayor afinidad. Esto se hace eligiendo la etiqueta que corresponde al valor más alto en la matriz $F$ para cada punto.
+\end{itemize}
+\begin{algorithm}
+	\caption{Local and Global Consistency}
+	\label{alg:LGC}
+	\KwIn{Conjunto de puntos $X = \{x_1, \dots, x_l, x_{l+1}, \dots, x_n\} \subseteq {R}^m$, conjunto de etiquetas $L = \{1, \dots, c\}$}
+	\KwOut{Etiquetas predichas para los puntos no etiquetados}
+	
+	\BlankLine
+	\textbf{Paso 1: Formar la matriz de afinidad} $W$ \\
+	\For{$i=1$ \textbf{to} $n$}{
+		\For{$j=1$ \textbf{to} $n$}{
+			\If{$i \neq j$}{
+				$W_{ij} \leftarrow \exp(-\|x_i - x_j\|^2 / 2\epsilon^2)$
+			}
+			\Else{
+				$W_{ii} \leftarrow 0$
+			}
+		}
+	}
+	
+	\BlankLine
+	\textbf{Paso 2: Construir la matriz} $S = D^{-1/2} W D^{-1/2}$ \\
+	$D$ es una matriz diagonal con el elemento $(i, i)$ igual a la suma de la $i$-ésima fila de $W$
+	
+	\BlankLine
+	\textbf{Paso 3: Iterar} $F^{(t+1)} = \alpha S F^{(t)} + (1 - \alpha) Y$ \textbf{hasta la convergencia} \\
+	$\alpha$ es un parámetro $\in (0, 1)$
+	
+	\BlankLine
+	\textbf{Paso 4: Asignar etiquetas} \\
+	Deja que $F^*$ denote el límite de la secuencia $\{F^{(t)}\}$ \\
+	\For{$i=1$ \textbf{to} $n$}{
+		$y_i \leftarrow \arg\max_{j \leq c} F^*_{ij}$
+	}
+	
+	\Return{Etiquetas predichas para los puntos no etiquetados}
+	
 \end{algorithm}
 
+Este algoritmo, como se ha podido llegar a observar, podría no usar directamente la unión física entre nodos del grafo, es decir, no utilizar el paso anterior de construcción del grafo, y aún así, funcionar correctamente, ya que dispondría de la información que da la matriz de distancias. Por ello, para el interés de este trabajo, es necesario buscar una manera de utilizar esta información, la cual se comenta en la seccion \ref{sec5:LGC}
+\clearpage
 \section{Ensembles}
 Los sistemas basados en \textit{ensembles} se refieren al proceso de combinar las opiniones de un conjunto de modelos diferentes para tomar una decisión final. Se ha descubierto que los \textit{ensembles} pueden producir resultados más favorables en comparación con los sistemas de un solo experto en una amplia gama de aplicaciones. La creación de un \textit{ensemble} implica generar componentes individuales del sistema y luego combinar sus clasificaciones. En este contexto, se destacan dos técnicas principales: \textit{bagging} y \textit{boosting}~\cite{ensembles}.
 

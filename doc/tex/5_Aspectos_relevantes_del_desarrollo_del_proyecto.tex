@@ -1,6 +1,17 @@
 \capitulo{5}{Aspectos relevantes del desarrollo del proyecto}
 En la sección que sigue, se abordan los aspectos más significativos que han marcado el desarrollo de este proyecto. Se detalla cómo cada elección ha influido en la trayectoria y los resultados del proyecto.
+\section{Lectura artículos científicos}
+Se ha decidido incluir la lectura de artículos científicos como aspectos relevantes ya que son una parte significativa de todo el trabajo, llevando bastante tiempo en aquellos que son más técnicos. Además proporcionan una base sólida de teorías y métodos que pueden ser utilizadas tanto para el trabajo como para otras situaciones. Todos ellos están en inglés por lo que también se mejora esta habilidad, notando cierta mejora de comprensión en los últimos artículos.
+Un artículo científico es un informe escrito y publicado en una revista con cierto prestigio que describe resultados originales de investigación. Estos artículos son fundamentales para la difusión del conocimiento científico y suelen seguir un formato estructurado que incluye una introducción, metodología, resultados, discusión y conclusiones.
 
+Para este trabajo se han leido 2 tipos de artículos, los \textit{surveys} o resúmenes sobre un tema y los artículos de implementación de algoritmos:
+\begin{itemize}
+	\item \textbf{\textit{A Survey on Semi-Supervised Learning}}~\cite{Engelen:semi-supervised}: Este artículo proporciona una revisión exhaustiva del campo del aprendizaje semi-supervisado. Gracias a este artículo se consigue una base sólida en este tipo de aprendizaje y se comprenden cuales son los desafios actuales y las direcciones futuras en la investigación en este campo.
+	\item \textbf{\textit{Ensemble Based Systems in Decision Making}}~\cite{ensembles}: Este artículo revisa el uso de sistemas basados en \textit{ensembles} para la toma de decisiones. Estos sistemas combinan múltiples clasificadores para mejorar la precisión y la robustez del proceso de decisión. Destaca cómo los sistemas de ensamblaje pueden superar las limitaciones de los clasificadores individuales y proporcionar decisiones más confiables y precisas.
+	\item \textbf{\textit{Improve Computer-Aided Diagnosis With Machine Learning Techniques Using Undiagnosed Samples}}~\cite{IEEE:CoForest}: Los autores presentan el método Co-Forest, una técnica semi-supervisada que combina múltiples clasificadores de árboles de decisión para mejorar la precisión del diagnóstico. Se discuten los beneficios de incorporar datos no etiquetados en el proceso de entrenamiento y se presentan resultados experimentales que demuestran la eficacia de esta metodología en varias aplicaciones médicas.
+	\item \textbf{\textit{Graph Construction Based on Labeled Instances for Semi-supervised Learning}}~\cite{gbili}: Los autores presentan un método para la construcción de grafos basado en instancias etiquetadas para el aprendizaje semi-supervisado. La idea principal es utilizar la información de las instancias etiquetadas para guiar la construcción del grafo.
+	\item \textbf{\textit{Learning with Local and Global Consistency}}~\cite{LGC}: Este artículo introduce un algoritmo para el aprendizaje con consistencia local y global.Los autores describen cómo el algoritmo itera para ajustar las etiquetas de las instancias no etiquetadas, combinando la información de las instancias vecinas y la información inicial. Se demuestra que este enfoque es eficaz para tareas de clasificación semi-supervisada.
+\end{itemize}
 \section{Trabajo Preexistente}
 La elección de este trabajo se realiza por el gran interés en la inteligencia artificial y el aprendizaje automático, pero también por el hecho de que ya existía un trabajo realizado por otro alumno un año atrás (David Martínez Acha -- \url{https://vass.dmacha.dev/}). Esto ayudaría mucho en el desarrollo ya que serviría como referencia para muchas dudas.
 
@@ -15,7 +26,7 @@ La documentación de David~\cite{TFG:David}, sirve de gran ayuda y también se h
 Gran parte de la web se reutiliza, pero a medida que se desarrolla el proyecto surgen nuevas ideas que modifican parte del comportamiento de la web que ya existía. Esta sección servirá para remarcar esas pequeñas o grandes modificaciones que sufre el diseño inicial y cual es la idea de esta nueva funcionalidad. 
 La primera idea de cambio que surge es la de modificar la funcionalidad de configuración de un algoritmo. Visualizando páginas web, se da con una página que muestra algoritmos de aprendizaje automático~ \cite{web:ml-visualizer}, pero no de la misma manera que David. En esta página se permite configurar y ver resultados y estadísticas en una única ventana, con la gran diferencia de que no muetra el paso a paso en cada algoritmo, sino directamente el resultado final de la clasificación.
 El primer prototipo se hace pensando en esta idea,quedando algo parecido a:
-\imagen{../img/anexos/prototipo_coforest.png}{Prototipo de visualizacion de algoritmo Co-Forest}{1}
+\imagen{../img/memoria/prototipo_coforest.png}{Prototipo de visualizacion de algoritmo Co-Forest}{1}
 Posteriormente, gracias al tutor nos damos cuenta de que si la idea es mostrar el paso a paso, que los parametros de configuración estén en la misma pantalla, no es de gran ayuda. Por esto, se decide volver a la versión del trabajo base y modificar las plantillas necesarias para adaptarlas a los nuevos algoritmos.
 
 \textbf{Configuración de parámetros:} Cuando tratamos con archivos de datos preparados para estos algoritmos, siempre se suele dar el caso de que la clase o etiqueta suele ser la última columna. Por esto, se ha mantenido la opción de seleccionar el atributo deseado, pero saldrá por defecto la clase en la caja de entrada. Esto además permite mayor agilidad a la hora de hacer pruebas de visualización ya que no hay que gastar tiempo en seleccionar esta opción.
@@ -31,7 +42,10 @@ Basado fuertemente en el pseudocodigo del artículo \cite{IEEE:CoForest}, la imp
 Para determinar si el algoritmo definitivo es bueno, se compara con el de Patricia, evaluando como varía el valor de \textit{accuracy} en cada iteración del algoritmo. Los resultados se muestran en la figura \ref{fig:../img/memoria/ComparacionCoForest.png}
 \imagenflotante{../img/memoria/ComparacionCoForest.png}{Comparación algoritmo CoForest utilizando diversos datasets}{1}
 
-\section{Comparativa de bibliotecas de grafos}
+\subsection{Grafos}
+En este apartado se comentarán todos los aspectos relevantes relacionados con la implementación de los algoritmos basados en grafos. Desde sus posibles interpretaciones y modificaciones con respecto al código original, a los diferentes estudios de comparación.
+
+\subsubsection{Comparativa de bibliotecas de grafos}
 Cuando se quiere implementar un algoritmo basado en grafos, lo ideal es utilizar una biblioteca que ayude a automatizar y mejorar el código. En \textit{Python}, existen varias bibliotecas que ayudan en esta tarea, tres de ellas son: \textit{\textbf{NetworkX}}, \textit{\textbf{igraph}} y \textit{\textbf{graph-tool}}. En esta sección se resumirá el estudio realizado para elegir la opción que mejor se adapte a las especificaciones.
 
 Todas ellas ayudan en la construcción de grafos, pero para empezar es necesario dejar claro para que se va a utilizar esta biblioteca. En cuanto al tamaño de los grafos, no necesariamente se necesita algo que maneje grafos muy grandes (más de 10000 nodos) de manera efectiva. La mayoría de \textit{datasets} utilizados tendrán muchas menos entradas de datos. En cuanto a la velocidad, se busca algo que sea efectivo pero sin necesidad de buscar lo mejor o más rápido, ya que los datos de entrada no van a suponer un gran esfuerzo. También hay que tener en cuenta la integración que se llevará a cabo posteriormente en la web, posiblemente con herramientas como \textit{d3.js}.
@@ -83,4 +97,54 @@ Los resultados obtenidos han sido los siguientes:
 A su vez, en el uso del formato \textit{JSON} se encuentra más útil el uso de NetworkX ya que incluye un método propio de exportación (\textit{nx.readwrite.json\_graph}).
 Por el contrario, con \textit{igraph}, habría que constuir un diccionario recorriendo los nodos y enlaces y posteriormente pasarlo a formato \textit{JSON}.
 
-En conclusión, se va a utilizar la libería \textit{\textbf{NetworkX}} por las ligeras mejoras en las pruebas realizadas y porque la curva de aprendizaje es algo menor que en el resto de casos.
+En conclusión, se va a utilizar la libería \textit{\textbf{NetworkX}} por las ligeras mejoras en las pruebas realizadas y porque la curva de aprendizaje es algo menor que en el resto de casos \footnote{Finalmente se utiliza únicamente para representar gráficamente el grafo construido en cada paso, ya que mediante estructuras básicas como diccionarios o listas es posible implementar los algoritmos}.
+
+\subsubsection{Modificaciones GBILI}\label{sec5:gbili}
+Con respecto al algoritmo \textit{GBILI}, surgen varias complicaciones o situaciones que no dejan claro el funcionamiento correcto. En este apartado se comentan las que se creen son más relevantes.
+\begin{enumerate}
+	\item Visualización por pasos en la web: desde un principio se tiene claro que lo ideal es tener una visualización por pasos del grafo, localizando las principales fases y mostrando como van cambiando hasta llegar a la inferencia. En este caso, el pseudocódigo \ref{alg:Gbili} muestra como hay un bucle principal en el que cada lista se va construyendo para cada nodo recorrido en este bucle externo. Para la visualización requerida esto no es lo ideal, ya que no podemos aislar las principales fases: lista de vecinos, lista de vecinos mutuos, grafo de distancias mínimas y grafo definitivo. Por todo esto, se decide seguir la misma estructura pero implementando todas estas estructuras de forma consecutiva.
+	\item Grafo no dirigido: en todo momento durante la implementación se conoce que cualquier enlace dentro del grafo es bidireccional, es decir, el grafo es no dirigido. Pero en una de las implementaciones esto no se sigue, lo que da en una estructura dirigida, que al realizar el seguimiento del código produce situaciones erróneas y confusas.
+	\item Malinterpretaciones pseudocódigo: en el código del artículo pueden surgir ciertas dudas de como hace algún paso. Estas son: al hacer la búsqueda en anchura, dice que debe retornar la componente (subgrafo aislado) del grafo completo, posteriormente, esta sintaxis la utiliza para los nodos individuales. Después de consultarlo con el tutor se llega a la conclusión de que la búsqueda en anchura realmente devuelve todo el conjunto de componentes del grafo y posteriormente se accede a la que pertenece cada nodo individual. Otra sintaxis que puede llevar a confusión es la que encontramos en la línea 20. Cuando comprueba que la distancia es mínima, la suma la hace dentro de los dos bucles, lo que puede llevar a interpretación de que esa condición se debe cumplir dentro del bucle interno. En esta situación, pongamos el siguiente ejemplo: la lista actual de vecinos mutuos es {0: [1, 2], 1: [0]...} y dos de los nodos etiquetados son [3, 4...]. Se accede a la lista de vecinos del nodo 0 y despues se recorre toda la lista de nodos etiquetados. Viendo esto sabriamos que obtendriamos una distancia mínima hasta un nodo etiquetado, pero siempre se estaría guardando el enlace entre los nodos vecinos, obteniendo la misma estructura que la lista de vecinos mutuos. Por ello, al implementarlo, hay que tener en cuenta que esta condición debe ir fuera del bucle interno, para poder coger de verdad la mínima distancia entre un nodo y sus vecinos.
+	\item Visualización con NetworkX: Para tener un primer acercamiento a una visualización y también para comprobar que el algoritmo ha seguido correctamente la influencia de los nodos etiquetados, se decide mostrar los 4 pasos graficamente. Un aspecto importante en la implementación es que con networkX, a la hora de construir el grafo, debe estar ordenado de la misma manera que los datos de entrada al algoritmo, si no mostrará información falsa, como nodos pintados como etiquetados que no lo son.
+	\imagen{../img/memoria/networkxGBILI.png}{Visualización correcta de las 4 fases de construcción del grafo con el algoritmo GBILI utilizando el \textit{dataset} de \textit{iris data}}{1}
+\end{enumerate}
+\subsubsection{LGC adaptado a grafos}\label{sec5:LGC}
+En el algoritmo original de Consistencia Local y Global, la matriz de afinidad $W$ se construye utilizando una función exponencial sobre la matriz de distancias entre los puntos. Sin embargo, dado que en este caso ya se ha construido un grafo $G$, utilizaremos esta información para definir la matriz de afinidad $W$. Específicamente, $W$ será una matriz binaria donde $W_{ij}=1$ si hay un enlace entre los nodos $i$ y $j$ en el grafo $G$, y $W_{ij}=0$ de lo contrario. Esta modificación aprovecha la estructura del grafo previamente construida, además, es la misma seguida por loa autores de~\cite{gbili}. Aunque es una opción algo "brusca", debe funcionar cuando los parámetros de los algoritmos son lo suficientemente buenos.
+
+Este ajuste del algoritmo de Consistencia Local y Global permite aprovechar la estructura del grafo construido a partir de los puntos de datos, en lugar de basarse únicamente en la matriz de distancias. Esta modificación es especialmente útil cuando se tiene información topológica adicional, mejorando potencialmente la precisión en la inferencia de etiquetas para los puntos no etiquetados.
+
+Un apunte importante es que cuando se estaba implementando esta modificación, se piensa que la matriz de afinidad se debe de construir aplicando la misma fórmula que antes, pero tomando como matriz de distancias las nuevas medidas de 0s y 1s. Esto no debe ser así y fue corregido ya que si no la matriz de afinidad ya no sería esa matriz binaria que utilizan los autores del artículo original.
+
+Para saber si funciona correctamente este algoritmo se realiza un pequeño estudio variando 3 parámetros, para ver como varía la \textit{accuracy} y que parámetro es el que afecta más al algoritmo.
+Los conjuntos de datos utilizados en este estudio son: \textit{iris}, \textit{breast cancer} y \textit{wine}.
+
+Cada conjunto de datos se divide en una parte de entrenamiento (etiquetada) y una parte de prueba (no etiquetada). Los parámetros a variar son:
+
+\begin{itemize}
+	\item Número de vecinos más cercanos \(K\): 5, 7, 10
+	\item Parámetro de suavizado \(\alpha\): 0.69, 0.79, 0.99
+	\item Tolerancia para la convergencia: \(1e-6\), \(1e-5\), \(1e-4\)
+\end{itemize}
+
+Para cada combinación de parámetros, se construye un grafo utilizando el algoritmo GBILI. Posteriormente, se aplica el algoritmo LGC para inferir etiquetas en el grafo, utilizando los parámetros especificados.
+
+Para un análisis estadístico, se utiliza el análisis ANOVA (Análisis de Varianza) para evaluar la influencia de cada parámetro en la precisión de las predicciones. ANOVA (Análisis de Varianza) es una técnica estadística utilizada para comparar las medias de tres o más grupos y determinar si al menos una de las medias es significativamente diferente de las demás, \cite{web:anova}. En este estudio, ANOVA se utiliza para evaluar la influencia de los parámetros \(K\), \(\alpha\) y la tolerancia en la precisión de las predicciones.
+
+\begin{itemize}
+	\item \textbf{Sum of Squares (SumSq)}: Mide la variabilidad total de la precisión debido a cada parámetro.
+	\item \textbf{Degrees of Freedom (df)}: Representa el número de valores independientes que pueden variar.
+	\item \textbf{F-Statistic (F)}: Compara la variabilidad entre los grupos con la variabilidad dentro de los grupos.
+	\item \textbf{P-Value (PR(>F))}: Indica la probabilidad de observar un efecto tan extremo como el observado si la hipótesis nula es cierta. Un valor pequeño sugiere que el parámetro tiene un efecto significativo.
+\end{itemize}
+
+Los resultados del análisis ANOVA muestran que el número de vecinos más cercanos \(K\) tiene una influencia significativa en la precisión del modelo, con un valor de \(p\) muy pequeño (\(1.19e-18\)). El parámetro \(\alpha\) y la tolerancia no muestran una influencia significativa en la precisión, con valores de \(p\) de 0.890 y 1.000 respectivamente. 
+\imagen{../img/memoria/estudioGBILI-LGC.png}{Efecto del parámetro K sobre la precisión}{1}
+Además, basado en los resultados del estudio, los mejores parámetros por defecto son:
+\begin{itemize}
+	\item \(K = 7\)
+	\item \(\alpha = 0.79\)
+	\item Tolerancia = \(1e-06\)
+\end{itemize}
+
+Estos parámetros proporcionan la mayor precisión promedio en la inferencia de etiquetas no supervisadas.
+Hay que tener en cuenta que es un estudio bastante pequeño y podría verse afectado por la falta de valores o incluso parámetros.

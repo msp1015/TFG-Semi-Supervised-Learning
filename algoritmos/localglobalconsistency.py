@@ -15,14 +15,13 @@ class LGC:
     Articulo original: Zhou, D., Bousquet, O., Lal, T. N., Weston, J., & Schölkopf, B. (2004). 
     Learning with local and global consistency.
     """
-    def __init__(self, grafo, nodos, etiquetas_etiquetados, sigma=1, alpha=0.5, tol=1e-6, max_iter=1000):
+    def __init__(self, grafo, nodos, etiquetas_etiquetados, alpha=0.5, tol=1e-6, max_iter=1000):
             """Inicializa una instancia de la clase LocalGlobalConsistency.
 
             Args:
                 grafo (tipo): El grafo utilizado para el algoritmo.
                 nodos (tipo): Los nodos del grafo.
                 etiquetas_etiquetados (tipo): Las etiquetas de los nodos etiquetados.
-                sigma (float): El parámetro de escala para la función exponencial.
                 alpha (float): El parámetro de suavizado entre la matriz de afinidad y las etiquetas.
                 tol (float): La tolerancia para la convergencia del algoritmo.
                 max_iter (int): El número máximo de iteraciones.
@@ -34,7 +33,6 @@ class LGC:
             self.Y = self.inicializar_Y()
             self.matriz_afinidad = self.construir_matriz_afinidad()
             self.Y = self.inicializar_Y()
-            self.sigma = sigma
             self.alpha = alpha
             self.tol = tol
             self.max_iter = max_iter
@@ -72,22 +70,9 @@ class LGC:
             np.array: Las etiquetas inferidas de los nodos no etiquetados.
         """
 
-        # W = self.construir_matriz_afinidad(sigma=self.sigma)
         S = self.normalizar_afinidad(self.matriz_afinidad)
         F_final = self.iterar_F(S, alpha=self.alpha, tol=self.tol, max_iter=self.max_iter)
         return self.predecir_etiquetas(F_final)
-    
-    # def construir_matriz_afinidad(self, sigma=1):
-    #     """ Construye la matriz de afinidad W a partir de la matriz de distancias ponderada.
-    #     Args:
-    #         sigma (float): El parámetro de escala para la función exponencial.
-
-    #     Returns:
-    #         np.array: La matriz de afinidad W.
-    #     """
-    #     W = np.exp(-self.matriz_afinidad**2 / (2 * sigma**2))
-    #     np.fill_diagonal(W, 0)
-    #     return W  
 
     def normalizar_afinidad(self, W):
         """ Normaliza la matriz de afinidad W.

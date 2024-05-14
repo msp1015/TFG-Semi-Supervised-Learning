@@ -108,7 +108,7 @@ class Gbili:
                         Line2D([0], [0], color='grey', lw=3)]
 
         # fig.legend(custom_lines, ['0', '1', '2', 'Desconocido'])
-        #plt.show()
+        # plt.show()
         return self.grafo
 
     def encuentra_knn(self):
@@ -265,7 +265,7 @@ class Gbili:
         G_sorted.add_nodes_from(sorted(G.nodes(data=True)))
         G_sorted.add_edges_from(G.edges(data=True))      
         colors = list(map(lambda x: 'grey' if x==-1 else 'yellow' if x==0 else 'blue' if x==1 else 'green', colores_map))        # Dibujar el grafo
-        nx.draw(G_sorted, ax=ax, with_labels=True, node_color=colors, edge_color='gray', node_size=50, font_size=10, font_weight='bold')
+        nx.draw(G_sorted, ax=ax, with_labels=True, node_color=colors, edge_color='gray', node_size=50, font_size=5, font_weight='bold')
             
         ax.set_title(titulo)
         
@@ -277,9 +277,9 @@ from sklearn.datasets import load_iris, load_breast_cancer
 from sklearn.model_selection import train_test_split
 iris = load_iris()
 breast_cancer = load_breast_cancer()
-x = breast_cancer.data
-y = breast_cancer.target
-K = 8
+x = iris.data
+y = iris.target
+K = 7
 
 L, U, L_, U_ = train_test_split(x, y, test_size=0.7, stratify=y)#, random_state=42)
 
@@ -289,7 +289,7 @@ todas_etiquetas = np.concatenate((L_, U_))
 solver = Gbili(U, L,todas_etiquetas, K)
 grafo = solver.construir_grafo()
 
-inferecia = LGC(grafo, solver.nodos, solver.etiquetas_etiquetados, sigma=1, alpha=0.99, tol=1e-10, max_iter=1000)
+inferecia = LGC(grafo, solver.nodos, solver.etiquetas_etiquetados, alpha=0.99, tol=1e-10, max_iter=1000)
 predicciones = inferecia.inferir_etiquetas()
 
 predicciones[len(L):]
