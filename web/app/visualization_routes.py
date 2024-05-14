@@ -38,6 +38,8 @@ def visualizar_algoritmo(algoritmo):
         params = parametros_democraticcolearning_tritraining()
     elif session['ALGORITMO'] == "coforest":
         params = parametros_coforest()
+    elif session['ALGORITMO'] == "graphs":
+        params = parametros_grafos()
 
     """En params se encontrarán todos los datos necesarios para ejecutar el algoritmo.
     Realmente no se le pasa la información ejecutada, se realiza una petición POST
@@ -83,7 +85,35 @@ def visualizar_algoritmo_json(algoritmo, run_id):
                            ejecutar=False,
                            json_data=json_data)
 
+def parametros_grafos():
+    """
+    Función auxiliar que obtiene todos los campos
+    obtenidos del formulario de Grafos
 
+    :return: lista de parámetros (en forma de diccionario).
+    """
+
+    constructor = request.form['constructor']
+    inferencia = request.form['inferencia']
+
+    # Estos son los parámetros concretos de Grafos
+    params = [
+        {"nombre": "constructor", "valor": request.form['constructor']},
+        {"nombre": "inferencia", "valor": request.form['inferencia']},
+        {"nombre": "target", "valor": request.form.get('target')},
+        {"nombre": "cx", "valor": request.form.get('cx', 'C1')},
+        {"nombre": "cy", "valor": request.form.get('cy', 'C2')},
+        {"nombre": "pca", "valor": request.form.get('pca', 'n')},
+        {"nombre": "stand", "valor": request.form.get('stand', 'n')},
+        {"nombre": "p_unlabelled", "valor": request.form.get('p_unlabelled')},
+        {"nombre": "p_test", "valor": request.form.get('p_test')},
+    ]
+
+    # Los parámetros anteriores no incluyen los propios parámetros de los clasificadores
+    # (SVM, GaussianNB...), esta función lo incluye
+    incorporar_clasificadores_params([constructor, inferencia], params)
+
+    return params
 def parametros_selftraining():
     """
     Función auxiliar que obtiene todos los campos

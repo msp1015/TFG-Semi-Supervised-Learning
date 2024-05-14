@@ -193,3 +193,13 @@ class FormConfiguracionCoForest(FormConfiguracionBase):
                               id="theta",
                               default=75,
                               validators=[InputRequired(), NumberRange(min=0, max=100)])
+
+class FormConfiguracionGrafos(FormConfiguracionBase):
+    constructor = SelectField(lazy_gettext('Select constructor'),
+                                name="constructor",
+                                id="constructor",
+                                validators=[InputRequired()])
+    inferencia = SelectField(lazy_gettext('Select inference'),
+                                name="inferencia",
+                                id="inferencia",
+                                validators=[InputRequired()])

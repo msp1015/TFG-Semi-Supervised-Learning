@@ -31,8 +31,8 @@ def create_app():
                                                            'anonimos')
     app.config['CARPETA_RUNS'] = os.path.join(
         os.path.basename(os.path.dirname(__file__)), 'runs')
-    app.config['ALGORITMOS_SELECCIONABLES'] = ["selftraining",
-                                               "cotraining", "democraticcolearning", "tritraining", "coforest"]
+    app.config['ALGORITMOS_SELECCIONABLES'] = ["selftraining", "cotraining", "democraticcolearning",
+                                               "tritraining", "coforest", "graphs"]
     db.init_app(app)
 
     def get_locale():

@@ -1,0 +1,46 @@
+{% extends "configuracion/base_configuracion.html" %} {% from "macros.html"
+import selector %} {% block parametros %}
+
+<div class="mb-3">
+    {{ form.constructor.label(class_="d-inline") }}
+    {{ form.constructor(class_="form-select") }}
+</div>
+<div class="parametros" id="parametros1"></div>
+<div class="mb-3">
+    {{ form.inferencia.label(class_="d-inline") }}
+    {{ form.inferencia(class_="form-select") }}
+</div>
+<div class="parametros" id="parametros2"></div>
+
+{% endblock %} {% block form_scripts %}
+<script>
+    const constructor = document.querySelector('#constructor');
+    const inferencia = document.querySelector('#inferencia');
+
+    const div_parametros1= document.querySelector('#parametros1');
+    const div_parametros2 = document.querySelector('#parametros2');
+
+    const todos_parametros = {{ parametros|tojson }};
+
+    constructor.addEventListener('change', (event) => {
+        generarFormParametros(event.target.value, div_parametros1, "constructor");
+    });
+
+    inferencia.addEventListener('change', (event) => {
+        generarFormParametros(event.target.value, div_parametros2, "inferencia");
+    });
+
+    generarFormParametros(constructor.value, div_parametros1, "constructor");
+    generarFormParametros(inferencia.value, div_parametros2, "inferencia");
+</script>
+{% endblock %} {% block explicaciones %}
+<p>
+  {{ gettext('_Explicaciones grafos_')}}
+</p>
+{% endblock %} {% block pseudocodigo %}
+<img
+  src="{{ gettext('/pseudocodigos/en/CoForest.png') }}"
+  width="75%"
+  alt="{{ gettext('Co-Forest Pseudocode') }}"
+/>
+{% endblock %}
