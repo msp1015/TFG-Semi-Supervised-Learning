@@ -15,7 +15,7 @@ class LGC:
     Articulo original: Zhou, D., Bousquet, O., Lal, T. N., Weston, J., & Schölkopf, B. (2004). 
     Learning with local and global consistency.
     """
-    def __init__(self, grafo, nodos, etiquetas_etiquetados, sigma=1, alpha=0.5, tol=1e-6):
+    def __init__(self, grafo, nodos, etiquetas_etiquetados, sigma=1, alpha=0.5, tol=1e-6, max_iter=1000):
             """Inicializa una instancia de la clase LocalGlobalConsistency.
 
             Args:
@@ -25,18 +25,19 @@ class LGC:
                 sigma (float): El parámetro de escala para la función exponencial.
                 alpha (float): El parámetro de suavizado entre la matriz de afinidad y las etiquetas.
                 tol (float): La tolerancia para la convergencia del algoritmo.
+                max_iter (int): El número máximo de iteraciones.
             """
             self.grafo = grafo
             self.nodos = nodos
             self.etiquetas_etiquetados = etiquetas_etiquetados
             self.n_categorias = len(np.unique(self.etiquetas_etiquetados))
             self.Y = self.inicializar_Y()
-            self.matriz_distancias_grafo = self.construir_matriz_distancias_grafo()
+            self.matriz_afinidad = self.construir_matriz_afinidad()
             self.Y = self.inicializar_Y()
             self.sigma = sigma
             self.alpha = alpha
             self.tol = tol
-            
+            self.max_iter = max_iter
 
     def inicializar_Y(self):
         """ Inicializa la matriz de etiquetas Y (mascara). 
@@ -48,17 +49,17 @@ class LGC:
             Y[i, label] = 1
         return Y    
     
-    def construir_matriz_distancias_grafo(self):
+    def construir_matriz_afinidad(self):
         """ Construye una matriz de distancias simplificada del grafo.
         Se asume que la distancia entre nodos vecinos es 1 y el resto de distancias es 0.
         Returns:
             np.array: La matriz de distancias del grafo.
         """
-        matriz_distancias = np.zeros((len(self.grafo), len(self.grafo)))
+        W = np.zeros((len(self.grafo), len(self.grafo)))
         for nodo, vecinos in self.grafo.items():
             for vecino in vecinos:
-                matriz_distancias[nodo][vecino] = 1
-        return matriz_distancias
+                W[nodo][vecino] = 1
+        return W
 
     def inferir_etiquetas(self):
         """ Proceso de inferencia de etiquetas en el grafo.
@@ -71,23 +72,22 @@ class LGC:
             np.array: Las etiquetas inferidas de los nodos no etiquetados.
         """
 
-        W = self.construir_matriz_afinidad(sigma=self.sigma)
-        S = self.normalizar_afinidad(W)
-        F_final = self.iterar_F(S, alpha=self.alpha, tol=self.tol)
+        # W = self.construir_matriz_afinidad(sigma=self.sigma)
+        S = self.normalizar_afinidad(self.matriz_afinidad)
+        F_final = self.iterar_F(S, alpha=self.alpha, tol=self.tol, max_iter=self.max_iter)
         return self.predecir_etiquetas(F_final)
     
-    def construir_matriz_afinidad(self, sigma=1):
-        """ Construye la matriz de afinidad W a partir de la matriz de distancias ponderada.
-        Args:
-            sigma (float): El parámetro de escala para la función exponencial.
+    # def construir_matriz_afinidad(self, sigma=1):
+    #     """ Construye la matriz de afinidad W a partir de la matriz de distancias ponderada.
+    #     Args:
+    #         sigma (float): El parámetro de escala para la función exponencial.
 
-        Returns:
-            np.array: La matriz de afinidad W.
-        """
-
-        W = np.exp(-self.matriz_distancias_grafo**2 / (2 * sigma**2))
-        np.fill_diagonal(W, 0)
-        return W  
+    #     Returns:
+    #         np.array: La matriz de afinidad W.
+    #     """
+    #     W = np.exp(-self.matriz_afinidad**2 / (2 * sigma**2))
+    #     np.fill_diagonal(W, 0)
+    #     return W  
 
     def normalizar_afinidad(self, W):
         """ Normaliza la matriz de afinidad W.
@@ -102,18 +102,18 @@ class LGC:
         S = D_inversa @ W @ D_inversa
         return S
 
-    def iterar_F(self, S, alpha=0.5, tol=1e-6):
+    def iterar_F(self, S, alpha=0.5, tol=1e-6, max_iter=1000):
         """ Itera la matriz de etiquetas F hasta convergencia.
         Args:
             S (np.array): La matriz de afinidad normalizada.
             alpha (float): El parámetro de suavizado entre la matriz de afinidad y las etiquetas.
             tol (float): La tolerancia para la convergencia del algoritmo.
-        
+            max_iter (int): El número máximo de iteraciones.
         Returns:
             np.array: La matriz de etiquetas F.
         """
         F = deepcopy(self.Y)
-        for _ in range(1000):
+        for _ in range(max_iter):
             F_next = alpha * S @ F + (1 - alpha) * self.Y
             if np.linalg.norm(F_next - F) < tol:
                 break

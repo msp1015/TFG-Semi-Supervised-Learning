@@ -78,37 +78,37 @@ class Gbili:
             dict: grafo resultante de la construcción.
         """
         # Configurar la figura y los ejes
-        fig, axs = plt.subplots(2, 2, figsize=(12, 6))  # 2 fila, 2 columnas
-        colores_map = np.array(self.etiquetas_modificadas)
+        # fig, axs = plt.subplots(2, 2, figsize=(12, 6))  # 2 fila, 2 columnas
+        # colores_map = np.array(self.etiquetas_modificadas)
 
         lista_knn = self.encuentra_knn()
-        self.dibujar_grafo(lista_knn, colores_map, axs[0, 0], "K-NN")
+        # self.dibujar_grafo(lista_knn, colores_map, axs[0, 0], "K-NN")
 
         lista_mknn = self.encuentra_mknn(lista_knn)
-        self.dibujar_grafo(lista_mknn, colores_map, axs[0, 1], "Mutual K-NN")
+        # self.dibujar_grafo(lista_mknn, colores_map, axs[0, 1], "Mutual K-NN")
 
         self.conectar_minima_distancia(lista_mknn)
         grafo_1 = deepcopy(self.grafo)
 
         # Componente = subgrafo
         componentes = self.encontrar_componentes()   
-        print("Componentes antes de conectar: ", componentes) 
+        # print("Componentes antes de conectar: ", componentes) 
         self.conectar_componentes(componentes, lista_knn)
-        print("GRAFO CON COMPONENTES CONECTADOS: ", self.grafo)
-        print()
+        # print("GRAFO CON COMPONENTES CONECTADOS: ", self.grafo)
+        # print()
         grafo_2 = deepcopy(self.grafo)
         # print("Componentes despues de conectar: ", self.encontrar_componentes())
 
-        self.dibujar_grafo(grafo_1, colores_map, axs[1, 0], "Grafo antes de conectar componentes")
-        self.dibujar_grafo(grafo_2, colores_map, axs[1, 1], "Grafo después de conectar componentes")
+        # self.dibujar_grafo(grafo_1, colores_map, axs[1, 0], "Grafo antes de conectar componentes")
+        # self.dibujar_grafo(grafo_2, colores_map, axs[1, 1], "Grafo después de conectar componentes")
         # Crear una leyenda
         custom_lines = [Line2D([0], [0], color='yellow', lw=3),
                         Line2D([0], [0], color='blue', lw=3),
                         Line2D([0], [0], color='green', lw=3),
                         Line2D([0], [0], color='grey', lw=3)]
 
-        fig.legend(custom_lines, ['0', '1', '2', 'Desconocido'])
-        plt.show()
+        # fig.legend(custom_lines, ['0', '1', '2', 'Desconocido'])
+        #plt.show()
         return self.grafo
 
     def encuentra_knn(self):
@@ -279,9 +279,9 @@ iris = load_iris()
 breast_cancer = load_breast_cancer()
 x = breast_cancer.data
 y = breast_cancer.target
-K = 7
+K = 8
 
-L, U, L_, U_ = train_test_split(x, y, test_size=0.7, stratify=y, random_state=42)
+L, U, L_, U_ = train_test_split(x, y, test_size=0.7, stratify=y)#, random_state=42)
 
 todas_etiquetas = np.concatenate((L_, U_))
 
@@ -289,7 +289,7 @@ todas_etiquetas = np.concatenate((L_, U_))
 solver = Gbili(U, L,todas_etiquetas, K)
 grafo = solver.construir_grafo()
 
-inferecia = LGC(grafo, solver.nodos, solver.etiquetas_etiquetados, sigma=1, alpha=1, tol=1e-12)
+inferecia = LGC(grafo, solver.nodos, solver.etiquetas_etiquetados, sigma=1, alpha=0.99, tol=1e-10, max_iter=1000)
 predicciones = inferecia.inferir_etiquetas()
 
 predicciones[len(L):]
