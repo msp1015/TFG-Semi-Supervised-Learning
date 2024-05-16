@@ -1,52 +1,58 @@
-{% extends "configuracion/base_configuracion.html" %}
-{%  from "macros.html" import tooltip %}
-{% block parametros %}
-    <div class="mb-3">
-        {{ form.clasificador1.label(class_="d-inline") }}
-        {{ form.clasificador1(class_="form-select") }}
-    </div>
-    <div class="parametros" id="parametros"></div>
-    <br>
-    <div class="mb-3">
-        {{ form.n.label }}
-        {{ form.n(class_="form-control", oninput="limitarUnicoMetodoST(this.value,'th')") }}
-    </div>
-    <div class="mb-3">
-        {{ form.th.label }}{{ tooltip(gettext('Empty N parameter to activate it')) }}
-        <div class="d-flex">
-            {{ form.th(class_="form-range w-75", oninput="actualizarBadgePorcentaje(this.value,'p_th_badge')", disabled=True) }}
-            <span id="p_th_badge" class="badge bg-primary px-3 mx-auto">75%</span>
-        </div>
-    </div>
-    <div class="mb-3">
-        {{ form.n_iter.label }}{{ tooltip(gettext('Enter 0 to not limit the number of iterations')) }}
-        {{ form.n_iter(class_="form-control") }}
-    </div>
-{% endblock %}
-{% block form_scripts %}
-    <script>
-        const clasificador = document.querySelector('#clasificador1');
-        const div_parametros= document.querySelector('#parametros');
+{% extends "configuracion/base_config_inductivos.html" %} {% from "macros.html"
+import tooltip %} {% block parametros %}
+<div class="mb-3">
+  {{ form.clasificador1.label(class_="d-inline") }} {{
+  form.clasificador1(class_="form-select") }}
+</div>
+<div class="parametros" id="parametros"></div>
+<br />
+<div class="mb-3">
+  {{ form.n.label }} {{ form.n(class_="form-control",
+  oninput="limitarUnicoMetodoST(this.value,'th')") }}
+</div>
+<div class="mb-3">
+  {{ form.th.label }}{{ tooltip(gettext('Empty N parameter to activate it')) }}
+  <div class="d-flex">
+    {{ form.th(class_="form-range w-75",
+    oninput="actualizarBadgePorcentaje(this.value,'p_th_badge')", disabled=True)
+    }}
+    <span id="p_th_badge" class="badge bg-primary px-3 mx-auto">75%</span>
+  </div>
+</div>
+<div class="mb-3">
+  {{ form.n_iter.label }}{{ tooltip(gettext('Enter 0 to not limit the number of
+  iterations')) }} {{ form.n_iter(class_="form-control") }}
+</div>
+{% endblock %} {% block form_scripts %}
+<script>
+  const clasificador = document.querySelector('#clasificador1');
+  const div_parametros= document.querySelector('#parametros');
 
-        const todos_parametros = {{ parametros|tojson }};
+  const todos_parametros = {{ parametros|tojson }};
 
-        clasificador.addEventListener('change', (event) => {
-            generarFormParametros(event.target.value, div_parametros, "clasificador1");
-        });
+  clasificador.addEventListener('change', (event) => {
+      generarFormParametros(event.target.value, div_parametros, "clasificador1");
+  });
 
-        generarFormParametros(clasificador.value, div_parametros, "clasificador1");
-    </script>
-{% endblock %}
-{% block explicaciones %}
-    <p>{{ gettext('It is the simplest semi-supervised learning method. This method wraps a single base classifier,
-        which is train with initial labelled data and take advantage of the pseudo-labelling process to continue
-        its training.
-        This method starts by training that base classifier with the labelled data. From this initial learning, the unlabelled
-        data is labelled (pseudo-labelling). The most confident new labelled instances (in which the classifier
-        has the most confident) are selected. Once selected, the classifier is retrained with union of those already
-        labelled instances and these new labelled.
-        The process continues until a stopping criterion (usually until label all data or a maximum number of iterations).') }}</p>
-{% endblock %}
-{% block pseudocodigo %}
-    <img src="{{ gettext('/pseudocodigos/en/SelfTraining.png') }}" width="75%" alt="{{ gettext('Self-Training Pseudocode') }}"/>
+  generarFormParametros(clasificador.value, div_parametros, "clasificador1");
+</script>
+{% endblock %} {% block explicaciones %}
+<p>
+  {{ gettext('It is the simplest semi-supervised learning method. This method
+  wraps a single base classifier, which is train with initial labelled data and
+  take advantage of the pseudo-labelling process to continue its training. This
+  method starts by training that base classifier with the labelled data. From
+  this initial learning, the unlabelled data is labelled (pseudo-labelling). The
+  most confident new labelled instances (in which the classifier has the most
+  confident) are selected. Once selected, the classifier is retrained with union
+  of those already labelled instances and these new labelled. The process
+  continues until a stopping criterion (usually until label all data or a
+  maximum number of iterations).') }}
+</p>
+{% endblock %} {% block pseudocodigo %}
+<img
+  src="{{ gettext('/pseudocodigos/en/SelfTraining.png') }}"
+  width="75%"
+  alt="{{ gettext('Self-Training Pseudocode') }}"
+/>
 {% endblock %}

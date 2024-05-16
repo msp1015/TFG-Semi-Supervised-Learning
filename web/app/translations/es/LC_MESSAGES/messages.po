@@ -455,21 +455,21 @@ msgstr ""
 "Aquí podrás acceder al perfil y al espacio personal con los conjuntos de "
 "datos y ejecuciones."
 
-#: templates/configuracion/base_configuracion.html:91 templates/inicio.html:192
+#: templates/configuracion/base_config_inductivos.html:91 templates/inicio.html:192
 #: templates/subida.html:112 templates/usuarios/miespacio.html:59
 #: templates/usuarios/perfil.html:80
 #: templates/visualizacion/base_visualizacion.html:188
 msgid "Next"
 msgstr "Siguiente"
 
-#: templates/configuracion/base_configuracion.html:92 templates/inicio.html:193
+#: templates/configuracion/base_config_inductivos.html:92 templates/inicio.html:193
 #: templates/subida.html:113 templates/usuarios/miespacio.html:60
 #: templates/usuarios/perfil.html:81
 #: templates/visualizacion/base_visualizacion.html:189
 msgid "Previous"
 msgstr "Anterior"
 
-#: templates/configuracion/base_configuracion.html:93 templates/inicio.html:194
+#: templates/configuracion/base_config_inductivos.html:93 templates/inicio.html:194
 #: templates/subida.html:114 templates/usuarios/miespacio.html:61
 #: templates/usuarios/perfil.html:82
 #: templates/visualizacion/base_visualizacion.html:190
@@ -567,7 +567,7 @@ msgstr "Algoritmo"
 msgid "Run date"
 msgstr "Fecha de ejecución"
 
-#: templates/configuracion/base_configuracion.html:35 templates/macros.html:136
+#: templates/configuracion/base_config_inductivos.html:35 templates/macros.html:136
 #: templates/macros.html:183
 msgid "Parameters"
 msgstr "Parámetros"
@@ -608,7 +608,7 @@ msgstr "Ha ocurrido un error"
 msgid "Dataset upload"
 msgstr "Carga del conjunto de datos"
 
-#: templates/configuracion/base_configuracion.html:10 templates/subida.html:11
+#: templates/configuracion/base_config_inductivos.html:10 templates/subida.html:11
 #: templates/usuarios/admin.html:12 templates/usuarios/base_form.html:4
 #: templates/usuarios/base_user.html:4
 #: templates/visualizacion/base_visualizacion.html:14
@@ -691,33 +691,33 @@ msgstr ""
 msgid "Once loaded, you can proceed to configure the algorithm "
 msgstr "Una vez cargado podrás pasar a la configuración del algoritmo "
 
-#: templates/configuracion/base_configuracion.html:7
-#: templates/configuracion/base_configuracion.html:13
+#: templates/configuracion/base_config_inductivos.html:7
+#: templates/configuracion/base_config_inductivos.html:13
 msgid "Algorithm configuration"
 msgstr "Configuración del algoritmo"
 
-#: templates/configuracion/base_configuracion.html:10
+#: templates/configuracion/base_config_inductivos.html:10
 #: templates/visualizacion/base_visualizacion.html:14
 msgid "Dataset"
 msgstr "Conjunto de datos"
 
-#: templates/configuracion/base_configuracion.html:21
+#: templates/configuracion/base_config_inductivos.html:21
 msgid "Theory"
 msgstr "Teoría"
 
-#: templates/configuracion/base_configuracion.html:52
+#: templates/configuracion/base_config_inductivos.html:52
 msgid "Run"
 msgstr "Ejecutar"
 
-#: templates/configuracion/base_configuracion.html:71
+#: templates/configuracion/base_config_inductivos.html:71
 msgid "Configuration area"
 msgstr "Área de configuración"
 
-#: templates/configuracion/base_configuracion.html:72
+#: templates/configuracion/base_config_inductivos.html:72
 msgid "On this page, you'll be able to customize the parameters of algorithm "
 msgstr "En esta página podrás personalizar los parámetros del algoritmo."
 
-#: templates/configuracion/base_configuracion.html:76
+#: templates/configuracion/base_config_inductivos.html:76
 msgid ""
 "You can gain a deeper understanding of the algorithm by reviewing its "
 "theory and pseudocode."
@@ -725,11 +725,11 @@ msgstr ""
 "Puedes conocer el algoritmo con mayor profundidad viendo su teoría y "
 "pseudocódigo."
 
-#: templates/configuracion/base_configuracion.html:80
+#: templates/configuracion/base_config_inductivos.html:80
 msgid "Here you can select the desired parameters."
 msgstr "Aquí puedes seleccionar los parámetros deseados."
 
-#: templates/configuracion/base_configuracion.html:84
+#: templates/configuracion/base_config_inductivos.html:84
 msgid ""
 "It's crucial to select the column of data that acts as the target "
 "correctly. The rest of the parameters can be used as default."
@@ -737,7 +737,7 @@ msgstr ""
 "Es muy importante seleccionar correctamente la columna de los datos que "
 "actúa como objetivo. El resto de parámetros pueden servir por defecto."
 
-#: templates/configuracion/base_configuracion.html:88
+#: templates/configuracion/base_config_inductivos.html:88
 msgid ""
 "And finally, execute the algorithm. The application may take a few "
 "seconds to display the complete execution."
