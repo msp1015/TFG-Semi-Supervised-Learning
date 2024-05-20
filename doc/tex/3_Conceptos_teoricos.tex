@@ -1,6 +1,6 @@
 \capitulo{3}{Conceptos teóricos}
 
-En esta sección se resumirán los conceptos teóricos básicos y necesarios para comprender el trabajo. Principalmente se hablará de aprendizaje automático y luego se profundizará en el aprendizaje semi-supervisado.
+En esta sección se resumirán los conceptos teóricos básicos y necesarios para comprender el trabajo. Principalmente se presentará el aprendizaje automático y luego se profundizará en el aprendizaje semisupervisado.
 
 \section{Aprendizaje automático}
 El aprendizaje automático (\textit{Machine Learning} en inglés) es el campo de la inteligencia artificial (IA) que se centra en el uso de datos y en el desarrollo de algoritmos para imitar la manera de aprender de los humanos \cite{ML:ibm}. La esencia radica en la capacidad de los sistemas informáticos para aprender de datos y realizar tareas sin intervención humana directa, si no descubriendo patrones y tendencias en los mismos. A estos sistemas se les conoce como \textbf{modelos}, los cuales pueden mejorar su rendimiento y adaptarse a nuevas situaciones basándose en la experiencia pasada.
@@ -15,7 +15,7 @@ Según los datos que se seleccionen en el primer paso, podemos tener dos ramas d
 
  
 \subsection{Aprendizaje supervisado}
-El aprendizaje supervisado es un tipo de aprendizaje automático en el que los modelos son entrenados utilizando conjuntos de datos etiquetados, en los que se basarán las decisiones y predicciones. Los conjuntos de datos contienen ejemplos emparejados de variables de entrada (o características) y de salida (o etiquetas). La esencia de este tipo de aprendizaje se basa en la capacidad del modelo para aprender la relación funcional entre las entradas y las salidas, permitiéndole hacer predicciones precisas sobre nuevos datos no vistos \cite{SL:guide}. De ahí su clasificación como \guillemetleft predictiva\guillemetright ~en la sección anterior.
+El aprendizaje supervisado es un tipo de aprendizaje automático en el que los modelos son entrenados utilizando conjuntos de datos etiquetados, en los que se basarán las decisiones y predicciones. Los conjuntos de datos contienen ejemplos emparejados de variables de entrada (o características) y de salida (o etiquetas). La esencia de este tipo de aprendizaje se basa en la capacidad del modelo para aprender la relación funcional entre las entradas y las salidas, permitiéndole hacer predicciones precisas sobre nuevos datos no vistos anteriormente~\cite{SL:guide}. De ahí su clasificación como \guillemetleft predictiva\guillemetright ~en la sección anterior.
 Dos tareas habituales dentro del aprendizaje supervisado son:
 \begin{itemize}
 	\item \textbf{Clasificación}: los modelos asignan categorías o clases a las entradas no etiquetadas. Dentro de este tipo se puede encontrar la clasificación binaria y la multi-clase. La primera se ve en un caso como la clasificación de correos electrónicos marcadas como spam o no spam (solo una etiqueta). Y la segunda se puede ver en cualquier ejemplo en el que haya mas de dos clases, como al establecer si un paciente tiene alto, medio o bajo riesgo de muerte ante una operación.
@@ -29,8 +29,8 @@ El sobreajuste u \textit{\textbf{overfitting}} es uno de los principales problem
 \subsection{Aprendizaje no supervisado}
 El aprendizaje no supervisado hace referencia a los tipos de problemas en los que se utiliza un modelo para caracterizar o extraer relaciones en los datos.
 A diferencia del aprendizaje supervisado, estos algoritmos descubren la estructura implícita de un conjunto de datos utilizando únicamente características de entrada y no clases o categorías. 
-Ya que no existen etiquetas en los datos, los métodos no supervisados se utilizan normalmente para crear una representación concisa de los datos, posibilitando la generación de contenido creativo a partir de ellos. Por ejemplo, si tenemos una gran cantidad de fotografías sin clasificar, un modelo no supervisado encontraría relaciones entre las caracteristicas para poder organizar automáticamente las imágenes en grupos~\cite{USL:guide}.
-Se pueden clasificar en tres diferentes tareas:
+Ya que no existen etiquetas en los datos, los métodos no supervisados se utilizan normalmente para crear una representación concisa de los datos, posibilitando la generación de contenido creativo a partir de ellos. Por ejemplo, si tenemos una gran cantidad de fotografías sin clasificar, un modelo no supervisado encontraría relaciones entre las características para poder organizar automáticamente las imágenes en grupos~\cite{USL:guide}.
+Principalmente, se pueden clasificar en tres diferentes tareas:
 \begin{itemize}
 	\item \textbf{Clustering}: segmentación o agrupamiento. Consiste en la identificación de grupos o \textit{clusters} en función de sus similitudes y diferencias. Dentro de este tipo, se puede diferenciar un agrupamiento exclusivo, donde los datos pertenencen a un unico grupo, y un agrupamiento superpuesto, donde los datos pueden perteneces a varias agrupaciones. El ejemplo de las fotografías entra dentro de esta categoría.
 	\item \textbf{Reglas de asociación}: utiliza una medida de interés para obtener un conjunto de reglas sólidas que permitan descubrir asociaciones interesantes entre las características de un conjunto de datos. La principal aplicación es el \guillemetleft análisis de cestas de compra\guillemetright, que se usa para determinar los patrones de compra de los clientes en funcion de las relaciones entre productos.
@@ -44,7 +44,7 @@ Se pueden clasificar en tres diferentes tareas:
 
 %https://www.wolfram.com/language/introduction-machine-learning/machine-learning-par%adigms/img/2-machine-learning-paradigms-Print-6.en.png
 
-En la siguiente tabla se resumen las principales diferencias entre aprendizaje supervisado y no supervisado:
+En la tabla \ref{supervisado_VS_noSupervisado} se resumen las principales diferencias entre aprendizaje supervisado y no supervisado:
 \begin{table}[ht]
 	\centering
 	\begin{tabular}{@{}p{2.5cm} p{5cm} p{5cm}@{}}
@@ -68,16 +68,16 @@ En la siguiente tabla se resumen las principales diferencias entre aprendizaje s
 \newpage
 
 
-\section{Aprendizaje semi-supervisado}
-Como el nombre sugiere, el aprendizaje semi-supervisado se encuentra entre los dos tipos vistos anteriormente. Los algoritmos dentro de esta estrategia se basan en extender cualquiera de los aprendizajes, supervisado o no supervisado, para añadir información adicional que el otro no proporciona~\cite{Intro:SemiSupervised}.
+\section{Aprendizaje semisupervisado}
+Como el nombre sugiere, el aprendizaje semisupervisado se encuentra entre los dos tipos vistos anteriormente. Los algoritmos dentro de esta estrategia se basan en extender cualquiera de los aprendizajes, supervisado o no supervisado, para añadir información adicional que el otro no proporciona~\cite{Intro:SemiSupervised}.
 
 Los métodos de clasificación semi-supervisada intentan utilizar puntos de datos no etiquetados para generar un modelo cuyo rendimiento supere el de los modelos obtenidos al utilizar solo datos etiquetados ~\cite{Engelen:semi-supervised}. 
 
-Por ejemplo, imaginemos que se esta trabajando en la clasificación de imágenes médicas para identificar diferentes tipos de enfermedades. En este caso, consideramos específicamente la detección temprana de ciertos tipos de cáncer a partir de imágenes de tomografías. En un enfoque supervisado, podríamos entrenar un modelo utilizando un conjunto de datos etiquetado que incluye imágenes con diagnósticos de cáncer y sin cáncer. Sin embargo, la obtención de un gran conjunto de datos etiquetado puede ser costosa y consume tiempo. En un escenario de aprendizaje semi-supervisado, además de los datos etiquetados, podríamos tener un conjunto de datos mucho más grande que incluye imágenes no etiquetadas. Algunas de estas pueden contener señales sutiles o características asociadas con el cáncer que no han sido previamente etiquetadas.
+Por ejemplo, imaginemos que se esta trabajando en la clasificación de imágenes médicas para identificar diferentes tipos de enfermedades. En este caso, consideramos específicamente la detección temprana de ciertos tipos de cáncer a partir de imágenes de tomografías. En un enfoque supervisado, podríamos entrenar un modelo utilizando un conjunto de datos etiquetado que incluye imágenes con diagnósticos de cáncer y sin cáncer. Sin embargo, la obtención de un gran conjunto de datos etiquetado puede ser costosa y consume tiempo. En un escenario de aprendizaje semisupervisado, además de los datos etiquetados, podríamos tener un conjunto de datos mucho más grande que incluye imágenes no etiquetadas. Algunas de estas pueden contener señales sutiles o características asociadas con el cáncer que no han sido previamente etiquetadas.
 
-El modelo de aprendizaje semi-supervisado  podría analizar estas imágenes no etiquetadas y descubrir patrones que podrian indicar la presencia temprana de cáncer. Por ejemplo, podría aprender a reconocer características microscopicas especificas de las imagenes que no son evidentes para el ojo humano. Cuando se encuentra con nuevas imágenes no etiquetadas que comparten estas características, el modelo podría clasificarlas como indicativas de la presencia de cáncer, incluso si no ha visto exactamente esas características en el conjunto de datos etiquetado.
-Existe una condición necesaria en el aprendizaje semi-supervisado: la distribución marginal subyacente $p(x)$ sobre el espacio de entrada debe contener información acerca de la distribución posterior $p(x|y)$ ~\cite{Engelen:semi-supervised}. Es decir, la naturaleza de los datos no etiquetados debe contener información útil para inferir las etiquetas correspondientes.
-Esta suposición es básica y en la mayoría de los ejemplos se cumple. Aún asi, como la manera de interactuar entre $p(x)$ y  $p(x|y)$ no es siempre la misma, se pueden tomar malas decisiones que conllevarían un rendimiento cada vez peor. Por esta razón, existen tres principales suposiciones que todo algoritmo semi-supervisado debe cumplir para funcionar correctamente.
+El modelo de aprendizaje semisupervisado podría analizar estas imágenes no etiquetadas y descubrir patrones que podrian indicar la presencia temprana de cáncer. Por ejemplo, podría aprender a reconocer características microscopicas especificas de las imagenes que no son evidentes para el ojo humano. Cuando se encuentra con nuevas imágenes no etiquetadas que comparten estas características, el modelo podría clasificarlas como indicativas de la presencia de cáncer, incluso si no ha visto exactamente esas características en el conjunto de datos etiquetado.
+Existe una condición necesaria en el aprendizaje semisupervisado: la distribución marginal subyacente $p(x)$ sobre el espacio de entrada debe contener información acerca de la distribución posterior $p(x|y)$ ~\cite{Engelen:semi-supervised}. Es decir, la naturaleza de los datos no etiquetados debe contener información útil para inferir las etiquetas correspondientes.
+Esta suposición es básica y en la mayoría de los ejemplos se cumple. Aún asi, como la manera de interactuar entre $p(x)$ y  $p(x|y)$ no es siempre la misma, se pueden tomar malas decisiones que conllevarían un rendimiento cada vez peor. Por esta razón, existen tres principales suposiciones que todo conjunto de datos de un algoritmo semisupervisado debe cumplir para funcionar correctamente.
 \begin{itemize}
 	\item \textit{\textbf{Smoothness assumption}}: traducida como suposición de suavidad, consiste en que para dos puntos $x_{1}$ y $x_{2}$ que están cerca en una región densa, entonces sus correspodientes salidas (o etiquetas) $y_{1}$ y $y_{2}$ deben ser las mismas. Esto es útil sobretodo con datos no eitquetados, ya que por la propiedad transitiva, dos puntos que no estén relativamente cerca, pueden ser de la misma clase.
 	\item \textit{\textbf{Low-density assumption}}: esta suposición está definida sobre la distribución de datos de entrada $p(x)$ y dice que el límite de decisión en la clasificación debe pasar antes por un área de poca densidad que por una de mayor densidad. Esto se puede observar en la figura \ref{fig:../img/memoria/Smoothness-LowDensity.png}.
@@ -93,7 +93,7 @@ En algunas ocasiones, aparece una cuarta suposición: \textit{\textbf{cluster as
 
 \imagen{../img/memoria/ClusterAssumption.png}{\textit{Cluster assumption}~\cite{web:assumptions}}{1}
 
-No hay una clasificación oficial de algoritmos de aprendizaje semi-supervisado, pero sí se pueden encontrar aproximaciones teniendo en cuenta las suposiciones en las que estan basadas los algoritmos y en cómo se relacionan con los algoritmos supervisados y no supervisados.
+No hay una clasificación oficial de algoritmos de aprendizaje semisupervisado, pero sí se pueden encontrar aproximaciones teniendo en cuenta las suposiciones en las que estan basadas los algoritmos y en cómo se relacionan con los algoritmos supervisados y no supervisados.
 \imagen{../img/memoria/Clasificacion-SemiSupervised}{Clasificación de los diferentes algoritmos que pretenden incorporar datos no etiquetados a métodos de clasificación. Basado en ~\cite{Engelen:semi-supervised}}{1}
 
 \subsection{Métodos inductivos}
@@ -101,7 +101,7 @@ Los métodos inductivos pretenden construir un clasificador que pueda generar pr
 \begin{itemize}
 	\item \textbf{\textit{Wrapper methods}}: Estos métodos entrenan inicialmente clasificadores con datos etiquetados y luego utilizan las predicciones para generar datos adicionales etiquetados. Los clasificadores se vuelven a entrenar con estos datos pseudo-etiquetados.
 	\item \textbf{\textit{Unsupervised preprocessing}}: Estos métodos extraen características útiles, pre-agrupan datos o determinan parámetros iniciales de aprendizaje de manera no supervisada, pero solo se aplican a datos originalmente etiquetados. Mejoran el rendimiento de clasificadores supervisados al utilizar información de datos no etiquetados durante la etapa de preprocesamiento.
-	\item \textbf{\textit{Intrinsecally semi-supervised}}: Incorporan directamente datos no etiquetados en la función objetivo o procedimiento de optimización. Son extensiones de métodos supervisados al entorno semi-supervisado. Maximizan la información obtenida de datos no etiquetados durante el proceso de aprendizaje.
+	\item \textbf{\textit{Intrinsecally semi-supervised}}: Incorporan directamente datos no etiquetados en la función objetivo o procedimiento de optimización. Son extensiones de métodos supervisados al entorno semisupervisado. Maximizan la información obtenida de datos no etiquetados durante el proceso de aprendizaje.
 	
 \end{itemize}
 \subsection{Métodos transductivos} \label{sec3:transductivo} %TODO Reestructurar esta parte utilizando el otro articulo
@@ -133,7 +133,7 @@ Existen diferentes maneras de llevar a cabo esta fase:
 
 
 \subsection{\textit{Co-Forest}}
-El co-forest es una versión semisupervisada del método de clasificación \textit{random forest}, diseñado para usar tanto datos etiquetados como no etiquetados. En este método, los árboles de decisión (que conforman el \textit{random forest}) se entrenan en un proceso iterativo utilizando subconjuntos de datos etiquetados junto con pseudo-etiquetas seleccionadas de los datos no etiquetados basadas en su alta confiabilidad. La confiabilidad de estas pseudo-etiquetas es evaluada por todos los árboles del ensemble excepto el árbol que está siendo entrenado en ese momento, denominado el conjunto concomitante. El entrenamiento continúa hasta que se alcanza un criterio de parada definido como el \textit{Out Of Bag Error}(OOBE), que mide el error de predicción del conjunto concomitante usando solo aquellos árboles que no incluyeron una muestra específica de los datos etiquetados en su entrenamiento.~\cite{IEEE:CoForest}. A continuación se muestra el pseudocódigo y una explicación más extensa:
+El co-forest es una versión semisupervisada del método de clasificación \textit{random forest}, diseñado para usar tanto datos etiquetados como no etiquetados. En este método, los árboles de decisión (que conforman el \textit{random forest}) se entrenan en un proceso iterativo utilizando subconjuntos de datos etiquetados junto con pseudo-etiquetas seleccionadas de los datos no etiquetados basadas en su alta confiabilidad. La confiabilidad de estas pseudo-etiquetas es evaluada por todos los árboles del ensemble excepto el árbol que está siendo entrenado en ese momento, denominado el conjunto concomitante. El entrenamiento continúa hasta que se alcanza un criterio de parada definido como el \textit{Out Of Bag Error}(OOBE), que mide el error de predicción del conjunto concomitante usando solo aquellos árboles que no incluyeron una muestra específica de los datos etiquetados en su entrenamiento~\cite{IEEE:CoForest}. A continuación se muestra el pseudocódigo y una explicación más extensa:
 \begin{algorithm}
 	\label{alg:Co-Forest}
 	\KwIn{Conjunto de datos etiquetados $L$, conjunto de datos no etiquetados $U$, número de árboles $n$, umbral de confianza $\theta$, sumatorio de confianzas inicial $W_{inicial}$ y parámetros para los árboles de decision $p$}
@@ -204,14 +204,14 @@ labeled instances}(GBILI)}
 El algoritmo \textit{GBILI} o Construcción de Grafos Basada en la Informatividad de Instancias Etiquetadas es un método de construcción de grafos para el aprendizaje semisupervisado. Su principal característica es que se basa en la informatividad de las instancias etiquetadas para relacionar nodos dentro del grafo, pudiendo aprovechar después esta conectividad para predecir las etiquetas de los datos no etiquetados. Se utilizan los métodos de $k$-vecinos más cercanos y  $k$-vecinos más cercanos mutuos para inicializar el grafo. En el pseudocódigo \ref{alg:Gbili}, propuesto en~\cite{gbili}, se puede ver el proceso detallado.
 
 \subsubsection{Metodología}
-El algoritmo aprovecha la información de las etiquetas disponibles para priorizar las conexiones entre los vértices, especialmente aquellos que están más cerca de un punto etiquetado, convirtiendo así estos puntos etiquetados en hubs a medida que aumenta el valor de k.
+El algoritmo aprovecha la información de las etiquetas disponibles para priorizar las conexiones entre los vértices, especialmente aquellos que están más cerca de un punto etiquetado, convirtiendo así estos puntos etiquetados en hubs a medida que aumenta el valor de $k$.
 Los pasos que sigue son:
 \begin{enumerate}
-	\item Generación de la Matriz de Distancias: Se crea una matriz de distancias $D$ usando la distancia euclidiana para determinar los k vecinos más cercanos de cada elemento.
+	\item Generación de la Matriz de Distancias: Se crea una matriz de distancias $D$ usando la distancia euclidiana para determinar los $k$ vecinos más cercanos de cada elemento.
 	\item Configuración de Parámetros: Se establece el parámetro $k$ con un valor natural y se genera una lista de puntos etiquetados	$L$.
-	\item Búsqueda de Vecinos Más Cercanos: Para cada vértice $v_i$, se encuentran sus k vecinos más cercanos.
-	\item Determinación de Vecinos Mutuos: Se identifican los k vecinos mutuos para $v_i$.
-	\item Cálculo de la Informatividad: Se calcula la suma de las distancias desde $v_i$ a cada elemento fe vecinos mutuos y desde estos elementos hasta un punto etiquetado. Se establece una conexión entre $v_i$ y $v_j$ que minimice esta suma. Este aspecto puede verse confuso y por ello se comenta en la sección \ref{sec5:gbili}
+	\item Búsqueda de Vecinos Más Cercanos: Para cada vértice $v_i$, se encuentran sus $k$ vecinos más cercanos.
+	\item Determinación de Vecinos Mutuos: Se identifican los $k$ vecinos mutuos para $v_i$.
+	\item Cálculo de la Informatividad: Se calcula la suma de las distancias desde $v_i$ a cada elemento de vecinos mutuos y desde estos elementos hasta un punto etiquetado. Se establece una conexión entre $v_i$ y $v_j$ que minimice esta suma. Este aspecto puede verse confuso y por ello se comenta en la sección \ref{sec5:gbili}
 	\item Post-procesamiento del Grafo: Se conectan los componentes aislados mediante una búsqueda en anchura (\textit{BFS}) para encontrar componentes en la red. Los componentes sin puntos etiquetados se conectan con componentes vecinos que tienen puntos etiquetados, limitando el número de nuevas conexiones para evitar una red demasiado densa.
 \end{enumerate}
 
@@ -259,13 +259,13 @@ Los pasos que sigue son:
 	\Return{$G$}
 	\caption{\textit{GBILI}}
 \end{algorithm}
-\clearpage
+
 Como se comenta en uno de los pasos, hay ciertos puntos en este algoritmo que deben ser comentados para evitar confusión en la implementación. Además, para este trabajo en concreto, el algoritmo sufre ciertas modificaciones (con la misma idea teórica) que se comentan en la sección \ref{sec5:gbili}.
 
 \subsection{\textit{Local and Global Consistency}}
-Este algoritmo aborda el problema general de aprender a partir de datos etiquetados y no etiquetados. Dado un conjunto de puntos $X$ y un conjunto de etiquetas $L$, los primeros $l$ puntos tienen etiquetas y los puntos restantes no están etiquetados. El objetivo es predecir las etiquetas de los puntos no etiquetados. Esta fuertemente basado en dos de las suposiciones comentadas previamente: Los puntos cercanos tienden a tener la misma etiqueta y los puntos en la misma estructura (como un clúster) probablemente tengan la misma etiqueta.
+Este algoritmo aborda el problema general de aprender a partir de grafos, utilizando tanto datos etiquetados como no etiquetados. Dado un conjunto de puntos $X$ y un conjunto de etiquetas $L$, los primeros $l$ puntos tienen etiquetas y los puntos restantes no están etiquetados. El objetivo es predecir las etiquetas de los puntos no etiquetados. Esta fuertemente basado en dos de las suposiciones comentadas previamente: Los puntos cercanos tienden a tener la misma etiqueta y los puntos en la misma estructura (como un clúster) probablemente tengan la misma etiqueta.
 
-La idea principal es que cada punto propague iterativamente su información de etiqueta a sus vecinos hasta que se alcance un estado global estable. El pseudocódigo \ref{alg:LGC} y las aclaraciones siguientes están basados en el artículo \cite{LGC}.
+La idea principal es que cada punto propague iterativamente su información de etiqueta a sus vecinos hasta que se alcance un estado global estable. El pseudocódigo \ref{alg:LGC} y las aclaraciones siguientes están basados en el artículo~\cite{LGC}.
 
 \begin{itemize}
 	\item Crear la matriz de afinidad: Calcula una matriz $W$ que mide la similitud entre cada par de puntos en $X$. Si dos puntos están muy cerca entre sí, su valor en la matriz $W$ será alto. Los valores en la diagonal de la matriz (que corresponden a la similitud de un punto consigo mismo) se establecen en cero.
@@ -312,7 +312,7 @@ La idea principal es que cada punto propague iterativamente su información de e
 \end{algorithm}
 
 Este algoritmo, como se ha podido llegar a observar, podría no usar directamente la unión física entre nodos del grafo, es decir, no utilizar el paso anterior de construcción del grafo, y aún así, funcionar correctamente, ya que dispondría de la información que da la matriz de distancias. Por ello, para el interés de este trabajo, es necesario buscar una manera de utilizar esta información, la cual se comenta en la seccion \ref{sec5:LGC}
-\clearpage
+
 \section{Ensembles}
 Los sistemas basados en \textit{ensembles} se refieren al proceso de combinar las opiniones de un conjunto de modelos diferentes para tomar una decisión final. Se ha descubierto que los \textit{ensembles} pueden producir resultados más favorables en comparación con los sistemas de un solo experto en una amplia gama de aplicaciones. La creación de un \textit{ensemble} implica generar componentes individuales del sistema y luego combinar sus clasificaciones. En este contexto, se destacan dos técnicas principales: \textit{bagging} y \textit{boosting}~\cite{ensembles}.
 
