@@ -74,20 +74,31 @@ class LGC:
         F_final = self.iterar_F(S, alpha=self.alpha, tol=self.tol, max_iter=self.max_iter)
         return self.predecir_etiquetas(F_final)
 
-    def normalizar_afinidad(self, W):
+    def normalizar_afinidad(self, W, epsilon=1e-4):
         """ Normaliza la matriz de afinidad W.
             Args:
             W (np.array): La matriz de afinidad W.
-
+            epsilon (float): Un valor cercano a 0 para evitar indeterminaciones.
+            
             Returns:
             np.array: La matriz de afinidad normalizada S.
         """
-        D = np.diag(W.sum(axis=1))
+        D = np.diag(W.sum(axis=1) + epsilon)
+        
+        import pandas as pd
+        df = pd.DataFrame(W)
+        df.to_csv('W.csv')
+        df_D = pd.DataFrame(D)
+        df_D.to_csv('D.csv')
         D_inversa = np.diag(1 / np.sqrt(D.diagonal()))
+        df_D_inversa = pd.DataFrame(D_inversa)
+        df_D_inversa.to_csv('D_inversa.csv')
         S = D_inversa @ W @ D_inversa
+        df_S = pd.DataFrame(S)
+        df_S.to_csv('S.csv')
         return S
 
-    def iterar_F(self, S, alpha=0.5, tol=1e-6, max_iter=1000):
+    def iterar_F(self, S, alpha=0.5, tol=1e-6, max_iter=10000):
         """ Itera la matriz de etiquetas F hasta convergencia.
         Args:
             S (np.array): La matriz de afinidad normalizada.
@@ -98,11 +109,18 @@ class LGC:
             np.array: La matriz de etiquetas F.
         """
         F = deepcopy(self.Y)
+        import pandas as pd
+        df_F = pd.DataFrame(F)
+        df_F.to_csv('F.csv')
         for _ in range(max_iter):
             F_next = alpha * S @ F + (1 - alpha) * self.Y
             if np.linalg.norm(F_next - F) < tol:
+                print("Convergencia alcanzada.")
                 break
             F = F_next
+        print("Iteraciones: ", _)
+        df_F_post = pd.DataFrame(F)
+        df_F_post.to_csv('F_post.csv')
         return F
 
     def predecir_etiquetas(self, F):
