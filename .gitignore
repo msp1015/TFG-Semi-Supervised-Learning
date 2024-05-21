@@ -167,6 +167,3 @@ cython_debug/
 alg/algPatri/*
 
 **/tempCodeRunnerFile.py
-
-# Evita los experimentos
-algoritmos/experimentos/*
