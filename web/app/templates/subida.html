@@ -44,18 +44,6 @@
                         </div>
                     </div>
                 </div>
-                <form action="{{ url_for('configuration_bp.configurar_algoritmo', algoritmo=session['ALGORITMO']) }}">
-                    {% if ya_hay_fichero %}
-                        <p id="fichero-previo">
-                            {{ gettext('Previous file detected: ') }}{{ session['FICHERO']|nombredataset }}</p>
-                        <input id="config_btn" class="btn btn-primary" type="submit"
-                               value="{{ gettext('Configure algorithm') }}"/>
-                    {% else %}
-                        <input id="config_btn" class="btn btn-primary" type="submit"
-                               value="{{ gettext('Configure algorithm') }}" disabled/>
-                    {% endif %}
-                </form>
-                <br>
                 <div class="btn-group">
                     <a id="fichero_prueba" class="btn btn-success"
                        href="{{ url_for('main_bp.descargar_prueba', fichero="iris") }}">{{ gettext('Download test file') }}</a>
@@ -71,6 +59,18 @@
                         </li>
                     </ul>
                 </div>
+                <br>
+                <form action="{{ url_for('configuration_bp.configurar_algoritmo', algoritmo=session['ALGORITMO']) }}">
+                    {% if ya_hay_fichero %}
+                        <p id="fichero-previo">
+                            {{ gettext('Previous file detected: ') }}{{ session['FICHERO']|nombredataset }}</p>
+                        <input id="config_btn" class="btn btn-primary" type="submit"
+                               value="{{ gettext('Configure algorithm') }}"/>
+                    {% else %}
+                        <input id="config_btn" class="btn btn-primary" type="submit"
+                               value="{{ gettext('Configure algorithm') }}" disabled/>
+                    {% endif %}
+                </form>
             </div>
         </div>
     </div>

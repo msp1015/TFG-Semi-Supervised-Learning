@@ -66,7 +66,8 @@ def create_app():
                             'cotraining': 'Co-Training',
                             'democraticcolearning': 'Democratic Co-Learning',
                             'tritraining': 'Tri-Training',
-                            'coforest': 'Co-Forest'},
+                            'coforest': 'Co-Forest',
+                            'graphs': gettext('Graphs')},
                 'idiomas': {'en': gettext('English'),
                             'es': gettext('Spanish')},
                 'idioma_actual': get_locale()}
