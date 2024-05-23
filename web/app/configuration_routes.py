@@ -44,23 +44,35 @@ def configurar_algoritmo(algoritmo):
         clasificadores = json.load(f)
 
     caracteristicas = list(dl.get_allfeatures())
-    clasificadores_keys = list(clasificadores.keys())
+    clasificadores_inductivos = clasificadores["Inductive"]
+    clasificadores_inductivos_keys = list(clasificadores_inductivos.keys())
+    alg_inferencia = clasificadores["Inference"]
+    alg_inferencia_keys = list(alg_inferencia.keys())
+    alg_construccion_grafos = clasificadores["Graphs"]
+    alg_construccion_grafos_keys = list(alg_construccion_grafos.keys())
     if session['ALGORITMO'] == "selftraining":
         form = FormConfiguracionSelfTraining()
-        form.clasificador1.choices = clasificadores_keys
+        form.clasificador1.choices = clasificadores_inductivos_keys
+        clasificadores = clasificadores_inductivos
     elif session['ALGORITMO'] == "cotraining":
         form = FormConfiguracionCoTraining()
-        form.clasificador1.choices = clasificadores_keys
-        form.clasificador2.choices = clasificadores_keys
+        form.clasificador1.choices = clasificadores_inductivos_keys
+        form.clasificador2.choices = clasificadores_inductivos_keys
+        clasificadores = clasificadores_inductivos
     elif session['ALGORITMO'] == "coforest":
         form = FormConfiguracionCoForest()
+        clasificadores = clasificadores_inductivos
     elif session['ALGORITMO'] == "graphs":
         form = FormConfiguracionGrafos()
+        form.constructor.choices = alg_construccion_grafos_keys
+        form.inferencia.choices = alg_inferencia_keys
+        clasificadores = alg_construccion_grafos | alg_inferencia
     else:
         form = FormConfiguracionSingleView()
-        form.clasificador1.choices = clasificadores_keys
-        form.clasificador2.choices = clasificadores_keys
-        form.clasificador3.choices = clasificadores_keys
+        form.clasificador1.choices = clasificadores_inductivos_keys
+        form.clasificador2.choices = clasificadores_inductivos_keys
+        form.clasificador3.choices = clasificadores_inductivos_keys
+        clasificadores = clasificadores_inductivos
 
     form.sel_target.choices = caracteristicas
     form.sel_target.default = caracteristicas[-1]
