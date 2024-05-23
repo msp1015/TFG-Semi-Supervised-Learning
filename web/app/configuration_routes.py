@@ -43,17 +43,8 @@ def configurar_algoritmo(algoritmo):
     with open(os.path.join(os.path.dirname(__file__), os.path.normpath("static/json/parametros.json"))) as f:
         clasificadores = json.load(f)
 
-    with open(os.path.join(os.path.dirname(__file__), os.path.normpath("static/json/grafos.json"))) as f:
-        construccion_grafos = json.load(f)
-    
-    with open(os.path.join(os.path.dirname(__file__), os.path.normpath("static/json/inferencia.json"))) as f:
-        inferencia_grafos = json.load(f)
-        
-
     caracteristicas = list(dl.get_allfeatures())
     clasificadores_keys = list(clasificadores.keys())
-    construccion_grafos_keys = list(construccion_grafos.keys())
-    inferencia_grafos_keys = list(inferencia_grafos.keys())
     if session['ALGORITMO'] == "selftraining":
         form = FormConfiguracionSelfTraining()
         form.clasificador1.choices = clasificadores_keys
@@ -65,8 +56,6 @@ def configurar_algoritmo(algoritmo):
         form = FormConfiguracionCoForest()
     elif session['ALGORITMO'] == "graphs":
         form = FormConfiguracionGrafos()
-        form.constructor.choices = construccion_grafos_keys 
-        form.inferencia.choices = inferencia_grafos_keys
     else:
         form = FormConfiguracionSingleView()
         form.clasificador1.choices = clasificadores_keys
@@ -82,5 +71,5 @@ def configurar_algoritmo(algoritmo):
     # después de cargar el formulario
     form.process()
     return render_template('configuracion/' + algoritmo + 'config.html',
-                           parametros=inferencia_grafos, 
+                           parametros=clasificadores, 
                            form=form)

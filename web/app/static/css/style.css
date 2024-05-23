@@ -314,3 +314,60 @@ footer {
     }
 }
 
+
+  .flip-card-3D-wrapper {
+    width: 100%;
+    height: 100%;
+    max-width: 300px; 
+    perspective: 1000px;
+    margin: 10px auto;
+  }
+  
+  .flip-card {
+    height: 100%;
+    height: 500px;
+    width: 300px;
+    transition: all 1s ease-in-out;
+    transform-style: preserve-3d;
+    margin: 10px auto;
+  }
+  
+  .flip-card img{
+    display: block;
+    width: 300px;
+    height: 250px;
+    object-fit: cover;
+  }
+  
+  
+  .do-flip {transform: rotateY(-180deg);}
+  
+  .flip-card-btn-turn-to-back, .flip-card-btn-turn-to-front {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;  
+    visibility: hidden;
+    border-radius: 10px;
+  }
+  
+  .flip-card-btn-turn-to-back, .flip-card-btn-turn-to-front{
+      border: #858AA6;
+      background: black;
+      color: #858AA6;
+      z-index: 3;
+  }
+  
+  .flip-card-front, .flip-card-back {
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    z-index: 2;
+    border-radius: 10px;
+    border:1px solid #858AA6;
+  }
+  
+  .flip-card-front {background: white; color: black;}
+  .flip-card-back {background: white; transform: rotateY(180deg);}
+  .flip-card-back h4 {color: black; font-weight: bold;}
+  
+  
