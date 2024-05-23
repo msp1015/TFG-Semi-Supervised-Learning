@@ -105,25 +105,48 @@
 </div>
 <div class="dos-colores container-fluid bg-3 text-center">
   <div class="row justify-content-around">
-    <div class="card shadow m-2" style="width: 18rem">
-      <img
-        class="card-img-top mt-2"
-        src="/coforest.png"
-        width="300"
-        height="250"
-        alt="Co-Forest"
-      />
-      <div class="card-body">
-        <h6 class="card-title title-mulish text-bold">Co-Forest</h6>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item" style="font-size: 0.95rem">{{ Prueba }}</li>
-        <li class="list-group-item">{{ Ensemble }}</li>
-      </ul>
-      <div class="card-body">
-        <a href="/seleccionar/coforest" class="btn btn-primary stretched-link"
-          >{{ gettext('Select') }}</a
-        >
+    <!-- https://codepen.io/cutydina/pen/wvjjgGP -->
+    <div class="flip-card-3D-wrapper col-md-3">
+      <div class="flip-card">
+        <div class="flip-card-front">
+          <img
+            class="card-img-top mt-2"
+            src="/coforest.png"
+            width="300"
+            height="250"
+            alt="Co-Forest"
+          />
+
+          <div class="card-body">
+            <h5 class="card-title title-mulish text-bold">Co-Forest</h5>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" style="font-size: 0.95rem">
+              {{ gettext('Transductive methods') }}
+            </li>
+            <li class="list-group-item">{{ gettext('a') }}</li>
+          </ul>
+          <div class="card-body">
+            <a href="/seleccionar/coforest" class="btn btn-primary"
+              >{{ gettext('Select') }}</a
+            >
+          </div>
+          <button class="flip-card-btn-turn-to-back">More</button>
+        </div>
+        <div class="flip-card-back">
+          <div class="card-body">
+            <h4 class="text-center">Co-Forest</h4>
+            <p>
+              {{ gettext('Co-Forest is a inductive method that uses a collection
+              of decision trees to predict the labels of the unlabelled
+              instances. It is based on the Random Forest algorithm, but it uses
+              the unlabelled instances to improve the predictions of the
+              decision trees.') }}
+            </p>
+
+            <button class="flip-card-btn-turn-to-front">flip</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -133,7 +156,7 @@
         src="/icono-grafos.png"
         width="300"
         height="250"
-        alt="Co-Forest"
+        alt="Grafos"
       />
       <div class="card-body">
         <h6 class="card-title title-mulish text-bold">Grafos</h6>
@@ -305,5 +328,24 @@
           }).start();
       });
   });
+  const flipCardWrapAll = document.querySelector("#flip-card-wrap-all")
+  const cardsWrapper = document.querySelectorAll(".flip-card-3D-wrapper")
+  const cards = document.querySelectorAll(".flip-card")
+  let frontButtons = ""
+  let backButtons = ""
+
+  for (let i = 0; i < cardsWrapper.length; i++) {
+    frontButtons = cardsWrapper[i].querySelector(".flip-card-btn-turn-to-back")
+    frontButtons.style.visibility = "visible"
+    frontButtons.onclick = function() {
+      cards[i].classList.toggle('do-flip')
+    }
+
+    backButtons = cardsWrapper[i].querySelector(".flip-card-btn-turn-to-front")
+    backButtons.style.visibility = "visible"
+    backButtons.onclick = function() {
+      cards[i].classList.toggle('do-flip')
+    }
+  }
 </script>
 {% endblock %}
