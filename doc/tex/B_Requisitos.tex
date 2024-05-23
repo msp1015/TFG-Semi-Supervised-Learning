@@ -1,8 +1,84 @@
 \apendice{Especificación de Requisitos}
-
 \section{Introducción}
+En esta sección se detallan los requisitos funcionales y no funcionales del sistema. Se incluyen los casos de uso, el catálogo de requisitos y la especificación de requisitos.
 
-Una muestra de cómo podría ser una tabla de casos de uso:
+\section{Objetivos generales}
+Los objetivos generales del sistema se podrían resumir en:
+
+\begin{enumerate}
+	\item Investigar sobre el aprendizaje semisupervisado: en que consisten los \textit{ensembles} y como funcionan los algoritmos basados en grafos.
+	\item Implementar los algoritmos: \textit{Co-Forest, GBILI, RGCLI, LGC y}
+	\item Mejorar y ampliar la web de visualización de estos algoritmos que otro alumno había desarrollado el año anterior.
+\end{enumerate}
+\section{Catálogo de requisitos}
+Cuando se aborda el desarrollo de un proyecto de software, es crucial establecer una comprensión clara y organizada de los requisitos del sistema. Estos requisitos se clasifican típicamente en dos categorías principales: requisitos funcionales y no funcionales.
+
+Los requisitos funcionales describen las funciones específicas y el comportamiento del sistema. Estos requisitos incluyen tareas, servicios o funciones que el sistema debe realizar.
+
+Por otro lado, los requisitos no funcionales se refieren a los aspectos del sistema que definen las cualidades o atributos del sistema, como la seguridad, la usabilidad, la confiabilidad, el rendimiento y la escalabilidad. Estos no están directamente relacionados con las actividades específicas que realiza el sistema, sino con cómo se lleva a cabo esas actividades.
+
+En este caso, al tratarse de un trabajo heredado, los requisitos son la mayoría iguales, sobretodo aquellos que tratan acerca de la gestión de usuarios, que no era el objetivo de este trabajo. Por ello, se listarán los requisitos que sí que hayan cambiado y aquellos que sean nuevos.
+
+\subsection{Requisitos funcionales}
+
+\begin{itemize}
+	\item \textbf{RF-1 Selección de algoritmo}: la aplicación debe
+	permitir seleccionar uno de los algoritmos implementados.
+	\begin{itemize}
+		\item \textbf{RF-1.1 Selección desde menú de navegación}: la opción del algoritmo se debe de poder pulsar desde la barra de navegación situada en la parte de arriba de la página web. Aunque el usuario se encuentre en cualquier otra página puede accedera ellos.
+		\item \textbf{RF-1.1 Selección desde página de inicio}: la otra posibilidad de acceso a los algoritmos es a través de las tarjetas situadas en la página inicial.
+	\end{itemize}
+	\item \textbf{RF-2 Selección de conjunto de datos}: la aplicación debe
+	permitir elegir un fichero \texttt{ARFF} o \texttt{ACSV} para ejecutar el algoritmo.
+	\begin{itemize}
+		\item \textbf{RF-2.1 Selección ya cargada}: la aplicación debe dar la opción de usar un fichero sin necesidad de descargarlo o subirlo.
+		\item \textbf{RF-2.2 Descarga de conjunto de datos}: el sistema debe permitir la descarga de estos ficheros a los que se puede acceder y que la aplicación ya contiene.
+		\item \textbf{RF-2.3 Carga de ficheros}: debe de haber una opción que permita cargar un archivo con las extensiones definidas. Tanto arrastrando el archivo como buscándolo en el explorador de ficheros.
+	\end{itemize} 
+	\item \textbf{RF-3 Visualización de resumen del fichero de datos}: la aplicación debe mostrar al usuario un resumen del conjunto de datos que se ha cargado o se va a utilizar para la ejecución del algoritmo.
+	\item \textbf{RF-4 Configuración del algoritmo}: la aplicación debe	permitir configurar la ejecución del algoritmo con los parámetros específicos del mismo.
+	\begin{itemize}
+		\item \textbf{RF-4.1 Configuración del clasificador}: el sistema debe permitir elegir que clasificador se quiere usar (si hay más de uno) y dentro de este, los parámetros que lo inician.
+		\item \textbf{RF-4.2 Configuración de los datos de entrada}: se debe permitir cambair los parámetros que modifican los conjuntos de datos que se usan en los algoritmos (porcentaje de etiquetados/no etiquetados, uso de reducción de dimensión, etc.).
+	\end{itemize} 
+	\item \textbf{RF-5 Control visualizaciones}: la aplicación debe mostrar visualizaciones interactivas: una principal (gráfico los puntos del conjunto de datos) y otra que aporta información adicional de cada paso.
+	\begin{itemize}
+		\item \textbf{RF-5.1 Visualización de algoritmos inductivos}: el gráfico principal son dos ejes donde se distribuyen los puntos (estáticos) y se debe poder visualizar los cambios que sufren en cada iteración (con ayuda de un \textit{tooltip}). La otra parte corresponde con la visualización de gráficas que muestran estadísticas de evaluación por cada iteración.
+		\item \textbf{RF-5.2 Visualización de algoritmos transductivos}: el gráfico principal corresponde con un grafo interactivo en el cual los nodos deben ser dinámicos. La otra parte debe estar relacionada, señalando los pasos que sigue en el pseudocódigo (construcción del grafo, inferencia, etc.) cada vez que en la visualización se pasa hacia adelante o hacia atrás.
+	\end{itemize}
+	\item \textbf{RF-6 Visualización de tutoriales}: desde cualquier página se debe poder acceder a un tutorial interactivo el cuál muestre los pasos que se deben de seguir en esa página concreta.
+	\item \textbf{RF-7 Acceso a ayudas}: la aplicación debe dar varias opciones que ayuden al usuario a comprender el contenido de la web y a utilizarla de manera correcta.
+	\begin{itemize}
+		\item \textbf{RF-6.1 Acceso a teoría y pseudocódigos}: la aplicación debe permitir visualizar el pseudocódigo junto con algo de teoría para comprender mejor el contenido.
+		\item \textbf{RF-6.2 Acceso a implementación del código}: la aplicación debe permitir acceder a la implementación de los algoritmos como recurso por si se quiere utilizar en el equipo del usuario.
+		\item \textbf{RF-6.3 Acceso al manual de usuario}.
+	\end{itemize}
+\end{itemize}
+
+\subsection{Requisitos no funcionales}
+Extraídos de la memoria de David~\cite{TFG:David}, se han resumido y reordenado.
+\begin{itemize}
+	\item \textbf{RNF-1 Disponibilidad}: el sistema de funcionar con muy alta probabilidad ante una petición y recuperarse rápido en caso de fallo.
+	\item \textbf{RNF-2 Accesibilidad}: el sistema debe poder abarcar el mayor público posible, facilitando su acceso y su manejo independientemente de las capacidades personales.
+	\item \textbf{RNF-3 Interoperabilidad}: el sistema debe poder utilizarse en el mayor número posible de sistemas (sistemas operativos, navegadores) dada su naturaleza Web.
+	\item \textbf{RNF-4 Mantenibilidad}: el sistema debe ser fácil de modificar, mejorar o adaptar cuando se presenten nuevas necesidades.
+	\item \textbf{RNF-5 Seguridad}: el sistema debe asegurar la información sensible (mediante cifrado y controles de accesos) y debe ser accesible mediante protocolos segurizados (SSL).
+	\item \textbf{RNF-6 Privacidad}: el sistema debe respetar la información privada y, de ninguna forma, compartirla con terceros. Debe ser un espacio reservado confidencial con el usuario.
+	\item \textbf{RNF-7 Escalabilidad}: el sistema debe ser capaz de crecer para ajustarse a la carga de trabajo.
+	\item \textbf{RNF-8 Usabilidad}: el sistema debe ser altamente capaz de manejar los errores durante la ejecución (entradas erróneas,\textit{bugs}...), mostrando información precisa al usuario y recuperándos de ellos a una situación estable. Las interfaces deben ser intuitivas para facilitar al usuario sus tareas.
+	\item \textbf{RNF-9 Internacionalización}: el sistema debe estar preparado para soportar el inglés y el español.
+	
+\end{itemize}
+
+\section{Especificación de requisitos}
+Un diagrama de casos de uso ayuda a visualizar el sistema desde la perspectiva de los usuarios finales, mostrando las diversas formas en las que interactuarán con el software. Los elementos principales de estos diagramas incluyen: actores: Representan roles de usuarios o sistemas externos que interactúan con el sistema; casos de uso: Cada caso de uso representa una secuencia específica de acciones que el sistema realiza en respuesta a una interacción con uno o más actores; relaciones: Incluyen asociaciones (líneas que conectan actores con casos de uso), inclusiones, extensiones y generalizaciones, las cuales definen cómo se relacionan y dependen entre sí los diferentes casos de uso y actores.
+
+De nuevo, la mayoría de los casos de uso se heredan del trabajo anterior y se modifican o se crean unos pocos. Para facilitar la comprensión, en la figura~\ref{fig:../img/anexos/CasosDeUso.drawio.png} se han pintado de verde aquellos que se han modificado, de rojo los nuevos y de negro los que ya existían.
+
+\imagen{../img/anexos/CasosDeUso.drawio.png}{Diagrama de casos de uso. En verde los modificados, en rojo los nuevos y en negro los que ya existían}
+
+
+
 
 % Caso de Uso 1 -> Consultar Experimentos.
 \begin{table}[p]
@@ -30,11 +106,3 @@ Una muestra de cómo podría ser una tabla de casos de uso:
 	\end{tabularx}
 	\caption{CU-1 Nombre del caso de uso.}
 \end{table}
-
-\section{Objetivos generales}
-
-\section{Catálogo de requisitos}
-
-\section{Especificación de requisitos}
-
-
