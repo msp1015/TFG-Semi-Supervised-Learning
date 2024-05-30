@@ -153,6 +153,18 @@ footer {
 
 .dos-colores {
     background: linear-gradient(to bottom, #4D7080 50%, #FFF 50%);
+} 
+
+ @media (max-width: 1220px) {
+    .dos-colores {
+        background: linear-gradient(to bottom, #4D7080 75%, #FFF 25%);
+    }
+}
+
+@media (max-width: 610px) {
+    .dos-colores {
+        background: linear-gradient(to bottom, #4D7080 90%, #FFF 10%);
+    }
 }
 
 .tooltip > .tooltip-inner {
@@ -173,18 +185,6 @@ footer {
 
 .bs-tooltip-auto[data-popper-placement^="right"] .tooltip-arrow::before {
     border-right-color: #737C80 !important;
-}
-
-@media (max-width: 1220px) {
-    .dos-colores {
-        background: linear-gradient(to bottom, #4D7080 75%, #FFF 25%);
-    }
-}
-
-@media (max-width: 610px) {
-    .dos-colores {
-        background: linear-gradient(to bottom, #4D7080 90%, #FFF 10%);
-    }
 }
 
 .parametros {
@@ -318,16 +318,17 @@ footer {
   .flip-card-3D-wrapper {
     width: 100%;
     height: 100%;
-    max-width: 300px; 
+    max-width: 200px; 
     perspective: 1000px;
     margin: 10px auto;
+    background-color: green;
   }
   
   .flip-card {
     height: 100%;
     height: 500px;
     width: 300px;
-    transition: all 1s ease-in-out;
+    transition: all 0.1s ease-in-out;
     transform-style: preserve-3d;
     margin: 10px auto;
   }
@@ -369,5 +370,4 @@ footer {
   .flip-card-front {background: white; color: black;}
   .flip-card-back {background: white; transform: rotateY(180deg);}
   .flip-card-back h4 {color: black; font-weight: bold;}
-  
   

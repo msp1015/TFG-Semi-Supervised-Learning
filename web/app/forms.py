@@ -73,6 +73,14 @@ class FormConfiguracionBase(FlaskForm):
                              id="sel_target",
                              validators=[InputRequired()])
 
+    p_unlabelled = IntegerRangeField(lazy_gettext('Unlabelled percentage'),
+                                     name="p_unlabelled",
+                                     id="p_unlabelled",
+                                     default=80,
+                                     validators=[InputRequired(), NumberRange(min=1, max=99)])
+
+    
+class FormConfiguracionBaseInductivo(FormConfiguracionBase):
     cx = SelectField(lazy_gettext('Select X component'),
                      name="cx",
                      id="cx",
@@ -90,21 +98,14 @@ class FormConfiguracionBase(FlaskForm):
     stand = BooleanField(lazy_gettext('Standardize'),
                          name="stand",
                          id="stand")
-
-    p_unlabelled = IntegerRangeField(lazy_gettext('Unlabelled percentage'),
-                                     name="p_unlabelled",
-                                     id="p_unlabelled",
-                                     default=80,
-                                     validators=[InputRequired(), NumberRange(min=1, max=99)])
-
+    
     p_test = IntegerRangeField(lazy_gettext('Test percentage (after unlabelled percentage)'),
                                name="p_test",
                                id="p_test",
                                default=20,
                                validators=[InputRequired(), NumberRange(min=1, max=99)])
-
-
-class FormConfiguracionSelfTraining(FormConfiguracionBase):
+    
+class FormConfiguracionSelfTraining(FormConfiguracionBaseInductivo):
     clasificador1 = SelectField(lazy_gettext('Select classifier'),
                                 name="clasificador1",
                                 id="clasificador1",
@@ -128,8 +129,7 @@ class FormConfiguracionSelfTraining(FormConfiguracionBase):
                           default=10,
                           validators=[InputRequired(), NumberRange(min=0)])
 
-
-class FormConfiguracionCoTraining(FormConfiguracionBase):
+class FormConfiguracionCoTraining(FormConfiguracionBaseInductivo):
     clasificador1 = SelectField(lazy_gettext('Select classifier'),
                                 name="clasificador1",
                                 id="clasificador1",
@@ -165,7 +165,7 @@ class FormConfiguracionCoTraining(FormConfiguracionBase):
                           validators=[InputRequired(), NumberRange(min=0)])
 
 
-class FormConfiguracionSingleView(FormConfiguracionBase):
+class FormConfiguracionSingleView(FormConfiguracionBaseInductivo):
     clasificador1 = SelectField(lazy_gettext('Select classifier'),
                                 name="clasificador1",
                                 id="clasificador1",
@@ -182,7 +182,7 @@ class FormConfiguracionSingleView(FormConfiguracionBase):
                                 validators=[InputRequired()])
 
 
-class FormConfiguracionCoForest(FormConfiguracionBase):
+class FormConfiguracionCoForest(FormConfiguracionBaseInductivo):
     n_arboles = IntegerField(lazy_gettext('Number of trees'),
                              name="n_arboles",
                              id="n_arboles",

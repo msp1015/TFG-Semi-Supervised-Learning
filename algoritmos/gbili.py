@@ -14,7 +14,7 @@ from scipy.spatial import distance_matrix
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from copy import deepcopy
-from localglobalconsistency import LGC
+#from localglobalconsistency import LGC
 class Gbili:
     """ Algoritmo de construccion de grafos GBILI basado en el artículo:
     'Graph construction based on labeled instances for
@@ -273,28 +273,28 @@ class Gbili:
     
     
 ## Ejemplo de uso
-from sklearn.datasets import load_iris, load_breast_cancer
-from sklearn.model_selection import train_test_split
-iris = load_iris()
-breast_cancer = load_breast_cancer()
-x = iris.data
-y = iris.target
-K = 7
+# from sklearn.datasets import load_iris, load_breast_cancer
+# from sklearn.model_selection import train_test_split
+# iris = load_iris()
+# breast_cancer = load_breast_cancer()
+# x = iris.data
+# y = iris.target
+# K = 10
 
-L, U, L_, U_ = train_test_split(x, y, test_size=0.7, stratify=y)#, random_state=42)
+# L, U, L_, U_ = train_test_split(x, y, test_size=0.7, stratify=y, random_state=42)
 
-todas_etiquetas = np.concatenate((L_, U_))
+# todas_etiquetas = np.concatenate((L_, U_))
 
 
-solver = Gbili(U, L,todas_etiquetas, K)
-grafo = solver.construir_grafo()
+# solver = Gbili(U, L,todas_etiquetas, K)
+# grafo = solver.construir_grafo()
 
-inferecia = LGC(grafo, solver.nodos, solver.etiquetas_etiquetados, alpha=0.99, tol=1e-10, max_iter=1000)
-predicciones = inferecia.inferir_etiquetas()
+# inferecia = LGC(grafo, solver.nodos, solver.etiquetas_etiquetados, alpha=0.99, tol=0.1, max_iter=10000)
+# predicciones = inferecia.inferir_etiquetas()
 
-predicciones[len(L):]
-etiquetas_reales = todas_etiquetas[len(L):]
-accuracy = np.mean(predicciones[len(L):] == etiquetas_reales)
-print("Predicciones: ", predicciones[len(L):])
-print("Etiquetas reales: ", etiquetas_reales)
-print(f"Accuracy: {accuracy}")
+# predicciones[len(L):]
+# etiquetas_reales = todas_etiquetas[len(L):]
+# accuracy = np.mean(predicciones[len(L):] == etiquetas_reales)
+# print("Predicciones: ", predicciones[len(L):])
+# print("Etiquetas reales: ", etiquetas_reales)
+# print(f"Accuracy: {accuracy}")

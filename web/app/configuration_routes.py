@@ -42,7 +42,7 @@ def configurar_algoritmo(algoritmo):
     dl = DatasetLoader(session['FICHERO'])
     with open(os.path.join(os.path.dirname(__file__), os.path.normpath("static/json/parametros.json"))) as f:
         clasificadores = json.load(f)
-
+        print(clasificadores)
     caracteristicas = list(dl.get_allfeatures())
     clasificadores_inductivos = clasificadores["Inductive"]
     clasificadores_inductivos_keys = list(clasificadores_inductivos.keys())
@@ -50,6 +50,7 @@ def configurar_algoritmo(algoritmo):
     alg_inferencia_keys = list(alg_inferencia.keys())
     alg_construccion_grafos = clasificadores["Graphs"]
     alg_construccion_grafos_keys = list(alg_construccion_grafos.keys())
+    
     if session['ALGORITMO'] == "selftraining":
         form = FormConfiguracionSelfTraining()
         form.clasificador1.choices = clasificadores_inductivos_keys
@@ -73,11 +74,13 @@ def configurar_algoritmo(algoritmo):
         form.clasificador2.choices = clasificadores_inductivos_keys
         form.clasificador3.choices = clasificadores_inductivos_keys
         clasificadores = clasificadores_inductivos
-
+        
     form.sel_target.choices = caracteristicas
     form.sel_target.default = caracteristicas[-1]
-    form.cx.choices = caracteristicas
-    form.cy.choices = caracteristicas
+    if hasattr(form, 'cx'):
+        form.cx.choices = caracteristicas
+    if hasattr(form, 'cy'):
+        form.cy.choices = caracteristicas
     
     # Aplica los valores por defecto que han sido definidos 
     # después de cargar el formulario

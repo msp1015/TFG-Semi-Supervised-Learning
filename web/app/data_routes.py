@@ -4,13 +4,15 @@ from datetime import datetime
 
 from flask import request, session, Blueprint, current_app, jsonify
 from flask_login import current_user
+import numpy as np
+from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sqlalchemy.exc import SQLAlchemyError
 
-from algoritmos import SelfTraining, CoTraining, DemocraticCoLearning, TriTraining, CoForest
+from algoritmos import SelfTraining, CoTraining, DemocraticCoLearning, TriTraining, CoForest, Gbili, LGC
 from algoritmos.utilidades.datasetloader import DatasetLoader
 from algoritmos.utilidades.datasplitter import data_split
 from algoritmos.utilidades.dimreduction import log_pca_reduction, log_cxcy_reduction
@@ -36,13 +38,13 @@ def datosselftraining():
 
     try:
         st = SelfTraining(
-            clf=obtener_clasificador(clasificador, obtener_parametros_clasificador(
+            clf=obtener_clasificador(clasificador, obtener_parametros_clasificador_inductivo(
                 clasificador, "clasificador1")),
             n=n if n != -1 else None,
             th=th/100 if th != -1 else None,
             n_iter=int(request.form['n_iter']))
 
-        info = obtener_info(st)
+        info = obtener_info_inductivo(st)
     except ValueError as e:
         return jsonify({
             "status": "warning",
@@ -69,11 +71,11 @@ def datoscoforest():
     n_arboles = int(request.form['n_arboles'])
     theta = int(request.form['theta'])
     try:
-        params_arbol_decision = obtener_parametros_clasificador(
+        params_arbol_decision = obtener_parametros_clasificador_inductivo(
             "DecisionTreeClassifier", "clasificador1")
         st = CoForest(n_arboles, theta/100, params_arbol_decision)
 
-        info = obtener_info(st)
+        info = obtener_info_inductivo(st)
     except ValueError as e:
         return jsonify({
             "status": "warning",
@@ -101,16 +103,16 @@ def datoscotraining():
 
     try:
         ct = CoTraining(
-            clf1=obtener_clasificador(clasificador1, obtener_parametros_clasificador(
+            clf1=obtener_clasificador(clasificador1, obtener_parametros_clasificador_inductivo(
                 clasificador1, "clasificador1")),
-            clf2=obtener_clasificador(clasificador2, obtener_parametros_clasificador(
+            clf2=obtener_clasificador(clasificador2, obtener_parametros_clasificador_inductivo(
                 clasificador2, "clasificador2")),
             p=int(request.form['p']),
             n=int(request.form['n']),
             u=int(request.form['u']),
             n_iter=int(request.form['n_iter']))
 
-        info = obtener_info(ct)
+        info = obtener_info_inductivo(ct)
     except ValueError as e:
         return jsonify({
             "status": "warning",
@@ -138,18 +140,18 @@ def datossingleview(is_democratic):
     clasificador3 = request.form['clasificador3']
 
     clf1 = obtener_clasificador(
-        clasificador1, obtener_parametros_clasificador(clasificador1, "clasificador1"))
+        clasificador1, obtener_parametros_clasificador_inductivo(clasificador1, "clasificador1"))
     clf2 = obtener_clasificador(
-        clasificador2, obtener_parametros_clasificador(clasificador2, "clasificador2"))
+        clasificador2, obtener_parametros_clasificador_inductivo(clasificador2, "clasificador2"))
     clf3 = obtener_clasificador(
-        clasificador3, obtener_parametros_clasificador(clasificador3, "clasificador3"))
+        clasificador3, obtener_parametros_clasificador_inductivo(clasificador3, "clasificador3"))
     try:
         if is_democratic:
             svclf = DemocraticCoLearning([clf1, clf2, clf3])
         else:
             svclf = TriTraining([clf1, clf2, clf3])
 
-        info = obtener_info(svclf)
+        info = obtener_info_inductivo(svclf)
     except ValueError as e:
         return jsonify({
             "status": "warning",
@@ -184,10 +186,36 @@ def datostritraining():
 
     return datossingleview(False)
 
+@data_bp.route('/graphs', methods=['POST'])
+def datosgraphs():
+    """
+    Obtiene los datos de la ejecución de algoritmos basados en grafos
+    
+    : return json con la información de ejecución
+    """
+    
+    constructor = request.form['constructor']
+    inferencia = request.form['inferencia']
+    
+    datasetloader = DatasetLoader(session['FICHERO'])
+    datasetloader.set_target(request.form['target'])
+    p_unlabelled=int(request.form['p_unlabelled']) / 100
+    x, y, mapa, is_unlabelled = datasetloader.get_x_y()
+    print(y)
+    print(x)
+    L, U, L_, U_ = train_test_split(x, y, test_size=p_unlabelled, stratify=y, random_state=42)
 
-def obtener_info(algoritmo):
+    todas_etiquetas = np.concatenate((L_, U_))
+
+    if constructor == "Gbili":
+
+        solver = Gbili(U, L,todas_etiquetas, 5)
+
+
+
+def obtener_info_inductivo(algoritmo):
     """Función auxiliar que evita el código duplicado de la obtención de toda la información
-    de la ejecución de los algoritmos.
+    de la ejecución de los algoritmos inductivos.
 
     Realiza la carga de datos, las particiones de datos, el entrenamiento del algoritmo,
     la conversión a un log (logger) en 2D y la conversión a JSON para las plantillas.
@@ -263,14 +291,10 @@ def obtener_info(algoritmo):
                 current_app.config['CARPETA_RUNS'], f'run-{current_user.id}-{date}.json'))
         else:
             db.session.commit()
-    #gaurdar en fichero
-    with open("obtener_info.txt", "w") as f:
-        f.write(str(info))
-    print(info)
     return info
 
 
-def obtener_parametros_clasificador(clasificador, nombre):
+def obtener_parametros_clasificador_inductivo(clasificador, nombre):
     """A la hora de instanciar un clasificador (sklearn), este tiene una serie de parámetros
     (NO CONFUNDIR CON LOS PARÁMETROS DE LOS ALGORITMOS SEMI-SUPERVISADOS).
     Aclaración: estos vienen codificados en parametros.json.
@@ -283,7 +307,7 @@ def obtener_parametros_clasificador(clasificador, nombre):
 
     with open(os.path.join(os.path.dirname(__file__), os.path.normpath("static/json/parametros.json"))) as f:
         clasificadores = json.load(f)
-
+    clasificadores = clasificadores["Inductive"]
     parametros_clasificador = {}
     for key in clasificadores[clasificador].keys():
         parametro = clasificadores[clasificador][key]
@@ -298,10 +322,14 @@ def obtener_parametros_clasificador(clasificador, nombre):
 
     return parametros_clasificador
 
+def obtener_parametros_clasificador_grafo(clasificador, nombre):
+    """ """
+    
+
 
 def obtener_clasificador(nombre, params):
     """Instancia un clasificador (sklearn) a partir de su nombre y los parámetros
-    introducidos (provenientes de "obtener_parametros_clasificador").
+    introducidos (provenientes de "obtener_parametros_clasificador_inductivo").
 
     :return: instancia del clasificador.
     """
@@ -327,7 +355,7 @@ def generar_json_parametros():
 
     with open(os.path.join(os.path.dirname(__file__), os.path.normpath("static/json/parametros.json"))) as f:
         clasificadores = json.load(f)
-
+    clasificadores = clasificadores["Inductive"]
     formulario = dict(request.form)
 
     claves_clasificadores = [

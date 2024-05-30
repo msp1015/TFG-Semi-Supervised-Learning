@@ -44,7 +44,6 @@ def visualizar_algoritmo(algoritmo):
     """En params se encontrarán todos los datos necesarios para ejecutar el algoritmo.
     Realmente no se le pasa la información ejecutada, se realiza una petición POST
     desde Javascript con estos parámetros al renderizar la plantilla del algoritmo."""
-
     return render_template('visualizacion/' + session['ALGORITMO'] + '.html',
                            params=params,
                            cx=request.form.get('cx', 'C1'),
@@ -101,17 +100,12 @@ def parametros_grafos():
         {"nombre": "constructor", "valor": request.form['constructor']},
         {"nombre": "inferencia", "valor": request.form['inferencia']},
         {"nombre": "target", "valor": request.form.get('target')},
-        {"nombre": "cx", "valor": request.form.get('cx', 'C1')},
-        {"nombre": "cy", "valor": request.form.get('cy', 'C2')},
-        {"nombre": "pca", "valor": request.form.get('pca', 'n')},
-        {"nombre": "stand", "valor": request.form.get('stand', 'n')},
-        {"nombre": "p_unlabelled", "valor": request.form.get('p_unlabelled')},
-        {"nombre": "p_test", "valor": request.form.get('p_test')},
+        {"nombre": "p_unlabelled", "valor": request.form.get('p_unlabelled')}
     ]
 
     # Los parámetros anteriores no incluyen los propios parámetros de los clasificadores
     # (SVM, GaussianNB...), esta función lo incluye
-    incorporar_clasificadores_params([constructor, inferencia], params)
+    incorporar_clasificadores_grafos_params([constructor, inferencia], params)
 
     return params
 def parametros_selftraining():
@@ -142,7 +136,7 @@ def parametros_selftraining():
 
     # Los parámetros anteriores no incluyen los propios parámetros de los clasificadores
     # (SVM, GaussianNB...), esta función lo incluye
-    incorporar_clasificadores_params([clasificador], params)
+    incorporar_clasificadores_inductivos_params([clasificador], params)
 
     return params
 
@@ -177,7 +171,7 @@ def parametros_cotraining():
 
     # Los parámetros anteriores no incluyen los propios parámetros de los clasificadores
     # (SVM, GaussianNB...), esta función lo incluye
-    incorporar_clasificadores_params([clasificador1, clasificador2], params)
+    incorporar_clasificadores_inductivos_params([clasificador1, clasificador2], params)
 
     return params
 
@@ -211,7 +205,7 @@ def parametros_democraticcolearning_tritraining():
     # Los parámetros anteriores no incluyen los propios parámetros de los clasificadores
     # (SVM, GaussianNB...), esta función lo incluye
     lista_clasificadores = [clasificador1, clasificador2, clasificador3]
-    incorporar_clasificadores_params(lista_clasificadores, params)
+    incorporar_clasificadores_inductivos_params(lista_clasificadores, params)
 
     if len(set(lista_clasificadores)) != len(lista_clasificadores) and session['ALGORITMO'] == "democraticcolearning":
         flash(gettext(
@@ -243,12 +237,11 @@ def parametros_coforest():
         {"nombre": "p_unlabelled", "valor": request.form.get('p_unlabelled')},
         {"nombre": "p_test", "valor": request.form.get('p_test')},
     ]
-    incorporar_clasificadores_params([clasificador], params)
-    print("params despues, ", params)
+    incorporar_clasificadores_inductivos_params([clasificador], params)
     return params
 
 
-def incorporar_clasificadores_params(nombre_clasificadores, params):
+def incorporar_clasificadores_inductivos_params(nombre_clasificadores, params):
     """
     Incluye los parámetros de los propios clasificadores base
     a la lista de parámetros generales para luego realizar la petición
@@ -257,8 +250,29 @@ def incorporar_clasificadores_params(nombre_clasificadores, params):
 
     with open(os.path.join(os.path.dirname(__file__), os.path.normpath("static/json/parametros.json"))) as f:
         clasificadores = json.load(f)
-
+    clasificadores = clasificadores["Inductive"]
     for i, clasificador in enumerate(nombre_clasificadores):
         for key in clasificadores[clasificador].keys():
             params.append({"nombre": f"clasificador{i + 1}_" + key,
                            "valor": request.form.get(f"clasificador{i + 1}_" + key, -1)})
+
+def incorporar_clasificadores_grafos_params(nombre_clasificadores, params):
+    """
+    Incluye los parámetros de los propios clasificadores base
+    a la lista de parámetros generales para luego realizar la petición
+    e instanciar los clasificadores con dichos parámetros.
+    """
+
+    with open(os.path.join(os.path.dirname(__file__), os.path.normpath("static/json/parametros.json"))) as f:
+        clasificadores = json.load(f)
+    clasificadores_inferencia = clasificadores["Inference"]
+    clasificadores_grafos = clasificadores["Graphs"]
+    for i, clasificador in enumerate(nombre_clasificadores):
+        if clasificador in clasificadores_inferencia.keys():
+            for key in clasificadores_inferencia[clasificador].keys():
+                params.append({"nombre": f"inferencia_" + key,
+                               "valor": request.form.get(f"inferencia_" + key, -1)})
+        elif clasificador in clasificadores_grafos.keys():
+            for key in clasificadores_grafos[clasificador].keys():
+                params.append({"nombre": f"constructor_" + key,
+                               "valor": request.form.get(f"constructor_" + key, -1)})
