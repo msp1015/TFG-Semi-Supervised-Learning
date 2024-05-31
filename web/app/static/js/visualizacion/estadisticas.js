@@ -112,10 +112,9 @@ function seleccionarstat(id_div_estadisticas, stat_seleccionada, lista_stats) {
     }
 
 }
-
 /**
  *
- * Genera los checboxes de cada clasificador
+ * Genera los checkboxes de cada clasificador
  *
  * @param id_div_objetivo - id del <div> donde se incluirán los checkboxes
  * @param id_div_estadisticas - id del <div> del gráfico SVG
@@ -140,6 +139,7 @@ function generarcheckboxes_clasificadores(id_div_objetivo, id_div_estadisticas, 
         if (this.checked) {
             deselectAllCheckbox.checked = false;
         }
+        actualizarSeleccionTodosNinguno();
     });
     div_objetivo.appendChild(selectAllCheckbox);
     div_objetivo.appendChild(document.createTextNode("_All_"));
@@ -160,29 +160,27 @@ function generarcheckboxes_clasificadores(id_div_objetivo, id_div_estadisticas, 
         if (this.checked) {
             selectAllCheckbox.checked = false;
         }
+        actualizarSeleccionTodosNinguno();
     });
     div_objetivo.appendChild(deselectAllCheckbox);
     div_objetivo.appendChild(document.createTextNode("_None_"));
 
-
-    for (let index in clasificadores){
+    for (let index in clasificadores) {
         let clasificador = clasificadores[index];
 
         let input = document.createElement("input");
-        input.setAttribute("id", "chk_" + clasificador.replace("(","")
-            .replace(")",""));
+        input.setAttribute("id", "chk_" + clasificador.replace("(", "").replace(")", ""));
         input.setAttribute("type", "checkbox");
         input.setAttribute("class", "form-check-input");
         input.checked = true;
 
-
-        input.addEventListener("click", function() {
+        input.addEventListener("change", function() {
             habilitar_clasificador(id_div_estadisticas, this.checked, clasificador);
+            actualizarSeleccionTodosNinguno();
         });
 
         let label = document.createElement("label");
-        label.setAttribute("for", "chk_" + clasificador.replace("(","")
-            .replace(")",""));
+        label.setAttribute("for", "chk_" + clasificador.replace("(", "").replace(")", ""));
         label.textContent = clasificador;
 
         div_objetivo.appendChild(input);
@@ -190,6 +188,25 @@ function generarcheckboxes_clasificadores(id_div_objetivo, id_div_estadisticas, 
         div_objetivo.append(" ");
     }
 
+    /**
+     * Actualiza el estado de "marcar todos" y "desmarcar todos"
+     */
+    function actualizarSeleccionTodosNinguno() {
+        let checkboxes = div_objetivo.querySelectorAll("input[type='checkbox']");
+        let individualCheckboxes = Array.from(checkboxes).filter(chk => chk.id !== "chk_select_all" && chk.id !== "chk_deselect_all");
+
+        let allChecked = individualCheckboxes.every(chk => chk.checked);
+        let noneChecked = individualCheckboxes.every(chk => !chk.checked);
+
+        selectAllCheckbox.checked = allChecked;
+        deselectAllCheckbox.checked = noneChecked;
+
+        selectAllCheckbox.disabled = allChecked;
+        deselectAllCheckbox.disabled = noneChecked;
+    }
+
+    // Inicializar el estado de los botones "All" y "None"
+    actualizarSeleccionTodosNinguno();
 }
 
 /**
@@ -204,28 +221,25 @@ function generarcheckboxes_clasificadores(id_div_objetivo, id_div_estadisticas, 
  * @param clasificador - nombre del clasificador
  */
 function habilitar_clasificador(id_div_objetivo, checked, clasificador) {
-    let nombre_clasificador = clasificador
-        .replace("(","")
-        .replace(")","");
+    let nombre_clasificador = clasificador.replace("(", "").replace(")", "");
     let statsvg = d3.select("#" + id_div_objetivo).select("svg").select("g");
-    let pts = statsvg.selectAll('circle[clf='+ nombre_clasificador +']');
-    let lineas = statsvg.selectAll('line[clf='+ nombre_clasificador +']');
+    let pts = statsvg.selectAll('circle[clf=' + nombre_clasificador + ']');
+    let lineas = statsvg.selectAll('line[clf=' + nombre_clasificador + ']');
 
-    if(checked){
+    if (checked) {
         pts.filter(function(d) {
             return d[0] <= cont && comprobarvisibilidad(nombre_clasificador, d3.select(this).attr("stat"));
-        })
-            .style("visibility", "visible")
+        }).style("visibility", "visible");
 
-        lineas.filter(function (d) {
+        lineas.filter(function(d) {
             return d <= cont && comprobarvisibilidad(nombre_clasificador, d3.select(this).attr("stat"));
-        })
-            .style("visibility", "visible")
-    }else{
+        }).style("visibility", "visible");
+    } else {
         pts.style("visibility", "hidden");
         lineas.style("visibility", "hidden");
     }
 }
+
 
 /**
  *

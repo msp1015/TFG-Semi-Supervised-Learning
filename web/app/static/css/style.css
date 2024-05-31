@@ -321,7 +321,6 @@ footer {
     max-width: 200px; 
     perspective: 1000px;
     margin: 10px auto;
-    background-color: green;
   }
   
   .flip-card {
