@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block title %}{{ gettext('Home') }}{% endblock %}
 {% block content %}
-<div class="mt-1 p-3 pb-1 A text-white text-center">
+<div class="p-3 pb-1 A text-white text-center">
   <h1 class="title-mulish text-bold">VASS</h1>
   <h4 class="title-mulish">
     {{ gettext('Semi-Supervised Algorithm Visualizer') }}
@@ -103,167 +103,227 @@
     </div>
   </div>
 </div>
-<div class="dos-colores container-fluid bg-3 text-center">
-  <div class="row justify-content-around">
-    <!-- https://codepen.io/cutydina/pen/wvjjgGP -->
-    <div class="flip-card-3D-wrapper col-md-3">
-      <div class="flip-card">
-        <div class="flip-card-front">
+<div class="dos-colores container-fluid text-center">
+  <div class="row justify-content-center">
+    <!-- Card 1 -->
+    <div class="card m-2 shadow" style="max-width: 570px">
+      <div class="row g-0">
+        <div class="col-md-6">
+          <img src="/grafos.png" class="img-fluid rounded-start" alt="Graphs" />
+        </div>
+        <div class="col-md-6">
+          <div class="card-body">
+            <h5 class="card-title title-mulish text-bold">
+              {{ gettext('Graphs') }}
+            </h5>
+            <p class="card-text">{{ gettext('Transductive methods') }}</p>
+            <a
+              href="/seleccionar/graphs"
+              class="btn btn-primary stretched-link"
+            >
+              {{ gettext('Select') }}
+            </a>
+            <a
+              href="https://arxiv.org/abs/2102.13303"
+              class="btn btn-secondary stretched-link"
+              style="position: relative"
+              target="_blank"
+            >
+              <i class="bi bi-file-earmark-text"></i> {{ gettext('Paper') }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card m-2 shadow" style="max-width: 570px">
+      <div class="row g-0">
+        <div class="col-md-6">
           <img
-            class="card-img-top mt-2"
-            src="/coforest.png"
-            width="300"
-            height="250"
+            src="/CoForest_.png"
+            class="img-fluid rounded-start"
             alt="Co-Forest"
           />
-
+        </div>
+        <div class="col-md-6">
           <div class="card-body">
             <h5 class="card-title title-mulish text-bold">Co-Forest</h5>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item" style="font-size: 0.95rem">
-              {{ gettext('Transductive methods') }}
-            </li>
-            <li class="list-group-item">{{ gettext('a') }}</li>
-          </ul>
-          <div class="card-body">
-            <a href="/seleccionar/coforest" class="btn btn-primary"
-              >{{ gettext('Select') }}</a
-            >
-          </div>
-          <button class="flip-card-btn-turn-to-back">More</button>
-        </div>
-        <div class="flip-card-back">
-          <div class="card-body">
-            <h4 class="text-center">Co-Forest</h4>
-            <p>
-              {{ gettext('Co-Forest is a inductive method that uses a collection
-              of decision trees to predict the labels of the unlabelled
-              instances. It is based on the Random Forest algorithm, but it uses
-              the unlabelled instances to improve the predictions of the
-              decision trees.') }}
+            <p class="card-text">
+              {{ gettext('Ensemble that uses multiple decision trees to
+              iteratively add confident predictions to the training set,
+              enhancing mutual learning.') }}
             </p>
 
-            <button class="flip-card-btn-turn-to-front">flip</button>
+            <a
+              href="/seleccionar/coforest"
+              class="btn btn-primary stretched-link"
+              >{{ gettext('Select') }}</a
+            >
+            <a
+              href="https://ieeexplore.ieee.org/document/4342802"
+              class="btn btn-secondary stretched-link"
+              style="position: relative; z-index: 1"
+              target="_blank"
+            >
+              <i class="bi bi-file-earmark-text"></i> {{ gettext('Paper') }}
+            </a>
           </div>
         </div>
       </div>
     </div>
-    <div class="card shadow m-2" style="width: 18rem">
-      <img
-        class="card-img-top mt-2"
-        src="/icono-grafos.png"
-        width="300"
-        height="250"
-        alt="Grafos"
-      />
-      <div class="card-body">
-        <h6 class="card-title title-mulish text-bold">Grafos</h6>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item" style="font-size: 0.95rem">
-          {{ gettext('Transductive methods') }}
-        </li>
-        <li class="list-group-item">{{ a }}</li>
-      </ul>
-      <div class="card-body">
-        <a href="/seleccionar/graphs" class="btn btn-primary stretched-link"
-          >{{ gettext('Select') }}</a
-        >
-      </div>
-    </div>
-    <div class="card shadow m-2" style="width: 18rem">
-      <img
-        class="card-img-top mt-2"
-        src="/SelfTraining.png"
-        width="300"
-        height="250"
-        alt="Self-Training"
-      />
-      <div class="card-body">
-        <h5 class="card-title title-mulish text-bold">Self-Training</h5>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{ gettext('One classifier') }}</li>
-        <li class="list-group-item">{{ gettext('Single-view') }}</li>
-      </ul>
-      <div class="card-body align-bottom">
-        <a
-          href="/seleccionar/selftraining"
-          class="btn btn-primary stretched-link"
-          >{{ gettext('Select') }}</a
-        >
+
+    <!-- Card 3 -->
+    <div class="card m-2 shadow" style="max-width: 570px">
+      <div class="row g-0">
+        <div class="col-md-6">
+          <img
+            src="/SelfTraining.png"
+            class="img-fluid rounded-start"
+            alt="Self-Training"
+          />
+        </div>
+        <div class="col-md-6">
+          <div class="card-body">
+            <h5 class="card-title title-mulish text-bold">
+              {{ gettext('Self-Training') }}
+            </h5>
+            <p class="card-text">
+              {{ gettext('Uses a base classifier initially trained with labeled
+              data and iteratively retrains with pseudo-labeled data until a
+              stopping criterion is met.') }}
+            </p>
+            <a
+              href="/seleccionar/selftraining"
+              class="btn btn-primary stretched-link"
+              >{{ gettext('Select') }}</a
+            >
+            <a
+              href="https://link.springer.com/article/10.1007/s10994-019-05855-6"
+              class="btn btn-secondary stretched-link"
+              style="position: relative; z-index: 1"
+              target="_blank"
+            >
+              <i class="bi bi-file-earmark-text"></i> {{ gettext('Paper') }}
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="card shadow m-2" style="width: 18rem">
-      <img
-        class="card-img-top mt-2"
-        src="/CoTraining.png"
-        width="300"
-        height="250"
-        alt="Co-Training"
-      />
-      <div class="card-body">
-        <h5 class="card-title title-mulish text-bold">Co-Training</h5>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{ gettext('Two classifiers') }}</li>
-        <li class="list-group-item">{{ gettext('Multi-view') }}</li>
-      </ul>
-      <div class="card-body">
-        <a href="/seleccionar/cotraining" class="btn btn-primary stretched-link"
-          >{{ gettext('Select') }}</a
-        >
-      </div>
-    </div>
-    <div class="card shadow m-2" style="width: 18rem">
-      <img
-        class="card-img-top mt-2"
-        src="/TriTraining.png"
-        width="300"
-        height="250"
-        alt="Tri-Training"
-      />
-      <div class="card-body">
-        <h5 class="card-title title-mulish text-bold">Tri-Training</h5>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{ gettext('Three classifiers') }}</li>
-        <li class="list-group-item">{{ gettext('Single-view') }}</li>
-      </ul>
-      <div class="card-body">
-        <a
-          href="/seleccionar/tritraining"
-          class="btn btn-primary stretched-link"
-          >{{ gettext('Select') }}</a
-        >
+
+    <!-- Card 4 -->
+    <div class="card m-2 shadow" style="max-width: 570px">
+      <div class="row g-0">
+        <div class="col-md-6">
+          <img
+            src="/CoTraining.png"
+            class="img-fluid rounded-start"
+            alt="Co-Training"
+          />
+        </div>
+        <div class="col-md-6">
+          <div class="card-body">
+            <h5 class="card-title title-mulish text-bold">
+              {{ gettext('Co-Training') }}
+            </h5>
+            <p class="card-text">
+              {{ gettext('Uses multiple classifiers trained on different
+              attribute subsets, iteratively predicting and selecting confident
+              labels to build new training sets.') }}
+            </p>
+            <a
+              href="/seleccionar/cotraining"
+              class="btn btn-primary stretched-link"
+              >{{ gettext('Select') }}</a
+            >
+            <a
+              href="https://dl.acm.org/doi/10.1145/279943.279962"
+              class="btn btn-secondary stretched-link"
+              style="position: relative; z-index: 1"
+              target="_blank"
+            >
+              <i class="bi bi-file-earmark-text"></i> {{ gettext('Paper') }}
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="card shadow m-2" style="width: 18rem">
-      <img
-        class="card-img-top mt-2"
-        src="/DemocraticCoLearning.png"
-        width="300"
-        height="250"
-        alt="Democratic Co-Learning"
-      />
-      <div class="card-body">
-        <h6 class="card-title title-mulish text-bold">
-          Democratic Co-Learning
-        </h6>
+
+    <!-- Card 5 -->
+    <div class="card m-2 shadow" style="max-width: 570px">
+      <div class="row g-0">
+        <div class="col-md-6">
+          <img
+            src="/TriTraining.png"
+            class="img-fluid rounded-start"
+            alt="Tri-Training"
+          />
+        </div>
+        <div class="col-md-6 d-flex flex-column">
+          <div class="card-body d-flex flex-column justify-content-between">
+            <h5 class="card-title title-mulish text-bold">
+              {{ gettext('Tri-Training') }}
+            </h5>
+            <p class="card-text">
+              {{ gettext('Uses three classifiers to pseudo-label data, requiring
+              two of them to agree, and iterates (with new empty data) until no
+              new labels are added.') }}
+            </p>
+            <div>
+              <a
+                href="/seleccionar/tritraining"
+                class="btn btn-primary stretched-link"
+                >{{ gettext('Select') }}</a
+              >
+              <a
+                href="https://ieeexplore.ieee.org/document/1512038"
+                class="btn btn-secondary stretched-link"
+                style="position: relative; z-index: 1"
+                target="_blank"
+              >
+                <i class="bi bi-file-earmark-text"></i> {{ gettext('Paper') }}
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item" style="font-size: 0.95rem">
-          {{ gettext('Three or more classifiers') }}
-        </li>
-        <li class="list-group-item">{{ gettext('Single-view') }}</li>
-      </ul>
-      <div class="card-body">
-        <a
-          href="/seleccionar/democraticcolearning"
-          class="btn btn-primary stretched-link"
-          >{{ gettext('Select') }}</a
-        >
+    </div>
+
+    <!-- Card 6 -->
+    <div class="card m-2 shadow" style="max-width: 570px">
+      <div class="row g-0">
+        <div class="col-md-6">
+          <img
+            src="/DemocraticCoLearning.png"
+            class="img-fluid rounded-start"
+            alt="Democratic Co-Learning"
+          />
+        </div>
+        <div class="col-md-6">
+          <div class="card-body">
+            <h5 class="card-title title-mulish text-bold">
+              {{ gettext('Democratic Co-Learning') }}
+            </h5>
+            <p class="card-text">
+              {{ gettext('Uses multiple classifiers to pseudo-label data by
+              majority vote, retraining misclassified instances until accuracy
+              stops improving.') }}
+            </p>
+            <a
+              href="/seleccionar/democraticcolearning"
+              class="btn btn-primary stretched-link"
+              >{{ gettext('Select') }}</a
+            >
+            <a
+              href="https://ieeexplore.ieee.org/document/1374241"
+              class="btn btn-secondary stretched-link"
+              style="position: relative; z-index: 1"
+              target="_blank"
+            >
+              <i class="bi bi-file-earmark-text"></i> {{ gettext('Paper') }}
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -325,24 +385,5 @@
           }).start();
       });
   });
-  const flipCardWrapAll = document.querySelector("#flip-card-wrap-all")
-  const cardsWrapper = document.querySelectorAll(".flip-card-3D-wrapper")
-  const cards = document.querySelectorAll(".flip-card")
-  let frontButtons = ""
-  let backButtons = ""
-
-  for (let i = 0; i < cardsWrapper.length; i++) {
-    frontButtons = cardsWrapper[i].querySelector(".flip-card-btn-turn-to-back")
-    frontButtons.style.visibility = "visible"
-    frontButtons.onclick = function() {
-      cards[i].classList.toggle('do-flip')
-    }
-
-    backButtons = cardsWrapper[i].querySelector(".flip-card-btn-turn-to-front")
-    backButtons.style.visibility = "visible"
-    backButtons.onclick = function() {
-      cards[i].classList.toggle('do-flip')
-    }
-  }
 </script>
 {% endblock %}
