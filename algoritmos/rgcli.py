@@ -1,78 +1,114 @@
 import numpy as np
+from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KDTree
-from concurrent.futures import ThreadPoolExecutor
-from scipy.spatial.distance import minkowski
+from scipy.spatial.distance import euclidean
 
-class Rgcli:
-    def __init__(self, X, puntos_etiquetados, ke=15, ki=5, nt=4):
-        self.X = X
-        self.puntos_etiquetados = puntos_etiquetados
+class RGCLI:
+    """ Algoritmo de construcción de grafos RGCLI basado en el articulo:
+        'RGCLI: Robust Graph that Considers Labeled Instances for Semi-
+        Supervised Learning' de los autores:
+        - Lilian Berton, Alan Valejo, Thiago de Paulo Faleiros, Jorge Valverde-Rebaza
+        Alnea de Andrade Lopes
+    """
+    def __init__(self, datos_e, datos_se, etiquetas, ke, ki):
+        """ Inicializa el algoritmo RGCLI
+
+        Args:
+        - datos_e: np.array
+            datos etiquetados
+        - datos_se: np.array
+            datos sin etiquetar
+        - etiquetas: np.array
+            Todas las etiquetas
+        - Ke: int
+            Número de vecinos más cercanos
+        - Ki: int
+            Número de vecinos más cercanos para el RGCLI
+        """
+        self.nodos = np.concatenate((datos_e, datos_se), axis=0)
+        self.nodos_etiquetados = np.array(range(len(datos_e)))
+        self.nodos_sin_etiquetar = np.array(range(len(datos_e), len(datos_e) + len(datos_se)))
+
+        self.etiquetas_etiquetados = etiquetas[:len(datos_e)]
+        self.etiquetas_modificadas = np.concatenate((self.etiquetas_etiquetados, np.full(len(datos_se), -1)))
+
         self.ke = ke
         self.ki = ki
-        self.nt = nt
-        self.n = X.shape[0]
-        self.etiquetas = np.array([1 if i in puntos_etiquetados else 0 for i in range(self.n)])
-        self.arbol_knn = KDTree(X)
+        self.V = list(range(len(self.nodos)))
+        self.E = []
+        self.W = {}
+        self.kdtree = KDTree(self.nodos)
+        self.l_kdtree = KDTree(self.nodos[self.nodos_etiquetados, :])
         self.kNN = {}
         self.F = {}
         self.L = {}
-        self.grafo = {i: [] for i in range(self.n)}
-        
-    def searchKNN(self, T):
-        for vi in T:
-            self.kNN[vi] = self.arbol_knn.query([self.X[vi]], k=self.ke, return_distance=False)[0]
-            dists, indices = self.arbol_knn.query([self.X[vi]], k=self.ke)
-            nearest_labeled = [index for index in indices[0] if self.etiquetas[index] == 1]
-            self.L[vi] = nearest_labeled[0] if nearest_labeled else None
-            self.F[vi] = indices[0][-1]
-            
-    def searchRGCLI(self, T):
-        for vi in T:
-            epsilon = {}
+        self.grafo_knn = {}
+        self.grafoFinal = {}
+
+    def search_knn(self):
+        """
+        Construye el grafo de vecinos mas cercanos.
+
+        Para cada nodo en self.V, este método:
+        - Encuentra todos los vecinos del nodo en el espacio de características, 
+            utilizando un kdtree para la búsqueda eficiente.
+        - Almacena los primeros `ke` vecinos en `self.kNN` y `self.grafo_knn`.
+        - Encuentra los vecinos etiquetados del nodo y almacena el más cercano en `self.L`.
+        - Almacena el vecino `ke`-ésimo más lejano en `self.F`.
+
+        Returns:
+            dict: Un diccionario que mapea cada nodo en self.V a sus `ke` vecinos más cercanos.
+        """
+        for v in self.V:
+            all_neighbors = self.kdtree.query([self.nodos[v]], k=len(self.nodos), return_distance=False)[0]
+            self.kNN[v] = all_neighbors[1:self.ke + 1].tolist()
+            self.grafo_knn[v] = self.kNN[v]
+
+            labeled_neighbors = self.l_kdtree.query([self.nodos[v]], k=2, return_distance=False)[0]
+            self.L[v] = self.nodos_etiquetados[labeled_neighbors[labeled_neighbors != v][0]]
+            self.F[v] = all_neighbors[-self.ke]
+        return self.kNN
+
+    def search_rgcli(self):
+        """
+        Construye un grafo final con ayuda de los datos etiquetados.
+
+        Para cada nodo en self.V, este método realiza lo siguiente:
+        - Calcula una medida de distancia, epsilon, para cada vecino del nodo.
+        - Selecciona los `ki` vecinos con la menor medida epsilon y los añade a `self.E`.
+        - Asigna un peso de 1 a cada uno de estos vecinos en `self.W`.
+        - Añade estos vecinos al grafo final `self.grafoFinal`.
+
+        El grafo final es un grafo no dirigido, cada nodo está conectado a sus `ki` vecinos.
+        """
+        for vi in self.V:
+            epsilon = dict()
             for vj in self.kNN[vi]:
-                if np.linalg.norm(self.X[vi] - self.X[vj]) <= np.linalg.norm(self.X[vj] - self.X[self.F[vj]]):
+                if euclidean(self.nodos[vi], self.nodos[vj]) <= euclidean(self.nodos[vj], self.nodos[self.F[vj]]):
                     e = (vi, vj)
-                    epsilon[e] = np.linalg.norm(self.X[vi] - self.X[vj]) + np.linalg.norm(self.X[vj] - self.X[self.L[vj]])
-            
-            sorted_edges = sorted(epsilon.items(), key=lambda item: item[1])
-            selected_edges = sorted_edges[:self.ki]
-            for (vi, vj), _ in selected_edges:
-                if vj not in self.grafo[vi] and vi != vj:
-                    self.grafo[vi].append(vj)
-                if vi not in self.grafo[vj] and vi != vj:
-                    self.grafo[vj].append(vi)
-                
-    def ajustar(self):
-        V = range(self.n)
-        T = np.array_split(list(V), self.nt)
-        print(T)
-        with ThreadPoolExecutor(max_workers=self.nt) as executor:
-            futures = [executor.submit(self.searchKNN, Ti) for Ti in T]
-            for future in futures:
-                future.result()
-                
-            futures = [executor.submit(self.searchRGCLI, Ti) for Ti in T]
-            for future in futures:
-                future.result()
-        
-        return self.grafo
+                    epsilon[e] = euclidean(self.nodos[vi], self.nodos[vj]) + euclidean(self.nodos[vj], self.nodos[self.L[vj]])
+            E_prime = sorted(epsilon, key=epsilon.get)[:self.ki]
+            self.E.extend(E_prime)
+            for e in E_prime:
+                print(e)
+                self.W[e] = 1
+                if e[0] not in self.grafoFinal:
+                    self.grafoFinal[e[0]] = []
+                if e[1] not in self.grafoFinal[e[0]]:
+                    self.grafoFinal[e[0]].append(e[1])
+                    
+                if e[1] not in self.grafoFinal:
+                    self.grafoFinal[e[1]] = []
+                if e[0] not in self.grafoFinal[e[1]]:
+                    self.grafoFinal[e[1]].append(e[0])
 
-# Uso de la clase RGCLI
-X = np.random.rand(100, 2)  # 100 puntos en un espacio bidimensional
-y = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]  # Primeros 10 puntos están etiquetados
+    def run(self):
+        """
+        Metodo que ejecuta los pasos del algoritmo RGCLI
 
-rgcli = Rgcli(X, y, ke=5, ki=5, nt=4)
-grafo = rgcli.ajustar()
-
-print(grafo)
-
-import networkx as nx
-import matplotlib.pyplot as plt
-
-G = nx.Graph()
-for u, vecinos in grafo.items():
-    for v in vecinos:
-        G.add_edge(u, v)
-
-nx.draw(G, with_labels=True)
-plt.show()
+        Returns:
+            dict, dict: Un diccionario para el grafo del primer paso y otro para el grafo final.   
+        """
+        self.search_knn()
+        self.search_rgcli()
+        return self.grafo_knn, self.grafoFinal
