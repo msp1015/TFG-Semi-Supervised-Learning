@@ -28,6 +28,7 @@ class CoForest:
         Args:
             n (int): número de árboles de decisión que componen el bosque.
             theta (float): umbral de confianza para pseudo datos.
+            params_arbol_decision (dict): parámetros para los árboles de decisión.
             random_state (int, optional): semilla para la generación de números
             aleatorios. Por defecto, None.
         """
@@ -55,20 +56,18 @@ class CoForest:
         self.accuracy_por_iteracion = []
 
     def fit(self,  X_train, Y_train, X_test, Y_test, features):
-        """Entrena el algoritmo CoForest con los datos de entrenamiento,
-        tanto etiquetados como no etiquetados.
+        """Entrena el algoritmo CoForest con los datos de entrenamiento y prueba.
 
         Args:
-            L (array): Datos de entrenamiento etiquetados.
-            y_l (array): Etiquetas de los datos de entrenamiento etiquetados.
-            U (array): Datos de entrenamiento no etiquetados.
+            X_train (array): Datos de entrenamiento.
+            Y_train (array): Etiquetas de los datos de entrenamiento.
             X_test (array): Datos de prueba.
-            y_test (array): Etiquetas de los datos de prueba.
+            Y_test (array): Etiquetas de los datos de prueba.
+            features (array): Características de los datos.
 
         Returns:
             dict: Un diccionario que contiene los árboles de decisión entrenados.
         """
-        
         L, y_l, U = obtain_train_unlabelled(X_train, Y_train)
         log = pd.DataFrame(L, columns=features)
         log['iters'] = [[0]] * len(log)
