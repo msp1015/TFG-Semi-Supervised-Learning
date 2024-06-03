@@ -38,8 +38,8 @@ def datosselftraining():
 
     try:
         st = SelfTraining(
-            clf=obtener_clasificador(clasificador, obtener_parametros_clasificador_inductivo(
-                clasificador, "clasificador1")),
+            clf=obtener_clasificador(clasificador, obtener_parametros_clasificador(
+                "Inductive", clasificador, "clasificador1")),
             n=n if n != -1 else None,
             th=th/100 if th != -1 else None,
             n_iter=int(request.form['n_iter']))
@@ -71,8 +71,8 @@ def datoscoforest():
     n_arboles = int(request.form['n_arboles'])
     theta = int(request.form['theta'])
     try:
-        params_arbol_decision = obtener_parametros_clasificador_inductivo(
-            "DecisionTreeClassifier", "clasificador1")
+        params_arbol_decision = obtener_parametros_clasificador(
+            "Inductive", "DecisionTreeClassifier", "clasificador1")
         st = CoForest(n_arboles, theta/100, params_arbol_decision)
 
         info = obtener_info_inductivo(st)
@@ -103,10 +103,10 @@ def datoscotraining():
 
     try:
         ct = CoTraining(
-            clf1=obtener_clasificador(clasificador1, obtener_parametros_clasificador_inductivo(
-                clasificador1, "clasificador1")),
-            clf2=obtener_clasificador(clasificador2, obtener_parametros_clasificador_inductivo(
-                clasificador2, "clasificador2")),
+            clf1=obtener_clasificador(clasificador1, obtener_parametros_clasificador(
+                "Inductive", clasificador1, "clasificador1")),
+            clf2=obtener_clasificador(clasificador2, obtener_parametros_clasificador(
+                "Inductive", clasificador2, "clasificador2")),
             p=int(request.form['p']),
             n=int(request.form['n']),
             u=int(request.form['u']),
@@ -140,11 +140,11 @@ def datossingleview(is_democratic):
     clasificador3 = request.form['clasificador3']
 
     clf1 = obtener_clasificador(
-        clasificador1, obtener_parametros_clasificador_inductivo(clasificador1, "clasificador1"))
+        clasificador1, obtener_parametros_clasificador("Inductive", clasificador1, "clasificador1"))
     clf2 = obtener_clasificador(
-        clasificador2, obtener_parametros_clasificador_inductivo(clasificador2, "clasificador2"))
+        clasificador2, obtener_parametros_clasificador("Inductive", clasificador2, "clasificador2"))
     clf3 = obtener_clasificador(
-        clasificador3, obtener_parametros_clasificador_inductivo(clasificador3, "clasificador3"))
+        clasificador3, obtener_parametros_clasificador("Inductive", clasificador3, "clasificador3"))
     try:
         if is_democratic:
             svclf = DemocraticCoLearning([clf1, clf2, clf3])
@@ -193,25 +193,67 @@ def datosgraphs():
     
     : return json con la información de ejecución
     """
-    
     constructor = request.form['constructor']
     inferencia = request.form['inferencia']
-    
+    print(inferencia)
     datasetloader = DatasetLoader(session['FICHERO'])
     datasetloader.set_target(request.form['target'])
     p_unlabelled=int(request.form['p_unlabelled']) / 100
+
     x, y, mapa, is_unlabelled = datasetloader.get_x_y()
-    print(y)
-    print(x)
-    L, U, L_, U_ = train_test_split(x, y, test_size=p_unlabelled, stratify=y, random_state=42)
+    L, U, L_y, U_y = train_test_split(x, y, test_size=p_unlabelled, stratify=y, random_state=42)
 
-    todas_etiquetas = np.concatenate((L_, U_))
-
+    todas_etiquetas = np.concatenate((L_y, U_y))
+    params_constructor = obtener_parametros_clasificador("Graphs", constructor, "constructor")
+    params_inferancia = obtener_parametros_clasificador("Inference", inferencia, "inferencia")
+    steps = []
     if constructor == "Gbili":
 
-        solver = Gbili(U, L,todas_etiquetas, 5)
+        solver = Gbili(U, L,todas_etiquetas, **params_constructor)
+        list_knn, list_mknn, distmin, grafoFinal = solver.construir_grafo()
+        steps = [list_knn, list_mknn, distmin, grafoFinal]
+    elif constructor == "Rgcli":
+        pass
+    
+    if inferencia == "LocalAndGlobalConsistency":
+        propagacion = LGC(grafoFinal, solver.nodos, solver.etiquetas_etiquetados, **params_inferancia)
+        predicciones = propagacion.inferir_etiquetas()
+    else:
+        pass
+        
+    
+    nodos_iniciales = build_nodos_json(grafoFinal, solver.etiquetas_etiquetados) 
+    for i in range(len(steps)):
+        steps[i] = build_enlaces_json(steps[i], solver.matriz_distancias)
+    predicciones = predicciones[len(L)].tolist()
+    predicciones_json = {}
+    for i, prediccion in enumerate(predicciones):
+        predicciones_json[str(i + len(L))] = prediccion
+    info_grafos = {"nodos": nodos_iniciales, "enlaces": steps, "predicciones": predicciones}
+    print(info_grafos)
+    if current_user.is_authenticated:
+        date = int(datetime.now().timestamp())
 
-
+        with open(os.path.join(current_app.config['CARPETA_RUNS'], f'run-{current_user.id}-{date}.json'), 'w') as f:
+            json.dump(info_grafos, f)
+        
+        run = Run()
+        run.algorithm = session['ALGORITMO']
+        run.json_parameters = generar_json_parametros_grafos()
+        run.filename = os.path.basename(session['FICHERO'])
+        run.date = datetime.now()
+        run.jsonfile = f'run-{current_user.id}-{date}.json'
+        run.user_id = current_user.id
+        
+        try:
+            db.session.add(run)
+        except SQLAlchemyError:
+            db.session.rollback()
+            os.remove(os.path.join(
+                current_app.config['CARPETA_RUNS'], f'run-{current_user.id}-{date}.json'))
+        else:
+            db.session.commit()
+    return info_grafos
 
 def obtener_info_inductivo(algoritmo):
     """Función auxiliar que evita el código duplicado de la obtención de toda la información
@@ -294,7 +336,7 @@ def obtener_info_inductivo(algoritmo):
     return info
 
 
-def obtener_parametros_clasificador_inductivo(clasificador, nombre):
+def obtener_parametros_clasificador(metodo, clasificador, nombre):
     """A la hora de instanciar un clasificador (sklearn), este tiene una serie de parámetros
     (NO CONFUNDIR CON LOS PARÁMETROS DE LOS ALGORITMOS SEMI-SUPERVISADOS).
     Aclaración: estos vienen codificados en parametros.json.
@@ -307,7 +349,7 @@ def obtener_parametros_clasificador_inductivo(clasificador, nombre):
 
     with open(os.path.join(os.path.dirname(__file__), os.path.normpath("static/json/parametros.json"))) as f:
         clasificadores = json.load(f)
-    clasificadores = clasificadores["Inductive"]
+    clasificadores = clasificadores[metodo]
     parametros_clasificador = {}
     for key in clasificadores[clasificador].keys():
         parametro = clasificadores[clasificador][key]
@@ -319,17 +361,13 @@ def obtener_parametros_clasificador_inductivo(clasificador, nombre):
             parametros_clasificador[key] = p
         else:
             parametros_clasificador[key] = request.form[nombre + "_" + key]
-
+    print(parametros_clasificador)
     return parametros_clasificador
-
-def obtener_parametros_clasificador_grafo(clasificador, nombre):
-    """ """
-    
 
 
 def obtener_clasificador(nombre, params):
     """Instancia un clasificador (sklearn) a partir de su nombre y los parámetros
-    introducidos (provenientes de "obtener_parametros_clasificador_inductivo").
+    introducidos (provenientes de "obtener_parametros_clasificador").
 
     :return: instancia del clasificador.
     """
@@ -387,3 +425,41 @@ def generar_json_parametros():
         pre_json[r] = formulario[r]
 
     return json.dumps(pre_json)
+
+def generar_json_parametros_grafos():
+    """_summary_
+
+    """
+    # TODO: Implementar
+    
+    return json.dumps({})
+
+def build_nodos_json(grafo, etiquetas_modificadas):
+    """Construye y guarda los nodos en formato JSON.
+
+    Args:
+        grafo (dict): Grafo a guardar.
+
+    Returns:
+        list: Lista de nodos.
+    """
+    nodos = []
+    for node in grafo:
+        nodos.append({"id": str(node), "group": int(etiquetas_modificadas[node])})
+    return nodos
+
+def build_enlaces_json(grafo, matriz_distancias):
+    """Construye y guarda los enlaces en formato JSON.
+
+    Args:
+        grafo (dict): Grafo a guardar.
+
+    Returns:
+        list: Lista de enlaces.
+    """
+    enlaces = []
+    for node in grafo:
+        for neighbor in grafo[node]:
+            if {"source": str(node), "target": str(neighbor)} not in enlaces and {"source": str(neighbor), "target": str(node)} not in enlaces:
+                enlaces.append({"source": str(node), "target": str(neighbor), "value": matriz_distancias[node][neighbor]})
+    return enlaces

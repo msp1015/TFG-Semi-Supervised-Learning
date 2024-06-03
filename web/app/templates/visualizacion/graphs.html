@@ -219,7 +219,7 @@ head %} {{ super() }}
 
 {% if ejecutar %}
 <script>
-  inicializar("/datos/{{ session['ALGORITMO'] }}", elementos);
+  inicializar_grafos("/datos/{{ session['ALGORITMO'] }}", elementos);
 </script>
 {% else %}
 <script>

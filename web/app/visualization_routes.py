@@ -94,7 +94,6 @@ def parametros_grafos():
 
     constructor = request.form['constructor']
     inferencia = request.form['inferencia']
-
     # Estos son los parámetros concretos de Grafos
     params = [
         {"nombre": "constructor", "valor": request.form['constructor']},
@@ -276,3 +275,5 @@ def incorporar_clasificadores_grafos_params(nombre_clasificadores, params):
             for key in clasificadores_grafos[clasificador].keys():
                 params.append({"nombre": f"constructor_" + key,
                                "valor": request.form.get(f"constructor_" + key, -1)})
+                
+    print(params)
