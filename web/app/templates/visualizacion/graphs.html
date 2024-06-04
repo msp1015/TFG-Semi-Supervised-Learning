@@ -250,7 +250,31 @@ head %} {{ super() }}
 </script>
 {% else %}
 <script>
+  document.getElementById("div_cargando").remove();
+  document.getElementById("visualizacion").style.visibility = 'visible';
+  document.getElementById("titulo_visualizacion").style.visibility = 'visible';
   let datos = {{ json_data|tojson }};
-  inicializarGrafo(datos)
+  var simulation, svg, container, link, node, clases;
+  var currentStep = 0;
+  var steps = [];
+  var dataSteps = [];
+  var predictions = {};
+  let selectedNode = null;
+  predictions = datos.predicciones;
+  steps = datos.enlaces;
+  dataSteps.push({
+    nodes: datos.nodos,
+    links: steps[0],
+  });
+  for (let i = 0; i < steps.length; i++) {
+    dataSteps.push({
+      nodes: datos.nodos,
+      links: steps[i],
+    });
+  }
+  clases = JSON.parse(datos.mapa);
+
+  inicializarGrafo();
+  updateGraph();
 </script>
 {% endif %} {% endblock %}
