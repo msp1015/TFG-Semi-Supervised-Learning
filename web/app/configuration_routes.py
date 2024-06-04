@@ -2,7 +2,7 @@ import json
 import os
 import sys
 
-from flask import flash, render_template, redirect, session, url_for, Blueprint, current_app, abort
+from flask import flash, jsonify, render_template, redirect, session, url_for, Blueprint, current_app, abort
 from flask_babel import gettext
 from .forms import FormConfiguracionGrafos, FormConfiguracionSelfTraining, FormConfiguracionCoTraining, FormConfiguracionSingleView, FormConfiguracionCoForest
 

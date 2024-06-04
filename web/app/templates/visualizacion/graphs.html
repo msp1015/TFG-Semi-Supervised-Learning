@@ -3,7 +3,7 @@ head %} {{ super() }}
 <script type="text/javascript" src="/js/visualizacion/d3.min.js"></script>
 <script type="text/javascript" src="/js/visualizacion/inicializar.js"></script>
 <script type="text/javascript" src="/js/visualizacion/estadisticas.js"></script>
-<script type="text/javascript" src="/js/visualizacion/grafico.js"></script>
+<script type="text/javascript" src="/js/visualizacion/grafos.js"></script>
 <script
   type="text/javascript"
   src="/js/visualizacion/funciones_comunes.js"
@@ -65,6 +65,13 @@ head %} {{ super() }}
           </button>
           <button id="nextit" class="btn btn-primary">
             <i class="bi bi-chevron-double-right"></i>
+          </button>
+          <button
+            id="inferir_etiq"
+            class="btn btn-success"
+            style="visibility: hidden"
+          >
+            {{ gettext('Infer label') }}
           </button>
         </div>
         <br />
@@ -219,27 +226,9 @@ head %} {{ super() }}
 
 {% if ejecutar %}
 <script>
-  var simulation, svg, container, link, node, clases;
-  var currentStep = 0;
-  var steps = [];
-  var dataSteps = [];
-  var predictions = {};
-  let selectedNode = null;
   inicializar("/datos/{{ session['ALGORITMO'] }}", elementos)
     .then(function (datos) {
-      predictions = datos.predicciones;
-      steps = datos.enlaces;
-      dataSteps.push({
-        nodes: datos.nodos,
-        links: steps[0],
-      });
-      for (let i = 0; i < steps.length; i++) {
-        dataSteps.push({
-          nodes: datos.nodos,
-          links: steps[i],
-        });
-      }
-      clases = JSON.parse(datos.mapa);
+      inicializarDatos(datos);
 
       inicializarGrafo();
       updateGraph();
@@ -254,26 +243,7 @@ head %} {{ super() }}
   document.getElementById("visualizacion").style.visibility = 'visible';
   document.getElementById("titulo_visualizacion").style.visibility = 'visible';
   let datos = {{ json_data|tojson }};
-  var simulation, svg, container, link, node, clases;
-  var currentStep = 0;
-  var steps = [];
-  var dataSteps = [];
-  var predictions = {};
-  let selectedNode = null;
-  predictions = datos.predicciones;
-  steps = datos.enlaces;
-  dataSteps.push({
-    nodes: datos.nodos,
-    links: steps[0],
-  });
-  for (let i = 0; i < steps.length; i++) {
-    dataSteps.push({
-      nodes: datos.nodos,
-      links: steps[i],
-    });
-  }
-  clases = JSON.parse(datos.mapa);
-
+  inicializarDatos(datos);
   inicializarGrafo();
   updateGraph();
 </script>

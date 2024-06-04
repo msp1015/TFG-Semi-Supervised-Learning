@@ -1,44 +1,264 @@
-{% extends "configuracion/base_config_grafos.html" %} {% from "macros.html"
-import selector %} {% block parametros %}
-
-<div class="mb-3">
-  {{ form.constructor.label(class_="d-inline") }} {{
-  form.constructor(class_="form-select") }}
+{% extends "base.html" %} {% from "macros.html" import tooltip %}{% from
+"macros.html" import selector %}{% block head %} {{ super() }}
+<script
+  type="text/javascript"
+  src="/js/configuracion/configuracion.js"
+></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %} {% block title %}{{ gettext('Algorithm configuration')
+}}{%endblock %} {% block content %}
+<button
+  id="btn_volver"
+  type="button"
+  onclick="history.back()"
+  class="btn sticky-top"
+>
+  <i class="bi bi-caret-left-fill"></i>{{ gettext('Go back') }}</button
+>| {{ gettext('Dataset') }}: {{ session['FICHERO']|nombredataset }}
+<div class="text-center pb-3">
+  <h1 class="title-mulish text-bold">
+    {{ gettext('Algorithm configuration') }}: {{ titulos[session['ALGORITMO']]
+    }}
+  </h1>
+  <hr class="separacion w-14" />
 </div>
-<div class="parametros" id="parametros1"></div>
-<div class="mb-3">
-  {{ form.inferencia.label(class_="d-inline") }} {{
-  form.inferencia(class_="form-select") }}
-</div>
-<div class="parametros" id="parametros2"></div>
+<div class="container-fluid mt-4">
+  <div class="row">
+    <div id="theory-card" class="col-md">
+      <div class="rounded-4 p-3 m-2 shadow-lg">
+        <div class="text-center">
+          <h4 class="title-mulish">{{ gettext('Theory') }}</h4>
+          <hr class="separacion w-8" />
+        </div>
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              data-toggle="tab"
+              href="#graphConstruction"
+              >{{ gettext('Build graph')}}</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#inference"
+              >{{ gettext('Inference')}}</a
+            >
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div id="graphConstruction" class="tab-pane fade show active">
+            <div class="m-2 p-2" id="theoryGraph">
+              <div id="gbili" style="display: block">
+                <p>
+                  {{ gettext(' The GBILI algorithm, standing for Graph Building
+                  based on the Informativeness of Labeled Instances, is a graph
+                  construction method for semi-supervised learning that
+                  leverages the informativeness of labeled instances to
+                  establish strategic node connections. The process initiates
+                  with the creation of a distance matrix using Euclidean
+                  distance to identify k-nearest neighbors. After setting
+                  parameters such as the number of neighbors, k, each node`s
+                  mutual nearest neighbors are pinpointed. Informativeness is
+                  then calculated by summing distances from each node to its
+                  mutual neighbors and to the nearest labeled point, which helps
+                  in forming connections that minimize this distance sum. The
+                  graph is further refined by connecting isolated components
+                  through a Breadth-First Search, ensuring network connectivity
+                  without over-densifying, which is key to the transductive
+                  methods used in semi-supervised learning.') }}
+                </p>
+                <img
+                  src="{{ gettext('/pseudocodigos/en/gbili.png') }}"
+                  width="75%"
+                  alt="Pseudocódigo Gbili"
+                />
+              </div>
+              <div id="rgcli" style="display: none">
+                <p>
+                  {{ gettext('The RGCLI (Refined Graph Construction based on
+                  Labeled Instance Information) algorithm enhances
+                  semi-supervised learning by efficiently constructing graphs in
+                  large datasets. It operates under the assumption that nearby
+                  or structurally similar points share the same label. The
+                  algorithm utilizes two parameters: ke for the broader
+                  neighborhood and ki for establishing actual connections based
+                  on proximity to labeled vertices. RGCLI begins by identifying
+                  ke nearest neighbors using a Kd-tree, calculates a score based
+                  on distances from a point to a mutual neighbor and the nearest
+                  labeled vertex, and then connects each point to ki mutual
+                  neighbors that minimize this distance. This approach ensures a
+                  sparse, meaningful graph that adheres to semi-supervised
+                  learning`s consistency assumptions while facilitating
+                  effective label propagation.')}}
+                </p>
+                <img
+                  src="{{ gettext('/pseudocodigos/en/rgcli.png') }}"
+                  width="75%"
+                  alt="Pseudocodigo Rgcli"
+                />
+              </div>
+            </div>
+          </div>
+          <div id="inference" class="tab-pane fade">
+            <div class="m-2 p-2" id="inferenceContent">
+              <p>
+                {{ gettext('The Graph-based Local and Global Consistency (LGC)
+                algorithm is a semi-supervised learning method designed to
+                predict labels for unlabeled data points by leveraging
+                relationships within the data. The algorithm starts by creating
+                an affinity matrix that represents the closeness between points
+                based on their distances. This matrix is normalized to help
+                stabilize the label propagation process. LGC iterates a label
+                spreading mechanism where each data point updates its label
+                based on the labels of its neighbors and its original label,
+                balanced by a parameter. The process continues until the labels
+                stabilize, essentially allowing each point to adopt the label
+                most common among its neighbors. In this specific adaptation of
+                LGC, the affinity matrix simplifies connections between points
+                as either existing (1) or not (0), streamlining the computation.
+                This approach effectively uses both labeled and unlabeled data
+                to enhance label prediction, making it particularly useful in
+                scenarios where labeled data is scarce but unlabeled data is
+                plentiful.')}}
+              </p>
+              <img
+                src="{{ gettext('/pseudocodigos/en/LGC.png') }}"
+                width="75%"
+                alt="Pseudocodigo LGC"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="parameters-card" class="col-md">
+      <div class="rounded-4 p-3 m-2 shadow-lg">
+        <div class="text-center">
+          <h4 class="title-mulish">{{ gettext('Parameters') }}</h4>
+          <hr class="separacion w-8" />
+        </div>
+        <form
+          action="{{ url_for('visualization_bp.visualizar_algoritmo', algoritmo=session['ALGORITMO']) }}"
+          method="POST"
+        >
+          {{ form.csrf_token }}
+          <div class="row">
+            <div class="col-md">
+              <div class="mb-3">
+                {{ form.constructor.label(class_="d-inline") }} {{
+                form.constructor(class_="form-select") }}
+              </div>
+              <div class="parametros" id="parametros1"></div>
+              <div class="mb-3">
+                {{ form.inferencia.label(class_="d-inline") }} {{
+                form.inferencia(class_="form-select") }}
+              </div>
+              <div class="parametros" id="parametros2"></div>
+            </div>
+            <div class="col-md">
+              <div class="mb-3">
+                {{ form.sel_target.label }} {{
+                form.sel_target(class_="form-select") }}
+              </div>
+              <div class="mb-3">
+                {{ form.p_unlabelled.label }}{{ tooltip(gettext('If already
+                semi-supervised, it will be ignored')) }}
+                <div class="d-flex">
+                  {{ form.p_unlabelled(class_="form-range w-75",
+                  oninput="actualizarBadgePorcentaje(this.value,'p_unlabelled_badge')")
+                  }}
+                  <span
+                    id="p_unlabelled_badge"
+                    class="badge bg-primary px-3 mx-auto"
+                    >80%</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <button
+              id="btn_run"
+              type="submit"
+              class="btn btn-primary m-auto"
+              style="width: 20rem"
+            >
+              {{ gettext('Run') }}
+            </button>
+          </div>
+        </form>
+        <script>
+          const constructor = document.querySelector('#constructor');
+          console.log(constructor.value);
+          const inferencia = document.querySelector('#inferencia');
 
-{% endblock %} {% block form_scripts %}
+          const div_parametros1= document.querySelector('#parametros1');
+          const div_parametros2 = document.querySelector('#parametros2');
+
+          const todos_parametros = {{ parametros|tojson }};
+
+          constructor.addEventListener('change', (event) => {
+              generarFormParametros(event.target.value, div_parametros1, "constructor");
+              if (constructor.value === 'Gbili') {
+                console.log('gbili');
+                document.getElementById('gbili').style.display = 'block';
+                document.getElementById('rgcli').style.display = 'none';
+              }
+              else if (constructor.value === 'Rgcli') {
+                document.getElementById('gbili').style.display = 'none';
+                document.getElementById('rgcli').style.display = 'block';
+              }
+          });
+
+          inferencia.addEventListener('change', (event) => {
+              generarFormParametros(event.target.value, div_parametros2, "inferencia");
+              $('.inference-algo-content').hide();
+              // Mostrar el div correspondiente al valor seleccionado
+              $('#' + $(this).val()).show();
+          });
+
+          generarFormParametros(constructor.value, div_parametros1, "constructor");
+          generarFormParametros(inferencia.value, div_parametros2, "inferencia");
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
-  const constructor = document.querySelector('#constructor');
-  const inferencia = document.querySelector('#inferencia');
-
-  const div_parametros1= document.querySelector('#parametros1');
-  const div_parametros2 = document.querySelector('#parametros2');
-
-  const todos_parametros = {{ parametros|tojson }};
-
-  constructor.addEventListener('change', (event) => {
-      generarFormParametros(event.target.value, div_parametros1, "constructor");
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+  tooltipTriggerList.forEach(function (el) {
+      new bootstrap.Tooltip(el);
   });
 
-  inferencia.addEventListener('change', (event) => {
-      generarFormParametros(event.target.value, div_parametros2, "inferencia");
+  document.getElementById('inicio_tutorial').addEventListener('click', function () {
+      this.style.animation = "none";
+      introJs().setOptions({
+          steps: [
+              {
+                  title: "{{ gettext("Configuration area") }}",
+                  intro: "{{ gettext("On this page, you'll be able to customize the parameters of algorithm ") }}" + "{{ titulos[session['ALGORITMO']] }}."
+              },
+              {
+                  element: '#theory-card',
+                  intro: "{{ gettext("You can gain a deeper understanding of the algorithm by reviewing its theory and pseudocode.") }}"
+              },
+              {
+                  element: '#parameters-card',
+                  intro: "{{ gettext("Here you can select the desired parameters.") }}"
+              },
+              {
+                  element: '#sel_target',
+                  intro: "{{ gettext("It's crucial to select the column of data that acts as the target correctly. The rest of the parameters can be used as default.") }}"
+              },
+              {
+                  element: '#btn_run',
+                  intro: "{{ gettext("And finally, execute the algorithm. The application may take a few seconds to display the complete execution.") }}"
+              }
+          ],
+          'nextLabel': "{{ gettext("Next") }}",
+          'prevLabel': "{{ gettext("Previous") }}",
+          'doneLabel': "{{ gettext("Done") }}",
+      }).start();
   });
-
-  generarFormParametros(constructor.value, div_parametros1, "constructor");
-  generarFormParametros(inferencia.value, div_parametros2, "inferencia");
 </script>
-{% endblock %} {% block explicaciones %}
-<p>{{ gettext('_Explicaciones grafos_')}}</p>
-{% endblock %} {% block pseudocodigo %}
-<img
-  src="{{ gettext('/pseudocodigos/en/CoForest.png') }}"
-  width="75%"
-  alt="{{ gettext('Co-Forest Pseudocode') }}"
-/>
 {% endblock %}

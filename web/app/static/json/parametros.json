@@ -124,7 +124,7 @@
     },
     "Rgcli": {
       "ke": {
-        "label": "Neighbors number",
+        "label": "Ke (KNN)",
         "type": "number",
         "step": 1,
         "min": 1,
@@ -132,7 +132,7 @@
         "default": 5
       },
       "ki": {
-        "label": "Neighbors number",
+        "label": "Ki (Rgcli)",
         "type": "number",
         "step": 1,
         "min": 1,
