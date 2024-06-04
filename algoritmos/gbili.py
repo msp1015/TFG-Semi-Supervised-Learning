@@ -18,7 +18,7 @@ class Gbili:
     Lilian Berton y Alneu de Andrade Lopes
     """
 
-    def __init__(self, datos_se, datos_e, etiquetas, k_vecinos):
+    def __init__(self, datos_se, datos_e, etiquetas, k_vecinos=5):
         """
         Constructor de la clase.
 

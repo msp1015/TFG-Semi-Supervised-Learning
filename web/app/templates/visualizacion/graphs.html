@@ -219,11 +219,38 @@ head %} {{ super() }}
 
 {% if ejecutar %}
 <script>
-  inicializar_grafos("/datos/{{ session['ALGORITMO'] }}", elementos);
+  var simulation, svg, container, link, node, clases;
+  var currentStep = 0;
+  var steps = [];
+  var dataSteps = [];
+  var predictions = {};
+  let selectedNode = null;
+  inicializar("/datos/{{ session['ALGORITMO'] }}", elementos)
+    .then(function (datos) {
+      predictions = datos.predicciones;
+      steps = datos.enlaces;
+      dataSteps.push({
+        nodes: datos.nodos,
+        links: steps[0],
+      });
+      for (let i = 0; i < steps.length; i++) {
+        dataSteps.push({
+          nodes: datos.nodos,
+          links: steps[i],
+        });
+      }
+      clases = JSON.parse(datos.mapa);
+
+      inicializarGrafo();
+      updateGraph();
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 </script>
 {% else %}
 <script>
   let datos = {{ json_data|tojson }};
-  inicializar_sin_peticion(datos, preparardataset_selftraining, grafico_selftraining)
+  inicializarGrafo(datos)
 </script>
 {% endif %} {% endblock %}

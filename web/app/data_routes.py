@@ -12,7 +12,7 @@ from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 from sqlalchemy.exc import SQLAlchemyError
 
-from algoritmos import SelfTraining, CoTraining, DemocraticCoLearning, TriTraining, CoForest, Gbili, LGC
+from algoritmos import SelfTraining, CoTraining, DemocraticCoLearning, TriTraining, CoForest, Gbili, LGC, RGCLI
 from algoritmos.utilidades.datasetloader import DatasetLoader
 from algoritmos.utilidades.datasplitter import data_split
 from algoritmos.utilidades.dimreduction import log_pca_reduction, log_cxcy_reduction
@@ -195,41 +195,52 @@ def datosgraphs():
     """
     constructor = request.form['constructor']
     inferencia = request.form['inferencia']
-    print(inferencia)
     datasetloader = DatasetLoader(session['FICHERO'])
     datasetloader.set_target(request.form['target'])
     p_unlabelled=int(request.form['p_unlabelled']) / 100
 
     x, y, mapa, is_unlabelled = datasetloader.get_x_y()
+    x = np.array(x)
+    y = np.array(y).ravel()
     L, U, L_y, U_y = train_test_split(x, y, test_size=p_unlabelled, stratify=y, random_state=42)
-
     todas_etiquetas = np.concatenate((L_y, U_y))
     params_constructor = obtener_parametros_clasificador("Graphs", constructor, "constructor")
     params_inferancia = obtener_parametros_clasificador("Inference", inferencia, "inferencia")
+    for key in params_inferancia.keys():
+        print(key, type(params_inferancia[key]))
     steps = []
+    # Construcción del grafo
     if constructor == "Gbili":
-
-        solver = Gbili(U, L,todas_etiquetas, **params_constructor)
+        solver = Gbili(U, L, todas_etiquetas, **params_constructor)
         list_knn, list_mknn, distmin, grafoFinal = solver.construir_grafo()
+        print("grafo final construido ", grafoFinal)
         steps = [list_knn, list_mknn, distmin, grafoFinal]
+        print(steps)
     elif constructor == "Rgcli":
-        pass
-    
+        print("estoy en RGCLI")
+        solver = RGCLI(U, L, todas_etiquetas, **params_constructor)
+        lista_knn, grafoFinal = solver.construir_grafo()
+        steps = [lista_knn, grafoFinal]
+        print("grafo final construido ", grafoFinal)
+        
     if inferencia == "LocalAndGlobalConsistency":
+        print("estoy en LGC")
         propagacion = LGC(grafoFinal, solver.nodos, solver.etiquetas_etiquetados, **params_inferancia)
         predicciones = propagacion.inferir_etiquetas()
     else:
         pass
-        
     
-    nodos_iniciales = build_nodos_json(grafoFinal, solver.etiquetas_etiquetados) 
+    nodos_iniciales = build_nodos_json(grafoFinal, solver.etiquetas_modificadas) 
     for i in range(len(steps)):
-        steps[i] = build_enlaces_json(steps[i], solver.matriz_distancias)
-    predicciones = predicciones[len(L)].tolist()
+        steps[i] = build_enlaces_json(steps[i])
+    predicciones = predicciones[len(L):].tolist()
     predicciones_json = {}
     for i, prediccion in enumerate(predicciones):
         predicciones_json[str(i + len(L))] = prediccion
-    info_grafos = {"nodos": nodos_iniciales, "enlaces": steps, "predicciones": predicciones}
+    info_grafos = {"nodos": nodos_iniciales, 
+                   "enlaces": steps, 
+                   "predicciones": predicciones_json,
+                   "mapa": json.dumps(mapa)}
     print(info_grafos)
     if current_user.is_authenticated:
         date = int(datetime.now().timestamp())
@@ -333,6 +344,7 @@ def obtener_info_inductivo(algoritmo):
                 current_app.config['CARPETA_RUNS'], f'run-{current_user.id}-{date}.json'))
         else:
             db.session.commit()
+    print(info["mapa"])
     return info
 
 
@@ -353,7 +365,9 @@ def obtener_parametros_clasificador(metodo, clasificador, nombre):
     parametros_clasificador = {}
     for key in clasificadores[clasificador].keys():
         parametro = clasificadores[clasificador][key]
-        if parametro["type"] == "number" and parametro["step"] == 0.1:
+        if parametro["type"] == "number" and (parametro["step"] == 0.1 
+                                              or parametro["step"] == 0.01 
+                                             or parametro["step"] == 0.001):
             p = float(request.form[nombre + "_" + key])
             parametros_clasificador[key] = p
         elif parametro["type"] == "number" and parametro["step"] == 1:
@@ -361,7 +375,6 @@ def obtener_parametros_clasificador(metodo, clasificador, nombre):
             parametros_clasificador[key] = p
         else:
             parametros_clasificador[key] = request.form[nombre + "_" + key]
-    print(parametros_clasificador)
     return parametros_clasificador
 
 
@@ -445,10 +458,10 @@ def build_nodos_json(grafo, etiquetas_modificadas):
     """
     nodos = []
     for node in grafo:
-        nodos.append({"id": str(node), "group": int(etiquetas_modificadas[node])})
+        nodos.append({"id": str(node), "class": int(etiquetas_modificadas[node])})
     return nodos
 
-def build_enlaces_json(grafo, matriz_distancias):
+def build_enlaces_json(grafo):
     """Construye y guarda los enlaces en formato JSON.
 
     Args:
@@ -461,5 +474,5 @@ def build_enlaces_json(grafo, matriz_distancias):
     for node in grafo:
         for neighbor in grafo[node]:
             if {"source": str(node), "target": str(neighbor)} not in enlaces and {"source": str(neighbor), "target": str(node)} not in enlaces:
-                enlaces.append({"source": str(node), "target": str(neighbor), "value": matriz_distancias[node][neighbor]})
+                enlaces.append({"source": str(node), "target": str(neighbor)})
     return enlaces

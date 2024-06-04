@@ -10,7 +10,7 @@ class RGCLI:
         - Lilian Berton, Alan Valejo, Thiago de Paulo Faleiros, Jorge Valverde-Rebaza
         Alnea de Andrade Lopes
     """
-    def __init__(self, datos_e, datos_se, etiquetas, ke, ki):
+    def __init__(self, datos_se, datos_e, etiquetas, ke=10, ki=3):
         """ Inicializa el algoritmo RGCLI
 
         Args:
@@ -90,7 +90,6 @@ class RGCLI:
             E_prime = sorted(epsilon, key=epsilon.get)[:self.ki]
             self.E.extend(E_prime)
             for e in E_prime:
-                print(e)
                 self.W[e] = 1
                 if e[0] not in self.grafoFinal:
                     self.grafoFinal[e[0]] = []
@@ -102,7 +101,7 @@ class RGCLI:
                 if e[0] not in self.grafoFinal[e[1]]:
                     self.grafoFinal[e[1]].append(e[0])
 
-    def run(self):
+    def construir_grafo(self):
         """
         Metodo que ejecuta los pasos del algoritmo RGCLI
 

@@ -28,6 +28,8 @@ def visualizar_algoritmo(algoritmo):
     # En este punto se deben recoger todos los parámetros
     # que el usuario introdujo en el formulario de configuración
     params = []
+    # Controlar si se trata de grafos o no
+    es_grafo = False
     if session['ALGORITMO'] == "selftraining":
         params = parametros_selftraining()
     elif session['ALGORITMO'] == "cotraining":
@@ -40,11 +42,17 @@ def visualizar_algoritmo(algoritmo):
         params = parametros_coforest()
     elif session['ALGORITMO'] == "graphs":
         params = parametros_grafos()
+        es_grafo = True
 
     """En params se encontrarán todos los datos necesarios para ejecutar el algoritmo.
     Realmente no se le pasa la información ejecutada, se realiza una petición POST
     desde Javascript con estos parámetros al renderizar la plantilla del algoritmo."""
-    return render_template('visualizacion/' + session['ALGORITMO'] + '.html',
+    if es_grafo:
+        return render_template('visualizacion/' + session['ALGORITMO'] + '.html',
+                               params=params,
+                               ejecutar=True)
+    else:
+        return render_template('visualizacion/' + session['ALGORITMO'] + '.html',
                            params=params,
                            cx=request.form.get('cx', 'C1'),
                            cy=request.form.get('cy', 'C2'),
@@ -76,7 +84,7 @@ def visualizar_algoritmo_json(algoritmo, run_id):
 
     with open(os.path.join(current_app.config['CARPETA_RUNS'], run.jsonfile)) as f:
         json_data = json.load(f)
-
+    # TOPO: TENER EN CUENTA LOS GRAFOS (NO SE NECESITA TANTA INFORMACION PARA LA PLANTILLA)
     return render_template('visualizacion/' + algoritmo + '.html',
                            params=[],
                            cx=run.cx,

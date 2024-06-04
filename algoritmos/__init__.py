@@ -9,7 +9,8 @@ from .tritraining import TriTraining
 from .coforest import CoForest
 from .gbili import Gbili
 from .localglobalconsistency import LGC
+from .rgcli import RGCLI
 
 __all__ = ['SelfTraining', 'CoTraining',
            'DemocraticCoLearning', 'TriTraining', 
-           'CoForest', 'Gbili', 'LGC']
+           'CoForest', 'Gbili', 'LGC', 'RGCLI']

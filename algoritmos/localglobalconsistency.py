@@ -15,7 +15,7 @@ class LGC:
     Articulo original: Zhou, D., Bousquet, O., Lal, T. N., Weston, J., & Schölkopf, B. (2004). 
     Learning with local and global consistency.
     """
-    def __init__(self, grafo, nodos, etiquetas_etiquetados, alpha=0.5, tol=1e-6, max_iter=1000):
+    def __init__(self, grafo, nodos, etiquetas_etiquetados, alpha=0.99, tol=1e-4, max_iter=1000):
             """Inicializa una instancia de la clase LocalGlobalConsistency.
 
             Args:
@@ -32,7 +32,6 @@ class LGC:
             self.n_categorias = len(np.unique(self.etiquetas_etiquetados))
             self.Y = self.inicializar_Y()
             self.matriz_afinidad = self.construir_matriz_afinidad()
-            self.Y = self.inicializar_Y()
             self.alpha = alpha
             self.tol = tol
             self.max_iter = max_iter
@@ -89,7 +88,7 @@ class LGC:
         S = D_inversa @ W @ D_inversa
         return S
 
-    def iterar_F(self, S, alpha=0.5, tol=1e-6, max_iter=10000):
+    def iterar_F(self, S, alpha=0.99, tol=1e-4, max_iter=1000):
         """ Itera la matriz de etiquetas F hasta convergencia.
         Args:
             S (np.array): La matriz de afinidad normalizada.
@@ -99,11 +98,11 @@ class LGC:
         Returns:
             np.array: La matriz de etiquetas F.
         """
+
         F = deepcopy(self.Y)
         for _ in range(max_iter):
             F_next = alpha * S @ F + (1 - alpha) * self.Y
-            diff = np.linalg.norm(F_next - F)
-            if diff < tol:
+            if np.linalg.norm(F_next - F) < tol:
                 break
             F = F_next
         return F
