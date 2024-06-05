@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-02-26 10:03+0100\n"
+"POT-Creation-Date: 2024-06-05 22:37+0200\n"
 "PO-Revision-Date: 2023-02-26 14:39+0100\n"
 "Last-Translator: David Martínez Acha <dmacha@ubu.es>\n"
 "Language: es\n"
@@ -16,129 +16,147 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.11.0\n"
+"Generated-By: Babel 2.14.0\n"
 
-#: __init__.py:67
+#: __init__.py:70 templates/base.html:54 templates/inicio.html:117
+msgid "Graphs"
+msgstr "Grafos"
+
+#: __init__.py:71
 msgid "English"
 msgstr "Inglés"
 
-#: __init__.py:68
+#: __init__.py:72
 msgid "Spanish"
 msgstr "Español"
 
-#: __init__.py:120
+#: __init__.py:124
 msgid "Please log in to access this page."
 msgstr "Por favor, inicia sesión para acceder a esta página."
 
-#: __init__.py:135
+#: __init__.py:140
 msgid "Internal Server Error"
 msgstr "Error interno del servidor"
 
-#: __init__.py:139
+#: __init__.py:144
 msgid "Not found"
 msgstr "No encontrado"
 
-#: __init__.py:143
+#: __init__.py:148
 msgid "Forbidden"
 msgstr "Petición denegada por el servidor"
 
-#: __init__.py:147
+#: __init__.py:152
 msgid "Unauthorized"
 msgstr "No autorizado"
 
-#: __init__.py:151
+#: __init__.py:156
 msgid "Bad request"
 msgstr "Mala petición"
 
-#: configuration_routes.py:25
+#: configuration_routes.py:27
 msgid "You must upload a file"
 msgstr "Debe subir un archivo"
 
-#: configuration_routes.py:31
+#: configuration_routes.py:33
 msgid "File must be ARFF or CSV"
 msgstr "El fichero debe ser ARFF o CSV"
 
-#: forms.py:9 forms.py:13 forms.py:43 forms.py:47 templates/macros.html:149
+#: forms.py:10 forms.py:14 forms.py:45 forms.py:49 templates/macros.html:225
 msgid "Name"
 msgstr "Nombre"
 
-#: forms.py:15 forms.py:19 forms.py:35 forms.py:36 forms.py:49 forms.py:52
-#: templates/macros.html:150
+#: forms.py:16 forms.py:20 forms.py:37 forms.py:38 forms.py:51 forms.py:54
+#: templates/macros.html:226
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: forms.py:21 forms.py:25 forms.py:31 forms.py:38 forms.py:39
+#: forms.py:22 forms.py:26 forms.py:33 forms.py:40 forms.py:41
 msgid "Password"
 msgstr "Contraseña"
 
-#: forms.py:27
+#: forms.py:28
 msgid "Confirm password"
 msgstr "Confirmar contraseña"
 
-#: forms.py:54 forms.py:58
+#: forms.py:56 forms.py:61
 msgid "Current password"
 msgstr "Contraseña actual"
 
-#: forms.py:60 forms.py:64
+#: forms.py:63 forms.py:67
 msgid "New password"
 msgstr "Nueva contraseña"
 
-#: forms.py:68
+#: forms.py:71
 msgid "Select the target/class attribute of the dataset"
 msgstr "Selecciona el atributo de la clase/etiqueta del conjunto de datos"
 
-#: forms.py:73
-msgid "Select X component"
-msgstr "Selecciona la componente X"
-
-#: forms.py:78
-msgid "Select Y component"
-msgstr "Selecciona la componente Y"
-
-#: forms.py:83
-msgid "Use PCA to reduce to 2D"
-msgstr "Utilizar PCA para reducir a 2D"
-
-#: forms.py:87
-msgid "Standardize"
-msgstr "Estandarizar"
-
-#: forms.py:91
+#: forms.py:76
 msgid "Unlabelled percentage"
 msgstr "Porcentaje de no etiquetados"
 
-#: forms.py:97
+#: forms.py:84
+msgid "Select X component"
+msgstr "Selecciona la componente X"
+
+#: forms.py:89
+msgid "Select Y component"
+msgstr "Selecciona la componente Y"
+
+#: forms.py:94
+msgid "Use PCA to reduce to 2D"
+msgstr "Utilizar PCA para reducir a 2D"
+
+#: forms.py:98
+msgid "Standardize"
+msgstr "Estandarizar"
+
+#: forms.py:102
 msgid "Test percentage (after unlabelled percentage)"
 msgstr "Porcentaje de test (después de aplicar el no etiquetados)"
 
-#: forms.py:105 forms.py:130 forms.py:135 forms.py:166 forms.py:171
-#: forms.py:176
+#: forms.py:109 forms.py:133 forms.py:138 forms.py:169 forms.py:174
+#: forms.py:179
 msgid "Select classifier"
 msgstr "Selecciona clasificador"
 
-#: forms.py:110
+#: forms.py:114
 msgid "N (Number of instances to select in each iteration)"
 msgstr "N (Número de datos a seleccionar en cada iteración)"
 
-#: forms.py:116
+#: forms.py:120 forms.py:191
 msgid "Threshold"
 msgstr "Límite"
 
-#: forms.py:122 forms.py:158
+#: forms.py:126 forms.py:161
 msgid "Number of iterations"
 msgstr "Número de iteraciones"
 
-#: forms.py:140
+#: forms.py:143
 msgid "Positives"
 msgstr "Positivos"
 
-#: forms.py:146
+#: forms.py:149
 msgid "Negatives"
 msgstr "Negativos"
 
-#: forms.py:152
+#: forms.py:155
 msgid "Number of initial data"
 msgstr "Número de datos iniciales"
+
+#: forms.py:186
+#, fuzzy
+msgid "Number of trees"
+msgstr "Número de iteraciones"
+
+#: forms.py:198
+msgid "Select constructor"
+msgstr "Selecciona un constructor"
+
+#: forms.py:202
+#, fuzzy
+msgid "Select inference"
+msgstr "Selecciona clasificador"
 
 #: main_routes.py:96
 msgid "You must select an algorithm"
@@ -168,7 +186,7 @@ msgstr "Correo electrónico no encontrado"
 msgid "You are already registered!"
 msgstr "¡Ya estás registrado!"
 
-#: user_routes.py:98 user_routes.py:174
+#: user_routes.py:98 user_routes.py:175
 msgid "Email already exists"
 msgstr "El correo electrónico ya existe"
 
@@ -184,11 +202,11 @@ msgstr "¡Cuenta creada!"
 msgid "User doesn't exist"
 msgstr "El usuario no existe"
 
-#: user_routes.py:169
+#: user_routes.py:170
 msgid "Incorrect current password"
 msgstr "Contraseña actual incorrecta"
 
-#: user_routes.py:191
+#: user_routes.py:193
 msgid "Account updated!"
 msgstr "¡Cuenta actualizada!"
 
@@ -196,49 +214,50 @@ msgstr "¡Cuenta actualizada!"
 msgid "You must select the parameters of the algorithm"
 msgstr "Debe seleccionar los parámetros del algoritmo"
 
-#: visualization_routes.py:182
+#: visualization_routes.py:218
 msgid "Classifiers must be different (diverse) to ensure proper execution"
 msgstr ""
 "Los clasificadores deben ser diferentes (diversos) para asegurar una "
 "ejecución correcta"
 
-#: templates/base.html:109 templates/usuarios/admin.html:9
+#: templates/base.html:115 templates/usuarios/admin.html:9
 #: templates/usuarios/admin.html:14
 msgid "Admin dashboard"
 msgstr "Panel de administración"
 
-#: templates/base.html:112 templates/usuarios/miespacio.html:9
+#: templates/base.html:118 templates/usuarios/miespacio.html:9
 #: templates/usuarios/miespacio.html:10
 msgid "My Space"
 msgstr "Mi Espacio"
 
-#: templates/base.html:113 templates/usuarios/base_user.html:21
+#: templates/base.html:119 templates/usuarios/base_user.html:21
 #: templates/usuarios/perfil.html:68
 msgid "Profile"
 msgstr "Perfil"
 
-#: templates/base.html:117
+#: templates/base.html:123
 msgid "Log Out"
 msgstr "Cerrar sesión"
 
-#: templates/base.html:123 templates/usuarios/registro.html:2
+#: templates/base.html:129 templates/usuarios/registro.html:2
 #: templates/usuarios/registro.html:3
 msgid "Sign Up"
 msgstr "Registrarse"
 
-#: templates/base.html:126
+#: templates/base.html:132
 msgid "Login"
 msgstr "Iniciar sesión"
 
-#: templates/base.html:147
+#: templates/base.html:153
 msgid "Success"
 msgstr "Éxito"
 
-#: templates/base.html:152 templates/visualizacion/base_visualizacion.html:118
+#: templates/base.html:158 templates/visualizacion/base_visualizacion.html:118
+#: templates/visualizacion/graphs.html:147
 msgid "Warning"
 msgstr "Advertencia"
 
-#: templates/base.html:159
+#: templates/base.html:165
 msgid "just now"
 msgstr "justo ahora"
 
@@ -246,7 +265,7 @@ msgstr "justo ahora"
 msgid "Go home"
 msgstr "Ir al inicio"
 
-#: templates/inicio.html:2
+#: templates/inicio.html:1
 msgid "Home"
 msgstr "Inicio"
 
@@ -254,34 +273,39 @@ msgstr "Inicio"
 msgid "Semi-Supervised Algorithm Visualizer"
 msgstr "Visualizador de Algoritmos Semi-Supervisados"
 
-#: templates/inicio.html:16 templates/inicio.html:22
+#: templates/inicio.html:23 templates/inicio.html:30
 msgid "A little bit of theory..."
 msgstr "Un poco de teoría..."
 
-#: templates/inicio.html:26
+#: templates/inicio.html:35
+#, fuzzy
 msgid ""
-"<strong>Semi-supervised learning</strong> is the branch of machine "
-"learning that\n"
-"                            refers to the simultaneous use of data both "
-"<strong>labeled</strong> and\n"
-"                            <strong>unlabeled</strong> to perform "
-"learning tasks. It sits between supervised\n"
-"                            and unsupervised learning.<br><br>Among all "
-"<strong>semi-supervised algorithms</strong>,\n"
-"                            the core of this project is based on "
-"<strong>inductive methods</strong>.\n"
-"                            Their idea is very simple: they try to create"
-" a classifier that predicts labels for new data.\n"
-"                            The proposed algorithms have this objective, "
-"albeit with a bit more specificity:\n"
-"                            <strong>wrapper methods</strong>. The well-"
-"known <strong>wrapper methods</strong>\n"
-"                            are based on <strong>pseudo-"
-"labeling</strong>, which is the process where classifiers\n"
-"                            trained with labeled data generate labels for"
-" the unlabeled ones. Once this process is\n"
-"                            completed, the classifier is retrained, "
-"incorporating these new labels."
+"<strong>Semi-supervised learning</strong> is the\n"
+"              branch of machine learning that refers to the simultaneous "
+"use of\n"
+"              data both <strong>labeled</strong> and\n"
+"              <strong>unlabeled</strong> to perform learning tasks. It "
+"sits\n"
+"              between supervised and unsupervised learning.<br /><br "
+"/>Among all\n"
+"              <strong>semi-supervised algorithms</strong>, the core of "
+"this\n"
+"              project is based on <strong>inductive methods</strong>. "
+"Their idea\n"
+"              is very simple: they try to create a classifier that "
+"predicts\n"
+"              labels for new data. The proposed algorithms have this "
+"objective,\n"
+"              albeit with a bit more specificity:\n"
+"              <strong>wrapper methods</strong>. The well-known\n"
+"              <strong>wrapper methods</strong> are based on\n"
+"              <strong>pseudo-labeling</strong>, which is the process "
+"where\n"
+"              classifiers trained with labeled data generate labels for "
+"the\n"
+"              unlabeled ones. Once this process is completed, the "
+"classifier is\n"
+"              retrained, incorporating these new labels."
 msgstr ""
 "El <strong>aprendizaje semi-supervisado</strong> es la rama del "
 "aprendizaje automático referido al uso simultáneo de datos tanto "
@@ -298,28 +322,33 @@ msgstr ""
 "proceso, el clasificador se vuelve a entrenar pero añadiendo estos "
 "nuevos."
 
-#: templates/inicio.html:40
+#: templates/inicio.html:53
+#, fuzzy
 msgid ""
-"In the following cards, four of the most representative algorithms of\n"
-"                            semi-supervised learning are presented: "
-"<strong>Self-Training</strong>,\n"
-"                            <strong>Co-Training</strong>, <strong>Tri-"
-"Training</strong> and\n"
-"                            <strong>Democratic Co-Learning</strong>. "
-"<br><br> Internally, each algorithm utilizes\n"
-"                            one or several classifiers (wrapper methods)."
-" Additionally, the number\n"
-"                            of views on the data is distinguished (a view"
-" being the subset of attributes of the dataset\n"
-"                            that the algorithm uses to learn the model). "
-"Unlike <strong>Single-view</strong>, a\n"
-"                            <strong>Multi-view</strong> algorithm views "
-"the dataset attributes as multiple subsets.\n"
-"                            For example, in the Co-Training algorithm, "
-"the first classifier might only \"see\" half of\n"
-"                            the attributes while the second one sees the "
-"other half. Each of them will work with its\n"
-"                            specific subset of attributes."
+"In the following cards, four of the most\n"
+"              representative algorithms of semi-supervised learning are\n"
+"              presented: <strong>Self-Training</strong>,\n"
+"              <strong>Co-Training</strong>, <strong>Tri-Training</strong>"
+" and\n"
+"              <strong>Democratic Co-Learning</strong>. <br /><br />\n"
+"              Internally, each algorithm utilizes one or several "
+"classifiers\n"
+"              (wrapper methods). Additionally, the number of views on the"
+" data\n"
+"              is distinguished (a view being the subset of attributes of "
+"the\n"
+"              dataset that the algorithm uses to learn the model). Unlike"
+"\n"
+"              <strong>Single-view</strong>, a\n"
+"              <strong>Multi-view</strong> algorithm views the dataset "
+"attributes\n"
+"              as multiple subsets. For example, in the Co-Training "
+"algorithm,\n"
+"              the first classifier might only \"see\" half of the "
+"attributes while\n"
+"              the second one sees the other half. Each of them will work "
+"with\n"
+"              its specific subset of attributes."
 msgstr ""
 "En las tarjetas que aparecen a continuación se presentan cuatro de los "
 "algoritmos más representativos del aprendizaje semi-supervisado: <strong"
@@ -335,22 +364,25 @@ msgstr ""
 "la mitad de atributos mientras que el segundo la otra mitad. Cada uno de "
 "ellos trabajará con su subconjunto de atributos concreto."
 
-#: templates/inicio.html:59 templates/inicio.html:65
+#: templates/inicio.html:82 templates/inicio.html:88
 msgid "Objective"
 msgstr "Objetivo"
 
-#: templates/inicio.html:69
+#: templates/inicio.html:92
+#, fuzzy
 msgid ""
-"The aim of this tool is to facilitate, through visualizations, the "
-"understanding\n"
-"                            of how the main semi-supervised algorithms "
-"actually work when combined with theoretical\n"
-"                            concepts. <br><br>By selecting any of the "
-"algorithms, you will be redirected to load the\n"
-"                            dataset. Subsequently, you can configure the "
-"algorithm with the desired parameters and\n"
-"                            finally obtain a visualization of the "
-"training process."
+"The aim of this tool is to facilitate, through\n"
+"              visualizations, the understanding of how the main semi-"
+"supervised\n"
+"              algorithms actually work when combined with theoretical "
+"concepts.\n"
+"              <br /><br />By selecting any of the algorithms, you will be"
+"\n"
+"              redirected to load the dataset. Subsequently, you can "
+"configure\n"
+"              the algorithm with the desired parameters and finally "
+"obtain a\n"
+"              visualization of the training process."
 msgstr ""
 "El objetivo de esta herramienta es facilitar, mediante visualizaciones, "
 "la comprensión de cómo funcionan realmente los principales algoritmos "
@@ -360,44 +392,94 @@ msgstr ""
 "algoritmo con los parámetros deseados y finalmente obtener una "
 "visualización del entrenamiento."
 
-#: templates/inicio.html:89
-msgid "One classifier"
-msgstr "Un clasificador"
+#: templates/inicio.html:120
+msgid ""
+"Construct similarity graphs to represent sample\n"
+"              similarities, then use these graphs to propagate labels "
+"from\n"
+"              labeled to unlabeled data."
+msgstr ""
 
-#: templates/inicio.html:90 templates/inicio.html:117 templates/inicio.html:133
-msgid "Single-view"
-msgstr "Single-view"
-
-#: templates/inicio.html:94 templates/inicio.html:107 templates/inicio.html:121
-#: templates/inicio.html:137
+#: templates/inicio.html:128 templates/inicio.html:165
+#: templates/inicio.html:203 templates/inicio.html:241
+#: templates/inicio.html:280 templates/inicio.html:319
 msgid "Select"
 msgstr "Seleccionar"
 
-#: templates/inicio.html:103
-msgid "Two classifiers"
-msgstr "Dos clasificadores"
+#: templates/inicio.html:136 templates/inicio.html:173
+#: templates/inicio.html:211 templates/inicio.html:249
+#: templates/inicio.html:288 templates/inicio.html:327
+msgid "Paper"
+msgstr "Artículo"
 
-#: templates/inicio.html:104
-msgid "Multi-view"
-msgstr "Multi-view"
+#: templates/inicio.html:157
+msgid ""
+"Ensemble that uses multiple decision trees to\n"
+"              iteratively add confident predictions to the training set,\n"
+"              enhancing mutual learning."
+msgstr ""
 
-#: templates/inicio.html:116
-msgid "Three classifiers"
-msgstr "Tres clasificadores"
+#: templates/inicio.html:193
+#, fuzzy
+msgid "Self-Training"
+msgstr "Pseudocódigo de Self-Training"
 
-#: templates/inicio.html:132
-msgid "Three or more classifiers"
-msgstr "Tres o más clasificadores"
+#: templates/inicio.html:196
+msgid ""
+"Uses a base classifier initially trained with labeled\n"
+"              data and iteratively retrains with pseudo-labeled data "
+"until a\n"
+"              stopping criterion is met."
+msgstr ""
 
-#: templates/inicio.html:146
+#: templates/inicio.html:231
+#, fuzzy
+msgid "Co-Training"
+msgstr "Pseudocódigo de Co-Training"
+
+#: templates/inicio.html:234
+msgid ""
+"Uses multiple classifiers trained on different\n"
+"              attribute subsets, iteratively predicting and selecting "
+"confident\n"
+"              labels to build new training sets."
+msgstr ""
+
+#: templates/inicio.html:269
+#, fuzzy
+msgid "Tri-Training"
+msgstr "Pseudocódigo de Tri-Training"
+
+#: templates/inicio.html:272
+msgid ""
+"Uses three classifiers to pseudo-label data, requiring\n"
+"              two of them to agree, and iterates (with new empty data) "
+"until no\n"
+"              new labels are added."
+msgstr ""
+
+#: templates/inicio.html:309
+#, fuzzy
+msgid "Democratic Co-Learning"
+msgstr "Pseudocódigo del Entrenamiento de Democratic Co-Learning"
+
+#: templates/inicio.html:312
+msgid ""
+"Uses multiple classifiers to pseudo-label data by\n"
+"              majority vote, retraining misclassified instances until "
+"accuracy\n"
+"              stops improving."
+msgstr ""
+
+#: templates/inicio.html:340
 msgid "Welcome"
 msgstr "Bienvenido/a"
 
-#: templates/inicio.html:147
+#: templates/inicio.html:341
 msgid "Welcome to VASS! This is a basic tutorial."
 msgstr "¡Bienvenido/a a Vass! Esto es un tutorial básico."
 
-#: templates/inicio.html:151
+#: templates/inicio.html:345
 msgid ""
 "Here's a quick rundown of some theoretical concepts and what the app aims"
 " to do."
@@ -405,7 +487,7 @@ msgstr ""
 "Aquí se realiza una pequeña introducción de conceptos teóricos y del "
 "objetivo de la aplicación."
 
-#: templates/inicio.html:155
+#: templates/inicio.html:349
 msgid ""
 "By selecting any of these algorithms, you'll be able to upload a dataset "
 "to work with."
@@ -413,13 +495,13 @@ msgstr ""
 "Al seleccionar cualquiera de estos algoritmos podrás subir un conjunto de"
 " datos con el que trabajar."
 
-#: templates/inicio.html:159
+#: templates/inicio.html:353
 msgid "Likewise, you can select any algorithm using these selectors."
 msgstr ""
 "Del mismo modo, puede seleccionar cualquier algoritmo mediante estos "
 "selectores."
 
-#: templates/inicio.html:163
+#: templates/inicio.html:357
 msgid ""
 "On every page of the application, you'll always find a basic tutorial by "
 "clicking on this button."
@@ -427,7 +509,7 @@ msgstr ""
 "En todas las páginas de la aplicación siempre encontrarás un tutorial "
 "básico pulsando en este botón."
 
-#: templates/inicio.html:167
+#: templates/inicio.html:361
 msgid ""
 "At any time, you can refer to the application's guide by clicking on this"
 " button."
@@ -435,11 +517,11 @@ msgstr ""
 "En cualquier momento puedes consultar el manual de la aplicación en este "
 "botón."
 
-#: templates/inicio.html:171
+#: templates/inicio.html:365
 msgid "You can also choose the desired language."
 msgstr "También puedes elegir el idioma deseado."
 
-#: templates/inicio.html:179
+#: templates/inicio.html:373
 msgid ""
 "You can log in or register in the application. This will allow you to "
 "store datasets and even save executions."
@@ -447,7 +529,7 @@ msgstr ""
 "Puedes iniciar sesión o registrarte en la aplicación. Esto permitirá "
 "almacenar conjuntos de datos e incluso guardar ejecuciones."
 
-#: templates/inicio.html:184
+#: templates/inicio.html:378
 msgid ""
 "Here you can access the profile and personal space with datasets and "
 "executions."
@@ -455,152 +537,171 @@ msgstr ""
 "Aquí podrás acceder al perfil y al espacio personal con los conjuntos de "
 "datos y ejecuciones."
 
-#: templates/configuracion/base_config_inductivos.html:91 templates/inicio.html:192
+#: templates/configuracion/base_config_inductivos.html:91
+#: templates/configuracion/graphsconfig.html:258 templates/inicio.html:386
 #: templates/subida.html:112 templates/usuarios/miespacio.html:59
 #: templates/usuarios/perfil.html:80
 #: templates/visualizacion/base_visualizacion.html:188
+#: templates/visualizacion/graphs.html:217
 msgid "Next"
 msgstr "Siguiente"
 
-#: templates/configuracion/base_config_inductivos.html:92 templates/inicio.html:193
+#: templates/configuracion/base_config_inductivos.html:92
+#: templates/configuracion/graphsconfig.html:259 templates/inicio.html:387
 #: templates/subida.html:113 templates/usuarios/miespacio.html:60
 #: templates/usuarios/perfil.html:81
 #: templates/visualizacion/base_visualizacion.html:189
+#: templates/visualizacion/graphs.html:218
 msgid "Previous"
 msgstr "Anterior"
 
-#: templates/configuracion/base_config_inductivos.html:93 templates/inicio.html:194
+#: templates/configuracion/base_config_inductivos.html:93
+#: templates/configuracion/graphsconfig.html:260 templates/inicio.html:388
 #: templates/subida.html:114 templates/usuarios/miespacio.html:61
 #: templates/usuarios/perfil.html:82
 #: templates/visualizacion/base_visualizacion.html:190
+#: templates/visualizacion/graphs.html:219
 msgid "Done"
 msgstr "Hecho"
 
-#: templates/macros.html:7
-msgid "Uncheck PCA to select specific components"
+#: templates/macros.html:6
+#, fuzzy
+msgid ""
+"Uncheck PCA to select specific\n"
+"  components"
 msgstr "Desmarca PCA para seleccionar componentes específicas"
 
-#: templates/macros.html:27
-msgid "If already semi-supervised, it will be ignored"
+#: templates/macros.html:26
+#, fuzzy
+msgid ""
+"If already semi-supervised,\n"
+"  it will be ignored"
 msgstr "Si ya fuera semi-supervisado, será ignorado"
 
-#: templates/macros.html:58
+#: templates/macros.html:78
 msgid "Input conditions"
 msgstr "Condiciones de entrada"
 
-#: templates/macros.html:65 templates/subida.html:29
+#: templates/macros.html:93 templates/subida.html:29
 msgid "Allowed extensions: .CSV & .ARFF"
 msgstr "Extensiones permitidas: .CSV & .ARFF"
 
-#: templates/macros.html:70
+#: templates/macros.html:102
 msgid "All attributes must be numeric"
 msgstr "Todos los atributos deben ser numéricos"
 
-#: templates/macros.html:71
-msgid "This does not include the target attribute (it can be categorical)"
+#: templates/macros.html:104
+#, fuzzy
+msgid ""
+"This does not include the target attribute (it can be\n"
+"              categorical)"
 msgstr "Esto no incluye al atributo de la clase (este puede ser categórico)"
 
-#: templates/macros.html:76
+#: templates/macros.html:113
 msgid "Supervised datasets can be uploaded"
 msgstr "Se pueden cargar conjuntos de datos supervisados"
 
-#: templates/macros.html:77
+#: templates/macros.html:115
 msgid "With all examples labelled"
 msgstr "Con todos los datos etiquetados"
 
-#: templates/macros.html:82
+#: templates/macros.html:123
 msgid "Semi-supervised datasets can be uploaded"
 msgstr "Se pueden cargar conjuntos de datos semi-supervisados"
 
-#: templates/macros.html:83
+#: templates/macros.html:126
+#, fuzzy
 msgid ""
-"Examples with -1, -1.0 or \"?\" on the target attribute will be "
-"interpreted as unlabelled examples"
+"Examples with -1, -1.0 or \"?\" on the target\n"
+"                attribute will be interpreted as unlabelled examples"
 msgstr ""
 "Los ejemplos con -1, 1.0 o \"?\" en el atributo de la clase serán "
 "interpretados como ejemplos no etiquetados"
 
-#: templates/macros.html:84
+#: templates/macros.html:130
+#, fuzzy
 msgid ""
-"A dataset can contain multiple unlabelled examples, but with the same "
-"type (-1, -1.0 or \"?\")"
+"A dataset can contain multiple unlabelled examples,\n"
+"                but with the same type (-1, -1.0 or \"?\")"
 msgstr ""
 "Un conjunto de datos puede contener múltiples ejemplos no etiquetados, "
 "pero con el mismo tipo (-1, -1.0 o \"?\")"
 
-#: templates/macros.html:90 templates/macros.html:190 templates/macros.html:228
+#: templates/macros.html:143 templates/macros.html:283
+#: templates/macros.html:355
 msgid "Close"
 msgstr "Cerrar"
 
-#: templates/macros.html:116 templates/usuarios/admin.html:27
+#: templates/macros.html:184 templates/usuarios/admin.html:27
 #: templates/usuarios/admin.html:64 templates/usuarios/miespacio.html:15
 msgid "Uploaded datasets"
 msgstr "Conjunto de datos subidos"
 
-#: templates/macros.html:119 templates/macros.html:134
+#: templates/macros.html:188 templates/macros.html:207
 msgid "Dataset file"
 msgstr "Fichero del conjunto de datos"
 
-#: templates/macros.html:121
+#: templates/macros.html:190
 msgid "Upload date"
 msgstr "Fecha de subida"
 
-#: templates/macros.html:122 templates/macros.html:137
+#: templates/macros.html:191 templates/macros.html:210
 msgid "User"
 msgstr "Usuario"
 
-#: templates/macros.html:123 templates/macros.html:138
-#: templates/macros.html:152
+#: templates/macros.html:192 templates/macros.html:211
+#: templates/macros.html:228
 msgid "Actions"
 msgstr "Acciones"
 
-#: templates/macros.html:130 templates/usuarios/admin.html:32
+#: templates/macros.html:202 templates/usuarios/admin.html:32
 #: templates/usuarios/admin.html:87 templates/usuarios/miespacio.html:23
 msgid "Run history"
 msgstr "Historial de ejecuciones"
 
-#: templates/macros.html:133 templates/subida.html:11
+#: templates/macros.html:206 templates/subida.html:11
 msgid "Algorithm"
 msgstr "Algoritmo"
 
-#: templates/macros.html:135
+#: templates/macros.html:208
 msgid "Run date"
 msgstr "Fecha de ejecución"
 
-#: templates/configuracion/base_config_inductivos.html:35 templates/macros.html:136
-#: templates/macros.html:183
+#: templates/configuracion/base_config_inductivos.html:35
+#: templates/configuracion/graphsconfig.html:137 templates/macros.html:209
+#: templates/macros.html:270
 msgid "Parameters"
 msgstr "Parámetros"
 
-#: templates/macros.html:146
+#: templates/macros.html:221
 msgid "Users"
 msgstr "Usuarios"
 
-#: templates/macros.html:151 templates/usuarios/base_user.html:41
+#: templates/macros.html:227 templates/usuarios/base_user.html:41
 msgid "Last login"
 msgstr "Último inicio de sesión"
 
-#: templates/macros.html:163
+#: templates/macros.html:237
 msgid "Are you sure?"
 msgstr "¿Estás seguro?"
 
-#: templates/macros.html:167
+#: templates/macros.html:246
 msgid "You are about to delete: "
 msgstr "Vas a eliminar: "
 
-#: templates/macros.html:170
+#: templates/macros.html:251
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: templates/macros.html:171
+#: templates/macros.html:259
 msgid "Delete"
 msgstr "Eliminar"
 
-#: templates/macros.html:202
+#: templates/macros.html:294
 msgid "Select algorithm"
 msgstr "Selecciona un algoritmo"
 
-#: templates/macros.html:225
+#: templates/macros.html:346
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
@@ -608,10 +709,12 @@ msgstr "Ha ocurrido un error"
 msgid "Dataset upload"
 msgstr "Carga del conjunto de datos"
 
-#: templates/configuracion/base_config_inductivos.html:10 templates/subida.html:11
+#: templates/configuracion/base_config_inductivos.html:10
+#: templates/configuracion/graphsconfig.html:16 templates/subida.html:11
 #: templates/usuarios/admin.html:12 templates/usuarios/base_form.html:4
 #: templates/usuarios/base_user.html:4
 #: templates/visualizacion/base_visualizacion.html:14
+#: templates/visualizacion/graphs.html:14
 msgid "Go back"
 msgstr "Volver"
 
@@ -639,17 +742,17 @@ msgstr "Selecciona fichero"
 msgid "completed"
 msgstr "completado"
 
-#: templates/subida.html:50
+#: templates/subida.html:49
+msgid "Download test file"
+msgstr "Descargar fichero de prueba"
+
+#: templates/subida.html:66
 msgid "Previous file detected: "
 msgstr "Fichero previo detectado: "
 
-#: templates/subida.html:52 templates/subida.html:55
+#: templates/subida.html:68 templates/subida.html:71
 msgid "Configure algorithm"
 msgstr "Configurar algoritmo"
-
-#: templates/subida.html:61
-msgid "Download test file"
-msgstr "Descargar fichero de prueba"
 
 #: templates/subida.html:86
 msgid "Data upload"
@@ -693,31 +796,40 @@ msgstr "Una vez cargado podrás pasar a la configuración del algoritmo "
 
 #: templates/configuracion/base_config_inductivos.html:7
 #: templates/configuracion/base_config_inductivos.html:13
+#: templates/configuracion/graphsconfig.html:8
+#: templates/configuracion/graphsconfig.html:20
 msgid "Algorithm configuration"
 msgstr "Configuración del algoritmo"
 
 #: templates/configuracion/base_config_inductivos.html:10
+#: templates/configuracion/graphsconfig.html:17
 #: templates/visualizacion/base_visualizacion.html:14
+#: templates/visualizacion/graphs.html:15
 msgid "Dataset"
 msgstr "Conjunto de datos"
 
 #: templates/configuracion/base_config_inductivos.html:21
+#: templates/configuracion/graphsconfig.html:30
 msgid "Theory"
 msgstr "Teoría"
 
 #: templates/configuracion/base_config_inductivos.html:52
+#: templates/configuracion/graphsconfig.html:186
 msgid "Run"
 msgstr "Ejecutar"
 
 #: templates/configuracion/base_config_inductivos.html:71
+#: templates/configuracion/graphsconfig.html:238
 msgid "Configuration area"
 msgstr "Área de configuración"
 
 #: templates/configuracion/base_config_inductivos.html:72
+#: templates/configuracion/graphsconfig.html:239
 msgid "On this page, you'll be able to customize the parameters of algorithm "
 msgstr "En esta página podrás personalizar los parámetros del algoritmo."
 
 #: templates/configuracion/base_config_inductivos.html:76
+#: templates/configuracion/graphsconfig.html:243
 msgid ""
 "You can gain a deeper understanding of the algorithm by reviewing its "
 "theory and pseudocode."
@@ -726,10 +838,12 @@ msgstr ""
 "pseudocódigo."
 
 #: templates/configuracion/base_config_inductivos.html:80
+#: templates/configuracion/graphsconfig.html:247
 msgid "Here you can select the desired parameters."
 msgstr "Aquí puedes seleccionar los parámetros deseados."
 
 #: templates/configuracion/base_config_inductivos.html:84
+#: templates/configuracion/graphsconfig.html:251
 msgid ""
 "It's crucial to select the column of data that acts as the target "
 "correctly. The rest of the parameters can be used as default."
@@ -738,6 +852,7 @@ msgstr ""
 "actúa como objetivo. El resto de parámetros pueden servir por defecto."
 
 #: templates/configuracion/base_config_inductivos.html:88
+#: templates/configuracion/graphsconfig.html:255
 msgid ""
 "And finally, execute the algorithm. The application may take a few "
 "seconds to display the complete execution."
@@ -745,34 +860,81 @@ msgstr ""
 "Y finalmente ejecutar el algoritmo. La aplicación puede tardar unos "
 "segundos en mostrar la ejecución completa."
 
-#: templates/configuracion/cotrainingconfig.html:25
-msgid "If it is larger than the total, it will be limited to it (the total)"
+#: templates/configuracion/coforestconfig.html:17
+msgid "Decision Tree parameters"
+msgstr "Parámetros de árboles de decisión"
+
+#: templates/configuracion/coforestconfig.html:30
+msgid ""
+"_Esta técnica se basa en la idea de utilizar múltiples\n"
+"  clasificadores (árboles de decisión, en este caso), los cuales se "
+"entrenan de\n"
+"  forma iterativa con un conjunto inicial de datos etiquetados. A medida "
+"que el\n"
+"  algoritmo avanza, cada árbol intenta clasificar los datos no "
+"etiquetados y las\n"
+"  predicciones más confiables se añaden al conjunto de entrenamiento como"
+" si\n"
+"  fueran etiquetas reales. Este proceso de \"enseñanza mutua\" entre los\n"
+"  clasificadores permite mejorar progresivamente el rendimiento del "
+"modelo a\n"
+"  medida que se incorpora más información de los datos no etiquetados. "
+"Co-forest\n"
+"  aprovecha la diversidad entre los árboles de decisión para mejorar la\n"
+"  generalización del modelo frente a datos nuevos o desconocidos, "
+"haciéndolo\n"
+"  especialmente útil en escenarios donde las etiquetas son escasas o "
+"costosas de\n"
+"  obtener._"
+msgstr ""
+
+#: templates/configuracion/coforestconfig.html:45
+#, fuzzy
+msgid "/pseudocodigos/en/CoForest.png"
+msgstr "/pseudocodigos/es/CoTraining.png"
+
+#: templates/configuracion/coforestconfig.html:47
+#, fuzzy
+msgid "Co-Forest Pseudocode"
+msgstr "Pseudocódigo de Co-Training"
+
+#: templates/configuracion/cotrainingconfig.html:22
+#, fuzzy
+msgid ""
+"If it is larger than the total, it will\n"
+"  be limited to it (the total)"
 msgstr "Si es mayor que el total, se limitará a él (al total)"
 
-#: templates/configuracion/cotrainingconfig.html:29
-#: templates/configuracion/selftrainingconfig.html:22
-msgid "Enter 0 to not limit the number of iterations"
+#: templates/configuracion/cotrainingconfig.html:26
+#: templates/configuracion/selftrainingconfig.html:23
+#, fuzzy
+msgid ""
+"Enter 0 to not limit the number of\n"
+"  iterations"
 msgstr "Introduce 0 para no limitar el número de iteraciones"
 
-#: templates/configuracion/cotrainingconfig.html:78
+#: templates/configuracion/cotrainingconfig.html:73
+#, fuzzy
 msgid ""
-"Strongly based on Self-Training but in this case, several classifiers "
-"(usually two)\n"
-"    handle the process and \"interact\" with each other. As Self-"
-"Training, once classifiers are trained,\n"
-"    they predict the labels of the those unlabelled instances, and all "
-"classifiers add the best predictions.\n"
-"    Co-Training works with two views of the data (\"multi-view\"). These "
-"views correspond not to subsets\n"
-"    of instances, but to subsets of instance´s atributtes "
-"(characteristics). Each classifier\n"
-"    will train considering different characteristics. Ideally, these "
-"views are independent and can\n"
-"    predict the label on their own (although this doesn´t always happen)."
-" When classifiers predict\n"
-"    labels on the data, they select the most confident data of both and "
-"build the new training set for\n"
-"    the next iteration."
+"Strongly based on Self-Training but in this case, several\n"
+"  classifiers (usually two) handle the process and \"interact\" with each"
+" other.\n"
+"  As Self-Training, once classifiers are trained, they predict the labels"
+" of the\n"
+"  those unlabelled instances, and all classifiers add the best "
+"predictions.\n"
+"  Co-Training works with two views of the data (\"multi-view\"). These "
+"views\n"
+"  correspond not to subsets of instances, but to subsets of instance´s\n"
+"  atributtes (characteristics). Each classifier will train considering "
+"different\n"
+"  characteristics. Ideally, these views are independent and can predict "
+"the\n"
+"  label on their own (although this doesn´t always happen). When "
+"classifiers\n"
+"  predict labels on the data, they select the most confident data of both"
+" and\n"
+"  build the new training set for the next iteration."
 msgstr ""
 "Basado fuertemente en Self-Training, en este caso varios clasificadores "
 "(normalmente dos) se encargan del proceso e \"interactúan\" entre sí. Del"
@@ -789,12 +951,13 @@ msgstr ""
 "ambos los de mayor confianza y construyen el nuevo conjunto de "
 "entrenamiento para la siguiente iteración."
 
-#: templates/configuracion/cotrainingconfig.html:90
+#: templates/configuracion/cotrainingconfig.html:87
 #: templates/visualizacion/cotraining.html:4
 msgid "/pseudocodigos/en/CoTraining.png"
 msgstr "/pseudocodigos/es/CoTraining.png"
 
-#: templates/configuracion/cotrainingconfig.html:90
+#: templates/configuracion/cotrainingconfig.html:89
+#: templates/visualizacion/coforest.html:6
 #: templates/visualizacion/cotraining.html:4
 msgid "Co-Training Pseudocode"
 msgstr "Pseudocódigo de Co-Training"
@@ -841,40 +1004,172 @@ msgid "/pseudocodigos/en/DemocraticCoLearningFit.png"
 msgstr "/pseudocodigos/es/DemocraticCoLearningEntrenar.png"
 
 #: templates/configuracion/democraticcolearningconfig.html:15
-#: templates/visualizacion/democraticcolearning.html:4
+#: templates/visualizacion/democraticcolearning.html:6
 msgid "Democratic Co-Learning Fit Pseudocode"
 msgstr "Pseudocódigo del Entrenamiento de Democratic Co-Learning"
 
 #: templates/configuracion/democraticcolearningconfig.html:16
-#: templates/visualizacion/democraticcolearning.html:5
+#: templates/visualizacion/democraticcolearning.html:9
 msgid "/pseudocodigos/en/DemocraticCoLearningCombine.png"
 msgstr "/pseudocodigos/es/DemocraticCoLearningCombinar.png"
 
 #: templates/configuracion/democraticcolearningconfig.html:16
-#: templates/visualizacion/democraticcolearning.html:5
+#: templates/visualizacion/democraticcolearning.html:11
 msgid "Democratic Co-Learning Combine Pseudocode"
 msgstr "Pseudocódigo de la Combinación de Democratic Co-Learning"
 
-#: templates/configuracion/selftrainingconfig.html:15
+#: templates/configuracion/graphsconfig.html:39
+msgid "Build graph"
+msgstr "Construir grafo"
+
+#: templates/configuracion/graphsconfig.html:44
+msgid "Inference"
+msgstr "Inferencia"
+
+#: templates/configuracion/graphsconfig.html:53
+msgid ""
+" The GBILI algorithm, standing for Graph Building\n"
+"                  based on the Informativeness of Labeled Instances, is a"
+" graph\n"
+"                  construction method for semi-supervised learning that\n"
+"                  leverages the informativeness of labeled instances to\n"
+"                  establish strategic node connections. The process "
+"initiates\n"
+"                  with the creation of a distance matrix using Euclidean\n"
+"                  distance to identify k-nearest neighbors. After setting"
+"\n"
+"                  parameters such as the number of neighbors, k, each "
+"node`s\n"
+"                  mutual nearest neighbors are pinpointed. "
+"Informativeness is\n"
+"                  then calculated by summing distances from each node to "
+"its\n"
+"                  mutual neighbors and to the nearest labeled point, "
+"which helps\n"
+"                  in forming connections that minimize this distance sum."
+" The\n"
+"                  graph is further refined by connecting isolated "
+"components\n"
+"                  through a Breadth-First Search, ensuring network "
+"connectivity\n"
+"                  without over-densifying, which is key to the "
+"transductive\n"
+"                  methods used in semi-supervised learning."
+msgstr ""
+
+#: templates/configuracion/graphsconfig.html:71
+#, fuzzy
+msgid "/pseudocodigos/en/gbili.png"
+msgstr "/pseudocodigos/es/CoTraining.png"
+
+#: templates/configuracion/graphsconfig.html:78
+msgid ""
+"The RGCLI (Refined Graph Construction based on\n"
+"                  Labeled Instance Information) algorithm enhances\n"
+"                  semi-supervised learning by efficiently constructing "
+"graphs in\n"
+"                  large datasets. It operates under the assumption that "
+"nearby\n"
+"                  or structurally similar points share the same label. "
+"The\n"
+"                  algorithm utilizes two parameters: ke for the broader\n"
+"                  neighborhood and ki for establishing actual connections"
+" based\n"
+"                  on proximity to labeled vertices. RGCLI begins by "
+"identifying\n"
+"                  ke nearest neighbors using a Kd-tree, calculates a "
+"score based\n"
+"                  on distances from a point to a mutual neighbor and the "
+"nearest\n"
+"                  labeled vertex, and then connects each point to ki "
+"mutual\n"
+"                  neighbors that minimize this distance. This approach "
+"ensures a\n"
+"                  sparse, meaningful graph that adheres to semi-"
+"supervised\n"
+"                  learning`s consistency assumptions while facilitating\n"
+"                  effective label propagation."
+msgstr ""
+
+#: templates/configuracion/graphsconfig.html:95
+#, fuzzy
+msgid "/pseudocodigos/en/rgcli.png"
+msgstr "/pseudocodigos/es/CoTraining.png"
+
+#: templates/configuracion/graphsconfig.html:105
+msgid ""
+"The Graph-based Local and Global Consistency (LGC)\n"
+"                algorithm is a semi-supervised learning method designed "
+"to\n"
+"                predict labels for unlabeled data points by leveraging\n"
+"                relationships within the data. The algorithm starts by "
+"creating\n"
+"                an affinity matrix that represents the closeness between "
+"points\n"
+"                based on their distances. This matrix is normalized to "
+"help\n"
+"                stabilize the label propagation process. LGC iterates a "
+"label\n"
+"                spreading mechanism where each data point updates its "
+"label\n"
+"                based on the labels of its neighbors and its original "
+"label,\n"
+"                balanced by a parameter. The process continues until the "
+"labels\n"
+"                stabilize, essentially allowing each point to adopt the "
+"label\n"
+"                most common among its neighbors. In this specific "
+"adaptation of\n"
+"                LGC, the affinity matrix simplifies connections between "
+"points\n"
+"                as either existing (1) or not (0), streamlining the "
+"computation.\n"
+"                This approach effectively uses both labeled and unlabeled"
+" data\n"
+"                to enhance label prediction, making it particularly "
+"useful in\n"
+"                scenarios where labeled data is scarce but unlabeled data"
+" is\n"
+"                plentiful."
+msgstr ""
+
+#: templates/configuracion/graphsconfig.html:125
+#, fuzzy
+msgid "/pseudocodigos/en/LGC.png"
+msgstr "/pseudocodigos/es/SelfTraining.png"
+
+#: templates/configuracion/graphsconfig.html:164
+#, fuzzy
+msgid ""
+"If already\n"
+"                semi-supervised, it will be ignored"
+msgstr "Si ya fuera semi-supervisado, será ignorado"
+
+#: templates/configuracion/selftrainingconfig.html:14
 msgid "Empty N parameter to activate it"
 msgstr "Vacía el parámetro N para activarlo"
 
 #: templates/configuracion/selftrainingconfig.html:41
+#, fuzzy
 msgid ""
-"It is the simplest semi-supervised learning method. This method wraps a "
-"single base classifier,\n"
-"        which is train with initial labelled data and take advantage of "
-"the pseudo-labelling process to continue\n"
-"        its training.\n"
-"        This method starts by training that base classifier with the "
-"labelled data. From this initial learning, the unlabelled\n"
-"        data is labelled (pseudo-labelling). The most confident new "
-"labelled instances (in which the classifier\n"
-"        has the most confident) are selected. Once selected, the "
-"classifier is retrained with union of those already\n"
-"        labelled instances and these new labelled.\n"
-"        The process continues until a stopping criterion (usually until "
-"label all data or a maximum number of iterations)."
+"It is the simplest semi-supervised learning method. This method\n"
+"  wraps a single base classifier, which is train with initial labelled "
+"data and\n"
+"  take advantage of the pseudo-labelling process to continue its "
+"training. This\n"
+"  method starts by training that base classifier with the labelled data. "
+"From\n"
+"  this initial learning, the unlabelled data is labelled (pseudo-"
+"labelling). The\n"
+"  most confident new labelled instances (in which the classifier has the "
+"most\n"
+"  confident) are selected. Once selected, the classifier is retrained "
+"with union\n"
+"  of those already labelled instances and these new labelled. The process"
+"\n"
+"  continues until a stopping criterion (usually until label all data or a"
+"\n"
+"  maximum number of iterations)."
 msgstr ""
 "Se trata del método de aprendizaje semi-supervisado más sencillo y "
 "\"directo\". Este método \"envuelve\" un único clasificador base, que "
@@ -889,12 +1184,12 @@ msgstr ""
 "hasta un criterio de parada (generalmente hasta etiquetar todos los datos"
 " o un número máximo de iteraciones)."
 
-#: templates/configuracion/selftrainingconfig.html:51
+#: templates/configuracion/selftrainingconfig.html:54
 #: templates/visualizacion/selftraining.html:4
 msgid "/pseudocodigos/en/SelfTraining.png"
 msgstr "/pseudocodigos/es/SelfTraining.png"
 
-#: templates/configuracion/selftrainingconfig.html:51
+#: templates/configuracion/selftrainingconfig.html:56
 #: templates/visualizacion/selftraining.html:4
 msgid "Self-Training Pseudocode"
 msgstr "Pseudocódigo de Self-Training"
@@ -1038,15 +1333,18 @@ msgid "Here you can modify the basic data of your profile."
 msgstr "Aquí puedes modificar los datos básicos de tu perfil."
 
 #: templates/visualizacion/base_visualizacion.html:29
+#: templates/visualizacion/graphs.html:32
 msgid "Main visualization"
 msgstr "Visualización principal"
 
 #: templates/visualizacion/base_visualizacion.html:39
+#: templates/visualizacion/graphs.html:49
 msgid "Zoom reset"
 msgstr "Reiniciar Zoom"
 
 #: templates/visualizacion/base_visualizacion.html:41
 #: templates/visualizacion/base_visualizacion.html:114
+#: templates/visualizacion/graphs.html:143
 msgid "Iteration"
 msgstr "Iteración"
 
@@ -1059,46 +1357,57 @@ msgid "General statistics"
 msgstr "Estadísticas generales"
 
 #: templates/visualizacion/base_visualizacion.html:108
+#: templates/visualizacion/graphs.html:137
 msgid "Initial data"
 msgstr "Dato inicial"
 
 #: templates/visualizacion/base_visualizacion.html:109
+#: templates/visualizacion/graphs.html:138
 msgid "Label"
 msgstr "Etiqueta"
 
 #: templates/visualizacion/base_visualizacion.html:110
+#: templates/visualizacion/graphs.html:139
 msgid "Classifier"
 msgstr "Clasificador"
 
 #: templates/visualizacion/base_visualizacion.html:111
+#: templates/visualizacion/graphs.html:140
 msgid "Classifier: Not classified"
 msgstr "Clasificador: No clasificado"
 
 #: templates/visualizacion/base_visualizacion.html:112
+#: templates/visualizacion/graphs.html:141
 msgid "Label: Not classified"
 msgstr "Etiqueta: No clasificado"
 
 #: templates/visualizacion/base_visualizacion.html:113
+#: templates/visualizacion/graphs.html:142
 msgid "Measure"
 msgstr "Valor"
 
 #: templates/visualizacion/base_visualizacion.html:115
+#: templates/visualizacion/graphs.html:144
 msgid "Point"
 msgstr "Punto"
 
 #: templates/visualizacion/base_visualizacion.html:116
+#: templates/visualizacion/graphs.html:145
 msgid "Position"
 msgstr "Posición"
 
 #: templates/visualizacion/base_visualizacion.html:117
+#: templates/visualizacion/graphs.html:146
 msgid "overlapping points"
 msgstr "puntos solapados"
 
 #: templates/visualizacion/base_visualizacion.html:142
+#: templates/visualizacion/graphs.html:171
 msgid "Visualization area"
 msgstr "Área de visualización"
 
 #: templates/visualizacion/base_visualizacion.html:143
+#: templates/visualizacion/graphs.html:172
 msgid ""
 "This page is the heart of the application. Here, you can observe the "
 "algorithm training process."
@@ -1107,10 +1416,12 @@ msgstr ""
 "proceso de entrenamiento del algoritmo."
 
 #: templates/visualizacion/base_visualizacion.html:147
+#: templates/visualizacion/graphs.html:176
 msgid "This is the main chart area."
 msgstr "Esta es la zona del gráfico principal."
 
 #: templates/visualizacion/base_visualizacion.html:152
+#: templates/visualizacion/graphs.html:181
 msgid ""
 "This chart will display the data classified by the algorithm. It's "
 "interactive; you can zoom in, scroll around, or select a data point (to "
@@ -1121,6 +1432,7 @@ msgstr ""
 " un dato (para mostrar información de interés)."
 
 #: templates/visualizacion/base_visualizacion.html:156
+#: templates/visualizacion/graphs.html:185
 msgid ""
 "You can proceed through the algorithm steps manually or automatically "
 "while visualizing the events."
@@ -1129,10 +1441,12 @@ msgstr ""
 " mientras se visualizan los eventos."
 
 #: templates/visualizacion/base_visualizacion.html:160
+#: templates/visualizacion/graphs.html:189
 msgid "This is the statistics area."
 msgstr "Esta es la zona de estadísticas."
 
 #: templates/visualizacion/base_visualizacion.html:165
+#: templates/visualizacion/graphs.html:194
 msgid ""
 "Here, the statistics extracted in each iteration are displayed in a "
 "general way, as if it were a single model."
@@ -1141,6 +1455,7 @@ msgstr ""
 "general, como si fuera un único modelo."
 
 #: templates/visualizacion/base_visualizacion.html:172
+#: templates/visualizacion/graphs.html:201
 msgid ""
 "Here, the statistics extracted in each iteration for each base classifier"
 " are displayed."
@@ -1149,14 +1464,53 @@ msgstr ""
 "clasificador base."
 
 #: templates/visualizacion/base_visualizacion.html:176
+#: templates/visualizacion/graphs.html:205
 msgid "Through this selector, you can choose the metric you want to see."
 msgstr "Mediante este selector puedes elegir la métrica que deseas ver."
 
 #: templates/visualizacion/base_visualizacion.html:180
+#: templates/visualizacion/graphs.html:209
 msgid "This allows you to select which base classifier to display."
 msgstr "Esto permite seleccionar qué clasificador base mostrar."
+
+#: templates/visualizacion/coforest.html:4
+#, fuzzy
+msgid "/pseudocodigos/en/coforest.png"
+msgstr "/pseudocodigos/es/CoTraining.png"
+
+#: templates/visualizacion/graphs.html:52
+msgid "Step"
+msgstr "Paso"
+
+#: templates/visualizacion/graphs.html:74
+#, fuzzy
+msgid "Infer label"
+msgstr "Etiqueta"
+
+#: templates/visualizacion/graphs.html:84
+#, fuzzy
+msgid "Algorithm Steps"
+msgstr "Algoritmo"
 
 #: templates/visualizacion/singleview.html:3
 msgid "Specific statistics"
 msgstr "Estadísticas específicas"
+
+#~ msgid "One classifier"
+#~ msgstr "Un clasificador"
+
+#~ msgid "Single-view"
+#~ msgstr "Single-view"
+
+#~ msgid "Two classifiers"
+#~ msgstr "Dos clasificadores"
+
+#~ msgid "Multi-view"
+#~ msgstr "Multi-view"
+
+#~ msgid "Three classifiers"
+#~ msgstr "Tres clasificadores"
+
+#~ msgid "Three or more classifiers"
+#~ msgstr "Tres o más clasificadores"
 
