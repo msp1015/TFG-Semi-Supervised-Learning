@@ -34,15 +34,10 @@ Principalmente, se pueden clasificar en tres diferentes tareas:
 \begin{itemize}
 	\item \textbf{Clustering}: segmentación o agrupamiento. Consiste en la identificación de grupos o \textit{clusters} en función de sus similitudes y diferencias. Dentro de este tipo, se puede diferenciar un agrupamiento exclusivo, donde los datos pertenencen a un unico grupo, y un agrupamiento superpuesto, donde los datos pueden perteneces a varias agrupaciones. El ejemplo de las fotografías entra dentro de esta categoría.
 	\item \textbf{Reglas de asociación}: utiliza una medida de interés para obtener un conjunto de reglas sólidas que permitan descubrir asociaciones interesantes entre las características de un conjunto de datos. La principal aplicación es el \guillemetleft análisis de cestas de compra\guillemetright, que se usa para determinar los patrones de compra de los clientes en funcion de las relaciones entre productos.
-	\item \textbf{Reducción de dimensionalidad}: estos algoritmos buscan reducir la complejidad de un conjunto de datos de alta dimensión a espacios de baja dimensión sin perder propiedades fundamentales de los datos originales. Este tipo de algoritmos se utiliza en la fase de análisis de datos, facilitando la representación gráfica. Se puede ver un ejemplo en la figura \ref{fig:../img/memoria/ML-ReduceDimension.png}.
+	\item \textbf{Reducción de dimensionalidad}: estos algoritmos buscan reducir la complejidad de un conjunto de datos de alta dimensión a espacios de baja dimensión sin perder propiedades fundamentales de los datos originales~\cite{PCA}. Este tipo de algoritmos se utiliza en la fase de análisis de datos, facilitando la representación gráfica. Se puede ver un ejemplo en la figura \ref{fig:../img/memoria/ML-ReduceDimension.png}.
 \end{itemize}
 
-%TODO: ORGANIZAR ESTA PARTE
-
 \imagen{../img/memoria/ML-ReduceDimension.png}{Reducción de dimensionalidad}{1} 
-
-
-%https://www.wolfram.com/language/introduction-machine-learning/machine-learning-par%adigms/img/2-machine-learning-paradigms-Print-6.en.png
 
 En la tabla \ref{supervisado_VS_noSupervisado} se resumen las principales diferencias entre aprendizaje supervisado y no supervisado:
 \begin{table}[ht]
@@ -84,7 +79,6 @@ Esta suposición es básica y en la mayoría de los ejemplos se cumple. Aún asi
 
 	\imagen{../img/memoria/Smoothness-LowDensity.png}{\textit{Smoothness assumption} y \textit{Low-density assumption}~\cite{Engelen:semi-supervised}}{0.5}
 	
-	
 	\item \textit{\textbf{Manifold assumption}}: esta suposición afirma que los datos utilizados se encuentran en un \textit{manifold} de baja dimensión incrustado en un espacio de mayor dimensión. En otras palabras, los datos, en lugar de proceder de cualquier parte del espacio, deben proceder de estos \textit{manifolds} de dimensiones más bajas ~\cite{web:assumptions}.
 	\imagen{../img/memoria/ManifoldAssumption.png}{\textit{Manifold assumption}~\cite{web:assumptions}}{0.45}
 \end{itemize}
@@ -98,31 +92,35 @@ No hay una clasificación oficial de algoritmos de aprendizaje semisupervisado, 
 \imagen{../img/memoria/Clasificacion-SemiSupervised}{Clasificación de los diferentes algoritmos que pretenden incorporar datos no etiquetados a métodos de clasificación. Basado en~\cite{Engelen:semi-supervised}}{1}
 
 \subsection{Métodos inductivos}
-Los métodos inductivos pretenden construir un clasificador que pueda generar predicciones para cualquier objeto del espacio de entrada. En el entrenamiento de este clasificador o modelo se pueden utilizar datos no etiquetados, pero las predicciones cuando hay varios son independientes entre sí una vez finalizado el entrenamiento.
+Los métodos inductivos en aprendizaje semi-supervisado tienen como objetivo construir un clasificador que pueda generar predicciones para cualquier objeto dentro del espacio de entrada. Durante la fase de entrenamiento de este clasificador, se pueden utilizar datos no etiquetados junto con los datos etiquetados disponibles. Una vez que el entrenamiento del modelo se ha completado, las predicciones que el clasificador realiza para nuevos datos son independientes entre sí. Esto significa que el modelo puede generalizar y hacer predicciones sobre nuevos ejemplos que no fueron vistos durante el entrenamiento, basándose en el conocimiento adquirido de los datos etiquetados y no etiquetados utilizados durante el entrenamiento~\cite{Engelen:semi-supervised}.
 \begin{itemize}
-	\item \textbf{\textit{Wrapper methods}}: Estos métodos entrenan inicialmente clasificadores con datos etiquetados y luego utilizan las predicciones para generar datos adicionales etiquetados. Los clasificadores se vuelven a entrenar con estos datos pseudo-etiquetados.
-	\item \textbf{\textit{Unsupervised preprocessing}}: Estos métodos extraen características útiles, pre-agrupan datos o determinan parámetros iniciales de aprendizaje de manera no supervisada, pero solo se aplican a datos originalmente etiquetados. Mejoran el rendimiento de clasificadores supervisados al utilizar información de datos no etiquetados durante la etapa de preprocesamiento.
-	\item \textbf{\textit{Intrinsecally semi-supervised}}: Incorporan directamente datos no etiquetados en la función objetivo o procedimiento de optimización. Son extensiones de métodos supervisados al entorno semisupervisado. Maximizan la información obtenida de datos no etiquetados durante el proceso de aprendizaje.
+	\item \textbf{\textit{Wrapper methods}}: Estos métodos inicialmente entrenan clasificadores utilizando únicamente los datos etiquetados. Después, las predicciones generadas por estos clasificadores se utilizan para etiquetar datos no etiquetados adicionales, creando así un conjunto de datos pseudo-etiquetados. El clasificador se vuelve a entrenar con estos datos adicionales, mejorando su capacidad para generalizar a partir de la información combinada de los datos originalmente etiquetados y los pseudo-etiquetados. En este grupo entrarían los cuatro algoritmos implementados en el trabajo anterior.
+	\item \textbf{\textit{Unsupervised preprocessing}}: En este enfoque, los métodos no supervisados se utilizan para extraer características útiles, agrupar datos o determinar parámetros iniciales de aprendizaje antes de entrenar el clasificador supervisado. Este preprocesamiento con datos no etiquetados mejora el rendimiento del clasificador supervisado, aprovechando las estructuras y patrones presentes en los datos no etiquetados.
+	\item \textbf{\textit{Intrinsecally semi-supervised}}: Estos métodos integran directamente los datos no etiquetados en la función objetivo o en el procedimiento de optimización del modelo de aprendizaje. Al incorporar datos no etiquetados en la función objetivo, se maximiza la información obtenida durante el proceso de aprendizaje, lo que lleva a una mejor generalización y rendimiento del clasificador.
 	
 \end{itemize}
-\subsection{Métodos transductivos} \label{sec3:transductivo} %TODO Reestructurar esta parte utilizando el otro articulo
+\subsection{Métodos transductivos} \label{sec3:transductivo}
 A diferencia de los métodos inductivos, los métodos transductivos no construyen un modelo para todo el espacio de entrada. En su lugar, su poder predictivo se limita exactamente a los objetos que encuentra durante la fase de entrenamiento. Por lo tanto, los métodos transductivos no tienen fases de entrenamiento y predicción distintas \cite{Engelen:semi-supervised}.
 
-El aprendizaje transductivo puede ahorrar tiempo y es preferible cuando el objetivo se orienta a mejorar nuestro conocimiento sobre el conjunto de datos sin etiquetar. Sin embargo, este enfoque tiene limitaciones, especialmente cuando queremos entender causas y efectos dentro de los datos. Básicamente, aunque el aprendizaje transductivo es útil para hacer inferencias específicas sobre los datos no etiquetados basándose en los datos etiquetados, no es adecuado ni efectivo para estudiar o predecir relaciones causales, es decir, cómo un factor directamente provoca otro. Esto se debe a que el aprendizaje transductivo se centra sólo en los datos presentes durante el entrenamiento y no generaliza más allá de estos. \cite{web:assumptions}.
-Los métodos transductivos suelen definir un grafo sobre todos los puntos de datos, tanto etiquetados como no etiquetados, codificando la similitud entre pares de puntos de datos con aristas posiblemente ponderadas. Estos algoritmos se dividen en tres pasos: creación del grafo, ponderación del grafo (matriz de pesos) e inferencia (se refiere al proceso de asignar etiquetas o categorías a los nodos no etiquetados en un grafo utilizando la información de los nodos etiquetados y la estructura del grafo).
+El aprendizaje transductivo puede ahorrar tiempo y es preferible cuando el objetivo se orienta a mejorar nuestro conocimiento sobre el conjunto de datos sin etiquetar. Sin embargo, este enfoque tiene limitaciones, especialmente cuando queremos entender causas y efectos dentro de los datos. Básicamente, aunque el aprendizaje transductivo es útil para hacer inferencias específicas sobre los datos no etiquetados basándose en los datos etiquetados, no es adecuado ni efectivo para estudiar o predecir relaciones causales, es decir, cómo un factor directamente provoca otro. Esto se debe a que el aprendizaje transductivo se centra sólo en los datos presentes durante el entrenamiento y no generaliza más allá de estos~\cite{web:assumptions}.
+Los métodos transductivos suelen definir un grafo sobre todos los puntos de datos, tanto etiquetados como no etiquetados, codificando la similitud entre pares de puntos de datos con aristas posiblemente ponderadas. Para definir más en detalle el aprendizaje semisupervisado basado en grafos (GSSL por sus siglas en inglés), se ha utilizado como base los conceptos del artículo~\cite{Engelen:semi-supervised} y para detallar más información se ha utilizado uno de los artículos más actualizados en este ámbito hasta la fecha~\cite{GSSL:review}. Ambos coinciden en que estos algoritmos se dividen en dos pasos: creación del grafo y fase de inferencia (se refiere al proceso de asignar etiquetas o categorías a los nodos no etiquetados en un grafo utilizando la información de los nodos etiquetados y la estructura del grafo).
 \subsubsection{Construccion de grafos}
-El primer paso es la construcción de la matriz de adyacencia, que indica la presencia de aristas entre pares de nodos. Existen tres métodos posibles de construcción de grafos:
+En el contexto del aprendizaje semi-supervisado basado en grafos (GSSL), la construcción del grafo es un paso crítico. Durante esta fase, se crea un grafo que representa todos los datos disponibles, tanto etiquetados como no etiquetados. Los nodos representan muestras y las aristas ponderadas reflejan la similitud entre pares de muestras. Existen varios métodos para construir estos grafos, que pueden clasificarse en métodos no supervisados y supervisados.
 \begin{itemize}
-	\item \textbf{$\varepsilon$ neighbourhood}: conecta cada nodo a todos los nodos a los que la distancia es como máximo $\varepsilon$. La medida de distancia normal suele ser euclídea. La estructura depende en gran medida de la elección de $\varepsilon$ y de la medida de distancia.
-	
-	\item \textbf{\textit{$k$ - nearest neighbours}}: cada nodo se conecta a sus $k$ vecinos más cercanos según alguna medida de distancia. Puede tener dos variantes: \textit{symmetric $k$ nearest neighbours}, que construye una arista si $i$ o $j$ estan en el ``vecindario'' de $k$ y mutual $k$-nearest neighbours que la construye si ambos están en la $k$ vecindad del otro, es decir, la relación es bidireccional.
-	
-	\item \textbf{$b$-matching}: el anterior método suele originar grafos que afectan al rendimiento del clasificador. El objetivo del $b$-matching es encontrar el subconjunto de aristas en el grafo completo de forma que cada nodo tenga grado $b$ y la suma de los pesos de las aristas sea máxima.
+	\item \textbf{Métodos no supervisados}: Los métodos no supervisados ignoran la información de las etiquetas durante la construcción del grafo. Entre los enfoques más populares se encuentran:
+	\begin{itemize}
+		\item \textbf{\textit{$k$-Nearest Neighbours}}: cada nodo se conecta a sus $k$ vecinos más cercanos según alguna medida de distancia. Puede tener dos variantes: \textit{symmetric $k$ nearest neighbours}, que construye una arista si $i$ o $j$ estan en el ``vecindario'' de $k$ y mutual $k$-nearest neighbours que la construye si ambos están en la $k$ vecindad del otro, es decir, la relación es bidireccional.
+		\item \textbf{\textit{$b$-Matching}}: Asegura que cada nodo tenga exactamente $b$ vecinos, lo que resulta en un grafo regular donde las etiquetas se propagan de manera equilibrada.
+	\end{itemize}
+	\item \textbf{Métodos supervisados}: Estos métodos utilizan la información de las muestras etiquetadas para refinar el grafo durante su construcción. Algunos ejemplos son:
+	\begin{itemize}
+		\item \textbf{\textit{GBILI (Graph-based on Informativeness of Labeled Instances)}} [\ref{sec3:gbili}]: Utiliza información de las etiquetas para crear grafos más precisos y robustos.
+		\item \textbf{\textit{RGCLI (Robust Graph that Considers Labeled Instances)}} [\ref{sec3:rgcli}]: Optimiza la construcción del grafo para mejorar la precisión en tareas de inferencia posteriores.
+	\end{itemize}
 \end{itemize}
 
-El segundo paso de la construcción del grafo es ponderarlo (dar pesos a las aristas). En primer lugar, se construye una matriz de adyacencia completa utilizando una función $k$ y después se obtiene la matriz de pesos $W$ mediante \textit{sparsification}\footnote{Sparsification es el proceso de eliminar elementos menos significativos de una matriz o aristas en un grafo, con el fin de hacer la estructura más esparcida y eficiente en términos de almacenamiento y procesamiento.}. Uno de los métodos más populares y sencillos, y en el que se profundizará en secciones más adelante, consiste en ponderar los enlaces entre los nodos con un 1 si existe relación entre ellos y con un 0 en caso contrario. Ponderar las aristas es crucial ya que refleja la fuerza de las relaciones entre nodos, lo que puede influir significativamente en la propagación de etiquetas y en la precisión final del algoritmo.
+Dentro de esta fase, un proceso importante es pondera el grafo (dar pesos a las aristas). En primer lugar, se construye una matriz de adyacencia completa utilizando una función $k$ y después se obtiene la matriz de pesos $W$ mediante \textit{sparsification}\footnote{Sparsification es el proceso de eliminar elementos menos significativos de una matriz o aristas en un grafo, con el fin de hacer la estructura más esparcida y eficiente en términos de almacenamiento y procesamiento.}. Uno de los métodos más populares y sencillos, y en el que se profundizará en secciones más adelante, consiste en ponderar los enlaces entre los nodos con un 1 si existe relación entre ellos y con un 0 en caso contrario. Ponderar las aristas es crucial ya que refleja la fuerza de las relaciones entre nodos, lo que puede influir significativamente en la propagación de etiquetas y en la precisión final del algoritmo.
 
-\clearpage
 
 \subsubsection{Fase de inferencia}
 Existen diferentes maneras de llevar a cabo esta fase:
@@ -133,10 +131,10 @@ Existen diferentes maneras de llevar a cabo esta fase:
 	\item\textit{ Local and global consistency}: La última propuesta no maneja bien el ruido de las etiquetas ya que las etiquetas verdaderas se fijan a los puntos de datos etiquetados. En segundo lugar, en los grafos irregulares, la influencia de los nodos con un grado alto es relativamente grande. La solución es el método LGC. El primer problema se resuelve penalizando el error cuadratico entre la etiqueta verdadera y la etiqueta estimada. El segundo problema se resuelve regularizando el termino de penalización para los puntos de datos no etiquetados mediante los grados de los nodos.
 \end{itemize}
 
-
+En resumen, los métodos transductivos en el aprendizaje semi-supervisado basado en grafos ofrecen un enfoque potente y escalable para aprovechar tanto datos etiquetados como no etiquetados. Aunque presentan ciertas limitaciones en la generalización y el estudio de relaciones causales, su capacidad para mejorar el conocimiento sobre conjuntos de datos no etiquetados los hace altamente valiosos en diversas aplicaciones.
 
 \subsection{\textit{ Graph-based on informativeness of
-labeled instances} (GBILI)}
+labeled instances} (GBILI)}\label{sec3:gbili}
 El algoritmo \textit{\textbf{GBILI}} o Construcción de Grafos Basada en la Informatividad de Instancias Etiquetadas~\cite{gbili} es un método de construcción de grafos para el aprendizaje semisupervisado. Su principal característica es que se basa en la informatividad de las instancias etiquetadas para relacionar nodos dentro del grafo, pudiendo aprovechar después esta conectividad para predecir las etiquetas de los datos no etiquetados. Se utilizan los métodos de $k$-vecinos más cercanos y  $k$-vecinos más cercanos mutuos para inicializar el grafo. En el pseudocódigo \ref{alg:Gbili}, propuesto en, se puede ver el proceso detallado.
 
 \subsubsection{Metodología}
@@ -198,7 +196,7 @@ Los pasos que sigue son:
 
 Como se comenta en uno de los pasos, hay ciertos puntos en este algoritmo que deben ser comentados para evitar confusión en la implementación. Además, para este trabajo en concreto, el algoritmo sufre ciertas modificaciones (con la misma idea teórica) que se comentan en la sección \ref{sec5:gbili}.
 
-\subsection{\textit{Robust Graph that Considers Labeled Instances} (RGCLI)}
+\subsection{\textit{Robust Graph that Considers Labeled Instances} (RGCLI)}\label{sec3:rgcli}
 El algoritmo \textbf{\textit{RGCLI}} (Grafo Robusto que Considera Instancias Etiquetadas) es una mejora del método GBILI, diseñado para la construcción de grafos robustos en el aprendizaje semi-supervisado \cite{rgcli}. Este método aprovecha la informatividad de las instancias etiquetadas para generar grafos más eficaces en la propagación de etiquetas, asegurando una mejor representación de la estructura de los datos y optimizando el rendimiento de las tareas de clasificación.
 \subsubsection{Metodología}
 El algoritmo RGCLI sigue un enfoque optimizado para construir grafos que satisfacen las suposiciones de consistencia del aprendizaje semi-supervisado, tanto a nivel local como global. La metodología se describe a continuación:
