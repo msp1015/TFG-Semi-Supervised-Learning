@@ -1,3 +1,43 @@
 \capitulo{1}{Introducción}
 
-Descripción del contenido del trabajo y del estructura de la memoria y del resto de materiales entregados.
+En los últimos años, el aprendizaje automático ha avanzado significativamente, destacando su capacidad para resolver problemas complejos en una variedad de dominios. Sin embargo, uno de los desafíos más persistentes es la obtención de datos etiquetados de alta calidad, los cuales son esenciales para el entrenamiento de modelos supervisados . En este contexto, el aprendizaje semisupervisado se presenta como una solución viable, al aprovechar tanto los datos etiquetados como los no etiquetados para mejorar la precisión de los modelos.
+
+El aprendizaje semi-supervisado incluye una variedad de algoritmos que permiten inferir etiquetas para datos no etiquetados, basándose en la información disponible de los datos etiquetados. Entre estos algoritmos se encuentran los métodos de \textit{ensembles} y los métodos basados en grafos, cada uno con sus propias ventajas y aplicaciones específicas. Los métodos de \textit{ensembles} combinan múltiples modelos de aprendizaje para mejorar el rendimiento general. La idea principal es que, al combinar las predicciones de varios modelos, se puede reducir la varianza y el sesgo, logrando una mejor precisión y robustez. Por otro lado, los métodos basados en grafos representan los datos como nodos en un grafo, donde los enlaces (aristas) entre los nodos indican relaciones o similitudes entre los datos. Este enfoque es especialmente poderoso para capturar la estructura intrínseca de los datos.
+
+Este proyecto se centra en la continuación y ampliación de una herramienta docente previamente desarrollada, la cual incluye una biblioteca de algoritmos semi-supervisados y una aplicación web para la visualización del proceso de entrenamiento. En la versión anterior, se implementaron cuatro algoritmos populares: \textit{Self-Training}, \textit{Co-Training}, \textit{Democratic Co-Learning} y \textit{Tri-Training}.
+
+En esta nueva fase del proyecto, se han añadido nuevos algoritmos para ampliar la funcionalidad de la herramienta. Específicamente, se ha incorporado el algoritmo \textit{Co-Forest} para métodos de ensembles y, para métodos transductivos basados en grafos, se han implementado los algoritmos \textit{GBILI} y \textit{RGCLI} en la fase de construcción de grafos, así como el algoritmo \textit{LGC} (\textit{Local and Global Consistency}) en la fase de inferencia de etiquetas.
+
+La estructura de este documento se organiza de la siguiente manera:
+
+\begin{itemize}
+	\item \textbf{Memoria}: documento principal del proyecto que se divide en:
+	\begin{enumerate}
+		\item \textbf{Introducción}: se ofrece una visión general del proyecto junto con la estructura de la documentación.
+		\item \textbf{Objetivos}: se enumeran los objetivos generales, técnicos y de desarrollo \textit{software}.
+		\item \textbf{Conceptos teóricos}: se explica en detalle los conceptos teóricos claves para comprender el desarrollo del proyecto (tanto en la documentación como en la aplicación final).
+		\item \textbf{Técnicas y herramientas}: se describe las tecnologías y herramientas de desarrollo empleadas en el proyecto.
+		\item \textbf{Aspectos relevantes del proyecto}: se discuten los aspectos más importantes del desarrollo del proyecto, como los estudios realizados o las dificultades encontradas en pleno desarrollo.
+		\item \textbf{Trabajos relacionados}: Se revisan otros trabajos y proyectos relevantes en el mismo ámbito que puedan servir de ayuda en el desarrollo.
+		\item \textbf{Conclusiones y líneas de trabajo futuras}: se evalua el cumplimiento de los objetivos propuestos y se sugieren posibles mejoras para el futuro.
+	\end{enumerate}
+	\item \textbf{Anexos}: documento que contiene contenido adicional del desarrollo del proyecto, dividido en:
+	\begin{enumerate}
+		\item \textbf{Plan de proyecto \textit{software}}: se detalla el plan de desarrollo del \textit{software}, incluyendo recursos y estrategias de gestión del proyecto.
+		\item \textbf{Especificación de requisitos}: se enumeran y describen los requisitos que el sistema debe cumplir usando diagramas y tablas.
+		\item \textbf{Especificación de diseño}: se presenta el diseño detallado de la arquitectura del sistema, describiendo los componentes principales y su interacción.
+		\item \textbf{Documentación técnica de programación}: se proporciona documentación técnica detallada, con el objetivo de simplificar la integración de nuevos desarrolladores en el proyecto y acelerar su comprensión del mismo.
+		\item \textbf{Documentación de usuario}: se ofrece una guía detallada para los usuarios de la aplicación, explicando cómo utilizar las diferentes funcionalidades.
+	\end{enumerate}
+\end{itemize}
+
+
+Como recursos adicionales se incluyen:
+\begin{itemize}
+	\item \textbf{Repositorio del proyecto}: \url{https://github.com/msp1015/TFG-Semi-Supervised-Learning}
+	\item \textbf{Web desplegada}: 
+	\begin{itemize}
+		\item \textbf{Versión 1.0}: \url{https://vass.dmacha.dev/}
+		\item \textbf{Versión 2.0}: \url{URL}
+	\end{itemize}
+\end{itemize}

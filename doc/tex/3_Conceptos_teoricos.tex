@@ -91,10 +91,11 @@ Esta suposición es básica y en la mayoría de los ejemplos se cumple. Aún asi
 
 En algunas ocasiones, aparece una cuarta suposición: \textit{\textbf{cluster assumption}}. Esta indica que dos datos que pertenecen a un mismo \textit{cluster}, pertenecen también a la misma clase. Se tomará esta suposición como una generalización de las tres anteriores ~\cite{Engelen:semi-supervised}.
 
-\imagen{../img/memoria/ClusterAssumption.png}{\textit{Cluster assumption}~\cite{web:assumptions}}{0.7}
+\imagen{../img/memoria/ClusterAssumption.png}{\textit{Cluster assumption}~\cite{web:assumptions}}{0.6}
 
+\subsection{Taxonomía}
 No hay una clasificación oficial de algoritmos de aprendizaje semisupervisado, pero sí se pueden encontrar aproximaciones teniendo en cuenta las suposiciones en las que estan basadas los algoritmos y en cómo se relacionan con los algoritmos supervisados y no supervisados.
-\imagen{../img/memoria/Clasificacion-SemiSupervised}{Clasificación de los diferentes algoritmos que pretenden incorporar datos no etiquetados a métodos de clasificación. Basado en ~\cite{Engelen:semi-supervised}}{1}
+\imagen{../img/memoria/Clasificacion-SemiSupervised}{Clasificación de los diferentes algoritmos que pretenden incorporar datos no etiquetados a métodos de clasificación. Basado en~\cite{Engelen:semi-supervised}}{1}
 
 \subsection{Métodos inductivos}
 Los métodos inductivos pretenden construir un clasificador que pueda generar predicciones para cualquier objeto del espacio de entrada. En el entrenamiento de este clasificador o modelo se pueden utilizar datos no etiquetados, pero las predicciones cuando hay varios son independientes entre sí una vez finalizado el entrenamiento.
@@ -112,15 +113,16 @@ Los métodos transductivos suelen definir un grafo sobre todos los puntos de dat
 \subsubsection{Construccion de grafos}
 El primer paso es la construcción de la matriz de adyacencia, que indica la presencia de aristas entre pares de nodos. Existen tres métodos posibles de construcción de grafos:
 \begin{itemize}
-	\item $\varepsilon$ neighbourhood: conecta cada nodo a todos los nodos a los que la distancia es como máximo $\varepsilon$. La medida de distancia normal suele ser euclídea. La estructura depende en gran medida de la elección de $\varepsilon$ y de la medida de distancia.
+	\item \textbf{$\varepsilon$ neighbourhood}: conecta cada nodo a todos los nodos a los que la distancia es como máximo $\varepsilon$. La medida de distancia normal suele ser euclídea. La estructura depende en gran medida de la elección de $\varepsilon$ y de la medida de distancia.
 	
-	\item $k$ - nearest neighbours: cada nodo se conecta a sus $k$ vecinos más cercanos según alguna medida de distancia. Ocurre un problema que tiene dos soluciones: symmetric $k$ nearest neighbours, que construye una arista si $i$ o $j$ estan en el “vecindario” de $k$ y mutual $k$-nearest neighbours que la construye si ambos están en la $k$ vecindad del otro.
+	\item \textbf{\textit{$k$ - nearest neighbours}}: cada nodo se conecta a sus $k$ vecinos más cercanos según alguna medida de distancia. Puede tener dos variantes: \textit{symmetric $k$ nearest neighbours}, que construye una arista si $i$ o $j$ estan en el ``vecindario'' de $k$ y mutual $k$-nearest neighbours que la construye si ambos están en la $k$ vecindad del otro, es decir, la relación es bidireccional.
 	
-	\item $b$-matching: el anterior método suele originar grafos en los que cada nodo no tiene $k$ vecinos, lo que está demostrado que afecta al rendimiento del clasificador. El objetivo del $b$-matching es encontrar el subconjunto de aristas en el grafo completo de forma que cada nodo tenga grado $b$ y la suma de los pesos de las aristas sea máxima.
+	\item \textbf{$b$-matching}: el anterior método suele originar grafos que afectan al rendimiento del clasificador. El objetivo del $b$-matching es encontrar el subconjunto de aristas en el grafo completo de forma que cada nodo tenga grado $b$ y la suma de los pesos de las aristas sea máxima.
 \end{itemize}
 
-El segundo paso de la construcción del grafo es ponderarlo (dar pesos a las aristas). En primer lugar, se construye una matriz de adyacencia completa utilizando una función k y después se obtiene la matriz de pesos W mediante \textit{sparsification}\footnote{Sparsification es el proceso de eliminar elementos menos significativos de una matriz o aristas en un grafo, con el fin de hacer la estructura más esparcida y eficiente en términos de almacenamiento y procesamiento.}. Uno de los métodos más populares es el de ponderación de bordes gausiano. Otro es el de linear neighbourhood propagation (LNP) que se basa en que cualquier punto de datos pueda aproximarse como una combinación lineal de sus vecinos.
-El algoritmo LNP asume una estructura del grafo conocida y fija. Sin embargo, en lugar de fijar la estructura del grafo, también se puede inferir simultáneamente la estructura del grafo y los pesos de las aristas reconstruyendo linealmente los nodos basándose en todos los demás nodos.
+El segundo paso de la construcción del grafo es ponderarlo (dar pesos a las aristas). En primer lugar, se construye una matriz de adyacencia completa utilizando una función $k$ y después se obtiene la matriz de pesos $W$ mediante \textit{sparsification}\footnote{Sparsification es el proceso de eliminar elementos menos significativos de una matriz o aristas en un grafo, con el fin de hacer la estructura más esparcida y eficiente en términos de almacenamiento y procesamiento.}. Uno de los métodos más populares y sencillos, y en el que se profundizará en secciones más adelante, consiste en ponderar los enlaces entre los nodos con un 1 si existe relación entre ellos y con un 0 en caso contrario. Ponderar las aristas es crucial ya que refleja la fuerza de las relaciones entre nodos, lo que puede influir significativamente en la propagación de etiquetas y en la precisión final del algoritmo.
+
+\clearpage
 
 \subsubsection{Fase de inferencia}
 Existen diferentes maneras de llevar a cabo esta fase:
@@ -135,7 +137,7 @@ Existen diferentes maneras de llevar a cabo esta fase:
 
 \subsection{\textit{ Graph-based on informativeness of
 labeled instances} (GBILI)}
-El algoritmo \textit{GBILI} o Construcción de Grafos Basada en la Informatividad de Instancias Etiquetadas~\cite{gbili} es un método de construcción de grafos para el aprendizaje semisupervisado. Su principal característica es que se basa en la informatividad de las instancias etiquetadas para relacionar nodos dentro del grafo, pudiendo aprovechar después esta conectividad para predecir las etiquetas de los datos no etiquetados. Se utilizan los métodos de $k$-vecinos más cercanos y  $k$-vecinos más cercanos mutuos para inicializar el grafo. En el pseudocódigo \ref{alg:Gbili}, propuesto en, se puede ver el proceso detallado.
+El algoritmo \textit{\textbf{GBILI}} o Construcción de Grafos Basada en la Informatividad de Instancias Etiquetadas~\cite{gbili} es un método de construcción de grafos para el aprendizaje semisupervisado. Su principal característica es que se basa en la informatividad de las instancias etiquetadas para relacionar nodos dentro del grafo, pudiendo aprovechar después esta conectividad para predecir las etiquetas de los datos no etiquetados. Se utilizan los métodos de $k$-vecinos más cercanos y  $k$-vecinos más cercanos mutuos para inicializar el grafo. En el pseudocódigo \ref{alg:Gbili}, propuesto en, se puede ver el proceso detallado.
 
 \subsubsection{Metodología}
 El algoritmo aprovecha la información de las etiquetas disponibles para priorizar las conexiones entre los vértices, especialmente aquellos que están más cerca de un punto etiquetado, convirtiendo así estos puntos etiquetados en hubs a medida que aumenta el valor de $k$.
@@ -195,6 +197,16 @@ Los pasos que sigue son:
 \end{algorithm}
 
 Como se comenta en uno de los pasos, hay ciertos puntos en este algoritmo que deben ser comentados para evitar confusión en la implementación. Además, para este trabajo en concreto, el algoritmo sufre ciertas modificaciones (con la misma idea teórica) que se comentan en la sección \ref{sec5:gbili}.
+
+\subsection{\textit{Robust Graph that Considers Labeled Instances} (RGCLI)}
+El algoritmo \textbf{\textit{RGCLI}} (Grafo Robusto que Considera Instancias Etiquetadas) es una mejora del método GBILI, diseñado para la construcción de grafos robustos en el aprendizaje semi-supervisado \cite{rgcli}. Este método aprovecha la informatividad de las instancias etiquetadas para generar grafos más eficaces en la propagación de etiquetas, asegurando una mejor representación de la estructura de los datos y optimizando el rendimiento de las tareas de clasificación.
+\subsubsection{Metodología}
+El algoritmo RGCLI sigue un enfoque optimizado para construir grafos que satisfacen las suposiciones de consistencia del aprendizaje semi-supervisado, tanto a nivel local como global. La metodología se describe a continuación:
+\begin{enumerate}
+	\item \textbf{Generación de la matriz de distancias}: Se crea una matriz de distancias $D$ utilizando la distancia euclidiana.
+	\item \textbf{Uso de \textit{kd-trees}}:
+	\item \textbf{Cálculo de la informatividad}: 
+\end{enumerate}
 
 \subsection{\textit{Local and Global Consistency}}
 Este algoritmo aborda el problema general de aprender a partir de grafos, utilizando tanto datos etiquetados como no etiquetados. Dado un conjunto de puntos $X$ y un conjunto de etiquetas $L$, los primeros $l$ puntos tienen etiquetas y los puntos restantes no están etiquetados. El objetivo es predecir las etiquetas de los puntos no etiquetados. Este proceso se conoce como la fase de inferencia en los algoritmos de aprendizaje semi-supervisado basados en grafos (GSSL, por sus siglas en inglés). El algoritmo está fuertemente basado en dos suposiciones fundamentales: 

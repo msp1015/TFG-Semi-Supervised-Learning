@@ -424,12 +424,20 @@ Vº. Bº. del Tutor:\\[2cm]
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-En este primer apartado se hace una \textbf{breve} presentación del tema que se aborda en el proyecto.
+En la práctica, el aprendizaje semi-supervisado es crucial debido a los retos y altos costos que implica obtener datos etiquetados de calidad. A pesar de su relevancia, estos algoritmos suelen ser ignorados, tanto en la investigación académica como en la educación, donde el énfasis generalmente recae en el aprendizaje supervisado o no supervisado.
+
+En un proyecto anterior, se desarrolló una biblioteca con cuatro de los más populares algoritmos semi-supervisados: Self-Training, Co-Training, Democratic Co-Learning y Tri-Training, además de una aplicación web para visualizar el proceso de entrenamiento de estos algoritmos.
+
+En este trabajo, se ha continuado la herramienta docente, añadiendo nuevos algoritmos para ampliar su alcance y funcionalidad. Se ha incorporado el algoritmo Co-Forest para métodos de \textit{ensembles} y, para métodos transductivos basados en grafos, se han implementado los algoritmos GBILI y RGCLI en la fase de construcción de grafos, y el algoritmo LGC (\textit{Local and Global Consistency}) en la fase de inferencia de etiquetas.
+
+El objetivo principal sigue siendo el mismo: mostrar cómo van cambiando los datos no etiquetados en la fase de entrenamiento, facilitando su comprensión. La visualización de las diferentes fases de estos algoritmos se han realizado en la misma aplicación web utilizada anteriormente, aunque con modificaciones para adaptarse a los nuevos algoritmos incorporados.
+
+Se parte de la aplicación web \url{https://vass.dmacha.dev} y se evoluciona a una segunda versión disponible en \url{URL}
 \end{abstract}
 
 \renewcommand*\abstractname{Descriptores}
 \begin{abstract}
-aprendizaje automático, aprendizaje semisupervisado, ensambles, grafos, algoritmos, página web
+aprendizaje automático, aprendizaje semisupervisado, ensembles, grafos, web
 \end{abstract}
 
 \clearpage
@@ -437,13 +445,22 @@ aprendizaje automático, aprendizaje semisupervisado, ensambles, grafos, algorit
 % Abstract en inglés
 \renewcommand*\abstractname{Abstract}
 \begin{abstract}
-A \textbf{brief} presentation of the topic addressed in the project.
+In practice, semi-supervised learning is crucial due to the challenges and high costs involved in obtaining quality labeled data. Despite its importance, these algorithms are often overlooked, both in academic research and education, where the focus generally falls on supervised or unsupervised learning.
+
+In a previous project, a library was developed with four of the most popular semi-supervised algorithms: Self-Training, Co-Training, Democratic Co-Learning, and Tri-Training, along with a web application to visualize the training process of these algorithms.
+
+In this work, the educational tool has been continued, adding new algorithms to expand its scope and functionality. The Co-Forest algorithm for ensemble methods has been incorporated, and for graph-based transductive methods, the GBILI and RGCLI algorithms have been implemented in the graph construction phase, and the LGC (Local and Global Consistency) algorithm in the label inference phase.
+
+The main objective remains the same: to show how the unlabeled data changes during the training phase, facilitating its understanding. The visualization of the different phases of these algorithms has been carried out in the same web application used previously, with modifications to accommodate the newly incorporated algorithms.
+
+The web application \url{https://vass.dmacha.dev} has been used as a starting point and has evolved into a second version available at \url{URL}.
 \end{abstract}
 
 \renewcommand*\abstractname{Keywords}
 \begin{abstract}
-machine learning, semisupervised learning, ensembles, graphs, algorithms, web page
+	machine learning, semi-supervised learning, ensembles, graphs, web
 \end{abstract}
+
 
 \clearpage
 
