@@ -1,12 +1,12 @@
 \capitulo{4}{Técnicas y herramientas}
 
 En este apartado se tratará de presentar las técnicas llevadas a cabo para desarrollar el proyecto y también las herramientas utilizadas durante todo el proceso.
-\section{Técnicas}
-En el ámbito del desarrollo de software, la selección adecuada de técnicas es fundamental para la eficacia y la sostenibilidad del proyecto. Este apartado se enfoca en las técnicas específicas implementadas en este trabajo.
+\section{Técnicas}\label{sec4:tecnicas}
+En el ámbito del desarrollo de software, la selección adecuada de técnicas es fundamental para la eficacia y la sostenibilidad del proyecto. Este apartado se enfoca en las técnicas específicas utilizadas en este trabajo.
 \subsection{SCRUM}
 Para explicar esta sección se utilizará el manual de la certificación oficial Scrum Master de Scrum Manager~\cite{SCRUM}.
 
-\imagen{../img/memoria/cicloSCRUM.png}{Procedimiento en la metodología SCRUM ~\cite{SCRUM}}{1.1}
+\imagen{../img/memoria/cicloSCRUM.png}{Procedimiento en la metodología SCRUM ~\cite{SCRUM}}{1}
 
 La metodología ágil Scrum se diferencia de las metodologías clásicas en su enfoque iterativo y flexible hacia la gestión de proyectos. Mientras que las metodologías clásicas, como el modelo en cascada, siguen un enfoque secuencial y predeterminado, Scrum promueve la adaptabilidad y la colaboración continua. Facilita respuestas rápidas a los cambios a través de ciclos cortos de desarrollo llamados Sprints, permitiendo a los equipos evaluar el progreso y ajustar el rumbo con frecuencia.
 \subsubsection{Roles}
@@ -31,23 +31,60 @@ La metodología ágil Scrum se diferencia de las metodologías clásicas en su e
 	\item \textbf{Retrospectiva del sprint}: oportunidad para el equipo scrum de inspeccionarse a sí mismo y crear un plan de mejoras para el proximo sprint.
 \end{itemize}
 
-\subsubsection{PEP 8}
+\subsection{Optimización de Rendimiento de la Web}
+En el desarrollo web, la optimización del rendimiento es crucial para asegurar una experiencia de usuario rápida y eficiente. Mejorar el rendimiento de una web implica una serie de técnicas y prácticas que reducen el tiempo de carga, optimizan la entrega de contenido y mejoran la interacción del usuario con el sitio. Una técnica esencial en este proceso es la auditoría de rendimiento de la web.
+\subsubsection{Auditoría de Rendimiento de la Web}
+La auditoría de rendimiento es un proceso sistemático de evaluación de una página web para identificar y resolver problemas que puedan afectar la velocidad y eficiencia del sitio. Hoy en día existen varias herramientas que permiten esto, siendo \textit{\textbf{Lighthouse}} una de las más conocidas. Por ello se utilizará su guía para explicar el concepto de auditoría de web~\cite{web:lighthouse}. 
+\subsubsection{¿Qué se audita en una web?}
+\begin{enumerate}
+	\item \textbf{Tiempo de carga}:
+	\begin{itemize}
+		\item \textbf{\textit{First Contentful Paint (FCP)}}: mide el tiempo que transcurre desde que el usuario navega a la página por primera vez hasta que se renderiza en la pantalla cualquier parte del contenido de la página.
+		\item \textbf{\textit{Largest Contentful Paint (LCP)}}: Tiempo hasta que se renderiza el contenido más grande visible en la ventana gráfica.
+		\item \textbf{\textit{Time to Interactive}}: Tiempo hasta que la página es completamente interactiva.
+	\end{itemize}
+	\item \textbf{Recursos estáticos}: 
+	\begin{itemize}
+		\item \textbf{Minificación de CSS y JavaScript}: Reducción del tamaño de los archivos eliminando espacios, comentarios y otros caracteres innecesarios.
+		\item \textbf{\textit{Lazy Loading}}: Carga diferida de imágenes y otros recursos solo cuando son necesarios.
+	\end{itemize}
+	\item \textbf{Optimización de imágenes}:
+	\begin{itemize}
+		\item \textbf{Formato de imágenes}: Uso de formatos eficientes como WebP o AVIF.
+		\item \textbf{Dimensiones correctas}: Asegurar que las imágenes no sean más grandes de lo necesario.
+	\end{itemize}
+	\item \textbf{Reducción de peticiones HTTP}: 
+	\begin{itemize}
+		\item \textbf{Combinar archivos}: Agrupación de archivos CSS y JavaScript para reducir el número de peticiones.
+		\item \textbf{Uso de \textit{sprites}}: Combinar varias imágenes pequeñas en una sola imagen para reducir peticiones.  
+	\end{itemize}
+\end{enumerate}
+
+\subsubsection{Resultados de la Auditoría}
+Una auditoría de rendimiento genera un informe detallado con las siguientes secciones:
+\begin{itemize}
+	\item \textbf{Diagnósticos}: Información específica sobre problemas encontrados y cómo afectan el rendimiento.
+	\item \textbf{Oportunidades}: Recomendaciones sobre cómo mejorar el rendimiento, incluyendo estimaciones de cuánto mejorará cada cambio sugerido.
+	\item \textbf{Métricas}: Resultados cuantitativos que miden el rendimiento actual de la web, como el tiempo de carga de diferentes partes del contenido.
+\end{itemize}
+Estas auditorías proporcionan una hoja de ruta clara para optimizar el rendimiento de la web, ayudando a priorizar las acciones necesarias para mejorar la velocidad y eficiencia del sitio.
+\subsection{PEP 8}
 En el desarrollo de este proyecto, se ha seguido la guía de estilo \textbf{\textit{PEP8}} para el lenguaje de programación Python,~\cite{Guia:PEP8}. \textit{PEP8} es un documento que proporciona convenciones para el código Python. El cumplimiento de estas convenciones es crucial para garantizar una base de código coherente, legible y eficiente.  
 Entre sus características, esta guía de estilo cobra importancia en:
 \begin{itemize}
-	\item Legibilidad: La claridad y la simplicidad del código se priorizan, haciendo que sea más fácil de leer y entender para cualquier desarrollador que lo lea.
-	\item Consistencia: Seguir una guía de estilo común promueve la uniformidad en la base de código, lo que facilita la colaboración entre múltiples desarrolladores (pensando en posibles modificaciones futuras).
-	\item Mantenibilidad: Un código bien estructurado y formateado según \textit{PEP8} es más sencillo de mantener, depurar y ampliar.
+	\item \textbf{Legibilidad}: La claridad y la simplicidad del código se priorizan, haciendo que sea más fácil de leer y entender para cualquier desarrollador que lo lea.
+	\item \textbf{Consistencia}: Seguir una guía de estilo común promueve la uniformidad en la base de código, lo que facilita la colaboración entre múltiples desarrolladores (pensando en posibles modificaciones futuras).
+	\item \textbf{Mantenibilidad}: Un código bien estructurado y formateado según \textit{PEP8} es más sencillo de mantener, depurar y ampliar.
 \end{itemize}
 Los aspectos clave de PEP8 adoptados en el proyecto son:
 \begin{itemize}
-	\item Formato de Código: Se ha prestado especial atención al uso adecuado de espacios en blanco, sangrías y alineaciones para mejorar la legibilidad. Manteniendo un límite de línea máximo de 80.
-	\item Convenciones de Nomenclatura: Las variables, funciones, clases y módulos se nombran siguiendo las recomendaciones de \textit{PEP8}, lo que facilita la comprensión de su propósito y alcance.
-	\item Guía de Importaciones: Los módulos se importan de una manera ordenada y coherente, evitando conflictos y facilitando la identificación de dependencias.
-	\item Comentarios y \textit{Docstrings}: Se utilizan comentarios y cadenas de documentación para explicar el propósito y el funcionamiento de todos los bloques de código, mejorando así la comprensibilidad del código.
+	\item \textbf{Formato de Código}: Se ha prestado especial atención al uso adecuado de espacios en blanco, sangrías y alineaciones para mejorar la legibilidad. Manteniendo un límite de línea máximo de 80.
+	\item \textbf{Convenciones de Nomenclatura}: Las variables, funciones, clases y módulos se nombran siguiendo las recomendaciones de \textit{PEP8}, lo que facilita la comprensión de su propósito y alcance.
+	\item \textbf{Guía de Importaciones}: Los módulos se importan de una manera ordenada y coherente, evitando conflictos y facilitando la identificación de dependencias.
+	\item \textbf{Comentarios y \textit{Docstrings}}: Se utilizan comentarios y cadenas de documentación para explicar el propósito y el funcionamiento de todos los bloques de código, mejorando así su comprensibilidad.
 \end{itemize}
-\subsubsection{Principios SOLID y Patrones de diseño}
-Se ha adoptado los principios SOLID como fundamentos clave para un diseño de software eficiente y mantenible. Estos principios orientan la estructura de nuestro código, asegurando que sea flexible ante cambios y extensiones futuras. 
+\subsection{Principios SOLID}
+Se ha adoptado los principios SOLID como fundamentos clave para un diseño de software eficiente y mantenible. Estos principios orientan la estructura del código, asegurando que sea flexible ante cambios y extensiones futuras. 
 \begin{mdframed}[linewidth=1pt, linecolor=black, leftmargin=10, rightmargin=10, backgroundcolor=gray!10, roundcorner=30pt]
 		\begin{itemize}
 		\item \textbf{S} (Responsabilidad Única): Cada componente tiene un solo propósito, facilitando las pruebas y minimizando las dependencias.
@@ -61,7 +98,7 @@ Se ha adoptado los principios SOLID como fundamentos clave para un diseño de so
 \section{Herramientas}
 En este proyecto, se ha empleado una variedad de herramientas esenciales que han facilitado un desarrollo eficiente y efectivo. A continuación, se detallan las herramientas clave utilizadas y cómo han ayudado en los resultados finales.
 \subsection{Programas}
-En esta sección se comentarán todos aquellos programas que se han utilizado durante el desarrollo, ya sea de código, documentación o planificación. Se inlcuyen aplicaciones tanto de escritorio como web.
+En esta sección se comentarán todos aquellos programas que se han utilizado durante el desarrollo, ya sea de código, documentación o planificación. Se incluyen aplicaciones tanto de escritorio como web.
 
 \subsubsection{Visual Studio Code}
 Visual Studio Code, ha sido el IDE principal utilizado en el proyecto, abarcando tanto el desarrollo web como la creación de algoritmos. Su amplia gama de extensiones lo convierte en una herramienta extremadamente versátil y potente, capaz de adaptarse a diversas necesidades de programación. Las funcionalidades como el resaltado de sintaxis, la depuración integrada, el control de versiones Git, la personalización a través de extensiones, como soporte para diferentes lenguajes de programación y herramientas de desarrollo, y la posibilidad de uso de \LaTeX, han sido las claves para que sea el entorno de programación elegido. 
@@ -75,7 +112,7 @@ El control de versiones y la planificación del proyecto se han gestionado a tra
 Taiga se ha utilizado para la planificación de sprints y la gestión ágil del proyecto. Esta herramienta permite organizar tareas, priorizar actividades y seguir el progreso de forma clara y estructurada. Quizá no sea la que más funcionalidades de, pero al tratarse de un único desarrollador, cumple con lo que se buscaba.
 
 \subsubsection{Zapier}
-\textit{Zapier} se ha utilzada para conectar aplicaciones como GitHub y Taiga para agilizar el proceso de planificación. Mediante la creación de \textit{'triggers}', se puede crear un \textit{issue} en GitHub y que aparezca automáticamente en Taiga o vicebersa.
+\textit{Zapier} se ha utilzada para conectar aplicaciones como GitHub y Taiga para agilizar el proceso de planificación. Mediante la creación de \textit{<<triggers>>} (desencadenantes), se puede crear un \textit{issue} en GitHub y que aparezca automáticamente en Taiga o viceversa, facilitando la creación de tareas, unificando su creación en un único lugar.
 
 \subsubsection{Excalidraw}
 Excalidraw ha sido utilizado para crear dibujos y diagramas de forma amena y sencilla. Esta herramienta web ofrece la capacidad de diseñar tanto diagramas que parecen hechos a mano como figuras más formales.
@@ -83,19 +120,40 @@ Excalidraw ha sido utilizado para crear dibujos y diagramas de forma amena y sen
 \subsubsection{w3schools}
 Para la resolución de dudas específicas y el aprendizaje de nuevas tecnologías, se ha recurrido a menudo a w3schools. Esta plataforma en línea ha sido una fuente de tutoriales, ejemplos de código y referencias, facilitando el rápido entendimiento de nuevas técnicas de desarrollo web.
 
+\subsubsection{Lighthouse}
+\textit{Lighthouse} es una herramienta automatizada de Google que ayuda a mejorar la calidad de las páginas web mediante auditorías detalladas~\cite{web:lighthouse}. Se puede ejecutar en cualquier página web, pública o que requiera autenticación.
+
+Esta herramienta ofrece informes con sugerencias de mejora en áreas clave como:
+\begin{itemize}
+	\item \textbf{Rendimiento}: Mide tiempos de carga y ofrece recomendaciones para mejorar la velocidad de la página.
+	\item \textbf{Informe de accesibilidad}: Evalúa la accesibilidad de la página para usuarios con discapacidades y proporciona sugerencias para mejorarla.
+	\item \textbf{Informe de prácticas recomendadas}: Verifica que la página siga las mejores prácticas de desarrollo web, incluyendo seguridad y estándares de codificación.
+	\item \textbf{Informe de SEO}: Analiza la optimización de la página para motores de búsqueda y sugiere mejoras para aumentar la visibilidad.
+\end{itemize}
+
+Al ser una herramienta de Google, viene integrada en \textit{Chrome DevTools}, pero también se puede usar como extensión del navegador o desde línea de comandos. Los resultados de las métricas anteriores las muestra con una puntuación de 0 a 100, como se puede ver en la imagen \ref{fig:../img/memoria/lighthouse.png}. Además, deja elegir entre ejecutar la auditoría en un dispositivo móvil o en un ordenador de escritorio, contextos que debe cubrir la web objetivo de este trabajo.
+
+\imagen{../img/memoria/lighthouse.png}{Resultado de ejecutar Lighthouse en una página web.}{0.8}
+
+En la figura \ref{fig:../img/memoria/lighthouse.png} se ve como cada área estudiada tiene sus propias métricas (algunas vistas en el apartado \ref{sec4:tecnicas}), las cuales también muestra con tiempos reales. Otro apartado relevante son los diagnósticos, donde muestra consejos para mejorar el rendimiento y además cuantifica esa mejora en unidades, como se puede ver en la figura \ref{fig:../img/memoria/lighthouse2.png}.
+
+\imagen{../img/memoria/lighthouse2.png}{Resultado de diagnósticos al ejecutar Lighthouse en una página web.}{1}
+
+\subsubsection{IA Generativa}
+El uso de herramientas de IA generativa como ChatGPT, GitHub Copilot y DALL·E en proyectos de desarrollo como el de este proyecto aumenta la productividad. Permiten encontrar, reducir y solucionar errores de manera rápida, mejorar la calidad del trabajo y evitar tareas tediosas y poco significativas como la creación de imágenes.
 
 \subsection{Bibliotecas}
-El desarrollo de este proyecto se ha apoyado en una serie de bibliotecas esenciales tanto para el \textit{backend} como para el \textit{frontend}, proporcionando una amplia gama de funcionalidades, desde el desarrollo web hasta el análisis de datos. A continuación, se detalla una lista de las principales bibliotecas empleadas:
+El desarrollo de este proyecto se ha apoyado en una serie de bibliotecas esenciales tanto para el \textit{backend} como para el \textit{frontend}, proporcionando una amplia gama de funcionalidades, desde el desarrollo web hasta el análisis de datos. A continuación, se detalla una lista de las principales bibliotecas empleadas, mayormente heredadas del anterior trabajo:
 
 \begin{itemize}
-	\item \textbf{Babel}: utilizada para las traducciones en la web, compilando en los lenguajes correspondientes.
-	\item \textbf{Flask}: framework de Python para el desarrollo de aplicaciones web.
-	\item \textbf{Mypy}: herramienta de verificación de tipos estáticos para Python, permite un desarrollo más seguro al detectar incompatibilidades de tipo.
-	\item \textbf{Pylint}: analiza el código Python en busca de errores, permite un código más limpio y estándar. Ayuda a seguir la guía de estilo \textit{PEP8} antes comentada.
-	\item \textbf{SQLAlchemy}: ORM(Object-Relational Mapping) de Python que facilita la interacción con bases de datos mediante código Python en lugar de SQL puro.
-	\item \textbf{Scikit-learn}: Biblioteca de aprendizaje automático para Python, incluye una amplia variedad de algoritmos y herramientas para análisis de datos.
-	\item \textbf{Numpy}: Proporciona soporte para arrays y matrices grandes y multidimensionales, junto con una colección de funciones matemáticas para operar con estos objetos.
-	\item \textbf{Pandas}: Ofrece estructuras de datos y herramientas de análisis de datos de alto rendimiento y fácil de usar para Python.
-	\item \textbf{Bootstrap}: Framework de desarrollo web para diseño de sitios y aplicaciones web \textless\textless responsive\textgreater\textgreater, incluye tanto CSS como componentes de JavaScript.
+	\item \textbf{Babel}: Utilizada para las traducciones en la web, permite llevar la internalización de manera ágil, generando todos aquellos textos nuevos y compilándolos para mostrarse en la web. La propia acción de traducir la lleva a cabo el desarrollador.
+	\item \textbf{Flask}: Framework de Python para el desarrollo de aplicaciones web. Incluye herramientas y características básicas como enrutamiento, gestión de solicitudes y respuestas, y soporte para plantillas HTML.
+	\item \textbf{Mypy}: Herramienta de verificación de tipos estáticos para Python, permite un desarrollo más seguro al detectar incompatibilidades de tipo.
+	\item \textbf{Pylint}: Analiza el código Python en busca de errores de estilo, listándolos para ayudar al usuario. Permite un código más limpio y estándar. Ayuda a seguir la guía de estilo \textit{PEP8} antes comentada.
+	\item \textbf{SQLAlchemy}: SQLAlchemy es una biblioteca de mapeo objeto-relacional (ORM) para Python que facilita la interacción con bases de datos relacionales mediante el uso de objetos de Python en lugar de consultas SQL directas. Proporciona una capa de abstracción que permite a los desarrolladores trabajar con modelos de datos en Python, simplificando operaciones de creación, lectura, actualización y eliminación (CRUD).
+	\item \textbf{Scikit-learn}: Biblioteca de aprendizaje automático para Python, incluye una amplia variedad de algoritmos y herramientas para tareas como clasificación, regresión, clustering y reducción de dimensionalidad entre otras. Usada para la construcción y evaluación de los modelos predictivos.
+	\item \textbf{Numpy}: Biblioteca que proporciona soporte para arrays y matrices grandes y multidimensionales, junto con una colección de funciones matemáticas para operar con estos objetos. Se utiliza como base para otras bibliotecas como scikit-learn o Pandas.
+	\item \textbf{Pandas}: Es una biblioteca poderosa y flexible para el análisis de datos en Python. Ofrece estructuras de datos de alto rendimiento, como DataFrames, que permiten la manipulación y análisis de datos de manera eficiente y expresiva.
+	\item \textbf{Bootstrap}: Framework de desarrollo web para diseño de sitios y aplicaciones web <<responsive>>, incluye tanto CSS como componentes de JavaScript.
 	\item \textbf{D3.js}: Biblioteca de JavaScript para producir visualizaciones de datos dinámicas y interactivas en navegadores web.
 \end{itemize}
