@@ -123,16 +123,28 @@ Dentro de esta fase, un proceso importante es pondera el grafo (dar pesos a las 
 
 
 \subsubsection{Fase de inferencia}
-Existen diferentes maneras de llevar a cabo esta fase:
+En la fase de inferencia del aprendizaje semisupervisado basado en grafos (GSSL), se utilizan dos enfoques principales: la regularización en grafos y el \textit{embedding} en grafos. Estos métodos se centran en la propagación de etiquetas desde los nodos etiquetados a los no etiquetados mediante la estructura del grafo construido.
 \begin{itemize}
-	\item Asignación de etiquetas duras: grafo min-cut: se añade un único nodo fuente $v+$, conectado con peso infinito a los puntos de datos positivos y un único nodo $v-$ conectado con peso infinito a los puntos de datos negativos. Por lo tanto, determinar el corte mínimo consiste en encontrar un conjunto de aristas con un peso combinado mínimo que, cuando se eliminan, dan como resultado un grafo sin rutas desde el nodo de origen hasta el noso de destino. Los nodos conectados a $v+$ se etiquetan como positivos y los conectados a $v-$ como negativos. Este enfoque puede conducir a que casi todos los datos se etiqueten con la misma.
-	\item Asignación probabilística de etiquetas: campos aleatorios de Markov: el anterior método solo produce etiquetas de clase y no probabilidades, lo que es una gran desventaja. La idea principal detrás de los CRF es calcular la probabilidad conjunta de todas las etiquetas dadas las observaciones y las relaciones entre etiquetas vecinas. Esto se hace utilizando una función de energía que mide cuán compatibles son las etiquetas y las características observadas. Luego, se utiliza una distribución exponencial para traducir la función de energía en una distribución de probabilidad.
-	\item Asignación probabilística eficiente de etiquetas: campos aleatorios gaussianos: La principal mejora de los GRFs con respecto a los MRFs es que los GRFs permiten una estimación más eficiente de las probabilidades de asignación de etiquetas.
-	\item\textit{ Local and global consistency}: La última propuesta no maneja bien el ruido de las etiquetas ya que las etiquetas verdaderas se fijan a los puntos de datos etiquetados. En segundo lugar, en los grafos irregulares, la influencia de los nodos con un grado alto es relativamente grande. La solución es el método LGC. El primer problema se resuelve penalizando el error cuadratico entre la etiqueta verdadera y la etiqueta estimada. El segundo problema se resuelve regularizando el termino de penalización para los puntos de datos no etiquetados mediante los grados de los nodos.
+	\item \textbf{Regularización en grafos}: La regularización en grafos busca encontrar una función de predicción que sea lo más cercana posible a las etiquetas conocidas y que mantenga una suavidad en todo el grafo. Esto significa que nodos conectados con una fuerte relación (representada por el peso de los bordes) deberían tener etiquetas similares. Los métodos de regularización en grafos se pueden clasificar en varias categorías:
+	\begin{itemize}
+		\item \textbf{Propagación de etiquetas (\textit{Label propagation})}: Este método es uno de los más populares para la inferencia de etiquetas en GSSL. Se basa en la idea de que las etiquetas de algunos nodos (semillas) se pueden propagar a los nodos no etiquetados basándose en la similitud representada por el grafo.
+		\begin{itemize}
+			\item \textbf{Campos Aleatorios Gaussianos (\textit{Gaussian Random Fields})}: Utiliza una función de predicción que debe cumplir con ciertas restricciones para asegurar que los nodos conectados compartan etiquetas similares.
+			\item \textbf{Consistencia Local y Global (\textit{Local and Global Consistency)}} [\ref{sec3:LGC}]: Este método extiende el enfoque de GRF a un contexto multiclase y trata de minimizar una función objetivo que penaliza las diferencias entre las etiquetas inferidas y las etiquetas conocidas.
+		\end{itemize}
+		\item \textbf{Regularización dirigida}: Este enfoque extiende la regularización a grafos dirigidos, utilizando caminos aleatorios para manejar la direccionalidad de los bordes.
+		\item \textbf{Regularización de variedad (\textit{Manifold Regularization})}:  Esta técnica aprovecha la geometría intrínseca de los datos.
+	\end{itemize}
+	\item \textbf{\textit{Embedding} en grafos}: El \textit{embedding} en grafos transforma la información estructural del grafo en un espacio de menor dimensión, facilitando la tarea de inferencia de etiquetas. Este enfoque se divide en tres componentes principales:
+	\begin{itemize}
+		\item \textbf{Codificador}: ransforma cada nodo del grafo en un vector de características de baja dimensión, preservando la estructura del grafo y la información de los nodos.
+		\item \textbf{Decodificador}: Reconstruye la información del grafo a partir de los vectores de características generados por el codificador.
+		\item \textbf{Reconstrucción}: El objetivo es minimizar la diferencia entre las medidas de similitud en el grafo original y las predicciones del decodificador.
+	\end{itemize}
 \end{itemize}
 
 En resumen, los métodos transductivos en el aprendizaje semi-supervisado basado en grafos ofrecen un enfoque potente y escalable para aprovechar tanto datos etiquetados como no etiquetados. Aunque presentan ciertas limitaciones en la generalización y el estudio de relaciones causales, su capacidad para mejorar el conocimiento sobre conjuntos de datos no etiquetados los hace altamente valiosos en diversas aplicaciones.
-
+\clearpage
 \subsection{\textit{ Graph-based on informativeness of
 labeled instances} (GBILI)}\label{sec3:gbili}
 El algoritmo \textit{\textbf{GBILI}} o Construcción de Grafos Basada en la Informatividad de Instancias Etiquetadas~\cite{gbili} es un método de construcción de grafos para el aprendizaje semisupervisado. Su principal característica es que se basa en la informatividad de las instancias etiquetadas para relacionar nodos dentro del grafo, pudiendo aprovechar después esta conectividad para predecir las etiquetas de los datos no etiquetados. Se utilizan los métodos de $k$-vecinos más cercanos y  $k$-vecinos más cercanos mutuos para inicializar el grafo. En el pseudocódigo \ref{alg:Gbili}, propuesto en, se puede ver el proceso detallado.
@@ -149,8 +161,8 @@ Los pasos que sigue son:
 	\item Post-procesamiento del Grafo: Se conectan los componentes aislados mediante una búsqueda en anchura (\textit{BFS}) para encontrar componentes en la red. Los componentes sin puntos etiquetados se conectan con componentes vecinos que tienen puntos etiquetados, limitando el número de nuevas conexiones para evitar una red demasiado densa.
 \end{enumerate}
 
-
-\begin{algorithm}
+\begin{algorithm}[H]
+\scriptsize
 	\label{alg:Gbili}
 	\KwIn{Conjunto de datos etiquetados $L$, conjunto de datos no etiquetados $U$, número de vecinos más cercanos $K$}
 	\KwOut{Grafo $G$}
@@ -195,18 +207,77 @@ Los pasos que sigue son:
 \end{algorithm}
 
 Como se comenta en uno de los pasos, hay ciertos puntos en este algoritmo que deben ser comentados para evitar confusión en la implementación. Además, para este trabajo en concreto, el algoritmo sufre ciertas modificaciones (con la misma idea teórica) que se comentan en la sección \ref{sec5:gbili}.
-
+\clearpage
 \subsection{\textit{Robust Graph that Considers Labeled Instances} (RGCLI)}\label{sec3:rgcli}
-El algoritmo \textbf{\textit{RGCLI}} (Grafo Robusto que Considera Instancias Etiquetadas) es una mejora del método GBILI, diseñado para la construcción de grafos robustos en el aprendizaje semi-supervisado \cite{rgcli}. Este método aprovecha la informatividad de las instancias etiquetadas para generar grafos más eficaces en la propagación de etiquetas, asegurando una mejor representación de la estructura de los datos y optimizando el rendimiento de las tareas de clasificación.
-\subsubsection{Metodología}
-El algoritmo RGCLI sigue un enfoque optimizado para construir grafos que satisfacen las suposiciones de consistencia del aprendizaje semi-supervisado, tanto a nivel local como global. La metodología se describe a continuación:
+El algoritmo \textbf{\textit{RGCLI}} (Grafo Robusto que Considera Instancias Etiquetadas) es una mejora del método GBILI, diseñado para la construcción de grafos robustos en el aprendizaje semi-supervisado \cite{rgcli}. Este método aprovecha la informatividad de las instancias etiquetadas para generar grafos más eficaces en la propagación de etiquetas, asegurando una mejor representación de la estructura de los datos y optimizando el rendimiento de las tareas de clasificación. GBILI tiene limitaciones significativas, como una alta complejidad temporal cuadrática, lo que dificulta su aplicación en conjuntos de datos grandes. RGCLI mejora GBILI al reducir la complejidad temporal de cuadrática a $O(nklogn)$, o que permite manejar conjuntos de datos grandes de manera más eficiente. Además, RGCLI demuestra matemáticamente que el grafo construido es óptimo para modelar la suposición de suavidad.
+
+El algoritmo original de RGCLI sigue un enfoque optimizado para construir grafos que satisfacen las suposiciones de consistencia del aprendizaje semisupervisado, tanto a nivel local como global. Utiliza hilos para realizar una ejecución concurrente y estructuras poco costosas como \textit{kdtrees}\footnote{<<En ciencias de la computación, un Árbol kd es una estructura de datos de particionado del espacio que organiza los puntos en un espacio euclídeo de k dimensiones, empleando solo planos perpendiculares a uno de los ejes del sistema de coordenadas>>~\cite{eswiki:kdtree}.}. Como se puede observar en el algoritmo~\ref{alg:rgcli}, recibe dos parámetros, $k_e$ y $k_i$ que indican el número de vecinos a encontrar en cada fase del algoritmo. Después de incializar todas las estructuras necesarias, el algoritmo se divide en dos fases:
 \begin{enumerate}
-	\item \textbf{Generación de la matriz de distancias}: Se crea una matriz de distancias $D$ utilizando la distancia euclidiana.
-	\item \textbf{Uso de \textit{kd-trees}}:
-	\item \textbf{Cálculo de la informatividad}: 
+	\item \textbf{Búsqueda de vecinos más cercanos}: Se construye un \textit{kdtree} a partir de los datos de entrada y se utiliza para buscar los $k_e$ vecinos más cercanos para cada punto. Además, se almacena información sobre los vecinos etiquetados más cercanos.
+	\item \textbf{Construcción del grafo RGCLI}: Se calculan los vecinos mutuos más cercanos (MkNN) y se asignan puntuaciones basadas en las distancias a los vecinos y a los puntos etiquetados. Se establecen conexiones entre los puntos utilizando los $k_i$ vecinos que minimizan las puntuaciones calculadas. La construcción del grafo prioriza las conexiones con puntos cercanos y etiquetados, generando un grafo esparso y eficiente para la propagación de etiquetas.
 \end{enumerate}
 
-\subsection{\textit{Local and Global Consistency}}
+\begin{algorithm}[H]
+\scriptsize
+	\label{alg:rgcli}
+	\KwIn{número de $k$ vecinos más cercanos $k_e$,
+		número de RGCLI vecinos más cercanos $k_i$,
+		lista de datos etiquetados $L$,
+		\textit{dataset} $X$,
+		número de hilos $nt$}
+	\KwOut{Grafo $G$}
+	\BlankLine
+	$V$ $\leftarrow$ vértices a partir de $X$ \\
+	$E, W$ $\leftarrow \emptyset$ \\
+	$G \leftarrow (V, E, W)$ \\
+	$kdtree \leftarrow$ a partir de $X$ \\
+	$kNN \leftarrow$ map \\
+	$F \leftarrow$ map \\
+	$L \leftarrow$ map \\
+	$T \leftarrow \{T_i : \bigcup_{i=1}^{nt} T_i = V, \bigcap_{i=1}^{nt} T_i = \emptyset \}$ \\
+	\For{$T_i \in T$}{
+		$t \leftarrow$ Hilo(SearchKNN($T_i$, $k_e$, $kdtree$, $kNN$, $L$)) \\
+		$t$.start() \\
+	}
+	\For{$T_i \in T$}{
+		$t \leftarrow$ Hilo(SearchRGCLI($G_L$, $T_i$, $k_i$, $kNN$, $L$)) \\
+		$t$.start() \\
+	}
+	\Return{$G$}
+
+	\BlankLine
+	\SetKwFunction{FSearchKNN}{SearchKNN}
+	\SetKwProg{Fn}{Function}{:}{}
+	\Fn{\FSearchKNN{$T$, $k_e$, $kdtree$, $kNN$, $L$}}{
+		\For{$v_i \in T$}{
+			$kNN[v_i] \leftarrow kdtree.query(v_i, k_e)$ \\
+			$L[v_i] \leftarrow$ encontrar puntos etiquetados más cercanos en $L$ \\
+			$F[v_i] \leftarrow$ encontrar el $k$-ésimo vecino más lejano de $v_i$ \\
+		}
+	}
+	
+	\BlankLine
+	\SetKwFunction{FSearchRGCLI}{SearchRGCLI}
+	\SetKwProg{Fn}{Function}{:}{}
+	\Fn{\FSearchRGCLI{$G_L$, $T$, $k_i$, $kNN$, $L$}}{
+		\For{$v_i \in T$}{
+			$\epsilon \leftarrow$ mapa \\
+			\For{$v_j \in kNN[v_i]$}{
+				\If{$dist(v_i, v_j) \leq dist(v_j, F[v_j])$}{
+					$e \leftarrow (v_j, v_i)$ \\
+					$\epsilon[e] \leftarrow dist(v_i, v_j) + dist(v_j, L[v_j])$ \\
+				}
+			}
+		}
+		$E^* \leftarrow$ obtener $k_i$ aristas con la menor puntuación de $\epsilon$ \\
+		$E \leftarrow E \cup E^*$ \\
+		$w(e) \leftarrow 1 \forall e=(v_i, v_j) \in E^*$ \\
+	}
+	\caption{\textit{RGCLI}}
+\end{algorithm}
+En resumen, el algoritmo RGCLI mejora significativamente la construcción de grafos para SSL al reducir la complejidad temporal y utilizar instancias etiquetadas de manera efectiva. El uso de \textit{kdtrees} optimiza la búsqueda de vecinos más cercanos, y las fases del algoritmo garantizan la creación de un grafo robusto y esparso que facilita la propagación de etiquetas y mejora el rendimiento del aprendizaje semisupervisado.
+\clearpage
+\subsection{\textit{Local and Global Consistency}} \label{sec3:LGC}
 Este algoritmo aborda el problema general de aprender a partir de grafos, utilizando tanto datos etiquetados como no etiquetados. Dado un conjunto de puntos $X$ y un conjunto de etiquetas $L$, los primeros $l$ puntos tienen etiquetas y los puntos restantes no están etiquetados. El objetivo es predecir las etiquetas de los puntos no etiquetados. Este proceso se conoce como la fase de inferencia en los algoritmos de aprendizaje semi-supervisado basados en grafos (GSSL, por sus siglas en inglés). El algoritmo está fuertemente basado en dos suposiciones fundamentales: 
 \begin{itemize}
 	\item \textbf{Homogeneidad Local}: Los puntos cercanos tienden a tener la misma etiqueta.
@@ -221,7 +292,8 @@ La idea principal es que cada punto propague iterativamente su información de e
 	\item Propagar la información de etiquetas: Comienza con una matriz inicial $F$ que contiene las etiquetas conocidas. Repite un proceso en el que cada punto actualiza su etiqueta basada en las etiquetas de sus puntos vecinos y sus etiquetas iniciales. Este proceso se repite hasta que las etiquetas dejan de cambiar significativamente.
 	\item Asignar etiquetas finales: Una vez que la propagación de etiquetas ha convergido (ya no cambia mucho), asigna a cada punto la etiqueta de la clase con la que tiene mayor afinidad. Esto se hace eligiendo la etiqueta que corresponde al valor más alto en la matriz $F$ para cada punto.
 \end{itemize}
-\begin{algorithm}
+\begin{algorithm}[H]
+\scriptsize
 	\caption{Local and Global Consistency}
 	\label{alg:LGC}
 	\KwIn{Conjunto de puntos $X = \{x_1, \dots, x_l, x_{l+1}, \dots, x_n\} \subseteq {R}^m$, conjunto de etiquetas $L = \{1, \dots, c\}$}
@@ -260,7 +332,7 @@ La idea principal es que cada punto propague iterativamente su información de e
 \end{algorithm}
 
 Este algoritmo, como se ha podido llegar a observar, podría no usar directamente la unión física entre nodos del grafo, es decir, no utilizar el paso anterior de construcción del grafo, y aún así, funcionar correctamente, ya que dispondría de la información que da la matriz de distancias. Por ello, para el interés de este trabajo, es necesario buscar una manera de utilizar esta información, la cual se comenta en la seccion \ref{sec5:LGC}.
-
+\clearpage
 \section{Ensembles}
 Los sistemas basados en \textit{ensembles} se refieren al proceso de combinar las opiniones de un conjunto de modelos diferentes para tomar una decisión final. Se ha descubierto que los \textit{ensembles} pueden producir resultados más favorables en comparación con los sistemas de un solo experto en una amplia gama de aplicaciones. La creación de un \textit{ensemble} implica generar componentes individuales del sistema y luego combinar sus clasificaciones. En este contexto, se destacan dos técnicas principales: \textit{bagging} y \textit{boosting}~\cite{ensembles}.
 
@@ -276,6 +348,7 @@ El \textit{Boosting} es un enfoque que construye secuencialmente un conjunto de 
 \subsection{\textit{Co-Forest}}
 El co-forest es una versión semisupervisada del método de clasificación \textit{random forest}, diseñado para usar tanto datos etiquetados como no etiquetados. En este método, los árboles de decisión (que conforman el \textit{random forest}) se entrenan en un proceso iterativo utilizando subconjuntos de datos etiquetados junto con pseudo-etiquetas seleccionadas de los datos no etiquetados basadas en su alta confiabilidad. La confiabilidad de estas pseudo-etiquetas es evaluada por todos los árboles del ensemble excepto el árbol que está siendo entrenado en ese momento, denominado el conjunto concomitante. El entrenamiento continúa hasta que se alcanza un criterio de parada definido como el \textit{Out Of Bag Error} (OOBE), que mide el error de predicción del conjunto concomitante usando solo aquellos árboles que no incluyeron una muestra específica de los datos etiquetados en su entrenamiento~\cite{IEEE:CoForest}. A continuación se muestra el pseudocódigo y una explicación más extensa:
 \begin{algorithm}
+\scriptsize
 	\label{alg:Co-Forest}
 	\KwIn{Conjunto de datos etiquetados $L$, conjunto de datos no etiquetados $U$, número de árboles $n$, umbral de confianza $\theta$, sumatorio de confianzas inicial $W_{inicial}$ y parámetros para los árboles de decision $p$}
 	\KwOut{\textit{Ensemble} de árboles entrenado $H$}
@@ -319,8 +392,6 @@ El co-forest es una versión semisupervisada del método de clasificación \text
 	\caption{\textit{Co-Forest}}
 \end{algorithm}
 
-\clearpage
-
 Inicialización de Variables:
 \begin{itemize}
 	\item Cada árbol del \textit{ensemble}, $h_i$, se inicializa entrenándolo con una muestra \textit{bootstrap} del conjunto etiquetado $L$.
@@ -339,3 +410,90 @@ Proceso iterativo:
 
 Reentrenamiento de árboles:
 Después de evaluar y potencialmente agregar nuevas pseudo-etiquetas, se decide si reentrenar el árbol. Esto se basa en una comparación del producto de error y sumatorio de confianzas actual contra el de la iteración anterior. Si el producto actual es menor, se procede a reentrenar el árbol incorporando las nuevas pseudo-etiquetas. Esto ayuda a mantener la calidad del modelo y a evitar el sobreajuste.
+
+\section{Métodos de evaluación de algoritmos de Aprendizaje Automático}
+La evaluación de algoritmos de \textit{Machine Learning} es fundamental para asegurar su rendimiento y capacidad de generalización. A continuación, se presenta un resumen de los conceptos y métodos más utilizados, siguiendo la guía~\cite{web:crossVal}.
+\subsection{\textit{Random Split}}
+\textit{Random Split} consiste en muestrear aleatoriamente un porcentaje de datos en conjuntos de entrenamiento, prueba y, preferiblemente, validación. La ventaja de este método es que asegura una representación adecuada de la población original en los tres conjuntos, evitando un muestreo sesgado.
+
+Es importante usar el conjunto de validación en la selección de modelos, como paso intermedio a la evaluación final, para ajustar parámetros en la fase de entrenamiento. El conjunto de prueba, que contiene datos completamente no vistos, se usa para la evaluación final del modelo después de la selección de características y ajuste de parámetros~\cite{web:evaluate}.
+
+\subsection{Validación cruzada}
+La validación cruzada es una técnica que permite evaluar el rendimiento del modelo de manera más robusta.
+\begin{itemize}
+	\item \textbf{\textit{K-Fold Cross-Validation}}: En la validación cruzada \textit{K-Fold}, el conjunto de datos se divide en $k$ pliegues (\textit{folds}). El modelo se entrena $k$ veces, cada vez utilizando $k-1$ pliegues para el entrenamiento y el pliegue restante para la prueba. El rendimiento final del modelo se obtiene promediando los resultados de las $k$ iteraciones.
+	\item \textbf{\textit{Stratified K-Fold Cross-Validation}}: Este método es similar a \textit{K-Fold}, pero asegura que cada pliegue tenga una distribución similar de la variable objetivo. Esto es especialmente útil en conjuntos de datos con desequilibrio de clases.
+\end{itemize}
+
+\subsection{\textit{Bootstrap}}
+El \textit{Bootstrap} es una técnica de remuestreo que estabiliza el modelo. Implica seleccionar un tamaño de muestra (generalmente igual al tamaño del conjunto de datos original), y luego seleccionar aleatoriamente puntos de datos con reemplazo para crear la muestra bootstrap. El modelo se entrena en esta muestra y se evalúa en los puntos de datos que no se incluyeron en la muestra (conocidos como muestras fuera de bolsa). Esto permite obtener una estimación robusta del rendimiento del modelo y ayuda a mitigar el sobreajuste. Esta técnica se utiliza dentro de los ensembles como ya se ha comentado en la sección anterior.
+
+\subsection{Matriz de Confusión}
+
+Para cada predicción de un modelo de clasificación, se puede construir una matriz de confusión que demuestra el número de casos de prueba correctamente e incorrectamente clasificados.
+
+La matriz de confusión se ve de la siguiente manera (considerando que 1 es Positivo y 0 es Negativo para las clases objetivo):
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		& \textbf{Actual 0} & \textbf{Actual 1} \\ \hline
+		\textbf{Predicted 0} & True Negatives (TN) & False Negatives (FN) \\ \hline
+		\textbf{Predicted 1} & False Positives (FP) & True Positives (TP) \\ \hline
+	\end{tabular}
+	\caption{Matriz de Confusión}
+\end{table}
+
+\begin{itemize}
+	\item \textbf{TN}: Número de casos negativos clasificados correctamente.
+	\item \textbf{TP}: Número de casos positivos clasificados correctamente.
+	\item \textbf{FN}: Número de casos positivos incorrectamente clasificados como negativos.
+	\item \textbf{FP}: Número de casos negativos incorrectamente clasificados como positivos.
+\end{itemize}
+
+\subsubsection{Exactitud (Accuracy)}
+
+La exactitud es la métrica más simple y se puede definir como el número de casos de prueba correctamente clasificados dividido por el número total de casos de prueba.
+
+\[
+\text{Exactitud} = \frac{TP + TN}{TP + TN + FP + FN}
+\]
+
+Sin embargo, no es muy útil para conjuntos de datos desequilibrados. Por ejemplo, en la detección de fraudes, si la proporción de fraude a no fraude es 1:99, la exactitud no sería un buen indicador del rendimiento del modelo.
+
+\subsubsection{Precisión (Precision)}
+
+La precisión es la métrica utilizada para identificar la corrección de la clasificación positiva.
+
+\[
+\text{Precisión} = \frac{TP}{TP + FP}
+\]
+
+Una mayor precisión significa una mejor capacidad del modelo para clasificar correctamente la clase positiva.
+
+\subsubsection{Recall}
+
+El recall nos dice el número de casos positivos correctamente identificados del número total de casos positivos.
+
+\[
+\text{Recall} = \frac{TP}{TP + FN}
+\]
+
+Un alto valor de recall indica que se identificaron muchos casos de fraude del total de fraudes.
+
+\subsubsection{F1 Score}
+
+El F1 Score es la media armónica del Recall y la Precisión, y equilibra las fortalezas de cada una.
+
+\[
+F1 = 2 \cdot \frac{\text{Precisión} \cdot \text{Recall}}{\text{Precisión} + \text{Recall}}
+\]
+
+Es útil en casos donde tanto el recall como la precisión son valiosos.
+
+\subsubsection{AUC-ROC}
+
+La curva ROC (\textit{Receiver Operating Characteristics}) es una gráfica de la tasa de verdaderos positivos (recall) contra la tasa de falsos positivos. El área bajo la curva (AUC-ROC) mide el rendimiento del modelo; cuanto mayor es el área, mejor es el rendimiento del modelo. Si la curva está cerca del eje diagonal (45 grados), sugiere que el modelo está prediciendo de manera aleatoria.
+\imagen{../img/memoria/curvaROC.png}{Curva AUC-ROC.}{0.4}
+
