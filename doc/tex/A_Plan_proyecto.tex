@@ -55,10 +55,10 @@ Sprint correspondiente a las fechas entre el 1 de febrero y el 14 de febrero. La
 	\item Continuar con la búsqueda de trabajos relacionados en la web.
 \end{itemize}
 
-Para la primera tarea, es importante comentar que se utiliza como referencia el pseudocódigo del articulo mencionado pero también la implementación de Patricia Hernando, \cite{TFG:Patricia}. 
+Para la primera tarea, es importante comentar que se utiliza como referencia el pseudocódigo del articulo mencionado pero también la implementación de Patricia Hernando~\cite{TFG:Patricia}. 
 Una vez se tiene la primera implementación del algoritmo, se compara con el algoritmo de Patricia, el cual se considera una solución muy buena como ensemble.
 El estudio realizado se explica mejor en el apartado de aspectos relevantes de la memoria, pero cabe mencionar que los primeros resultados no son muy fiables, lo que hace pensar que algo está mal implementado.
-Además de la búsqueda de páginas anteriores, se encuentra una muy buena opción: https://ml-visualizer.herokuapp.com/. Esta página tiene algo diferente, ya que permite configurar y ver el resultado del algoritmo en la misma ventana. Este será uno de los objetivos en la web.
+Además de la búsqueda de páginas anteriores, se encuentra una muy buena opción: \url{https://ml-visualizer.herokuapp.com/}. Esta página tiene algo diferente, ya que permite configurar y ver el resultado del algoritmo en la misma ventana. Este será uno de los objetivos en la web.
 
 \subsection{Sprint 5}
 Sprint que corresponde a las dos semanas siguientes, se asignan las tareas:
@@ -86,7 +86,7 @@ En cuanto al código implementado hasta el momento, se considera que está basta
 El error que se estaba cometiendo en cuanto a la implementación del Co-forest estaba en el calculo del error, ya que uno de los parámetros (los índices de los datos de entrenamiento que se usan en cada árbol) se estaba repitiendo en cada ejecución, cuando cada árbol debería tener los suyos. Es decir, el error se estaba calculando de manera incorrecta. Una vez corregido esto, el algoritmo se considera eficiente.
 
 \subsection{Sprint 7}
-Este sprint es aún más reducido debido a las condiciones dadas, correspondiente entre los días 14 y 20 de marzo. Se utiliza para avanzar en todas aquellas tareas retrasadas, asignando las tareas:
+Este Sprint es aún más reducido debido a las condiciones dadas, correspondiente entre los días 14 y 20 de marzo. Se utiliza para avanzar en todas aquellas tareas retrasadas, asignando las tareas:
 \begin{itemize}
 	\item Documentación de conceptos teóricos: tanto teoría de ensembles como el propio algoritmo Co-forest.
 	\item Documentación de trabajos relacionados.
@@ -134,7 +134,7 @@ Del 11 de abril al 18 de abril, se establecen las siguientes tareas de cara al s
 \end{itemize}
 Se consigue la visualización del Co-Forest completa reutilizando gran parte del código de los otros algoritmos, dando pie también a posibles cambios futuros en la visualización. Finalmente se determina que el gráfico de tarta no es la mejor manera de representar este tipo de soluciones y se mantiene el estilo original. Esto tiene la desventaja de que en el Co-Forest existen muchos más clasificadores y en ocasiones provoca un \textit{tooltip} mucho más grande y que se sale de la pantalla. 
 
-Además se hacen pequeños cambios como dejar la opción de la etiqueta o clase por defecto al configurar el algoritmo y permitir desmarcar y marcar todas las opciones (clasificadores) en el gráfico de estadísticas específicas.
+Además se hacen pequeños cambios, por ejemplo se considera que es mejor dejar una opción de la etiqueta o clase por defecto al configurar cualquier algoritmo. Esto es así porque cuando tratamos con archivos dedicados a aprendizaje automático, la mayoría de ellos tienen su etiqueta en la última columna. Por lo tanto se mostrará por defecto esta columna como clase o etiqueta en vez de dejarlo vacío. También se añade una opción que permite desmarcar y marcar todas las opciones (clasificadores) en el gráfico de estadísticas específicas, esto surge como idea después de implementar el Co-Forest, ya que si el usuario selecciona muchos árboles de decisión, está bien que pueda quitar o añadir  todos de golpe.
 
 \subsection{Sprint 11}
 Sprint correspondiente a los días entre el 18 y el 25 de abril, en la reunión se establecen las siguientes tareas:
@@ -151,9 +151,9 @@ Sprint correspondiente a los días entre el 18 y el 25 de abril, en la reunión 
 
 Este Sprint se utiliza sobretodo para leer e investigar acerca de los métodos transductivos o basados en grafos. Más concretamente se manda leer el artículo del algoritmo \textit{GBILI}, que será uno de ellos a implementar en cuánto a la construcción del grafo y el artículo de \textit{Local and Global Consistency (LGC)} como algoritmo de inferencia de etiquetas. En la memoria se especifican las características de ambos algoritmos.
  
-Se realiza un mini estudio para la elección de una biblioteca en el uso de grafos, que se puede encontrar en los aspectos relevantes. Finalmente se decide utilizar \textit{NetworkX} por su facilidad de uso y aprendizaje.
+Se realiza un estudio para la elección de una biblioteca en el uso de grafos, que se puede encontrar en los aspectos relevantes. Finalmente se decide utilizar \textit{NetworkX} por su facilidad de uso y aprendizaje.
 
-En cuánto a los arreglos del Co-Forest, se realizan las dos primeras tareas marcadas y se deja para más adelante cambiar la visualización del \textit{tooltip}.
+En cuánto a los arreglos del Co-Forest, se realizan las dos primeras tareas marcadas y se deja para más adelante cambiar la visualización del \textit{tooltip}. El problema con la última iteración provenía de la manera en la que se devolvía el número de iteraciones. Los datos se guardaban correctamente, pero teniendo en cuenta que las iteraciones comienzan en 0, se estaba devolviendo un valor mayor del que debería. 
 
 \subsection{Sprint 12}
 Sprint correspondiente a la siguiente semana entre el 25 de abril y el 2 de mayo. Se mandan las siguientes tareas:
@@ -161,9 +161,10 @@ Sprint correspondiente a la siguiente semana entre el 25 de abril y el 2 de mayo
 	\item Implementar algoritmos: tanto el \textit{GBILI} como el \textit{LGC}.
 	\item Documentar los conceptos de cada algoritmo y los aspectos relevantes en su implementación.
 \end{itemize}
-En este sprint no hay mucho detalle que comentar ya que se trata de implementar el algoritmo. Finalmente no se utiliza la librería \textit{NetworkX} para almacenar los datos del grafo, si no que se utiliza para su visualización. La visualización en este caso ayuda a ver si realmente el grafo se está construyendo siguiendo los pasos establecidos y si tienen sentido o no. Por ejemplo, si se colorean todos los nodos que son etiquetados, se podra saber si la conexión basada en estos nodos es correcta o no.
 
-Finalmente no se consigue implementar ambos algoritmos de forma definitiva pero si se llega a una buena aproximación. El aspecto a destacar es que de la forma en que se implementa el algoritmo \textit{LGC} realmente no aprovecha la disposición física final del grafo, sino su matriz de distancias original. Se va con esta premisa a la reunión para tener en cuenta un posible cambio.
+En este sprint no hay mucho detalle que comentar ya que se trata de implementar el algoritmo. Finalmente no se utiliza la librería \textit{NetworkX} para almacenar los datos del grafo, sino que se utiliza para su visualización. La visualización en este caso ayuda a ver si realmente el grafo se está construyendo siguiendo los pasos establecidos y si tienen sentido o no. Por ejemplo, si se colorean todos los nodos que son etiquetados, se podrá saber si la conexión basada en estos nodos es correcta o no.
+
+Finalmente no se consigue implementar ambos algoritmos de forma definitiva pero sí se llega a una buena aproximación. El aspecto a destacar es que de la forma en que se implementa el algoritmo \textit{LGC} realmente no aprovecha la disposición física final del grafo, sino su matriz de distancias original. Se va con esta premisa a la siguiente reunión para tener en cuenta un posible cambio.
 
 \subsection{Sprint 13}
 Corresponde a los días entre el 2 y el 9 de mayo. Se comentan las siguientes tareas a realizar:
@@ -174,9 +175,9 @@ Corresponde a los días entre el 2 y el 9 de mayo. Se comentan las siguientes ta
 
 Se trata de finalizar ambos algoritmos para poder empezar su integración con la web.
 
-El resumen de las correciones en el \textit{GBILI} (todas ellas comentadas en la sección 5 de la memoria) es: el grafo es no dirigido por lo que se deben almacenar enlances en ambas direcciones, el pseudocódigo se puede interpretar erróneamente y provocar fallos al almacenar las estructuras de datos necesarias y por último, la visualización debe ser con el grafo ordenado para que tenga sentido las nuevas conexiones.
+El resumen de las correciones en el \textit{GBILI} (todas ellas comentadas en la sección 5 de la memoria) es: el grafo es no dirigido por lo que se deben almacenar enlaces en ambas direcciones, el pseudocódigo se puede interpretar erróneamente y provocar fallos al almacenar las estructuras de datos necesarias y por último, la visualización debe ser con el grafo ordenado para que tenga sentido las nuevas conexiones.
 
-En cuánto a la inferencia se manda tener en cuenta la conexión entre nodos del grafo mediante una matriz de afinidad binaria (1 si hay conexión, 0 en caso contrario).
+En cuanto a la inferencia se debe tener en cuenta la conexión entre nodos del grafo mediante una matriz de afinidad binaria (1 si hay conexión, 0 en caso contrario). Se resuelve así el problema de que el algoritmo no utilizaba los enlaces del grafo, pero surge uno nuevo. Uno de los pasos de este algoritmo hace la suma por filas de esta nueva matriz de afinidad, consiguiendo así valores enteros en su diagonal. La posibilidad de que haya ceros en esta matriz hace que se produzcan indeterminaciones en operaciones posteriores, por lo que se debe plantear una solución a esto.
 
 Se consigue tener el algoritmo \textit{GBILI} bien implementado, pero al inferir etiquetas los resultados no son los esperados con la nueva matriz de afinidad.
 
@@ -185,10 +186,66 @@ Se empieza a integrar en la web una nueva opción para seleccionar la visualizac
 \subsection{Sprint 14}
 Correspondiente a los días entre el 9 y el 16 de mayo. Se comentan las siguientes tareas:
 \begin{itemize}
-	\item Corregir definitivamente ambos algoritmos (\textit{LGC} sobretodo).
+	\item Corregir definitivamente ambos algoritmos (\textit{LGC} en especial).
 	\item Integrar en la web, con la visualización por fases.
 \end{itemize}
-Este Sprint se utiliza para corregir el \textit{LGC} para que tome correctamente la matriz de afinidad que debe y también para ponerse al día con la documentación de estos métodos. La documentación lleva gran parte del tiempo de este sprint, pero se consigue ponerse al día con la memoria.
+
+En la reunión se dan las pautas finales para implementar definitivamente el algoritmo \textit{LGC}. Se estaba utilizando la matriz de afinidad definida por unos y ceros, pero también el primer paso del algoritmo definido en~\cite{LGC}, que calcula otra matriz de afinidad distinta. Con la eliminación de este paso y el uso de regularización para evitar el problema de las divisiones entre 0, se da por finalizado la implementación del algoritmo \textit{Local and Global Consistency}.
+
+La documentación lleva gran parte del tiempo de este sprint, pero se consigue ponerse al día con la memoria. Por ello la web sufre poco cambio y lo que cambia es el código con integración de métodos necesarios para los grafos.
+
+\subsection{Sprint 15}
+Sprint correspondiente a los días entre el 16 y el 23 de mayo. En la reunión se definen las tareas:
+\begin{itemize}
+	\item Realizar estudio del funcionamiento de los algoritmos \textit{GBILI} y \textit{LGC} y documentarlo.
+	\item Lectura e implementación del algoritmo RGCLI.
+	\item Documentación del anexo B: Especificación de Requisitos.
+\end{itemize}
+
+Para finalizar con la parte de los algoritmos \textit{GBILI} y \textit{LGC} se decide realizar un estudio de su utilización conjunta, con varios valores en sus parámetros. Para ello, con ayuda de un mapa de calor, se realizan varias ejecuciones con distintos valores en sus parámetros, consiguiendo así localizar que parámetros afectan más y qué valores en los parámetros producen mejores resultados.
+
+Se decide que el último algoritmo a implementar sea el \textit{RGCLI}~\cite{rgcli}. Es una mejora del \textit{GBILI} por lo que la lectura y la comprensión suponen menos problema que el anterior. Se implementa una primera versión muy parecida al pseudocódigo original.
+
+Con respecto a la documentación se extienden los requisitos ya existentes en la documentación del trabajo anterior. No hay muchos requisitos ni funcionalidades nuevas pero se considera que los definidos son muy generales y por eso se decide hacer una lista más detallada. Además, se deciden poner los casos de uso generales que entran dentro de los objetivos, entre ellos: dar opción al usuario de acceder a documentación del algoritmo, visualizar tabla de datos al cargar archivos y también visualizar una tabla de resultados finales, con la clasificación de cada dato de entrada. 
+
+\subsection{Sprint 16}
+Sprint correspondiente a los días entre el 23 y el 30 de mayo. En la reunión se definen las tareas:
+\begin{itemize}
+	\item Integración en la web de los algoritmos.
+	\item Traducir textos generados hasta el momento.
+\end{itemize}
+
+En este tiempo el trabajo no sufre gran cambio. Mientras se intenta integrar finalmente la visualización de los grafos en la web final, se realiza un proyecto en paralelo únicamente dedicado a la visualización de grafos en una web. Para ello se intenta simular una ejecución real en este subproyecto, generando un \textit{json} con los resultados de la ejecución, como se hacía con el \textit{Co-Forest} y después visualizando, con ayuda de la librería \textit{d3.js}, los grafos en cada paso. Esto lleva bastante tiempo debido a la inexperiencia con el uso de simulaciones en \textit{javascript} y a la complejidad de representar diferentes pasos dentro de un grafo.
+
+\subsection{Sprint 17}
+Sprint correspondiente a los días entre el 30 de mayo y el 6 de junio. Se decide llevar el trabajo a julio y se definen las siguientes tareas:
+\begin{itemize}
+	\item Corregir \textit{RGCLI}.
+	\item Continuar la integración en la web de los algoritmos.
+	\item Cambiar página de inicio de la web.
+	\item Corregir y continuar parte de anexos y memoria.
+\end{itemize}
+
+En este periodo se intenta trasladar todo el proyecto realizado aparte a la web real. Para ello se debe realizar gran parte de código específico para grafos, ya que muchos de los métodos anteriores no sirven. Buscando reutilizar la mayor parte del código, hay situaciones en las que la lógica debe ser separada entre métodos inductivos y métodos basados en grafos, pensando también en facilitar nuevas implementaciones futuras.
+Se consigue poder ejecutar tanto los algoritmos \textit{GBILI} como el \textit{RGCLI} junto con el \textit{LGC} y se visualizan los grafos paso por paso.
+
+Con respecto al \textit{RGCLI}, se cambia su implementación para que no haga su ejecución con hilos y facilite la recogida de datos para representarlos.
+
+La página de inicio de la web sufre un cambio visual. Los contenedores o \textit{cards} que contienen los iconos de los algoritmos y que permiten seleccionarlos, se decide hacerlos de manera horizontal, además de incluir una explicación introductoria al algoritmo y permitir acceder a la documentación de cada algoritmo (en las mismas \textit{cards}). Esto se decide así ya que de la manera en la que estaba hecho, un usuario que entra por primera vez, puede no conocer nada del algoritmo, provocando que tenga que seleccionar un algoritmo y seleccionar un fichero para poder leer su explicación en la parte de configuración.
+
+\subsection{Sprint 18}
+Sprint correspondiente a los días entre el 6 de junio y 20 de junio. Se definen las siguientes tareas:
+\begin{itemize}
+	\item Finalizar parte de configuración y visualización de grafos.
+	\item Crear pseudocódigos específicos para la web.
+	\item Corregir y documentar parte de la memoria.
+	\item Finalizar con los anexos A, B y C.
+\end{itemize}
+
+El inicio de este Sprint se utiliza para ponerse al día con la documentación, tanto de la memoria como los anexos. Para ello, se decide realizar ya todas las secciones y corregir algunas de ellas. Por ejemplo, la parte de los conceptos teóricos basados en grafos, se considera que es una parte muy importante del trabajo, y como la documentación estaba basada en un artículo el cual hace de introducción hacia estos métodos, se decide usar otro artículo como complemento, una \textit{review} hecha en 2021 que contiene detalles más extensos y renovados~\cite{GSSL:review}.
+
+En la visualización, se pretende corregir: poner las imágenes definitivas de los pseudocódigos de cada algoritmo nuevo, conseguir que en la configuración la parte de teoría cambie dinámicamente según quiera el usuario ver la fase de construcción de grafos o la fase de inferencia y por último completar el paso a paso de los algoritmos para que de forma visual se vea qué parte está ejecutando.
+
 
 \section{Estudio de viabilidad}
 
