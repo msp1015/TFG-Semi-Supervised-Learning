@@ -26,7 +26,7 @@ En este caso, al tratarse de un trabajo heredado, los requisitos son la mayoría
 	permitir seleccionar uno de los algoritmos implementados.
 	\begin{itemize}
 		\item \textbf{RF-1.1 Selección desde menú de navegación}: la opción del algoritmo se debe de poder pulsar desde la barra de navegación situada en la parte de arriba de la página web. Aunque el usuario se encuentre en cualquier otra página puede accedera ellos.
-		\item \textbf{RF-1.1 Selección desde página de inicio}: la otra posibilidad de acceso a los algoritmos es a través de las tarjetas situadas en la página inicial.
+		\item \textbf{RF-1.2 Selección desde página de inicio}: la otra posibilidad de acceso a los algoritmos es a través de las tarjetas situadas en la página inicial.
 	\end{itemize}
 	\item \textbf{RF-2 Selección de conjunto de datos}: la aplicación debe
 	permitir elegir un fichero \texttt{ARFF} o \texttt{ACSV} para ejecutar el algoritmo.
@@ -35,7 +35,11 @@ En este caso, al tratarse de un trabajo heredado, los requisitos son la mayoría
 		\item \textbf{RF-2.2 Descarga de conjunto de datos}: el sistema debe permitir la descarga de estos ficheros a los que se puede acceder y que la aplicación ya contiene.
 		\item \textbf{RF-2.3 Carga de ficheros}: debe de haber una opción que permita cargar un archivo con las extensiones definidas. Tanto arrastrando el archivo como buscándolo en el explorador de ficheros.
 	\end{itemize} 
-	\item \textbf{RF-3 Visualización de resumen del fichero de datos}: la aplicación debe mostrar al usuario un resumen del conjunto de datos que se ha cargado o se va a utilizar para la ejecución del algoritmo.
+	\item \textbf{RF-3 Visualizar datos de entrada en forma de tabla}: la aplicación debe permitir visualizar los datos de entrada en forma de tabla para que el usuario tenga más contexto del conjunto de datos que está usando.
+\begin{itemize}
+	\item \textbf{RF-3.1 Visualizar resumen en fase de selección}: desde la página de carga de conjunto de datos se debe permitir ver un resumen de los datos en forma de tabla.
+	\item \textbf{RF-3.2 Visualizar resultados clasificados}: la misma tabla se debe poder acceder a ella en la fase final, cuando todos los datos han sido clasificados, pudiendo ver la clasificación de cada entrada.
+\end{itemize}
 	\item \textbf{RF-4 Configuración del algoritmo}: la aplicación debe	permitir configurar la ejecución del algoritmo con los parámetros específicos del mismo.
 	\begin{itemize}
 		\item \textbf{RF-4.1 Configuración del clasificador}: el sistema debe permitir elegir que clasificador se quiere usar (si hay más de uno) y dentro de este, los parámetros que lo inician.
@@ -45,6 +49,10 @@ En este caso, al tratarse de un trabajo heredado, los requisitos son la mayoría
 	\begin{itemize}
 		\item \textbf{RF-5.1 Visualización de algoritmos inductivos}: el gráfico principal son dos ejes donde se distribuyen los puntos (estáticos) y se debe poder visualizar los cambios que sufren en cada iteración (con ayuda de un \textit{tooltip}). La otra parte corresponde con la visualización de gráficas que muestran estadísticas de evaluación por cada iteración.
 		\item \textbf{RF-5.2 Visualización de algoritmos transductivos}: el gráfico principal corresponde con un grafo interactivo en el cual los nodos deben ser dinámicos. La otra parte debe estar relacionada, señalando los pasos que sigue en el pseudocódigo (construcción del grafo, inferencia, etc.) cada vez que en la visualización se pasa hacia adelante o hacia atrás.
+		\begin{itemize}
+			\item \textbf{RF-5.2.1 Control de grafo}: los grafos serán interactivos, pudiendo mover cada nodo una vez se tenga el resultado final. También se permitirá hacer más llamativo un nodo para seguir su pista.
+			\item \textbf{RF-5.2.2 Selección entre fases o resultados}: una vez se tengan el grafo final junto con la inferencia, el usuario puede acceder tanto a los resultados viendo una matriz de confusión o a la visualización de las fases.
+		\end{itemize}
 	\end{itemize}
 	\item \textbf{RF-6 Visualización de tutoriales}: desde cualquier página se debe poder acceder a un tutorial interactivo el cuál muestre los pasos que se deben de seguir en esa página concreta.
 	\item \textbf{RF-7 Acceso a ayudas}: la aplicación debe dar varias opciones que ayuden al usuario a comprender el contenido de la web y a utilizarla de manera correcta.
@@ -53,6 +61,7 @@ En este caso, al tratarse de un trabajo heredado, los requisitos son la mayoría
 		\item \textbf{RF-6.2 Acceso a implementación del código}: la aplicación debe permitir acceder a la implementación de los algoritmos como recurso por si se quiere utilizar en el equipo del usuario.
 		\item \textbf{RF-6.3 Acceso al manual de usuario}.
 	\end{itemize}
+	\item \textbf{RF-8 Acceder al artículo del algoritmo}: desde la página de inicio se puede acceder al artículo científico en el que se define el comportamiento de cada algoritmo concreto.
 \end{itemize}
 
 \subsection{Requisitos no funcionales}
@@ -77,31 +86,290 @@ De nuevo, la mayoría de los casos de uso se heredan del trabajo anterior y se m
 
 \imagen{../img/anexos/CasosDeUso.drawio.pdf}{Diagrama de casos de uso. En verde los modificados, en azul los nuevos y en negro los que ya existían}
 
-A continuación se definirán los casos de uso implementados y modificados en este proyecto, para ver el resto de casos de uso, acceder a la documentación de \url{https://github.com/dmacha27/TFG-SemiSupervisado/tree/main/doc}.
+A continuación se definirán los casos de uso implementados y modificados en este proyecto. Para ver el resto de casos de uso, acceder a la documentación del archivo <<anexos.pdf>> en \url{https://github.com/dmacha27/TFG-SemiSupervisado/tree/main/doc}. Se utilizará el identificador del anterior trabajo para aquellos que se hayan modificado y se seguirá la secuencia para los nuevos.
 
-% Caso de Uso 1 -> Consultar Experimentos.
+% Caso de Uso 1 -> Visualizar un algoritmo.
 \begin{table}[p]
 	\centering
 	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
 		\toprule
-		\textbf{CU-1}    & \textbf{Ejemplo de caso de uso}\\
+		\textbf{CU-1}    & \textbf{Visualizar un algoritmo}\\
 		\toprule
-		\textbf{Versión}              & 1.0    \\
-		\textbf{Autor}                & Alumno \\
-		\textbf{Requisitos asociados} & RF-xx, RF-xx \\
-		\textbf{Descripción}          & La descripción del CU \\
-		\textbf{Precondición}         & Precondiciones (podría haber más de una) \\
+		\textbf{Versión}              & 2.0    \\
+		\textbf{Autor}                & Mario Sanz Pérez \\
+		\textbf{Requisitos asociados} & RF-1, RF-2, RF-4, RF.5 \\
+		\textbf{Descripción}          & Visualización del proceso de entrenamiento de un algoritmo semi-supervisado. Con gráfico principal, estadísticas y fases seguidas. \\
+		\textbf{Precondición}         & No hay precondiciones \\
 		\textbf{Acciones}             &
 		\begin{enumerate}
 			\def\labelenumi{\arabic{enumi}.}
 			\tightlist
-			\item Pasos del CU
-			\item Pasos del CU (añadir tantos como sean necesarios)
-		\end{enumerate}\\
-		\textbf{Postcondición}        & Postcondiciones (podría haber más de una) \\
-		\textbf{Excepciones}          & Excepciones \\
-		\textbf{Importancia}          & Alta o Media o Baja... \\
+			\item Ejecución del caso de uso 2 (Seleccionar algoritmo).
+			\item Ejecución del caso de uso 3 (Cargar conjunto de datos).
+			\item Ejecución del caso de uso 4 (Configurar algoritmo).
+			\item Se realiza la ejecución interna del algoritmo, obtención de la información y creación de los gráficos.
+			\item El usuario verá en la página los distintos gráficos de su visualización. 
+			\item [Opcional] Ejecución del caso de uso 5 (Controlar visualizaciones).
+			\item [Opcional] Ejecución del caso de uso 19 (ver tablas con datos clasificados)
+ 		\end{enumerate}\\
+		\textbf{Extensiones}          & 4a Si el usuario estuviera registrado, toda la información de la ejecución será almacenada. \\
+		\textbf{Postcondición}        & Visualizaciones renderizadas en la Web \\
+		\textbf{Excepciones}          & \begin{itemize}
+			\item Excepciones de los casos de uso ejecutados controladas por ellos mismos.
+			\item El conjunto de datos tenía atributos nominales (paso 4). En este caso se mostrará un mensaje (modal) y al cerrarlo volverá al paso 3.
+			\item La ejecución del algoritmo finalizó con excepciones (paso 4), serán capturadas y se volverá al paso 3.
+		\end{itemize}	 \\
+		\textbf{Importancia}          & Alta\\
 		\bottomrule
 	\end{tabularx}
-	\caption{CU-1 Nombre del caso de uso.}
+	\caption{Caso de uso 1: Visualizar un algoritmo.}
+\end{table}
+
+% Caso de Uso 2 -> Seleccionar algoritmo.
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-2}    & \textbf{Seleccionar algoritmo}\\
+		\toprule
+		\textbf{Versión}              & 2.0    \\
+		\textbf{Autor}                & Mario Sanz Pérez \\
+		\textbf{Requisitos asociados} & RF-1, RF-8 \\
+		\textbf{Descripción}          & Seleccionar el algoritmo a ejecutar (establecerlo en la sesión del usuario). \\
+		\textbf{Precondición}         & Ejecutando el caso de uso 1. \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario selecciona un algoritmo haciendo clic en el nombre del algoritmo en la barra de navegación.
+			\item Se redirige al usuario a la página de subida.
+		\end{enumerate}\\
+		\textbf{Acciones\newline alternativas}&
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item En caso de encontrarse en la página principal, el usuario
+			puede seleccionar un algoritmo haciendo clic en una de las tarjetas de
+			presentación de algoritmos.
+			\item El área de acción del \textit{mouse} es toda la tarjeta excepto el botón reservado para acceder a la documentación del articulo (Caso de uso 20).
+			\item Se redirige al usuario a la página de subida. \end{enumerate}\\
+		\textbf{Postcondición}        & Algoritmo almacenado en su sesión y redirección a la página de subida. \\
+		\textbf{Excepciones}          & Sin excepciones \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de uso 2: Seleccionar algoritmo.}
+\end{table}
+
+% Caso de Uso 3 -> Cargar conjunto de datos.
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-3}    & \textbf{Cargar conjunto de datos}\\
+		\toprule
+		\textbf{Versión}              & 2.0    \\
+		\textbf{Autor}                & Mario Sanz Pérez \\
+		\textbf{Requisitos asociados} & RF-2, RF-3.1 \\
+		\textbf{Descripción}          & Carga en el sistema de un fichero ARFF o CSV con el conjunto de datos a utilizar. \\
+		\textbf{Precondición}         & Ejecutando el caso de uso 1 y haber ejecutado ya el caso de uso 2.\\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item ***POR DEFINIR***
+		\end{enumerate}\\
+		\textbf{Extensiones}          & 3a Si el usuario estuviera registrado, el fichero será vinculado a su cuenta (en base de datos). \\
+		\textbf{Postcondición}        & Conjunto de datos almacenado en su sesión (y fichero local) y redirección a la página de configuración \\
+		\textbf{Excepciones}          & \begin{itemize}
+			\item El usuario ha accedido a la página de subida sin seleccionar un algoritmo, será redirigido a la página principal (con un mensaje de aviso de esta situación) y se ejecutará el caso de uso 2.
+			\item El fichero no es ARFF ni CSV, al hacer clic en el botón, será redirigido a esta misma página (subida) y deberá realizar el caso de uso de nuevo.
+		\end{itemize} \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de uso 3: Cargar conjunto de datos.}
+\end{table}
+
+
+% Caso de Uso 4 -> Configurar algoritmo.
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-4}    & \textbf{Configurar algoritmo}\\
+		\toprule
+		\textbf{Versión}              & 2.0    \\
+		\textbf{Autor}                & Mario Sanz Pérez \\
+		\textbf{Requisitos asociados} & RF-4 \\
+		\textbf{Descripción}          & Parametrización de la ejecución del algoritmo. Cada algoritmo tiene sus propios parámetros. \\
+		\textbf{Precondición}         & Ejecutando el caso de uso 1 y haber ejecutado ya el caso de uso 3. \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario verá el apartado teórico por un lado y el formulario de parámetros por otro.
+			\item El usuario selecciona e introduce los parámetros deseados para la ejecución del algoritmo.
+			\item El usuario hace clic en el botón de ejecución.
+			\item Se redirige al usuario a la página de visualización.
+		\end{enumerate}\\
+		\textbf{Extensiones}          & 
+		\begin{enumerate}[label=\alph*]
+			\tightlist
+			\item En el caso de los grafos, el usuario podrá elegir entre la teoría de la fase de construcción del grafo o la fase de inferencia.
+			\item El algoritmo que esté seleccionado en la tarjeta de configuración es el que se mostrará en la teoría.
+		\end{enumerate}\\
+		\textbf{Postcondición}        & Redirección a la página de visualización \\
+		\textbf{Excepciones}          & \begin{itemize}
+			\item El usuario ha accedido a la página de subida sin seleccionar un algoritmo, será redirigido a la página principal y se ejecutará el caso de uso 2.
+			\item El usuario ha accedido a la página de configuración sin cargar un conjunto de datos, será redirigido a la página de subida y se ejecutará el caso de uso 3.
+			\item El usuario sí que ha cargado un conjunto de datos, pero el sistema no puede acceder al fichero. Redirección a página de error.
+			\item El formulario está incompleto o erróneo. En este caso se bloqueará el envío del formulario indicando qué se debe arreglar.
+		\end{itemize} \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de uso 4: Configurar algoritmo.}
+\end{table}
+
+% Caso de Uso 5 -> Controlar visualizaciones GSSL.
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-5}    & \textbf{Controlar visualizaciones (grafos)}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Mario Sanz Pérez \\
+		\textbf{Requisitos asociados} & RF-5.2 \\
+		\textbf{Descripción}          & Manipulación de las visualizaciones de forma interactiva. \\
+		\textbf{Precondición}         & Ejecutando el caso de uso 1, haber seleccionado la tarjeta de grafos en el caso de uso 2 y haber ejecutado ya el caso de uso 4. \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario verá la visualización principal así como las fases seguidas.
+			\item El usuario puede avanzar o retroceder en las iteraciones del algoritmo.
+			\item El usuario puede realizar \textit{zoom} sobre el gráfico principal así como reiniciarlo.
+			\item El usuario puede ver información particular sobre cada punto en el gráfico principal pasando el ratón por encima de ellos.
+			\item El usuario puede interactuar con los nodos del grafo, moviéndolos, clicándolos o realizando su inferencia.
+			\item El usuario puede ver las estadísticas de las predicciones.
+		\end{enumerate}\\
+		\textbf{Postcondición}        & El usuario ha podido manejar con libertad los elementos mostrados. \\
+		\textbf{Excepciones}          & Sin excepciones \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de uso 5: Controlar visualizaciones (grafos).}
+\end{table}
+
+
+% Caso de uso 19 --> ver tablas con datos clasificados
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-19}    & \textbf{Ver tabla con resultados clasificados}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Mario Sanz Pérez \\
+		\textbf{Requisitos asociados} & RF-5, RF-3.2 \\
+		\textbf{Descripción}          & Acceso a página con tabla que contiene los datos de entrada y su clasificación final. \\
+		\textbf{Precondición}         & Ejecutando el caso de uso 1 y haber ejecutado ya el caso de uso 4. \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item ***POR DEFINIR***
+		\end{enumerate}\\
+		\textbf{Postcondición}        & ***POR DEFINIR*** \\
+		\textbf{Excepciones}          & Sin excepciones \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de uso 19: Ver tabla con resultados clasificados.}
+\end{table}
+
+%Caso de uso 20 --> Acceder a documentación del algoritmo
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-20}    & \textbf{Acceder a documentación del algoritmo}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Mario Sanz Pérez \\
+		\textbf{Requisitos asociados} & RF-1.2, RF-8 \\
+		\textbf{Descripción}          & Acceso a página web que contiene el artículo científico que define el algoritmo. \\
+		\textbf{Precondición}         & Sin precondiciones. \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario puede acceder al artículo científico del algoritmo pulsando el botón de color gris de la tarjeta de inicio.
+			\item Se abrirá una pestaña aparte en el navegador.
+		\end{enumerate}\\
+		\textbf{Postcondición}        & El usuario ha accedido a la web que contiene el artículo relacionado. \\
+		\textbf{Excepciones}          & Sin excepciones \\
+		\textbf{Importancia}          & Baja \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de uso 20: Acceder a documentación del algoritmo}
+\end{table}
+
+% Caso de uso 21 --> Ver resumen de datos de entrada
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-21}    & \textbf{Ver tabla con resumen de datos de entrada}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autor}                & Mario Sanz Pérez \\
+		\textbf{Requisitos asociados} & RF-2, RF-3.1 \\
+		\textbf{Descripción}          & Visualización en forma de tabla de los datos de entrada. \\
+		\textbf{Precondición}         & Ejecutando el caso de uso 1 y haber ejecutado ya el caso de uso 2. \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item ***POR DEFINIR***
+		\end{enumerate}\\
+		\textbf{Postcondición}        & ***POR DEFINIR*** \\
+		\textbf{Excepciones}          & Sin excepciones \\
+		\textbf{Importancia}          & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de uso 21: Ver tabla con resumen de datos de entrada.}
+\end{table}
+
+%Caso de uso 22 --> Visualizar tutoriales
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-22}    & \textbf{Visualizar tutoriales}\\
+		\toprule
+		\textbf{Versión}              & 1.0    \\
+		\textbf{Autores}                & David Martínez Acha y Mario Sanz Pérez\\
+		\textbf{Requisitos asociados} & RF-6 \\
+		\textbf{Descripción}          & Visualización de tutoriales en cada ventana. \\
+		\textbf{Precondición}         & Sin precondiciones. \\
+		\textbf{Acciones}             &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item En la página de inicio: el tutorial consta de 7 pasos secuenciales.
+			\item En la página de selección de datos: ***POR DEFINIR***
+			\item En la página de configuración: el tutorial consta de 5 pasos.
+			\item En la página de visualización: si son métodos inductivos consta de 6 pasos y si son métodos de grafos consta de ***POR DEFINIR***.
+			\item En cualquier paso del tutorial, este se puede cerrar.
+			\item Ver el siguiente o el anterior paso.
+		\end{enumerate}\\
+		\textbf{Postcondición}        & El usuario puede seguir navegando por la página en la que estaba \\
+		\textbf{Excepciones}          & Sin excepciones \\
+		\textbf{Importancia}          & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de uso 22: Visualizar tutoriales.}
 \end{table}
