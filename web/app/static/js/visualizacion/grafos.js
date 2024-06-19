@@ -9,21 +9,37 @@ let selectedNode = null;
 
 function inicializarDatos(datos) {
     predictions = datos.predicciones;
-      steps = datos.enlaces;
-      dataSteps.push({
+    steps = datos.enlaces;
+    dataSteps.push({
+    nodes: datos.nodos,
+    links: steps[0],
+    });
+    for (let i = 0; i < steps.length; i++) {
+    dataSteps.push({
         nodes: datos.nodos,
-        links: steps[0],
-      });
-      for (let i = 0; i < steps.length; i++) {
-        dataSteps.push({
-          nodes: datos.nodos,
-          links: steps[i],
-        });
-      }
-      clases = JSON.parse(datos.mapa);
-      maxiter = steps.length;
-      console.log('maxiter', maxiter)
+        links: steps[i],
+    });
+    }
+    clases = JSON.parse(datos.mapa);
+    maxiter = steps.length;
 }
+
+// function inicializarDatos(datos) {
+//     predictions = datos.predicciones;
+//     steps = datos.enlaces;
+//     dataSteps.push({
+//         nodes: datos.nodos.map(node => ({ ...node, originalClass: node.class })),
+//         links: steps[0],
+//     });
+//     for (let i = 0; i < steps.length; i++) {
+//         dataSteps.push({
+//             nodes: datos.nodos.map(node => ({ ...node, originalClass: node.class })),
+//             links: steps[i],
+//         });
+//     }
+//     clases = JSON.parse(datos.mapa);
+//     maxiter = steps.length;
+// }
 
 let intervalo = null;
 
@@ -150,17 +166,30 @@ function updateChart(event) {
 }
 
 function changeStep(direction) {
-    console.log('changeStep')
     currentStep += direction;
     if (currentStep < 0) currentStep = 0;
     if (currentStep >= dataSteps.length) currentStep = dataSteps.length - 1;
+    actualizaBarraProgreso(currentStep);
     updateGraph();
+}
+
+function actualizaBarraProgreso(step) {
+    let progreso = (step / maxiter) * 100;
+    document.getElementById('progreso').style.width = `${progreso}%`;
+    document.getElementById("progreso").setAttribute("aria-valuenow", progreso.toString());
+    document.getElementById("iteracion").innerHTML = traducir("gbili_" + step.toString());
 }
 
 function updateGraph() {
     const currentData = dataSteps[currentStep];
     const nodes = currentData.nodes;
     const links = currentData.links;
+    
+    // if (currentStep < dataSteps.length - 1) {
+    //     nodes.forEach(node => {
+    //         node.class = node.originalClass;
+    //     });
+    // }
 
     // Update nodes
     node = node.data(nodes, d => d.id)
@@ -203,7 +232,7 @@ function updateGraph() {
     } else {
       node.on(".drag", null);
     }
-    console.log('currentStep', currentStep, dataSteps.length - 1)
+
     if (currentStep === dataSteps.length - 1 ) {
       var button = document.getElementById('inferir_etiq');
       button.disabled = false;
@@ -211,7 +240,7 @@ function updateGraph() {
       document.getElementById('inferir_etiq').addEventListener('click', () => inferLabels());
     }
 
-    // Asegurar que el botón de inferencia se elimine si no es el último paso
+    // Asegurar que el botón de inferencia se deshabilite si no es el último paso
     if (currentStep < dataSteps.length - 1) {
       const inferButton = document.getElementById('inferir_etiq');
       if (inferButton) {
@@ -234,6 +263,26 @@ function inferLabels() {
         .text(`ID: ${d.id}, Grupo: ${d.class}`); // Actualizar el tooltip
     });
 }
+// function inferLabels() {
+//     node.each(function(d) {
+//         if (d.class === -1) {
+//             d.originalClass = d.class; // Store the current class before changing it
+//             d.class = predictions[d.id];
+//             d3.select(this)
+//                 .transition()
+//                 .duration(1000) // Highlight duration
+//                 .attr("r", 10)
+//                 .transition()
+//                 .duration(1000) // Return to original size
+//                 .attr("r", 5);
+//         }
+//         d3.select(this)
+//             .attr("fill", d => d.class === -1 ? '#808080' : color(d.class))
+//             .select("title")
+//             .text(`ID: ${d.id}, Grupo: ${d.class}`); // Actualizar el tooltip
+//     });
+// }
+
 
 function dragstarted(event) {
     if (!event.active) simulation.alphaTarget(0.3).restart();

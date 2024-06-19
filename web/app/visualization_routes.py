@@ -44,11 +44,15 @@ def visualizar_algoritmo(algoritmo):
         params = parametros_grafos()
         es_grafo = True
 
+    nombreGrafo = request.form['constructor']
+    nombreInferencia = request.form['inferencia']
     """En params se encontrarán todos los datos necesarios para ejecutar el algoritmo.
     Realmente no se le pasa la información ejecutada, se realiza una petición POST
     desde Javascript con estos parámetros al renderizar la plantilla del algoritmo."""
     if es_grafo:
         return render_template('visualizacion/' + session['ALGORITMO'] + '.html',
+                               nombreGrafo=nombreGrafo,
+                               nombreInferencia=nombreInferencia,
                                params=params,
                                ejecutar=True)
     else:
