@@ -27,7 +27,7 @@ head %} {{ super() }}
   class="d-flex flex-wrap justify-content-around mb-3 position-relative"
 >
   <div id="visualization-card" class="col-md">
-    <div class="m-2 pt-4 pb-2 shadow-lg rounded-4 sticky-top">
+    <div class="m-2 p-2 shadow-lg rounded-4 sticky-top">
       <div class="text-center position-relative">
         <h4 class="title-mulish">{{ gettext('Main visualization') }}</h4>
         <hr class="separacion w-10" />
@@ -63,14 +63,13 @@ head %} {{ super() }}
           <button id="previt" class="btn btn-primary">
             <i class="bi bi-chevron-double-left"></i>
           </button>
+          <button id="reproducir" class="btn btn-primary">
+            <i class="bi bi-play-fill"></i>
+          </button>
           <button id="nextit" class="btn btn-primary">
             <i class="bi bi-chevron-double-right"></i>
           </button>
-          <button
-            id="inferir_etiq"
-            class="btn btn-success"
-            style="visibility: hidden"
-          >
+          <button id="inferir_etiq" class="btn btn-success disabled">
             {{ gettext('Infer label') }}
           </button>
         </div>
@@ -78,19 +77,24 @@ head %} {{ super() }}
       </div>
     </div>
   </div>
-  <div id="pseudo_codigo" class="col-md">
-    <div class="m-2 pt-4 pb-2 shadow-lg rounded-4 sticky-top">
-      <div class="text-center position-relative">
+  <div id="pasos_grafos" class="col-md">
+    <div class="m-2 p-2 shadow-lg rounded-4 sticky-top">
+      <div class="text-center">
         <h4 class="title-mulish">{{ gettext('Algorithm Steps') }}</h4>
         <hr class="separacion w-10" />
-        <div
-          id="pseudo_container"
-          class="d-flex mt-4 justify-content-center align-items-center"
-        >
-          <div class="d-flex flex-column">
-            <!-- Agrega más imágenes según los pasos del algoritmo -->
-          </div>
+        <div class="btn-group btn-group-toggle">
+          <label class="btn btn-primary" id="btn-fases-grafo">
+            <i class="bi bi-arrow-right-circle"></i>
+            {{ gettext('Graph phases') }}
+          </label>
+          <label class="btn btn-success disabled" id="btn-inferencia">
+            {{ gettext('Inference results') }}
+          </label>
         </div>
+      </div>
+
+      <div id="fases_grafo" class="m-2 p-2">
+        <div class="row justify-content-center"></div>
       </div>
     </div>
   </div>

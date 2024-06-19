@@ -2,6 +2,7 @@ let simulation, svg, container, link, node, clases;
 let color;
 let currentStep = 0;
 let steps = dataSteps = [];
+let maxiter = 0;
 let predictions = {};
 let selectedNode = null;
 
@@ -20,7 +21,39 @@ function inicializarDatos(datos) {
         });
       }
       clases = JSON.parse(datos.mapa);
+      maxiter = steps.length;
+      console.log('maxiter', maxiter)
 }
+
+let intervalo = null;
+
+/**
+ *
+ * Se encarga de la reproducción automática de la visualización al
+ * pulsar dicho botón.
+ *
+ * Tiempo: 1 segundo y medio por iteración.
+ *
+ */
+function reproducir(){
+    if (!intervalo){
+        document.getElementById("reproducir").innerHTML = "<i class='bi bi-stop-fill'></i>";
+        intervalo = setInterval(function () {
+            if (currentStep+1 >= maxiter){
+                document.getElementById("reproducir").innerHTML = "<i class='bi bi-play-fill'></i>";
+                clearInterval(intervalo);
+                intervalo = null;
+            }
+            changeStep(1);
+        }, 1500)
+    } else {
+        document.getElementById("reproducir").innerHTML = "<i class='bi bi-play-fill'></i>";
+        clearInterval(intervalo);
+        intervalo = null;
+    }
+}
+
+
 
 function inicializarGrafo() {
 
@@ -108,6 +141,7 @@ function inicializarGrafo() {
 
     document.getElementById('previt').addEventListener('click', () => changeStep(-1));
     document.getElementById('nextit').addEventListener('click', () => changeStep(1));
+    document.getElementById('reproducir').addEventListener('click', () => reproducir());
 }
 
 function updateChart(event) {
@@ -169,16 +203,21 @@ function updateGraph() {
     } else {
       node.on(".drag", null);
     }
-    if (currentStep === dataSteps.length - 1 && !document.getElementById('infer')) {
-      document.getElementById('inferir_etiq').style.visibility = 'visible';
+    console.log('currentStep', currentStep, dataSteps.length - 1)
+    if (currentStep === dataSteps.length - 1 ) {
+      var button = document.getElementById('inferir_etiq');
+      button.disabled = false;
+      button.classList.remove('disabled');
       document.getElementById('inferir_etiq').addEventListener('click', () => inferLabels());
     }
 
     // Asegurar que el botón de inferencia se elimine si no es el último paso
     if (currentStep < dataSteps.length - 1) {
-      const inferButton = document.getElementById('infer');
+      const inferButton = document.getElementById('inferir_etiq');
       if (inferButton) {
-        inferButton.remove();
+        var button = document.getElementById('inferir_etiq');
+        button.disabled = true;
+        button.classList.add('disabled');
       }
     }
 
