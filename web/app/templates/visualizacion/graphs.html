@@ -2,8 +2,8 @@
 head %} {{ super() }}
 <script type="text/javascript" src="/js/visualizacion/d3.min.js"></script>
 <script type="text/javascript" src="/js/visualizacion/inicializar.js"></script>
-<script type="text/javascript" src="/js/visualizacion/estadisticas.js"></script>
 <script type="text/javascript" src="/js/visualizacion/grafos.js"></script>
+<script type="text/javascript" src="/js/visualizacion/pasos_grafos.js"></script>
 <script
   type="text/javascript"
   src="/js/visualizacion/funciones_comunes.js"
@@ -94,7 +94,7 @@ head %} {{ super() }}
       </div>
 
       <div id="fases_grafo" class="m-2 p-2">
-        <div class="row justify-content-center"></div>
+        {% include '/visualizacion/' ~ nombreGrafo ~ '.html' %}
       </div>
     </div>
   </div>
@@ -187,46 +187,22 @@ head %} {{ super() }}
       let steps = [
           {
               title: "{{ gettext("Visualization area") }}",
-              intro: "{{ gettext("This page is the heart of the application. Here, you can observe the algorithm training process.") }}"
-          },
-          {
-              element: '#visualization-card',
-              intro: "{{ gettext("This is the main chart area.") }}",
-              position: 'right'
+              intro: "{{ gettext("This page is the heart of the application. Here, you can observe graph based algorithm training process.") }}"
           },
           {
               element: '#visualizacion_principal',
-              intro: "{{ gettext("This chart will display the data classified by the algorithm. It's interactive; you can zoom in, scroll around, or select a data point (to display relevant information).") }}"
+              intro: "{{ gettext("This chart will display the graph phases of the algorithm. It's interactive; you can zoom in, scroll around, or select a data point (to display relevant information).") }}"
           },
           {
               element: '#controles',
               intro: "{{ gettext("You can proceed through the algorithm steps manually or automatically while visualizing the events.") }}"
           },
           {
-              element: '#stats-card',
-              intro: "{{ gettext("This is the statistics area.") }}",
+              element: '#pasos_grafos',
+              intro: "{{ gettext("This is where you can see the steps explained theoretically, plus a summary of results.") }}",
               position: 'left'
-          },
-          {
-              element: '#zona_estadisticas_generales',
-              intro: "{{ gettext("Here, the statistics extracted in each iteration are displayed in a general way, as if it were a single model.") }}"
           }
       ];
-
-      if (!(window.location.pathname.includes('selftraining'))) {
-          steps.push({
-                  element: '#zona_estadisticas_especificas',
-                  intro: "{{ gettext("Here, the statistics extracted in each iteration for each base classifier are displayed.") }}"
-              },
-              {
-                  element: '#selector_stat',
-                  intro: "{{ gettext("Through this selector, you can choose the metric you want to see.") }}"
-              },
-              {
-                  element: '#checkboxes_especifico_grafico_stat',
-                  intro: "{{ gettext("This allows you to select which base classifier to display.") }}"
-              });
-      }
 
       document.getElementById('inicio_tutorial').addEventListener('click', function () {
           this.style.animation = "none";
@@ -239,8 +215,6 @@ head %} {{ super() }}
       });
   });
 </script>
-<!-- Si fuesen necesarios más se incluirán aquí -->
-<!-- En principio siempre (al menos) se ejecutará la petición POST -->
 
 {% if ejecutar %}
 <script>

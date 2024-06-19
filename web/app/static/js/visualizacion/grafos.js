@@ -5,7 +5,7 @@ let steps = dataSteps = [];
 let maxiter = 0;
 let predictions = {};
 let selectedNode = null;
-
+let initialColors = {};
 
 function inicializarDatos(datos) {
     predictions = datos.predicciones;
@@ -24,22 +24,7 @@ function inicializarDatos(datos) {
     maxiter = steps.length;
 }
 
-// function inicializarDatos(datos) {
-//     predictions = datos.predicciones;
-//     steps = datos.enlaces;
-//     dataSteps.push({
-//         nodes: datos.nodos.map(node => ({ ...node, originalClass: node.class })),
-//         links: steps[0],
-//     });
-//     for (let i = 0; i < steps.length; i++) {
-//         dataSteps.push({
-//             nodes: datos.nodos.map(node => ({ ...node, originalClass: node.class })),
-//             links: steps[i],
-//         });
-//     }
-//     clases = JSON.parse(datos.mapa);
-//     maxiter = steps.length;
-// }
+
 
 let intervalo = null;
 
@@ -69,6 +54,15 @@ function reproducir(){
     }
 }
 
+function highlightNodosDeClase(clase) {
+  node.each(function(d) {
+    if (d.class === clase) {
+      d3.select(this).attr("r", 12); // Aumenta el tamaño del nodo
+    } else {
+      d3.select(this).attr("r", 5); // Restablece el tamaño del nodo
+    }
+  });
+}
 
 
 function inicializarGrafo() {
@@ -80,6 +74,7 @@ function inicializarGrafo() {
     color = d3.scaleOrdinal()
     .domain(Object.keys(clases))
     .range(d3.schemeSet3);
+
     let leyenda = document.getElementById("leyenda_visualizacion");
 
     leyenda.innerHTML = "";
@@ -88,6 +83,9 @@ function inicializarGrafo() {
       let span = document.createElement("span");
       span.style.color = color(parseInt(clase));
       span.innerHTML = clases[clase];
+      span.addEventListener('click', function() {
+        highlightNodosDeClase(parseInt(clase));
+      });
       leyenda.appendChild(span);
     }
 
@@ -95,7 +93,9 @@ function inicializarGrafo() {
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-        .style("border", "1px solid black");
+        .style("border", "3px solid rgba(0, 0, 0, 0.3)")
+        .style("border-radius", "10px");
+
     container = svg.append('g')        
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
     .style("margin", "auto");
@@ -184,12 +184,7 @@ function updateGraph() {
     const currentData = dataSteps[currentStep];
     const nodes = currentData.nodes;
     const links = currentData.links;
-    
-    // if (currentStep < dataSteps.length - 1) {
-    //     nodes.forEach(node => {
-    //         node.class = node.originalClass;
-    //     });
-    // }
+  
 
     // Update nodes
     node = node.data(nodes, d => d.id)
@@ -205,7 +200,12 @@ function updateGraph() {
             }
             })
         );
-
+    if (currentStep != dataSteps.length - 1){
+      node.each(function(d) {
+          d3.select(this)
+          .attr("fill", d => d.class === -1 ? '#808080' : color(d.class))
+      });
+    }
    
     link = link.data(links, d => `${d.source}-${d.target}`)
       .join("line")
@@ -223,7 +223,7 @@ function updateGraph() {
     }
     simulation.alpha(0.3).restart();
 
-    // Add drag behavior only in the final step
+    // Arrastrar solo en el ultimo paso
     if (currentStep === dataSteps.length - 1) {
       node.call(d3.drag()
             .on("start", dragstarted)
@@ -253,36 +253,19 @@ function updateGraph() {
     
 }
 function inferLabels() {
-    node.each(function(d) {
-        if (d.class === -1) {
-            d.class = predictions[d.id];
-        }
-        d3.select(this)
-        .attr("fill", d => d.class === -1 ? '#808080' : color(d.class))
-        .select("title")
-        .text(`ID: ${d.id}, Grupo: ${d.class}`); // Actualizar el tooltip
-    });
+  node.each(function(d) {
+      if (d.id in predictions) { // Verificar si el id del nodo está en predictions
+          d3.select(this)
+          .transition()
+          .duration(1000)
+          .attr("r", 12)
+          .attr("fill", d => color(predictions[d.id]))
+          .transition()
+          .duration(1000)
+          .attr("r", d => selectedNode && d.id === selectedNode ? 8 : 5);
+      }
+  });
 }
-// function inferLabels() {
-//     node.each(function(d) {
-//         if (d.class === -1) {
-//             d.originalClass = d.class; // Store the current class before changing it
-//             d.class = predictions[d.id];
-//             d3.select(this)
-//                 .transition()
-//                 .duration(1000) // Highlight duration
-//                 .attr("r", 10)
-//                 .transition()
-//                 .duration(1000) // Return to original size
-//                 .attr("r", 5);
-//         }
-//         d3.select(this)
-//             .attr("fill", d => d.class === -1 ? '#808080' : color(d.class))
-//             .select("title")
-//             .text(`ID: ${d.id}, Grupo: ${d.class}`); // Actualizar el tooltip
-//     });
-// }
-
 
 function dragstarted(event) {
     if (!event.active) simulation.alphaTarget(0.3).restart();
