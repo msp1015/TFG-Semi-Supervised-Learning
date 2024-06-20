@@ -83,11 +83,11 @@ head %} {{ super() }}
         <h4 class="title-mulish">{{ gettext('Algorithm Steps') }}</h4>
         <hr class="separacion w-10" />
         <div class="btn-group btn-group-toggle">
-          <label class="btn btn-primary" id="btn-fases-grafo">
+          <label class="btn btn-outline-primary active" id="btn-fases-grafo">
             <i class="bi bi-arrow-right-circle"></i>
             {{ gettext('Graph phases') }} - {{ gettext(nombreGrafo) }}
           </label>
-          <label class="btn btn-success disabled" id="btn-inferencia">
+          <label class="btn btn-outline-success disabled" id="btn-inferencia">
             {{ gettext('Inference results') }} - {{ gettext(nombreInferencia) }}
           </label>
         </div>
@@ -111,7 +111,6 @@ head %} {{ super() }}
         step.style.display = index === currentStep ? "block" : "none";
       });
     }
-
     document.getElementById("previt").addEventListener("click", () => {
       currentStep = Math.max(0, currentStep - 1);
       updateStepDisplay();
@@ -137,6 +136,7 @@ head %} {{ super() }}
    * @returns {*} - texto traducido.
    */
   function traducir(texto) {
+      
       let traducciones = {
           'Initial data': "{{ gettext('Initial data') }}",
           'Label': "{{ gettext('Label') }}",
@@ -152,17 +152,17 @@ head %} {{ super() }}
       }
 
       let pasos_gbili = {
-          'gbili_0': "{{gettext('Initial data')}}",
-          'gbili_1': "{{gettext('K nearest neighbors')}}",
-          'gbili_2': "{{gettext('Mutual K nearest neighbors')}}",
-          'gbili_3': "{{gettext('Minimum distances')}}",
-          'gbili_4': "{{gettext('Final graph')}}"
+          'Gbili_0': "{{gettext('Initial data')}}",
+          'Gbili_1': "{{gettext('K nearest neighbors')}}",
+          'Gbili_2': "{{gettext('Mutual K nearest neighbors')}}",
+          'Gbili_3': "{{gettext('Minimum distances')}}",
+          'Gbili_4': "{{gettext('Final graph')}}"
       }
 
       let pasos_rgcli = {
-          'rgcli_0': "{{gettext('Initial data')}}",
-          'rgcli_1': "{{gettext('Ke nearest neighbors')}}",
-          'rgcli_2': "{{gettext('Final graph')}}"
+          'Rgcli_0': "{{gettext('Initial data')}}",
+          'Rgcli_1': "{{gettext('Ke nearest neighbors')}}",
+          'Rgcli_2': "{{gettext('Final graph')}}"
       }
 
       if (texto in traducciones || texto in pasos_gbili || texto in pasos_rgcli) {
@@ -182,6 +182,7 @@ head %} {{ super() }}
 
   let cx = "{{ cx }}", cy = "{{ cy }}";
 
+  var nombreAlgoritmo = "{{ nombreGrafo }}";
 
   document.addEventListener('DOMContentLoaded', function () {
       let steps = [
