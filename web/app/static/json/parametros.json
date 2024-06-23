@@ -112,7 +112,7 @@
     }
   },
   "Graphs": {
-    "Gbili": {
+    "GBILI": {
       "k_vecinos": {
         "label": "Neighbors number",
         "type": "number",
@@ -122,7 +122,7 @@
         "default": 5
       }
     },
-    "Rgcli": {
+    "RGCLI": {
       "ke": {
         "label": "Ke (KNN)",
         "type": "number",
@@ -132,7 +132,7 @@
         "default": 5
       },
       "ki": {
-        "label": "Ki (Rgcli)",
+        "label": "Ki (RGCLI)",
         "type": "number",
         "step": 1,
         "min": 1,

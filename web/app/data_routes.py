@@ -210,13 +210,13 @@ def datosgraphs():
         print(key, type(params_inferancia[key]))
     steps = []
     # Construcción del grafo
-    if constructor == "Gbili":
+    if constructor == "GBILI":
         solver = Gbili(U, L, todas_etiquetas, **params_constructor)
         list_knn, list_mknn, distmin, grafoFinal = solver.construir_grafo()
         print("grafo final construido ", grafoFinal)
         steps = [list_knn, list_mknn, distmin, grafoFinal]
         print(steps)
-    elif constructor == "Rgcli":
+    elif constructor == "RGCLI":
         print("estoy en RGCLI")
         solver = RGCLI(U, L, todas_etiquetas, **params_constructor)
         lista_knn, grafoFinal = solver.construir_grafo()

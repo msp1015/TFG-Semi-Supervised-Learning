@@ -1,176 +1,129 @@
-<style>
-  #form {
-    text-align: center;
-    position: relative;
-    margin-top: 20px;
-  }
-
-  #form fieldset {
-    background: white;
-    border: 0 none;
-    border-radius: 0.5rem;
-    box-sizing: border-box;
-    width: 100%;
-    margin: 0;
-    padding-bottom: 20px;
-    position: relative;
-  }
-
-  .finish {
-    text-align: center;
-  }
-
-  #form fieldset:not(:first-of-type) {
-    display: none;
-  }
-
-  #form .previous-step,
-  .next-step {
-    width: 100px;
-    font-weight: bold;
-    color: white;
-    border: 0 none;
-    border-radius: 0px;
-    cursor: pointer;
-    padding: 10px 5px;
-    margin: 10px 5px 10px 0px;
-    float: right;
-  }
-
-  .form,
-  .previous-step {
-    background: #616161;
-  }
-
-  .form,
-  .next-step {
-    background: #2f8d46;
-  }
-
-  #form .previous-step:hover,
-  #form .previous-step:focus {
-    background-color: #000000;
-  }
-
-  #form .next-step:hover,
-  #form .next-step:focus {
-    background-color: #2f8d46;
-  }
-
-  .text {
-    color: #2f8d46;
-    font-weight: normal;
-  }
-
-  #progressbar {
-    margin-bottom: 30px;
-    overflow: hidden;
-    color: lightgrey;
-  }
-
-  #progressbar .active {
-    color: #2f8d46;
-  }
-
-  #progressbar li {
-    list-style-type: none;
-    font-size: 15px;
-    width: 25%;
-    float: left;
-    position: relative;
-    font-weight: 400;
-  }
-
-  #progressbar #step1:before {
-    content: "1";
-  }
-
-  #progressbar #step2:before {
-    content: "2";
-  }
-
-  #progressbar #step3:before {
-    content: "3";
-  }
-
-  #progressbar #step4:before {
-    content: "4";
-  }
-
-  #progressbar li:before {
-    width: 50px;
-    height: 50px;
-    line-height: 45px;
-    display: block;
-    font-size: 20px;
-    color: #ffffff;
-    background: lightgray;
-    border-radius: 50%;
-    margin: 0 auto 10px auto;
-    padding: 2px;
-  }
-
-  #progressbar li:after {
-    content: "";
-    width: 100%;
-    height: 2px;
-    background: lightgray;
-    position: absolute;
-    left: 0;
-    top: 25px;
-    z-index: -1;
-  }
-
-  #progressbar li.active:before,
-  #progressbar li.active:after {
-    background: #2f8d46;
-  }
-
-  .progress {
-    height: 20px;
-  }
-
-  .progress-bar {
-    background-color: #2f8d46;
-  }
-</style>
-<div class="container">
-  <div class="row justify-content-center">
-    <div
-      class="col-11 col-sm-9 col-md-7 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2"
-    >
-      <div class="px-0 pt-4 pb-0 mt-3 mb-3">
-        <form id="form">
-          <ul id="progressbar">
-            <li class="active" id="step1">
-              <strong>Step 1</strong>
-            </li>
-            <li id="step2"><strong>Step 2</strong></li>
-            <li id="step3"><strong>Step 3</strong></li>
-            <li id="step4"><strong>Step 4</strong></li>
-          </ul>
-          <div class="progress">
-            <div class="progress-bar"></div>
-          </div>
-          <br />
-          <fieldset>
-            <h2>Welcome To GFG Step 1</h2>
-          </fieldset>
-          <fieldset>
-            <h2>Welcome To GFG Step 2</h2>
-          </fieldset>
-          <fieldset>
-            <h2>Welcome To GFG Step 3</h2>
-          </fieldset>
-          <fieldset>
-            <div class="finish">
-              <h2 class="text text-center">
-                <strong>FINISHED</strong>
-              </h2>
-            </div>
-          </fieldset>
-        </form>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Step Progress Bar</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      .step-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        position: relative;
+      }
+      .step {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: #ddd;
+        border-radius: 50%;
+        transition: background-color 0.3s;
+        z-index: 1;
+      }
+      .step.active {
+        background-color: #007bff;
+        color: #fff;
+      }
+      .line {
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        width: calc(100% - 30px);
+        height: 2px;
+        background-color: #ddd;
+        z-index: 0;
+        transform: translateY(-50%);
+      }
+      .line.active {
+        background-color: #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="step-container">
+        <div class="line" id="line1"></div>
+        <div class="step active" id="step1">0</div>
+        <div class="step" id="step2">1</div>
+        <div class="step" id="step3">2</div>
+      </div>
+      <div id="step-content" class="mb-4">
+        <h3>{{gettext('Step')}} 0</h3>
+        <img
+          src="{{ gettext('/pseudocodigos/en/rgcli/rgcli_0.png') }}"
+          width="75%"
+          alt="{{ gettext('RGCLI step 0') }}"
+        />
       </div>
     </div>
-  </div>
-</div>
+
+    <script>
+      let currentStep = 1;
+      const totalSteps = 3;
+
+      function cambiarPaso(step) {
+        currentStep += step;
+        if (currentStep < 1) {
+          currentStep = 1;
+        }
+        if (currentStep > totalSteps) {
+          currentStep = totalSteps;
+        }
+        updateSteps();
+      }
+
+      function updateSteps() {
+        for (let i = 1; i <= totalSteps; i++) {
+          const stepElement = document.getElementById(`step${i}`);
+          stepElement.classList.remove("active");
+          if (i <= currentStep) {
+            stepElement.classList.add("active");
+          }
+        }
+        updateLine();
+        updateContent();
+      }
+
+      function updateLine() {
+        const lineElement = document.getElementById("line1");
+        if (currentStep > 1) {
+          lineElement.classList.add("active");
+        } else {
+          lineElement.classList.remove("active");
+        }
+      }
+
+      function updateContent() {
+        const contentElement = document.getElementById("step-content");
+        switch (currentStep) {
+          case 1:
+            contentElement.innerHTML = `
+                    <h3>Paso 1: Bienvenido</h3>
+                    <p>Este es el primer paso de nuestro proceso.</p>
+                `;
+            break;
+          case 2:
+            contentElement.innerHTML = `
+                    <h3>Paso 2: Información</h3>
+                    <p>Este es el segundo paso de nuestro proceso.</p>
+                `;
+            break;
+          case 3:
+            contentElement.innerHTML = `
+                    <h3>Paso 3: Confirmación</h3>
+                    <p>Este es el tercer y último paso de nuestro proceso.</p>
+                `;
+            break;
+        }
+      }
+    </script>
+  </body>
+</html>

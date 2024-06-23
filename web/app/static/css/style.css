@@ -314,3 +314,9 @@ footer {
     }
 }
 
+.navbar-nav .nav-item .nav-link.active {
+    color: rgb(117, 218, 236);
+    font-weight: bold;
+    border-radius: 5px; 
+    padding: 10px 15px; 
+}

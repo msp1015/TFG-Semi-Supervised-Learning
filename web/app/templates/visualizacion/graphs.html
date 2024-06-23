@@ -15,7 +15,10 @@ head %} {{ super() }}
 >| {{ gettext('Dataset') }}: {{ session['FICHERO']|nombredataset }}
 <br />
 <div id="titulo_visualizacion" class="text-center pb-3">
-  <h1 class="title-mulish text-bold">{{ titulos[session['ALGORITMO']] }}</h1>
+  <h1 class="title-mulish text-bold">
+    {{ gettext('Graphs')}}: {{gettext(nombreGrafo)}} |
+    {{gettext(nombreInferencia)}}
+  </h1>
   <hr class="separacion w-12" />
 </div>
 <div id="div_cargando">
@@ -60,13 +63,13 @@ head %} {{ super() }}
               ></div>
             </div>
           </div>
-          <button id="previt" class="btn btn-primary">
+          <button id="previt" class="btn btn-primary" onclick="cambiarPaso(-1)">
             <i class="bi bi-chevron-double-left"></i>
           </button>
           <button id="reproducir" class="btn btn-primary">
             <i class="bi bi-play-fill"></i>
           </button>
-          <button id="nextit" class="btn btn-primary">
+          <button id="nextit" class="btn btn-primary" onclick="cambiarPaso(-1)">
             <i class="bi bi-chevron-double-right"></i>
           </button>
           <button id="inferir_etiq" class="btn btn-success disabled">
@@ -84,11 +87,10 @@ head %} {{ super() }}
         <hr class="separacion w-10" />
         <div class="btn-group btn-group-toggle">
           <label class="btn btn-primary" id="btn-fases-grafo">
-            <i class="bi bi-arrow-right-circle"></i>
-            {{ gettext('Graph phases') }} - {{ gettext(nombreGrafo) }}
+            {{ gettext('Graph phases') }}
           </label>
           <label class="btn btn-success disabled" id="btn-inferencia">
-            {{ gettext('Inference results') }} - {{ gettext(nombreInferencia) }}
+            {{ gettext('Inference results') }}
           </label>
         </div>
       </div>

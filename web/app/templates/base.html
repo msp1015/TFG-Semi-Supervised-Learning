@@ -36,22 +36,22 @@
                 <div class="collapse navbar-collapse text-white" id="mynavbar">
                     <ul id="selectores_algoritmo" class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/seleccionar/selftraining">Self-Training</a>
+                            <a class="nav-link {% if session['ALGORITMO'] == "selftraining"  %} active {%endif%}" href="/seleccionar/selftraining">Self-Training</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/seleccionar/cotraining">Co-Training</a>
+                            <a class="nav-link {% if session['ALGORITMO'] == "cotraining"  %} active {%endif%}" href="/seleccionar/cotraining">Co-Training</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/seleccionar/tritraining">Tri-Training</a>
+                            <a class="nav-link {% if session['ALGORITMO'] == "tritraining"  %} active {%endif%}" href="/seleccionar/tritraining">Tri-Training</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/seleccionar/democraticcolearning">Democratic Co-Learning</a>
+                            <a class="nav-link {% if session['ALGORITMO'] == "democraticcolearning"  %} active {%endif%}" href="/seleccionar/democraticcolearning">Democratic Co-Learning</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/seleccionar/coforest">Co-Forest</a>
+                            <a class="nav-link {% if session['ALGORITMO'] == "coforest"  %} active {%endif%}" href="/seleccionar/coforest">Co-Forest</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/seleccionar/graphs"> {{gettext('Graphs')}}</a>
+                            <a class="nav-link {% if session['ALGORITMO'] == "graphs"  %} active {%endif%}" href="/seleccionar/graphs"> {{gettext('Graphs')}}</a>
                         </li>
                     </ul>
                     <hr>

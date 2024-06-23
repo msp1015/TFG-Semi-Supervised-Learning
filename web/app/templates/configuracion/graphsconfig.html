@@ -59,11 +59,13 @@
                 key to the transductive methods used in semi-supervised
                 learning.') }}
               </p>
-              <img
-                src="{{ gettext('/pseudocodigos/en/gbili.png') }}"
-                width="75%"
-                alt="Pseudocódigo Gbili"
-              />
+              <div class="text-center">
+                <img
+                  src="{{ gettext('/pseudocodigos/en/gbili.png') }}"
+                  width="75%"
+                  alt="Pseudocódigo Gbili"
+                />
+              </div>
             </div>
             <div id="rgcli" style="display: none">
               <p>
@@ -82,11 +84,13 @@
                 adheres to semi-supervised learning`s consistency assumptions
                 while facilitating effective label propagation.')}}
               </p>
-              <img
-                src="{{ gettext('/pseudocodigos/en/rgcli.png') }}"
-                width="75%"
-                alt="Pseudocodigo Rgcli"
-              />
+              <div class="text-center">
+                <img
+                  src="{{ gettext('/pseudocodigos/en/rgcli.png') }}"
+                  width="75%"
+                  alt="Pseudocodigo Rgcli"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -112,11 +116,13 @@
               scenarios where labeled data is scarce but unlabeled data is
               plentiful.')}}
             </p>
-            <img
-              src="{{ gettext('/pseudocodigos/en/LGC.png') }}"
-              width="75%"
-              alt="Pseudocodigo LGC"
-            />
+            <div class="text-center">
+              <img
+                src="{{ gettext('/pseudocodigos/en/LGC.png') }}"
+                width="75%"
+                alt="Pseudocodigo LGC"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -188,11 +194,11 @@
 
           constructor.addEventListener('change', (event) => {
               generarFormParametros(event.target.value, div_parametros1, "constructor");
-              if (constructor.value === 'Gbili') {
+              if (constructor.value === 'GBILI') {
                 document.getElementById('gbili').style.display = 'block';
                 document.getElementById('rgcli').style.display = 'none';
               }
-              else if (constructor.value === 'Rgcli') {
+              else if (constructor.value === 'RGCLI') {
                 document.getElementById('gbili').style.display = 'none';
                 document.getElementById('rgcli').style.display = 'block';
               }

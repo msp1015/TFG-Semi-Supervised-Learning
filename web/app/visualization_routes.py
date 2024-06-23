@@ -87,7 +87,7 @@ def visualizar_algoritmo_json(algoritmo, run_id):
 
     with open(os.path.join(current_app.config['CARPETA_RUNS'], run.jsonfile)) as f:
         json_data = json.load(f)
-    # TOPO: TENER EN CUENTA LOS GRAFOS (NO SE NECESITA TANTA INFORMACION PARA LA PLANTILLA)
+    # TODO: TENER EN CUENTA LOS GRAFOS (NO SE NECESITA TANTA INFORMACION PARA LA PLANTILLA)
     return render_template('visualizacion/' + algoritmo + '.html',
                            params=[],
                            cx=run.cx,

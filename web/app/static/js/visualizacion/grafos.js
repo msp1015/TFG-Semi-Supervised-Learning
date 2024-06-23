@@ -22,6 +22,7 @@ function inicializarDatos(datos) {
     }
     clases = JSON.parse(datos.mapa);
     maxiter = steps.length;
+    console.log(maxiter);
 }
 
 
@@ -283,3 +284,6 @@ function dragended(event) {
     event.subject.fx = null;
     event.subject.fy = null;
 }
+
+
+
