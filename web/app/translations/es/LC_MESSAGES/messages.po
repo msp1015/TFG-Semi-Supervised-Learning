@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-05 22:37+0200\n"
+"POT-Creation-Date: 2024-06-24 01:06+0200\n"
 "PO-Revision-Date: 2023-02-26 14:39+0100\n"
 "Last-Translator: David Martínez Acha <dmacha@ubu.es>\n"
 "Language: es\n"
@@ -18,7 +18,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
 
-#: __init__.py:70 templates/base.html:54 templates/inicio.html:117
+#: __init__.py:70 templates/base.html:54
+#: templates/configuracion/graphsconfig.html:20 templates/inicio.html:117
+#: templates/visualizacion/graphs.html:19
 msgid "Graphs"
 msgstr "Grafos"
 
@@ -145,18 +147,16 @@ msgid "Number of initial data"
 msgstr "Número de datos iniciales"
 
 #: forms.py:186
-#, fuzzy
 msgid "Number of trees"
-msgstr "Número de iteraciones"
+msgstr "Número de árboles"
 
 #: forms.py:198
 msgid "Select constructor"
 msgstr "Selecciona un constructor"
 
 #: forms.py:202
-#, fuzzy
 msgid "Select inference"
-msgstr "Selecciona clasificador"
+msgstr "Selecciona la inferencia"
 
 #: main_routes.py:96
 msgid "You must select an algorithm"
@@ -214,7 +214,7 @@ msgstr "¡Cuenta actualizada!"
 msgid "You must select the parameters of the algorithm"
 msgstr "Debe seleccionar los parámetros del algoritmo"
 
-#: visualization_routes.py:218
+#: visualization_routes.py:221
 msgid "Classifiers must be different (diverse) to ensure proper execution"
 msgstr ""
 "Los clasificadores deben ser diferentes (diversos) para asegurar una "
@@ -253,7 +253,6 @@ msgid "Success"
 msgstr "Éxito"
 
 #: templates/base.html:158 templates/visualizacion/base_visualizacion.html:118
-#: templates/visualizacion/graphs.html:147
 msgid "Warning"
 msgstr "Advertencia"
 
@@ -399,87 +398,108 @@ msgid ""
 "from\n"
 "              labeled to unlabeled data."
 msgstr ""
+"Construir grafos de similitud para representar las\n"
+"              similitudes entre muestras, luego usar estos grafos para "
+"propagar etiquetas\n"
+"              desde los datos etiquetados a los no etiquetados."
 
-#: templates/inicio.html:128 templates/inicio.html:165
-#: templates/inicio.html:203 templates/inicio.html:241
-#: templates/inicio.html:280 templates/inicio.html:319
+#: templates/inicio.html:129 templates/inicio.html:167
+#: templates/inicio.html:207 templates/inicio.html:247
+#: templates/inicio.html:288 templates/inicio.html:329
 msgid "Select"
 msgstr "Seleccionar"
 
-#: templates/inicio.html:136 templates/inicio.html:173
-#: templates/inicio.html:211 templates/inicio.html:249
-#: templates/inicio.html:288 templates/inicio.html:327
+#: templates/inicio.html:137 templates/inicio.html:175
+#: templates/inicio.html:215 templates/inicio.html:255
+#: templates/inicio.html:296 templates/inicio.html:337
 msgid "Paper"
 msgstr "Artículo"
 
-#: templates/inicio.html:157
+#: templates/inicio.html:159
 msgid ""
 "Ensemble that uses multiple decision trees to\n"
 "              iteratively add confident predictions to the training set,\n"
 "              enhancing mutual learning."
 msgstr ""
-
-#: templates/inicio.html:193
-#, fuzzy
-msgid "Self-Training"
-msgstr "Pseudocódigo de Self-Training"
+"Conjunto que utiliza múltiples árboles de decisión para\n"
+"              añadir iterativamente predicciones confiables al conjunto "
+"de entrenamiento,\n"
+"              mejorando el aprendizaje mutuo."
 
 #: templates/inicio.html:196
+msgid "Self-Training"
+msgstr "Self-Training"
+
+#: templates/inicio.html:199
 msgid ""
 "Uses a base classifier initially trained with labeled\n"
 "              data and iteratively retrains with pseudo-labeled data "
 "until a\n"
 "              stopping criterion is met."
 msgstr ""
+"Utiliza un clasificador base inicialmente entrenado con datos etiquetados"
+"\n"
+"              y se reentrena iterativamente con datos pseudo-etiquetados\n"
+"              hasta que se cumple un criterio de parada."
 
-#: templates/inicio.html:231
-#, fuzzy
+#: templates/inicio.html:236
 msgid "Co-Training"
-msgstr "Pseudocódigo de Co-Training"
+msgstr "Co-Training"
 
-#: templates/inicio.html:234
+#: templates/inicio.html:239
 msgid ""
 "Uses multiple classifiers trained on different\n"
 "              attribute subsets, iteratively predicting and selecting "
 "confident\n"
 "              labels to build new training sets."
 msgstr ""
+"Utiliza múltiples clasificadores entrenados en diferentes\n"
+"              subconjuntos de atributos, prediciendo y seleccionando "
+"iterativamente\n"
+"              etiquetas confiables para construir nuevos conjuntos de "
+"entrenamiento."
 
-#: templates/inicio.html:269
-#, fuzzy
+#: templates/inicio.html:276
 msgid "Tri-Training"
-msgstr "Pseudocódigo de Tri-Training"
+msgstr "Tri-Training"
 
-#: templates/inicio.html:272
+#: templates/inicio.html:279
 msgid ""
 "Uses three classifiers to pseudo-label data, requiring\n"
 "              two of them to agree, and iterates (with new empty data) "
 "until no\n"
 "              new labels are added."
 msgstr ""
+"Utiliza tres clasificadores para pseudo-etiquetar datos, requiriendo\n"
+"              que dos de ellos estén de acuerdo, e itera (con nuevos "
+"datos vacíos)\n"
+"              hasta que no se añadan nuevas etiquetas."
 
-#: templates/inicio.html:309
-#, fuzzy
+#: templates/inicio.html:318
 msgid "Democratic Co-Learning"
-msgstr "Pseudocódigo del Entrenamiento de Democratic Co-Learning"
+msgstr "Democratic Co-Learning"
 
-#: templates/inicio.html:312
+#: templates/inicio.html:321
 msgid ""
 "Uses multiple classifiers to pseudo-label data by\n"
 "              majority vote, retraining misclassified instances until "
 "accuracy\n"
 "              stops improving."
 msgstr ""
+"Utiliza múltiples clasificadores para pseudo-etiquetar datos por\n"
+"              voto mayoritario, reentrenando instancias mal clasificadas "
+"hasta que\n"
+"              la precisión deje de mejorar."
 
-#: templates/inicio.html:340
+#: templates/inicio.html:351
 msgid "Welcome"
 msgstr "Bienvenido/a"
 
-#: templates/inicio.html:341
+#: templates/inicio.html:352
 msgid "Welcome to VASS! This is a basic tutorial."
 msgstr "¡Bienvenido/a a Vass! Esto es un tutorial básico."
 
-#: templates/inicio.html:345
+#: templates/inicio.html:356
 msgid ""
 "Here's a quick rundown of some theoretical concepts and what the app aims"
 " to do."
@@ -487,7 +507,7 @@ msgstr ""
 "Aquí se realiza una pequeña introducción de conceptos teóricos y del "
 "objetivo de la aplicación."
 
-#: templates/inicio.html:349
+#: templates/inicio.html:360
 msgid ""
 "By selecting any of these algorithms, you'll be able to upload a dataset "
 "to work with."
@@ -495,13 +515,13 @@ msgstr ""
 "Al seleccionar cualquiera de estos algoritmos podrás subir un conjunto de"
 " datos con el que trabajar."
 
-#: templates/inicio.html:353
+#: templates/inicio.html:364
 msgid "Likewise, you can select any algorithm using these selectors."
 msgstr ""
 "Del mismo modo, puede seleccionar cualquier algoritmo mediante estos "
 "selectores."
 
-#: templates/inicio.html:357
+#: templates/inicio.html:368
 msgid ""
 "On every page of the application, you'll always find a basic tutorial by "
 "clicking on this button."
@@ -509,7 +529,7 @@ msgstr ""
 "En todas las páginas de la aplicación siempre encontrarás un tutorial "
 "básico pulsando en este botón."
 
-#: templates/inicio.html:361
+#: templates/inicio.html:372
 msgid ""
 "At any time, you can refer to the application's guide by clicking on this"
 " button."
@@ -517,11 +537,11 @@ msgstr ""
 "En cualquier momento puedes consultar el manual de la aplicación en este "
 "botón."
 
-#: templates/inicio.html:365
+#: templates/inicio.html:376
 msgid "You can also choose the desired language."
 msgstr "También puedes elegir el idioma deseado."
 
-#: templates/inicio.html:373
+#: templates/inicio.html:384
 msgid ""
 "You can log in or register in the application. This will allow you to "
 "store datasets and even save executions."
@@ -529,7 +549,7 @@ msgstr ""
 "Puedes iniciar sesión o registrarte en la aplicación. Esto permitirá "
 "almacenar conjuntos de datos e incluso guardar ejecuciones."
 
-#: templates/inicio.html:378
+#: templates/inicio.html:389
 msgid ""
 "Here you can access the profile and personal space with datasets and "
 "executions."
@@ -538,41 +558,39 @@ msgstr ""
 "datos y ejecuciones."
 
 #: templates/configuracion/base_config_inductivos.html:91
-#: templates/configuracion/graphsconfig.html:258 templates/inicio.html:386
+#: templates/configuracion/graphsconfig.html:260 templates/inicio.html:397
 #: templates/subida.html:112 templates/usuarios/miespacio.html:59
 #: templates/usuarios/perfil.html:80
 #: templates/visualizacion/base_visualizacion.html:188
-#: templates/visualizacion/graphs.html:217
+#: templates/visualizacion/graphs.html:201
 msgid "Next"
 msgstr "Siguiente"
 
 #: templates/configuracion/base_config_inductivos.html:92
-#: templates/configuracion/graphsconfig.html:259 templates/inicio.html:387
+#: templates/configuracion/graphsconfig.html:261 templates/inicio.html:398
 #: templates/subida.html:113 templates/usuarios/miespacio.html:60
 #: templates/usuarios/perfil.html:81
 #: templates/visualizacion/base_visualizacion.html:189
-#: templates/visualizacion/graphs.html:218
+#: templates/visualizacion/graphs.html:202
 msgid "Previous"
 msgstr "Anterior"
 
 #: templates/configuracion/base_config_inductivos.html:93
-#: templates/configuracion/graphsconfig.html:260 templates/inicio.html:388
+#: templates/configuracion/graphsconfig.html:262 templates/inicio.html:399
 #: templates/subida.html:114 templates/usuarios/miespacio.html:61
 #: templates/usuarios/perfil.html:82
 #: templates/visualizacion/base_visualizacion.html:190
-#: templates/visualizacion/graphs.html:219
+#: templates/visualizacion/graphs.html:203
 msgid "Done"
 msgstr "Hecho"
 
 #: templates/macros.html:6
-#, fuzzy
 msgid ""
 "Uncheck PCA to select specific\n"
 "  components"
 msgstr "Desmarca PCA para seleccionar componentes específicas"
 
 #: templates/macros.html:26
-#, fuzzy
 msgid ""
 "If already semi-supervised,\n"
 "  it will be ignored"
@@ -591,7 +609,6 @@ msgid "All attributes must be numeric"
 msgstr "Todos los atributos deben ser numéricos"
 
 #: templates/macros.html:104
-#, fuzzy
 msgid ""
 "This does not include the target attribute (it can be\n"
 "              categorical)"
@@ -610,7 +627,6 @@ msgid "Semi-supervised datasets can be uploaded"
 msgstr "Se pueden cargar conjuntos de datos semi-supervisados"
 
 #: templates/macros.html:126
-#, fuzzy
 msgid ""
 "Examples with -1, -1.0 or \"?\" on the target\n"
 "                attribute will be interpreted as unlabelled examples"
@@ -619,7 +635,6 @@ msgstr ""
 "interpretados como ejemplos no etiquetados"
 
 #: templates/macros.html:130
-#, fuzzy
 msgid ""
 "A dataset can contain multiple unlabelled examples,\n"
 "                but with the same type (-1, -1.0 or \"?\")"
@@ -668,7 +683,7 @@ msgid "Run date"
 msgstr "Fecha de ejecución"
 
 #: templates/configuracion/base_config_inductivos.html:35
-#: templates/configuracion/graphsconfig.html:137 templates/macros.html:209
+#: templates/configuracion/graphsconfig.html:133 templates/macros.html:209
 #: templates/macros.html:270
 msgid "Parameters"
 msgstr "Parámetros"
@@ -809,27 +824,27 @@ msgid "Dataset"
 msgstr "Conjunto de datos"
 
 #: templates/configuracion/base_config_inductivos.html:21
-#: templates/configuracion/graphsconfig.html:30
+#: templates/configuracion/graphsconfig.html:29
 msgid "Theory"
 msgstr "Teoría"
 
 #: templates/configuracion/base_config_inductivos.html:52
-#: templates/configuracion/graphsconfig.html:186
+#: templates/configuracion/graphsconfig.html:182
 msgid "Run"
 msgstr "Ejecutar"
 
 #: templates/configuracion/base_config_inductivos.html:71
-#: templates/configuracion/graphsconfig.html:238
+#: templates/configuracion/graphsconfig.html:240
 msgid "Configuration area"
 msgstr "Área de configuración"
 
 #: templates/configuracion/base_config_inductivos.html:72
-#: templates/configuracion/graphsconfig.html:239
+#: templates/configuracion/graphsconfig.html:241
 msgid "On this page, you'll be able to customize the parameters of algorithm "
 msgstr "En esta página podrás personalizar los parámetros del algoritmo."
 
 #: templates/configuracion/base_config_inductivos.html:76
-#: templates/configuracion/graphsconfig.html:243
+#: templates/configuracion/graphsconfig.html:245
 msgid ""
 "You can gain a deeper understanding of the algorithm by reviewing its "
 "theory and pseudocode."
@@ -838,12 +853,12 @@ msgstr ""
 "pseudocódigo."
 
 #: templates/configuracion/base_config_inductivos.html:80
-#: templates/configuracion/graphsconfig.html:247
+#: templates/configuracion/graphsconfig.html:249
 msgid "Here you can select the desired parameters."
 msgstr "Aquí puedes seleccionar los parámetros deseados."
 
 #: templates/configuracion/base_config_inductivos.html:84
-#: templates/configuracion/graphsconfig.html:251
+#: templates/configuracion/graphsconfig.html:253
 msgid ""
 "It's crucial to select the column of data that acts as the target "
 "correctly. The rest of the parameters can be used as default."
@@ -852,7 +867,7 @@ msgstr ""
 "actúa como objetivo. El resto de parámetros pueden servir por defecto."
 
 #: templates/configuracion/base_config_inductivos.html:88
-#: templates/configuracion/graphsconfig.html:255
+#: templates/configuracion/graphsconfig.html:257
 msgid ""
 "And finally, execute the algorithm. The application may take a few "
 "seconds to display the complete execution."
@@ -866,40 +881,44 @@ msgstr "Parámetros de árboles de decisión"
 
 #: templates/configuracion/coforestconfig.html:30
 msgid ""
-"_Esta técnica se basa en la idea de utilizar múltiples\n"
-"  clasificadores (árboles de decisión, en este caso), los cuales se "
-"entrenan de\n"
-"  forma iterativa con un conjunto inicial de datos etiquetados. A medida "
-"que el\n"
-"  algoritmo avanza, cada árbol intenta clasificar los datos no "
-"etiquetados y las\n"
-"  predicciones más confiables se añaden al conjunto de entrenamiento como"
-" si\n"
-"  fueran etiquetas reales. Este proceso de \"enseñanza mutua\" entre los\n"
-"  clasificadores permite mejorar progresivamente el rendimiento del "
-"modelo a\n"
-"  medida que se incorpora más información de los datos no etiquetados. "
-"Co-forest\n"
-"  aprovecha la diversidad entre los árboles de decisión para mejorar la\n"
-"  generalización del modelo frente a datos nuevos o desconocidos, "
-"haciéndolo\n"
-"  especialmente útil en escenarios donde las etiquetas son escasas o "
-"costosas de\n"
-"  obtener._"
+"This technique is based on the idea of using multiple classifiers\n"
+"  (decision trees, in this case), which are iteratively trained with an "
+"initial\n"
+"  set of labeled data. As the algorithm progresses, each tree attempts to"
+"\n"
+"  classify the unlabeled data, and the most confident predictions are "
+"added to\n"
+"  the training set as if they were real labels. This process of \"mutual\n"
+"  teaching\" among the classifiers progressively improves the model`s "
+"performance\n"
+"  as more information from the unlabeled data is incorporated. Co-forest\n"
+"  leverages the diversity among the decision trees to enhance the model`s"
+"\n"
+"  generalization to new or unknown data, making it especially useful in\n"
+"  scenarios where labels are scarce or expensive to obtain."
 msgstr ""
+"Esta técnica se basa en la idea de utilizar múltiples clasificadores\n"
+"  (árboles de decisión, en este caso), los cuales se entrenan de forma iterativa con un\n"
+"  conjunto inicial de datos etiquetados. A medida que el algoritmo avanza, cada árbol intenta\n"
+"  clasificar los datos no etiquetados y las predicciones más confiables se añaden al\n"
+"  conjunto de entrenamiento como si fueran etiquetas reales. Este proceso de \"enseñanza\n"
+"  mutua\" entre los clasificadores permite mejorar progresivamente el rendimiento del modelo\n"
+"  a medida que se incorpora más información de los datos no etiquetados. Co-forest\n"
+"  aprovecha la diversidad entre los árboles de decisión para mejorar la generalización del modelo\n"
+"  frente a datos nuevos o desconocidos, haciéndolo especialmente útil en\n"
+"  escenarios donde las etiquetas son escasas o costosas de obtener."
+
+#: templates/configuracion/coforestconfig.html:43
+#: templates/visualizacion/coforest.html:4
+msgid "/pseudocodigos/en/CoForest.png"
+msgstr "/pseudocodigos/es/CoForest.png"
 
 #: templates/configuracion/coforestconfig.html:45
 #, fuzzy
-msgid "/pseudocodigos/en/CoForest.png"
-msgstr "/pseudocodigos/es/CoTraining.png"
-
-#: templates/configuracion/coforestconfig.html:47
-#, fuzzy
 msgid "Co-Forest Pseudocode"
-msgstr "Pseudocódigo de Co-Training"
+msgstr "Pseudocódigo de Co-Forest"
 
 #: templates/configuracion/cotrainingconfig.html:22
-#, fuzzy
 msgid ""
 "If it is larger than the total, it will\n"
 "  be limited to it (the total)"
@@ -907,7 +926,6 @@ msgstr "Si es mayor que el total, se limitará a él (al total)"
 
 #: templates/configuracion/cotrainingconfig.html:26
 #: templates/configuracion/selftrainingconfig.html:23
-#, fuzzy
 msgid ""
 "Enter 0 to not limit the number of\n"
 "  iterations"
@@ -1018,128 +1036,124 @@ msgstr "/pseudocodigos/es/DemocraticCoLearningCombinar.png"
 msgid "Democratic Co-Learning Combine Pseudocode"
 msgstr "Pseudocódigo de la Combinación de Democratic Co-Learning"
 
-#: templates/configuracion/graphsconfig.html:39
-msgid "Build graph"
-msgstr "Construir grafo"
+#: templates/configuracion/graphsconfig.html:33
+msgid "Graph construction"
+msgstr "Construcción del grafo"
 
-#: templates/configuracion/graphsconfig.html:44
+#: templates/configuracion/graphsconfig.html:36
 msgid "Inference"
 msgstr "Inferencia"
 
-#: templates/configuracion/graphsconfig.html:53
+#: templates/configuracion/graphsconfig.html:45
 msgid ""
 " The GBILI algorithm, standing for Graph Building\n"
-"                  based on the Informativeness of Labeled Instances, is a"
-" graph\n"
-"                  construction method for semi-supervised learning that\n"
-"                  leverages the informativeness of labeled instances to\n"
-"                  establish strategic node connections. The process "
-"initiates\n"
-"                  with the creation of a distance matrix using Euclidean\n"
-"                  distance to identify k-nearest neighbors. After setting"
+"                based on the Informativeness of Labeled Instances, is a "
+"graph\n"
+"                construction method for semi-supervised learning that "
+"leverages\n"
+"                the informativeness of labeled instances to establish "
+"strategic\n"
+"                node connections. The process initiates with the creation"
+" of a\n"
+"                distance matrix using Euclidean distance to identify "
+"k-nearest\n"
+"                neighbors. After setting parameters such as the number of"
 "\n"
-"                  parameters such as the number of neighbors, k, each "
-"node`s\n"
-"                  mutual nearest neighbors are pinpointed. "
-"Informativeness is\n"
-"                  then calculated by summing distances from each node to "
-"its\n"
-"                  mutual neighbors and to the nearest labeled point, "
-"which helps\n"
-"                  in forming connections that minimize this distance sum."
-" The\n"
-"                  graph is further refined by connecting isolated "
-"components\n"
-"                  through a Breadth-First Search, ensuring network "
-"connectivity\n"
-"                  without over-densifying, which is key to the "
-"transductive\n"
-"                  methods used in semi-supervised learning."
+"                neighbors, k, each node`s mutual nearest neighbors are\n"
+"                pinpointed. Informativeness is then calculated by summing"
+"\n"
+"                distances from each node to its mutual neighbors and to "
+"the\n"
+"                nearest labeled point, which helps in forming connections"
+" that\n"
+"                minimize this distance sum. The graph is further refined "
+"by\n"
+"                connecting isolated components through a Breadth-First "
+"Search,\n"
+"                ensuring network connectivity without over-densifying, "
+"which is\n"
+"                key to the transductive methods used in semi-supervised\n"
+"                learning."
 msgstr ""
 
-#: templates/configuracion/graphsconfig.html:71
-#, fuzzy
+#: templates/configuracion/graphsconfig.html:64
 msgid "/pseudocodigos/en/gbili.png"
-msgstr "/pseudocodigos/es/CoTraining.png"
+msgstr "/pseudocodigos/es/gbili.png"
 
-#: templates/configuracion/graphsconfig.html:78
+#: templates/configuracion/graphsconfig.html:72
 msgid ""
 "The RGCLI (Refined Graph Construction based on\n"
-"                  Labeled Instance Information) algorithm enhances\n"
-"                  semi-supervised learning by efficiently constructing "
-"graphs in\n"
-"                  large datasets. It operates under the assumption that "
-"nearby\n"
-"                  or structurally similar points share the same label. "
-"The\n"
-"                  algorithm utilizes two parameters: ke for the broader\n"
-"                  neighborhood and ki for establishing actual connections"
-" based\n"
-"                  on proximity to labeled vertices. RGCLI begins by "
-"identifying\n"
-"                  ke nearest neighbors using a Kd-tree, calculates a "
-"score based\n"
-"                  on distances from a point to a mutual neighbor and the "
-"nearest\n"
-"                  labeled vertex, and then connects each point to ki "
-"mutual\n"
-"                  neighbors that minimize this distance. This approach "
-"ensures a\n"
-"                  sparse, meaningful graph that adheres to semi-"
+"                Labeled Instance Information) algorithm enhances semi-"
 "supervised\n"
-"                  learning`s consistency assumptions while facilitating\n"
-"                  effective label propagation."
+"                learning by efficiently constructing graphs in large "
+"datasets.\n"
+"                It operates under the assumption that nearby or "
+"structurally\n"
+"                similar points share the same label. The algorithm "
+"utilizes two\n"
+"                parameters: ke for the broader neighborhood and ki for\n"
+"                establishing actual connections based on proximity to "
+"labeled\n"
+"                vertices. RGCLI begins by identifying ke nearest "
+"neighbors using\n"
+"                a Kd-tree, calculates a score based on distances from a "
+"point to\n"
+"                a mutual neighbor and the nearest labeled vertex, and "
+"then\n"
+"                connects each point to ki mutual neighbors that minimize "
+"this\n"
+"                distance. This approach ensures a sparse, meaningful "
+"graph that\n"
+"                adheres to semi-supervised learning`s consistency "
+"assumptions\n"
+"                while facilitating effective label propagation."
 msgstr ""
 
-#: templates/configuracion/graphsconfig.html:95
-#, fuzzy
+#: templates/configuracion/graphsconfig.html:89
 msgid "/pseudocodigos/en/rgcli.png"
-msgstr "/pseudocodigos/es/CoTraining.png"
+msgstr "/pseudocodigos/es/rgcli.png"
 
-#: templates/configuracion/graphsconfig.html:105
+#: templates/configuracion/graphsconfig.html:100
 msgid ""
 "The Graph-based Local and Global Consistency (LGC)\n"
-"                algorithm is a semi-supervised learning method designed "
+"              algorithm is a semi-supervised learning method designed\n"
+"              toference-tab\"> predict labels for unlabeled data points "
+"by\n"
+"              leveraging relationships within the data. The algorithm "
+"starts by\n"
+"              creating an affinity matrix that represents the closeness "
+"between\n"
+"              points based on their distances. This matrix is normalized "
+"to help\n"
+"              stabilize the label propagation process. LGC iterates a "
+"label\n"
+"              spreading mechanism where each data point updates its label"
+" based\n"
+"              on the labels of its neighbors and its original label, "
+"balanced by\n"
+"              a parameter. The process continues until the labels "
+"stabilize,\n"
+"              essentially allowing each point to adopt the label most "
+"common\n"
+"              among its neighbors. In this specific adaptation of LGC, "
+"the\n"
+"              affinity matrix simplifies connections between points as "
+"either\n"
+"              existing (1) or not (0), streamlining the computation. This"
+"\n"
+"              approach effectively uses both labeled and unlabeled data "
 "to\n"
-"                predict labels for unlabeled data points by leveraging\n"
-"                relationships within the data. The algorithm starts by "
-"creating\n"
-"                an affinity matrix that represents the closeness between "
-"points\n"
-"                based on their distances. This matrix is normalized to "
-"help\n"
-"                stabilize the label propagation process. LGC iterates a "
-"label\n"
-"                spreading mechanism where each data point updates its "
-"label\n"
-"                based on the labels of its neighbors and its original "
-"label,\n"
-"                balanced by a parameter. The process continues until the "
-"labels\n"
-"                stabilize, essentially allowing each point to adopt the "
-"label\n"
-"                most common among its neighbors. In this specific "
-"adaptation of\n"
-"                LGC, the affinity matrix simplifies connections between "
-"points\n"
-"                as either existing (1) or not (0), streamlining the "
-"computation.\n"
-"                This approach effectively uses both labeled and unlabeled"
-" data\n"
-"                to enhance label prediction, making it particularly "
-"useful in\n"
-"                scenarios where labeled data is scarce but unlabeled data"
-" is\n"
-"                plentiful."
+"              enhance label prediction, making it particularly useful in\n"
+"              scenarios where labeled data is scarce but unlabeled data "
+"is\n"
+"              plentiful."
 msgstr ""
 
-#: templates/configuracion/graphsconfig.html:125
-#, fuzzy
+#: templates/configuracion/graphsconfig.html:121
 msgid "/pseudocodigos/en/LGC.png"
-msgstr "/pseudocodigos/es/SelfTraining.png"
+msgstr "/pseudocodigos/es/LGC.png"
 
-#: templates/configuracion/graphsconfig.html:164
-#, fuzzy
+#: templates/configuracion/graphsconfig.html:160
 msgid ""
 "If already\n"
 "                semi-supervised, it will be ignored"
@@ -1333,18 +1347,17 @@ msgid "Here you can modify the basic data of your profile."
 msgstr "Aquí puedes modificar los datos básicos de tu perfil."
 
 #: templates/visualizacion/base_visualizacion.html:29
-#: templates/visualizacion/graphs.html:32
+#: templates/visualizacion/graphs.html:35
 msgid "Main visualization"
 msgstr "Visualización principal"
 
 #: templates/visualizacion/base_visualizacion.html:39
-#: templates/visualizacion/graphs.html:49
+#: templates/visualizacion/graphs.html:52
 msgid "Zoom reset"
 msgstr "Reiniciar Zoom"
 
 #: templates/visualizacion/base_visualizacion.html:41
 #: templates/visualizacion/base_visualizacion.html:114
-#: templates/visualizacion/graphs.html:143
 msgid "Iteration"
 msgstr "Iteración"
 
@@ -1357,57 +1370,47 @@ msgid "General statistics"
 msgstr "Estadísticas generales"
 
 #: templates/visualizacion/base_visualizacion.html:108
-#: templates/visualizacion/graphs.html:137
 msgid "Initial data"
 msgstr "Dato inicial"
 
 #: templates/visualizacion/base_visualizacion.html:109
-#: templates/visualizacion/graphs.html:138
 msgid "Label"
 msgstr "Etiqueta"
 
 #: templates/visualizacion/base_visualizacion.html:110
-#: templates/visualizacion/graphs.html:139
 msgid "Classifier"
 msgstr "Clasificador"
 
 #: templates/visualizacion/base_visualizacion.html:111
-#: templates/visualizacion/graphs.html:140
 msgid "Classifier: Not classified"
 msgstr "Clasificador: No clasificado"
 
 #: templates/visualizacion/base_visualizacion.html:112
-#: templates/visualizacion/graphs.html:141
 msgid "Label: Not classified"
 msgstr "Etiqueta: No clasificado"
 
 #: templates/visualizacion/base_visualizacion.html:113
-#: templates/visualizacion/graphs.html:142
 msgid "Measure"
 msgstr "Valor"
 
 #: templates/visualizacion/base_visualizacion.html:115
-#: templates/visualizacion/graphs.html:144
 msgid "Point"
 msgstr "Punto"
 
 #: templates/visualizacion/base_visualizacion.html:116
-#: templates/visualizacion/graphs.html:145
 msgid "Position"
 msgstr "Posición"
 
 #: templates/visualizacion/base_visualizacion.html:117
-#: templates/visualizacion/graphs.html:146
 msgid "overlapping points"
 msgstr "puntos solapados"
 
 #: templates/visualizacion/base_visualizacion.html:142
-#: templates/visualizacion/graphs.html:171
+#: templates/visualizacion/graphs.html:179
 msgid "Visualization area"
 msgstr "Área de visualización"
 
 #: templates/visualizacion/base_visualizacion.html:143
-#: templates/visualizacion/graphs.html:172
 msgid ""
 "This page is the heart of the application. Here, you can observe the "
 "algorithm training process."
@@ -1416,12 +1419,10 @@ msgstr ""
 "proceso de entrenamiento del algoritmo."
 
 #: templates/visualizacion/base_visualizacion.html:147
-#: templates/visualizacion/graphs.html:176
 msgid "This is the main chart area."
 msgstr "Esta es la zona del gráfico principal."
 
 #: templates/visualizacion/base_visualizacion.html:152
-#: templates/visualizacion/graphs.html:181
 msgid ""
 "This chart will display the data classified by the algorithm. It's "
 "interactive; you can zoom in, scroll around, or select a data point (to "
@@ -1432,7 +1433,7 @@ msgstr ""
 " un dato (para mostrar información de interés)."
 
 #: templates/visualizacion/base_visualizacion.html:156
-#: templates/visualizacion/graphs.html:185
+#: templates/visualizacion/graphs.html:188
 msgid ""
 "You can proceed through the algorithm steps manually or automatically "
 "while visualizing the events."
@@ -1441,12 +1442,10 @@ msgstr ""
 " mientras se visualizan los eventos."
 
 #: templates/visualizacion/base_visualizacion.html:160
-#: templates/visualizacion/graphs.html:189
 msgid "This is the statistics area."
 msgstr "Esta es la zona de estadísticas."
 
 #: templates/visualizacion/base_visualizacion.html:165
-#: templates/visualizacion/graphs.html:194
 msgid ""
 "Here, the statistics extracted in each iteration are displayed in a "
 "general way, as if it were a single model."
@@ -1455,7 +1454,6 @@ msgstr ""
 "general, como si fuera un único modelo."
 
 #: templates/visualizacion/base_visualizacion.html:172
-#: templates/visualizacion/graphs.html:201
 msgid ""
 "Here, the statistics extracted in each iteration for each base classifier"
 " are displayed."
@@ -1464,33 +1462,81 @@ msgstr ""
 "clasificador base."
 
 #: templates/visualizacion/base_visualizacion.html:176
-#: templates/visualizacion/graphs.html:205
 msgid "Through this selector, you can choose the metric you want to see."
 msgstr "Mediante este selector puedes elegir la métrica que deseas ver."
 
 #: templates/visualizacion/base_visualizacion.html:180
-#: templates/visualizacion/graphs.html:209
 msgid "This allows you to select which base classifier to display."
 msgstr "Esto permite seleccionar qué clasificador base mostrar."
 
-#: templates/visualizacion/coforest.html:4
-#, fuzzy
-msgid "/pseudocodigos/en/coforest.png"
-msgstr "/pseudocodigos/es/CoTraining.png"
+#: templates/visualizacion/graphs.html:55
+#: templates/visualizacion/graphs.html:144
+#: templates/visualizacion/graphs.html:152
+msgid "Initial Data"
+msgstr "Datos iniciales"
 
-#: templates/visualizacion/graphs.html:52
-msgid "Step"
-msgstr "Paso"
+#: templates/visualizacion/graphs.html:76
+msgid "Infer labels"
+msgstr "Inferir etiquetas"
 
-#: templates/visualizacion/graphs.html:74
-#, fuzzy
-msgid "Infer label"
-msgstr "Etiqueta"
-
-#: templates/visualizacion/graphs.html:84
-#, fuzzy
+#: templates/visualizacion/graphs.html:86
 msgid "Algorithm Steps"
-msgstr "Algoritmo"
+msgstr "Pasos Algoritmo"
+
+#: templates/visualizacion/graphs.html:90
+msgid "Graph phases"
+msgstr "Fases de grafos"
+
+#: templates/visualizacion/graphs.html:93
+msgid "Inference results"
+msgstr "Resultados de inferencia"
+
+#: templates/visualizacion/graphs.html:145
+msgid "K nearest neighbors"
+msgstr "K vecinos más cercanos"
+
+#: templates/visualizacion/graphs.html:146
+msgid "Mutual K nearest neighbors"
+msgstr "K vecinos más cercanos mutuos"
+
+#: templates/visualizacion/graphs.html:147
+msgid "Minimum distances"
+msgstr "Distancias mínimas"
+
+#: templates/visualizacion/graphs.html:148
+#: templates/visualizacion/graphs.html:154
+msgid "Final graph"
+msgstr "Grafo final"
+
+#: templates/visualizacion/graphs.html:153
+msgid "Ke nearest neighbors"
+msgstr "Ke vecinos más cercanos"
+
+#: templates/visualizacion/graphs.html:180
+msgid ""
+"This page is the heart of the application. Here, you can observe graph "
+"based algorithm training process."
+msgstr ""
+"Esta página es el núcleo de la aplicación. Aquí podrás observar el "
+"proceso de entrenamiento del algoritmo."
+
+#: templates/visualizacion/graphs.html:184
+msgid ""
+"This chart will display the graph phases of the algorithm. It's "
+"interactive; you can zoom in, scroll around, or select a data point (to "
+"display relevant information)."
+msgstr ""
+"En este gráfico se irán mostrando los datos clasificados por el "
+"algoritmo. Es interactivo, puedes aplicar zoom, desplazarte o seleccionar"
+" un dato (para mostrar información de interés)."
+
+#: templates/visualizacion/graphs.html:192
+msgid ""
+"This is where you can see the steps explained theoretically, plus a "
+"summary of results."
+msgstr ""
+"Aquí es donde puedes ver los pasos explicados teóricamente, además de un "
+"resumen de los resultados."
 
 #: templates/visualizacion/singleview.html:3
 msgid "Specific statistics"
@@ -1513,4 +1559,164 @@ msgstr "Estadísticas específicas"
 
 #~ msgid "Three or more classifiers"
 #~ msgstr "Tres o más clasificadores"
+
+#~ msgid ""
+#~ " The GBILI algorithm, standing for Graph Building\n"
+#~ "                  based on the Informativeness"
+#~ " of Labeled Instances, is a graph"
+#~ "\n"
+#~ "                  construction method for "
+#~ "semi-supervised learning that\n"
+#~ "                  leverages the informativeness "
+#~ "of labeled instances to\n"
+#~ "                  establish strategic node "
+#~ "connections. The process initiates\n"
+#~ "                  with the creation of a"
+#~ " distance matrix using Euclidean\n"
+#~ "                  distance to identify "
+#~ "k-nearest neighbors. After setting\n"
+#~ "                  parameters such as the "
+#~ "number of neighbors, k, each node`s\n"
+#~ ""
+#~ "                  mutual nearest neighbors are"
+#~ " pinpointed. Informativeness is\n"
+#~ "                  then calculated by summing"
+#~ " distances from each node to its\n"
+#~ ""
+#~ "                  mutual neighbors and to "
+#~ "the nearest labeled point, which helps"
+#~ "\n"
+#~ "                  in forming connections that"
+#~ " minimize this distance sum. The\n"
+#~ "                  graph is further refined "
+#~ "by connecting isolated components\n"
+#~ "                  through a Breadth-First "
+#~ "Search, ensuring network connectivity\n"
+#~ "                  without over-densifying, "
+#~ "which is key to the transductive\n"
+#~ "                  methods used in semi-supervised learning."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The RGCLI (Refined Graph Construction based on\n"
+#~ "                  Labeled Instance Information) algorithm enhances\n"
+#~ "                  semi-supervised learning by"
+#~ " efficiently constructing graphs in\n"
+#~ "                  large datasets. It operates"
+#~ " under the assumption that nearby\n"
+#~ "                  or structurally similar "
+#~ "points share the same label. The\n"
+#~ "                  algorithm utilizes two "
+#~ "parameters: ke for the broader\n"
+#~ "                  neighborhood and ki for "
+#~ "establishing actual connections based\n"
+#~ "                  on proximity to labeled "
+#~ "vertices. RGCLI begins by identifying\n"
+#~ "                  ke nearest neighbors using"
+#~ " a Kd-tree, calculates a score "
+#~ "based\n"
+#~ "                  on distances from a "
+#~ "point to a mutual neighbor and the"
+#~ " nearest\n"
+#~ "                  labeled vertex, and then "
+#~ "connects each point to ki mutual\n"
+#~ "                  neighbors that minimize this"
+#~ " distance. This approach ensures a\n"
+#~ "                  sparse, meaningful graph "
+#~ "that adheres to semi-supervised\n"
+#~ "                  learning`s consistency assumptions"
+#~ " while facilitating\n"
+#~ "                  effective label propagation."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The Graph-based Local and Global Consistency (LGC)\n"
+#~ "                algorithm is a semi-"
+#~ "supervised learning method designed to\n"
+#~ "                predict labels for unlabeled"
+#~ " data points by leveraging\n"
+#~ "                relationships within the data."
+#~ " The algorithm starts by creating\n"
+#~ "                an affinity matrix that "
+#~ "represents the closeness between points\n"
+#~ ""
+#~ "                based on their distances. "
+#~ "This matrix is normalized to help\n"
+#~ ""
+#~ "                stabilize the label "
+#~ "propagation process. LGC iterates a "
+#~ "label\n"
+#~ "                spreading mechanism where each"
+#~ " data point updates its label\n"
+#~ "                based on the labels of"
+#~ " its neighbors and its original "
+#~ "label,\n"
+#~ "                balanced by a parameter. "
+#~ "The process continues until the labels"
+#~ "\n"
+#~ "                stabilize, essentially allowing "
+#~ "each point to adopt the label\n"
+#~ "                most common among its "
+#~ "neighbors. In this specific adaptation "
+#~ "of\n"
+#~ "                LGC, the affinity matrix "
+#~ "simplifies connections between points\n"
+#~ "                as either existing (1) "
+#~ "or not (0), streamlining the "
+#~ "computation.\n"
+#~ "                This approach effectively uses"
+#~ " both labeled and unlabeled data\n"
+#~ "                to enhance label prediction,"
+#~ " making it particularly useful in\n"
+#~ "                scenarios where labeled data"
+#~ " is scarce but unlabeled data is\n"
+#~ ""
+#~ "                plentiful."
+#~ msgstr ""
+
+#~ msgid "Step"
+#~ msgstr "Paso"
+
+#~ msgid "/pseudocodigos/en/coforest.png"
+#~ msgstr "/pseudocodigos/es/CoForest.png"
+
+#~ msgid "Decision Tree parameters"
+#~ msgstr "Parámetros de árboles de decisión"
+
+#~ msgid ""
+#~ "_Esta técnica se basa en la idea de utilizar múltiples\n"
+#~ "  clasificadores (árboles de decisión, "
+#~ "en este caso), los cuales se "
+#~ "entrenan de\n"
+#~ "  forma iterativa con un conjunto "
+#~ "inicial de datos etiquetados. A medida"
+#~ " que el\n"
+#~ "  algoritmo avanza, cada árbol intenta"
+#~ " clasificar los datos no etiquetados "
+#~ "y las\n"
+#~ "  predicciones más confiables se añaden"
+#~ " al conjunto de entrenamiento como si"
+#~ "\n"
+#~ "  fueran etiquetas reales. Este proceso"
+#~ " de \"enseñanza mutua\" entre los\n"
+#~ "  clasificadores permite mejorar "
+#~ "progresivamente el rendimiento del modelo "
+#~ "a\n"
+#~ "  medida que se incorpora más "
+#~ "información de los datos no etiquetados."
+#~ " Co-forest\n"
+#~ "  aprovecha la diversidad entre los "
+#~ "árboles de decisión para mejorar la\n"
+#~ ""
+#~ "  generalización del modelo frente a "
+#~ "datos nuevos o desconocidos, haciéndolo\n"
+#~ ""
+#~ "  especialmente útil en escenarios donde"
+#~ " las etiquetas son escasas o costosas"
+#~ " de\n"
+#~ "  obtener._"
+#~ msgstr ""
+
+#~ msgid "Co-Forest Pseudocode"
+#~ msgstr "Pseudocódigo de Co-Forest"
 

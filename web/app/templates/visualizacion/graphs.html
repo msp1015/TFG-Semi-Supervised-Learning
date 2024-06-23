@@ -139,22 +139,9 @@ head %} {{ super() }}
    * @returns {*} - texto traducido.
    */
   function traducir(texto) {
-      let traducciones = {
-          'Initial data': "{{ gettext('Initial data') }}",
-          'Label': "{{ gettext('Label') }}",
-          'Classifier': "{{ gettext('Classifier') }}",
-          'Classifier: Not classified': "{{ gettext('Classifier: Not classified') }}",
-          'Label: Not classified': "{{ gettext('Label: Not classified') }}",
-          'Measure': "{{ gettext('Measure') }}",
-          'Iteration': "{{ gettext('Iteration') }}",
-          'Point': "{{ gettext('Point') }}",
-          'Position': "{{ gettext('Position') }}",
-          'overlapping points': "{{ gettext('overlapping points') }}",
-          'Warning': "{{ gettext('Warning') }}"
-      }
 
       let pasos_gbili = {
-          'GBILI_0': "{{gettext('Initial data')}}",
+          'GBILI_0': "{{gettext('Initial Data')}}",
           'GBILI_1': "{{gettext('K nearest neighbors')}}",
           'GBILI_2': "{{gettext('Mutual K nearest neighbors')}}",
           'GBILI_3': "{{gettext('Minimum distances')}}",
@@ -162,13 +149,13 @@ head %} {{ super() }}
       }
 
       let pasos_rgcli = {
-          'RGCLI_0': "{{gettext('Initial data')}}",
+          'RGCLI_0': "{{gettext('Initial Data')}}",
           'RGCLI_1': "{{gettext('Ke nearest neighbors')}}",
           'RGCLI_2': "{{gettext('Final graph')}}"
       }
 
-      if (texto in traducciones || texto in pasos_gbili || texto in pasos_rgcli) {
-          return traducciones[texto] || pasos_gbili[texto] || pasos_rgcli[texto]
+      if ( texto in pasos_gbili || texto in pasos_rgcli) {
+          return pasos_gbili[texto] || pasos_rgcli[texto]
       }
 
       return texto

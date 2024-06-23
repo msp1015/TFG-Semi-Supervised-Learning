@@ -213,18 +213,13 @@ def datosgraphs():
     if constructor == "GBILI":
         solver = Gbili(U, L, todas_etiquetas, **params_constructor)
         list_knn, list_mknn, distmin, grafoFinal = solver.construir_grafo()
-        print("grafo final construido ", grafoFinal)
         steps = [list_knn, list_mknn, distmin, grafoFinal]
-        print(steps)
     elif constructor == "RGCLI":
-        print("estoy en RGCLI")
         solver = RGCLI(U, L, todas_etiquetas, **params_constructor)
         lista_knn, grafoFinal = solver.construir_grafo()
         steps = [lista_knn, grafoFinal]
-        print("grafo final construido ", grafoFinal)
         
-    if inferencia == "LocalAndGlobalConsistency":
-        print("estoy en LGC")
+    if inferencia == "LGC":
         propagacion = LGC(grafoFinal, solver.nodos, solver.etiquetas_etiquetados, **params_inferancia)
         predicciones = propagacion.inferir_etiquetas()
     else:

@@ -84,7 +84,7 @@
     }
   },
   "Inference": {
-    "LocalAndGlobalConsistency": {
+    "LGC": {
       "alpha": {
         "label": "Alpha",
         "type": "number",
