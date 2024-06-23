@@ -178,7 +178,7 @@ function actualizaBarraProgreso(step) {
     let progreso = (step / maxiter) * 100;
     document.getElementById('progreso').style.width = `${progreso}%`;
     document.getElementById("progreso").setAttribute("aria-valuenow", progreso.toString());
-    document.getElementById("iteracion").innerHTML = traducir("gbili_" + step.toString());
+    document.getElementById("iteracion").innerHTML = traducir(nombreAlgoritmo + "_" + step.toString());
 }
 
 function updateGraph() {
