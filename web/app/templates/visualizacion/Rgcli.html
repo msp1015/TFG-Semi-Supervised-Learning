@@ -1,129 +1,161 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Step Progress Bar</title>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <style>
-      .step-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 20px;
+<style>
+  [multi-step-progress] {
+    ul.steps {
+      margin-bottom: 30px;
+      padding-left: 0;
+      overflow: hidden;
+      text-align: center;
+
+      li {
+        list-style-type: none;
+        color: #bbb;
+        font-size: 9px;
+        float: left;
         position: relative;
-      }
-      .step {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        background-color: #ddd;
-        border-radius: 50%;
-        transition: background-color 0.3s;
-        z-index: 1;
-      }
-      .step.active {
-        background-color: #007bff;
-        color: #fff;
-      }
-      .line {
-        position: absolute;
-        top: 50%;
-        left: 20px;
-        width: calc(100% - 30px);
-        height: 2px;
-        background-color: #ddd;
-        z-index: 0;
-        transform: translateY(-50%);
-      }
-      .line.active {
-        background-color: #007bff;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="step-container">
-        <div class="line" id="line1"></div>
-        <div class="step active" id="step1">0</div>
-        <div class="step" id="step2">1</div>
-        <div class="step" id="step3">2</div>
-      </div>
-      <div id="step-content" class="mb-4">
-        <h3>{{gettext('Step')}} 0</h3>
-        <img
-          src="{{ gettext('/pseudocodigos/en/rgcli/rgcli_0.png') }}"
-          width="75%"
-          alt="{{ gettext('RGCLI step 0') }}"
-        />
-      </div>
-    </div>
+        font: 500 13px/1 helvetica;
 
-    <script>
-      let currentStep = 1;
-      const totalSteps = 3;
-
-      function cambiarPaso(step) {
-        currentStep += step;
-        if (currentStep < 1) {
-          currentStep = 1;
+        &:before {
+          font-family: "Font Awesome 5 Free";
+          font-weight: 600;
+          font-size: 20px;
+          content: attr(data-icon);
+          width: 50px;
+          height: 50px;
+          line-height: 50px;
+          display: block;
+          background: #eee;
+          border-radius: 50%;
+          margin: 0 auto 10px auto;
         }
-        if (currentStep > totalSteps) {
-          currentStep = totalSteps;
-        }
-        updateSteps();
-      }
 
-      function updateSteps() {
-        for (let i = 1; i <= totalSteps; i++) {
-          const stepElement = document.getElementById(`step${i}`);
-          stepElement.classList.remove("active");
-          if (i <= currentStep) {
-            stepElement.classList.add("active");
+        &:after {
+          content: "";
+          width: 100%;
+          height: 10px;
+          background: #eee;
+          position: absolute;
+          left: -50%;
+          top: 21px;
+          z-index: -1;
+        }
+
+        &:last-child {
+          &:after {
+            width: 150%;
           }
         }
-        updateLine();
-        updateContent();
+
+        &.active {
+          color: yellowgreen;
+
+          &:before,
+          &:after {
+            background: yellowgreen;
+            color: #333;
+          }
+        }
+      }
+    }
+
+    ul.content {
+      list-style: none;
+      padding: 1rem;
+      text-align: center;
+
+      li {
+        display: none;
+
+        &.active {
+          display: block;
+        }
       }
 
-      function updateLine() {
-        const lineElement = document.getElementById("line1");
-        if (currentStep > 1) {
-          lineElement.classList.add("active");
+      p {
+        text-align: left;
+      }
+    }
+  }
+</style>
+<div multi-step-progress="">
+  <ul class="steps pt-4">
+    <li data-target-step="1">Paso 1</li>
+    <li data-target-step="2">Paso 2</li>
+  </ul>
+
+  <ul class="content pb-4">
+    <li class="active" data-step="1">
+      <h1>Step 1</h1>
+      <p>
+        Lorem ipsum dolor sit amet, erant dolor phaedrum ad vel, usu mundi
+        consequuntur ne. In pri ceteros pericula argumentum, at eum veri congue
+        consequat, no quot nibh mea. Natum aliquam pericula at vis, congue
+        efficiendi cu mea. Tibique commune gubergren et usu, usu ne sadipscing
+        voluptatibus comprehensam, te wisi tritani his. Ornatus comprehensam eu
+        sed, sit nisl eruditi ocurreret.
+      </p>
+    </li>
+    <li data-step="2">
+      <h1>Step 2</h1>
+      <p>
+        Lorem ipsum dolor sit amet, erant dolor phaedrum ad vel, usu mundi
+        consequuntur ne. In pri ceteros pericula argumentum, at eum veri congue
+        consequat, no quot nibh mea. Natum aliquam pericula at vis, congue
+        efficiendi cu mea. Tibique commune gubergren et usu, usu ne sadipscing
+        voluptatibus comprehensam, te wisi tritani his. Ornatus comprehensam eu
+        sed, sit nisl eruditi ocurreret.
+      </p>
+    </li>
+    <li data-step="3">
+      <h1>Step 3</h1>
+      <p>
+        Lorem ipsum dolor sit amet, erant dolor phaedrum ad vel, usu mundi
+        consequuntur ne. In pri ceteros pericula argumentum, at eum veri congue
+        consequat, no quot nibh mea. Natum aliquam pericula at vis, congue
+        efficiendi cu mea. Tibique commune gubergren et usu, usu ne sadipscing
+        voluptatibus comprehensam, te wisi tritani his. Ornatus comprehensam eu
+        sed, sit nisl eruditi ocurreret.
+      </p>
+    </li>
+  </ul>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const steps = document.querySelectorAll("ul.steps li");
+    const contents = document.querySelectorAll("ul.content li");
+    const prevButton = document.getElementById("previt");
+    const nextButton = document.getElementById("nexit");
+    let currentStep = 0;
+
+    function showStep(step) {
+      steps.forEach((li, index) => {
+        li.classList.toggle("active", index === step);
+        if (index < step) {
+          li.classList.add("completed");
         } else {
-          lineElement.classList.remove("active");
+          li.classList.remove("completed");
         }
-      }
+      });
 
-      function updateContent() {
-        const contentElement = document.getElementById("step-content");
-        switch (currentStep) {
-          case 1:
-            contentElement.innerHTML = `
-                    <h3>Paso 1: Bienvenido</h3>
-                    <p>Este es el primer paso de nuestro proceso.</p>
-                `;
-            break;
-          case 2:
-            contentElement.innerHTML = `
-                    <h3>Paso 2: Información</h3>
-                    <p>Este es el segundo paso de nuestro proceso.</p>
-                `;
-            break;
-          case 3:
-            contentElement.innerHTML = `
-                    <h3>Paso 3: Confirmación</h3>
-                    <p>Este es el tercer y último paso de nuestro proceso.</p>
-                `;
-            break;
-        }
+      contents.forEach((li, index) => {
+        li.classList.toggle("active", index === step);
+      });
+    }
+
+    prevButton.addEventListener("click", function () {
+      if (currentStep > 0) {
+        currentStep--;
+        showStep(currentStep);
       }
-    </script>
-  </body>
-</html>
+    });
+
+    nextButton.addEventListener("click", function () {
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    });
+
+    // Initial display
+    showStep(currentStep);
+  });
+</script>

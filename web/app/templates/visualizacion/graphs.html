@@ -63,13 +63,13 @@ head %} {{ super() }}
               ></div>
             </div>
           </div>
-          <button id="previt" class="btn btn-primary" onclick="cambiarPaso(-1)">
+          <button id="previt" class="btn btn-primary">
             <i class="bi bi-chevron-double-left"></i>
           </button>
           <button id="reproducir" class="btn btn-primary">
             <i class="bi bi-play-fill"></i>
           </button>
-          <button id="nextit" class="btn btn-primary" onclick="cambiarPaso(-1)">
+          <button id="nextit" class="btn btn-primary">
             <i class="bi bi-chevron-double-right"></i>
           </button>
           <button id="inferir_etiq" class="btn btn-success disabled">
@@ -86,7 +86,7 @@ head %} {{ super() }}
         <h4 class="title-mulish">{{ gettext('Algorithm Steps') }}</h4>
         <hr class="separacion w-10" />
         <div class="btn-group btn-group-toggle">
-          <label class="btn btn-outline-primary" id="btn-fases-grafo">
+          <label class="btn btn-outline-primary active" id="btn-fases-grafo">
             {{ gettext('Graph phases') }}
           </label>
           <label class="btn btn-outline-success disabled" id="btn-inferencia">
@@ -154,17 +154,17 @@ head %} {{ super() }}
       }
 
       let pasos_gbili = {
-          'gbili_0': "{{gettext('Initial data')}}",
-          'gbili_1': "{{gettext('K nearest neighbors')}}",
-          'gbili_2': "{{gettext('Mutual K nearest neighbors')}}",
-          'gbili_3': "{{gettext('Minimum distances')}}",
-          'gbili_4': "{{gettext('Final graph')}}"
+          'GBILI_0': "{{gettext('Initial data')}}",
+          'GBILI_1': "{{gettext('K nearest neighbors')}}",
+          'GBILI_2': "{{gettext('Mutual K nearest neighbors')}}",
+          'GBILI_3': "{{gettext('Minimum distances')}}",
+          'GBILI_4': "{{gettext('Final graph')}}"
       }
 
       let pasos_rgcli = {
-          'rgcli_0': "{{gettext('Initial data')}}",
-          'rgcli_1': "{{gettext('Ke nearest neighbors')}}",
-          'rgcli_2': "{{gettext('Final graph')}}"
+          'RGCLI_0': "{{gettext('Initial data')}}",
+          'RGCLI_1': "{{gettext('Ke nearest neighbors')}}",
+          'RGCLI_2': "{{gettext('Final graph')}}"
       }
 
       if (texto in traducciones || texto in pasos_gbili || texto in pasos_rgcli) {
@@ -184,6 +184,7 @@ head %} {{ super() }}
 
   let cx = "{{ cx }}", cy = "{{ cy }}";
 
+  var nombreAlgoritmo = "{{ nombreGrafo }}";
 
   document.addEventListener('DOMContentLoaded', function () {
       let steps = [
