@@ -22,7 +22,6 @@ function inicializarDatos(datos) {
     }
     clases = JSON.parse(datos.mapa);
     maxiter = steps.length;
-    console.log(maxiter);
 }
 
 
@@ -270,10 +269,12 @@ function updateGraph() {
 
     
 }
+
 function inferLabels() {
   var button = document.getElementById('btn-inferencia');
   button.disabled = false;
   button.classList.remove('disabled');
+  selectedNode = null;
   node.each(function(d) {
       if (d.id in predictions) { // Verificar si el id del nodo está en predictions
           d3.select(this)
@@ -283,9 +284,10 @@ function inferLabels() {
           .attr("fill", d => color(predictions[d.id]))
           .transition()
           .duration(1000)
-          .attr("r", d => selectedNode && d.id === selectedNode ? 8 : 5);
+          .attr("r", 5);
       }
   });
+  updateGraph();
 }
 
 function dragstarted(event) {

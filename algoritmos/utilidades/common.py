@@ -40,7 +40,7 @@ def calculate_log_statistics(y_test, predicted):
     """
 
     return [accuracy_score(y_test, predicted),
-            precision_score(y_test, predicted, average="weighted"),
+            precision_score(y_test, predicted, average="weighted", zero_division=0.0),
             1 - accuracy_score(y_test, predicted),
             f1_score(y_test, predicted, average='weighted'),
             recall_score(y_test, predicted, average='weighted')]

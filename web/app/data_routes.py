@@ -5,6 +5,7 @@ from datetime import datetime
 from flask import request, session, Blueprint, current_app, jsonify
 from flask_login import current_user
 import numpy as np
+from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
@@ -16,6 +17,7 @@ from algoritmos import SelfTraining, CoTraining, DemocraticCoLearning, TriTraini
 from algoritmos.utilidades.datasetloader import DatasetLoader
 from algoritmos.utilidades.datasplitter import data_split
 from algoritmos.utilidades.dimreduction import log_pca_reduction, log_cxcy_reduction
+from algoritmos.utilidades.common import calculate_log_statistics
 
 from . import db
 from .models import Run
@@ -229,76 +231,20 @@ def datosgraphs():
     for i in range(len(steps)):
         steps[i] = build_enlaces_json(steps[i])
     predicciones = predicciones[len(L):].tolist()
-    
-    print("Etiquetas iniciales: ", U_y)
-    print("Etiquetas finales: ", predicciones)
-    print(mapa)
-    
-    
-    from sklearn.metrics import confusion_matrix, classification_report
-    print(confusion_matrix(U_y, predicciones).tolist())
     conf_matrix = confusion_matrix(U_y, predicciones)
-    report = classification_report(U_y, predicciones)
-    print("\nReporte de Clasificación:")
-    print(report)
-    # guardar dato de recall de la clase 1
-    recall = report.split("\n")[3].split(" ")[-2]
-    print(recall)
-    def calculate_metrics_from_conf_matrix(conf_matrix):
-        metrics = {}
-        num_classes = conf_matrix.shape[0]
+    medidas = calculate_log_statistics(U_y, predicciones)
+    metricas = {"accuracy": medidas[0], "precision": medidas[1], "error": medidas[2], "f1-score": medidas[3], "recall": medidas[4]}
 
-        for i in range(num_classes):
-            tp = conf_matrix[i, i]
-            fp = conf_matrix[:, i].sum() - tp
-            fn = conf_matrix[i, :].sum() - tp
-            tn = conf_matrix.sum() - (tp + fp + fn)
-
-            precision = tp / (tp + fp) if (tp + fp) != 0 else 0
-            recall = tp / (tp + fn) if (tp + fn) != 0 else 0
-            f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) != 0 else 0
-            accuracy = (tp + tn) / (tp + tn + fp + fn)
-
-            metrics[mapa[i]] = {
-                'TP': tp,
-                'FP': fp,
-                'FN': fn,
-                'TN': tn,
-                'Precision': precision,
-                'Recall': recall,
-                'F1-Score': f1,
-                'Accuracy': accuracy
-            }
-
-        # Calcular métricas generales
-        overall_accuracy = np.trace(conf_matrix) / np.sum(conf_matrix)
-        
-        metrics['Overall'] = {
-            'Accuracy': overall_accuracy
-        }
-
-        return metrics
-
-    metrics = calculate_metrics_from_conf_matrix(conf_matrix)
-    print(metrics)
-    for cls, cls_metrics in metrics.items():
-        print(f"{cls}:")
-        for metric, value in cls_metrics.items():
-            print(f"  {metric}: {value:.4f}")
-    
-    
-    
-    
-    
-    
-    
     predicciones_json = {}
     for i, prediccion in enumerate(predicciones):
         predicciones_json[str(i + len(L))] = prediccion
+
     info_grafos = {"nodos": nodos_iniciales, 
                    "enlaces": steps, 
                    "predicciones": predicciones_json,
-                   "mapa": json.dumps(mapa)}
+                   "mapa": json.dumps(mapa),
+                   "confusion_matrix": conf_matrix.tolist(),
+                   "average_metrics": metricas}
     print(info_grafos)
     if current_user.is_authenticated:
         date = int(datetime.now().timestamp())

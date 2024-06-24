@@ -320,8 +320,10 @@ function generargraficoestadistico(id_div_objetivo, datos_stats, dominio) {
         leyenda = document.getElementById("leyenda_estadisticas_especificas");
         leyenda.innerHTML = "";
     }
-
+    leyenda.style.maxHeight = "300px"; // Ajusta este valor según sea necesario
+    leyenda.style.overflowY = "auto";
     for (const d of dominio) {
+        console.log(d)
         let span = document.createElement("span");
         span.classList.add("text-left");
         span.classList.add("text-break");

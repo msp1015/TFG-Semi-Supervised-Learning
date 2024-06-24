@@ -320,3 +320,17 @@ footer {
     border-radius: 5px; 
     padding: 10px 15px; 
 }
+
+.confusion-matrix .metrics {
+    overflow: auto;
+    max-width: 100%;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: center;
+}

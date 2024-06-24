@@ -1,199 +1,237 @@
-{% extends "base.html" %}
-{% from "macros.html" import modalerror %}
-{% block head %}
-    {{ super() }}
-    <script type="text/javascript" src="/js/visualizacion/d3.min.js"></script>
-    <script type="text/javascript" src="/js/visualizacion/inicializar.js"></script>
-    <script type="text/javascript" src="/js/visualizacion/estadisticas.js"></script>
-    <script type="text/javascript" src="/js/visualizacion/grafico.js"></script>
-    <script type="text/javascript" src="/js/visualizacion/funciones_comunes.js"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-{% endblock %}
-{% block content %}
-    <button id="btn_volver" type="button" onclick="history.back()" class="btn">
-        <i class="bi bi-caret-left-fill"></i>{{ gettext('Go back') }}</button>| {{ gettext('Dataset') }}:
-    {{ session['FICHERO']|nombredataset }}
-    <br>
-    <div id="titulo_visualizacion" class="text-center pb-3">
-        <h1 class="title-mulish text-bold">{{ titulos[session['ALGORITMO']] }}</h1>
-        <hr class="separacion w-12"/>
-    </div>
-    <div id="div_cargando">
-        <div id="cargando" class="cargando m-auto"></div>
-    </div>
-    <div id="visualizacion" style="visibility: hidden;"
-         class="d-flex flex-wrap justify-content-around mb-3 position-relative">
-        <div id="visualization-card" class="col-md">
-            <div class="m-2 pt-4 pb-2 shadow-lg rounded-4 sticky-top">
-                <div class="text-center position-relative">
-                    <h4 class="title-mulish">{{ gettext('Main visualization') }}</h4>
-                    <hr class="separacion w-10"/>
-                    <div id="zona_gráfico" class="d-flex mt-4 justify-content-center align-items-center">
-                        <div class="d-flex">
-                            <div class="position-relative" id="visualizacion_principal"></div>
-                            <div id="leyenda_visualizacion" class="d-flex flex-column align-items-start m-auto"
-                                 style="width: 7rem;"></div>
-                        </div>
-                    </div>
-                    <div class="text_center" id="controles">
-                        <button id="reiniciar_zoom" class="btn btn-light">{{ gettext('Zoom reset') }}</button>
-                        <br><br>
-                        <label>{{ gettext('Iteration') }}: </label><label id="iteracion">0</label>
-                        <div class="rounded-4 p-2">
-                            <div class="progress m-auto" style="width: 30rem;">
-                                <div id="progreso" class="progress-bar gold" role="progressbar" aria-valuemin="0"></div>
-                            </div>
-                        </div>
-                        <button id="previt" class="btn btn-primary"><i class="bi bi-chevron-double-left"></i></button>
-                        <button id="reproducir" class="btn btn-primary"><i class="bi bi-play-fill"></i></button>
-                        <button id="nextit" class="btn btn-primary"><i class="bi bi-chevron-double-right"></i></button>
-                    </div>
-                    <br>
-                </div>
-            </div>
+{% extends "base.html" %} {% from "macros.html" import modalerror %} {% block
+head %} {{ super() }}
+<script type="text/javascript" src="/js/visualizacion/d3.min.js"></script>
+<script type="text/javascript" src="/js/visualizacion/inicializar.js"></script>
+<script type="text/javascript" src="/js/visualizacion/estadisticas.js"></script>
+<script type="text/javascript" src="/js/visualizacion/grafico.js"></script>
+<script
+  type="text/javascript"
+  src="/js/visualizacion/funciones_comunes.js"
+></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+{% endblock %} {% block content %}
+<button id="btn_volver" type="button" onclick="history.back()" class="btn">
+  <i class="bi bi-caret-left-fill"></i>{{ gettext('Go back') }}</button
+>| {{ gettext('Dataset') }}: {{ session['FICHERO']|nombredataset }}
+<br />
+<div id="titulo_visualizacion" class="text-center pb-3">
+  <h1 class="title-mulish text-bold">{{ titulos[session['ALGORITMO']] }}</h1>
+  <hr class="separacion w-12" />
+</div>
+<div id="div_cargando">
+  <div id="cargando" class="cargando m-auto"></div>
+</div>
+<div
+  id="visualizacion"
+  style="visibility: hidden"
+  class="d-flex flex-wrap justify-content-around mb-3 position-relative"
+>
+  <div id="visualization-card" class="col-md">
+    <div class="m-2 pt-4 pb-2 shadow-lg rounded-4 sticky-top">
+      <div class="text-center position-relative">
+        <h4 class="title-mulish">{{ gettext('Main visualization') }}</h4>
+        <hr class="separacion w-10" />
+        <div
+          id="zona_gráfico"
+          class="d-flex mt-4 justify-content-center align-items-center"
+        >
+          <div class="d-flex">
+            <div class="position-relative" id="visualizacion_principal"></div>
+            <div
+              id="leyenda_visualizacion"
+              class="d-flex flex-column align-items-start m-auto"
+              style="width: 7rem"
+            ></div>
+          </div>
         </div>
-        <div id="stats-card" class="col-md">
-            <div class="m-2 pt-4 pb-2 shadow-lg rounded-4 text-center sticky-top">
-                <div class="accordion w-75 mx-auto" id="pseudocodigo">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="encabezado">
-                            <button class="accordion-button collapsed title-mulish" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false"
-                                    aria-controls="collapse">
-                                {{ gettext('Pseudocode') }}
-                            </button>
-                        </h2>
-                        <div id="collapse" class="accordion-collapse collapse" aria-labelledby="encabezado"
-                             data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                {% block pseudocodigo %}{% endblock %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <h4 class="title-mulish">{{ gettext('General statistics') }}</h4>
-                <hr class="separacion w-10"/>
-                <div id="zona_estadisticas_generales"
-                     class=" d-flex mt-4 justify-content-center align-items-center text-center">
-                    <div class="d-flex">
-                        <div id="estadisticas_generales"></div>
-                        <div id="leyenda_estadisticas_generales" class="d-flex flex-column align-items-start m-auto"
-                             style="width: 12rem;"></div>
-                    </div>
-                </div>
-                <br>
-                {% block titulo_especificas %}{% endblock %}
-                <div id="zona_estadisticas_especificas"
-                     class=" d-flex justify-content-center align-items-center text-center">
-                    <!-- Si fuesen necesarias más estadísticas se incluirán aquí -->
-                    {% block mas_estadisticas %}{% endblock %}
-                </div>
+        <div class="text_center" id="controles">
+          <button id="reiniciar_zoom" class="btn btn-light">
+            {{ gettext('Zoom reset') }}
+          </button>
+          <br /><br />
+          <label>{{ gettext('Iteration') }}: </label
+          ><label id="iteracion">0</label>
+          <div class="rounded-4 p-2">
+            <div class="progress m-auto" style="width: 30rem">
+              <div
+                id="progreso"
+                class="progress-bar gold"
+                role="progressbar"
+                aria-valuemin="0"
+              ></div>
             </div>
+          </div>
+          <button id="previt" class="btn btn-primary">
+            <i class="bi bi-chevron-double-left"></i>
+          </button>
+          <button id="reproducir" class="btn btn-primary">
+            <i class="bi bi-play-fill"></i>
+          </button>
+          <button id="nextit" class="btn btn-primary">
+            <i class="bi bi-chevron-double-right"></i>
+          </button>
         </div>
+        <br />
+      </div>
     </div>
-    {{ modalerror() }}
-    <script>
+  </div>
+  <div id="stats-card" class="col-md">
+    <div class="m-2 pt-4 pb-2 shadow-lg rounded-4 text-center sticky-top">
+      <div class="accordion w-75 mx-auto" id="pseudocodigo">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="encabezado">
+            <button
+              class="accordion-button collapsed title-mulish"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#collapse"
+              aria-expanded="false"
+              aria-controls="collapse"
+            >
+              {{ gettext('Pseudocode') }}
+            </button>
+          </h2>
+          <div
+            id="collapse"
+            class="accordion-collapse collapse"
+            aria-labelledby="encabezado"
+            data-bs-parent="#accordionExample"
+          >
+            <div class="accordion-body">
+              {% block pseudocodigo %}{% endblock %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <h4 class="title-mulish">{{ gettext('General statistics') }}</h4>
+      <hr class="separacion w-10" />
+      <div
+        id="zona_estadisticas_generales"
+        class="d-flex mt-4 justify-content-center align-items-center text-center"
+      >
+        <div class="d-flex">
+          <div id="estadisticas_generales"></div>
+          <div
+            id="leyenda_estadisticas_generales"
+            class="d-flex flex-column align-items-start m-auto"
+            style="width: 12rem"
+          ></div>
+        </div>
+      </div>
+      <br />
+      <br />
+      {% block titulo_especificas %}{% endblock %}
+      <div
+        id="zona_estadisticas_especificas"
+        class="d-flex justify-content-center align-items-center text-center"
+      >
+        <!-- Si fuesen necesarias más estadísticas se incluirán aquí -->
+        {% block mas_estadisticas %}{% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
+{{ modalerror() }}
+<script>
 
-        /**
-         *
-         * Centraliza traducciones de las visualizaciones accediendo
-         * a las traducciones con la misma clave que el texto.
-         *
-         * @param texto - texto a traducir.
-         * @returns {*} - texto traducido.
-         */
-        function traducir(texto) {
-            let traducciones = {
-                'Initial data': "{{ gettext('Initial data') }}",
-                'Label': "{{ gettext('Label') }}",
-                'Classifier': "{{ gettext('Classifier') }}",
-                'Classifier: Not classified': "{{ gettext('Classifier: Not classified') }}",
-                'Label: Not classified': "{{ gettext('Label: Not classified') }}",
-                'Measure': "{{ gettext('Measure') }}",
-                'Iteration': "{{ gettext('Iteration') }}",
-                'Point': "{{ gettext('Point') }}",
-                'Position': "{{ gettext('Position') }}",
-                'overlapping points': "{{ gettext('overlapping points') }}",
-                'Warning': "{{ gettext('Warning') }}"
-            }
+  /**
+   *
+   * Centraliza traducciones de las visualizaciones accediendo
+   * a las traducciones con la misma clave que el texto.
+   *
+   * @param texto - texto a traducir.
+   * @returns {*} - texto traducido.
+   */
+  function traducir(texto) {
+      let traducciones = {
+          'Initial data': "{{ gettext('Initial data') }}",
+          'Label': "{{ gettext('Label') }}",
+          'Classifier': "{{ gettext('Classifier') }}",
+          'Classifier: Not classified': "{{ gettext('Classifier: Not classified') }}",
+          'Label: Not classified': "{{ gettext('Label: Not classified') }}",
+          'Measure': "{{ gettext('Measure') }}",
+          'Iteration': "{{ gettext('Iteration') }}",
+          'Point': "{{ gettext('Point') }}",
+          'Position': "{{ gettext('Position') }}",
+          'overlapping points': "{{ gettext('overlapping points') }}",
+          'Warning': "{{ gettext('Warning') }}"
+      }
 
-            if (texto in traducciones) {
-                return traducciones[texto]
-            }
+      if (texto in traducciones) {
+          return traducciones[texto]
+      }
 
-            return texto
-        }
+      return texto
+  }
 
-        /* Datos para la petición POST de la ejecución del algortimo.
-        * Es decir, cada elemento es uno de los parámetros configurados */
-        let elementos = [];
+  /* Datos para la petición POST de la ejecución del algortimo.
+  * Es decir, cada elemento es uno de los parámetros configurados */
+  let elementos = [];
 
-        {% for param in params %}
-            elementos.push({nombre: "{{ param.nombre }}", valor: "{{ param.valor }}"});
-        {% endfor %}
+  {% for param in params %}
+      elementos.push({nombre: "{{ param.nombre }}", valor: "{{ param.valor }}"});
+  {% endfor %}
 
-        let cx = "{{ cx }}", cy = "{{ cy }}";
+  let cx = "{{ cx }}", cy = "{{ cy }}";
 
 
-        document.addEventListener('DOMContentLoaded', function () {
-            let steps = [
-                {
-                    title: "{{ gettext("Visualization area") }}",
-                    intro: "{{ gettext("This page is the heart of the application. Here, you can observe the algorithm training process.") }}"
-                },
-                {
-                    element: '#visualization-card',
-                    intro: "{{ gettext("This is the main chart area.") }}",
-                    position: 'right'
-                },
-                {
-                    element: '#visualizacion_principal',
-                    intro: "{{ gettext("This chart will display the data classified by the algorithm. It's interactive; you can zoom in, scroll around, or select a data point (to display relevant information).") }}"
-                },
-                {
-                    element: '#controles',
-                    intro: "{{ gettext("You can proceed through the algorithm steps manually or automatically while visualizing the events.") }}"
-                },
-                {
-                    element: '#stats-card',
-                    intro: "{{ gettext("This is the statistics area.") }}",
-                    position: 'left'
-                },
-                {
-                    element: '#zona_estadisticas_generales',
-                    intro: "{{ gettext("Here, the statistics extracted in each iteration are displayed in a general way, as if it were a single model.") }}"
-                }
-            ];
+  document.addEventListener('DOMContentLoaded', function () {
+      let steps = [
+          {
+              title: "{{ gettext("Visualization area") }}",
+              intro: "{{ gettext("This page is the heart of the application. Here, you can observe the algorithm training process.") }}"
+          },
+          {
+              element: '#visualization-card',
+              intro: "{{ gettext("This is the main chart area.") }}",
+              position: 'right'
+          },
+          {
+              element: '#visualizacion_principal',
+              intro: "{{ gettext("This chart will display the data classified by the algorithm. It's interactive; you can zoom in, scroll around, or select a data point (to display relevant information).") }}"
+          },
+          {
+              element: '#controles',
+              intro: "{{ gettext("You can proceed through the algorithm steps manually or automatically while visualizing the events.") }}"
+          },
+          {
+              element: '#stats-card',
+              intro: "{{ gettext("This is the statistics area.") }}",
+              position: 'left'
+          },
+          {
+              element: '#zona_estadisticas_generales',
+              intro: "{{ gettext("Here, the statistics extracted in each iteration are displayed in a general way, as if it were a single model.") }}"
+          }
+      ];
 
-            if (!(window.location.pathname.includes('selftraining'))) {
-                steps.push({
-                        element: '#zona_estadisticas_especificas',
-                        intro: "{{ gettext("Here, the statistics extracted in each iteration for each base classifier are displayed.") }}"
-                    },
-                    {
-                        element: '#selector_stat',
-                        intro: "{{ gettext("Through this selector, you can choose the metric you want to see.") }}"
-                    },
-                    {
-                        element: '#checkboxes_especifico_grafico_stat',
-                        intro: "{{ gettext("This allows you to select which base classifier to display.") }}"
-                    });
-            }
+      if (!(window.location.pathname.includes('selftraining'))) {
+          steps.push({
+                  element: '#zona_estadisticas_especificas',
+                  intro: "{{ gettext("Here, the statistics extracted in each iteration for each base classifier are displayed.") }}"
+              },
+              {
+                  element: '#selector_stat',
+                  intro: "{{ gettext("Through this selector, you can choose the metric you want to see.") }}"
+              },
+              {
+                  element: '#checkboxes_especifico_grafico_stat',
+                  intro: "{{ gettext("This allows you to select which base classifier to display.") }}"
+              });
+      }
 
-            document.getElementById('inicio_tutorial').addEventListener('click', function () {
-                this.style.animation = "none";
-                introJs().setOptions({
-                    steps: steps,
-                    'nextLabel': "{{ gettext("Next") }}",
-                    'prevLabel': "{{ gettext("Previous") }}",
-                    'doneLabel': "{{ gettext("Done") }}",
-                }).start();
-            });
-        });
-
-    </script>
-    <!-- Si fuesen necesarios más se incluirán aquí -->
-    <!-- En principio siempre (al menos) se ejecutará la petición POST -->
-    {% block mas_scripts %}{% endblock %}
-{% endblock %}
+      document.getElementById('inicio_tutorial').addEventListener('click', function () {
+          this.style.animation = "none";
+          introJs().setOptions({
+              steps: steps,
+              'nextLabel': "{{ gettext("Next") }}",
+              'prevLabel': "{{ gettext("Previous") }}",
+              'doneLabel': "{{ gettext("Done") }}",
+          }).start();
+      });
+  });
+</script>
+<!-- Si fuesen necesarios más se incluirán aquí -->
+<!-- En principio siempre (al menos) se ejecutará la petición POST -->
+{% block mas_scripts %}{% endblock %} {% endblock %}

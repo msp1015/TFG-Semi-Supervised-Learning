@@ -3,7 +3,7 @@ head %} {{ super() }}
 <script type="text/javascript" src="/js/visualizacion/d3.min.js"></script>
 <script type="text/javascript" src="/js/visualizacion/inicializar.js"></script>
 <script type="text/javascript" src="/js/visualizacion/grafos.js"></script>
-<script type="text/javascript" src="/js/visualizacion/pasos_grafos.js"></script>
+<script type="text/javascript" src="/js/visualizacion/inferencia.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script
   type="text/javascript"
@@ -44,7 +44,7 @@ head %} {{ super() }}
             <div
               id="leyenda_visualizacion"
               class="d-flex flex-column align-items-start m-auto"
-              style="width: 7rem"
+              style="width: 9rem"
             ></div>
           </div>
         </div>
@@ -100,7 +100,8 @@ head %} {{ super() }}
         {% include '/visualizacion/' ~ nombreGrafo ~ '.html' %}
       </div>
       <div id="inferencia" class="m-2 p-2" style="display: none">
-        Matriz de confusión y pie charts.
+        <div id="matrix-container" class="confusion-matrix"></div>
+        <div id="metrics-container" class="metrics"></div>
       </div>
     </div>
   </div>
@@ -108,19 +109,19 @@ head %} {{ super() }}
 {{ modalerror() }}
 
 <script>
-  $(document).ready(function(){
-      $('#btn-fases-grafo').click(function(){
-          $('#btn-fases-grafo').addClass('active');
-          $('#btn-inferencia').removeClass('active');
-          $('#fases_grafo').show();
-          $('#inferencia').hide();
-      });
-      $('#btn-inferencia').click(function(){
-          $('#btn-inferencia').addClass('active');
-          $('#btn-fases-grafo').removeClass('active');
-          $('#inferencia').show();
-          $('#fases_grafo').hide();
-      });
+  $(document).ready(function () {
+    $("#btn-fases-grafo").click(function () {
+      $("#btn-fases-grafo").addClass("active");
+      $("#btn-inferencia").removeClass("active");
+      $("#fases_grafo").show();
+      $("#inferencia").hide();
+    });
+    $("#btn-inferencia").click(function () {
+      $("#btn-inferencia").addClass("active");
+      $("#btn-fases-grafo").removeClass("active");
+      $("#inferencia").show();
+      $("#fases_grafo").hide();
+    });
   });
 </script>
 <script>
@@ -146,7 +147,7 @@ head %} {{ super() }}
       let pasos_rgcli = {
           'RGCLI_0': "{{gettext('Initial Data')}}",
           'RGCLI_1': "{{gettext('Ke nearest neighbors')}}",
-          'RGCLI_2': "{{gettext('Final graph')}}"
+          'RGCLI_2': "{{gettext('Ki nearest neighbors')}}"
       }
 
       if ( texto in pasos_gbili || texto in pasos_rgcli) {
@@ -206,7 +207,7 @@ head %} {{ super() }}
   inicializar("/datos/{{ session['ALGORITMO'] }}", elementos)
     .then(function (datos) {
       inicializarDatos(datos);
-
+      dibujaEstadisticas(datos);
       inicializarGrafo();
       updateGraph();
     })
