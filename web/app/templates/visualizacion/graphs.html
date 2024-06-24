@@ -4,6 +4,7 @@ head %} {{ super() }}
 <script type="text/javascript" src="/js/visualizacion/inicializar.js"></script>
 <script type="text/javascript" src="/js/visualizacion/grafos.js"></script>
 <script type="text/javascript" src="/js/visualizacion/pasos_grafos.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script
   type="text/javascript"
   src="/js/visualizacion/funciones_comunes.js"
@@ -98,34 +99,28 @@ head %} {{ super() }}
       <div id="fases_grafo" class="m-2 p-2">
         {% include '/visualizacion/' ~ nombreGrafo ~ '.html' %}
       </div>
+      <div id="inferencia" class="m-2 p-2" style="display: none">
+        Matriz de confusión y pie charts.
+      </div>
     </div>
   </div>
 </div>
 {{ modalerror() }}
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const steps = document.querySelectorAll(".pseudo-step");
-    let currentStep = 0;
-
-    function updateStepDisplay() {
-      steps.forEach((step, index) => {
-        step.style.display = index === currentStep ? "block" : "none";
+  $(document).ready(function(){
+      $('#btn-fases-grafo').click(function(){
+          $('#btn-fases-grafo').addClass('active');
+          $('#btn-inferencia').removeClass('active');
+          $('#fases_grafo').show();
+          $('#inferencia').hide();
       });
-    }
-
-    document.getElementById("previt").addEventListener("click", () => {
-      currentStep = Math.max(0, currentStep - 1);
-      updateStepDisplay();
-    });
-
-    document.getElementById("nextit").addEventListener("click", () => {
-      currentStep = Math.min(steps.length - 1, currentStep + 1);
-      updateStepDisplay();
-    });
-
-    // Inicializar la visualización del primer paso
-    updateStepDisplay();
+      $('#btn-inferencia').click(function(){
+          $('#btn-inferencia').addClass('active');
+          $('#btn-fases-grafo').removeClass('active');
+          $('#inferencia').show();
+          $('#fases_grafo').hide();
+      });
   });
 </script>
 <script>

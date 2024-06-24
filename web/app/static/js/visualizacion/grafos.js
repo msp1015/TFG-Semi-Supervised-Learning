@@ -170,8 +170,25 @@ function changeStep(direction) {
     currentStep += direction;
     if (currentStep < 0) currentStep = 0;
     if (currentStep >= dataSteps.length) currentStep = dataSteps.length - 1;
+    // Asegura que se deshabilita el boton de resultados de inferencia
+    if(currentStep < maxiter) {
+      let button = document.getElementById('btn-inferencia');
+      button.disabled = true;
+      button.classList.add('disabled');
+      $('#inferencia').hide();
+      $('#fases_grafo').show(); 
+      $('#btn-fases-grafo').addClass('active');
+    }
     actualizaBarraProgreso(currentStep);
     updateGraph();
+    muestraPaso(currentStep);
+}
+
+function muestraPaso(step) {
+  for (let i = 0; i <= maxiter; i++) {
+    document.getElementById(`step-${i}`).classList.remove('active');
+  }
+  document.getElementById(`step-${step}`).classList.add('active');
 }
 
 function actualizaBarraProgreso(step) {
@@ -254,6 +271,9 @@ function updateGraph() {
     
 }
 function inferLabels() {
+  var button = document.getElementById('btn-inferencia');
+  button.disabled = false;
+  button.classList.remove('disabled');
   node.each(function(d) {
       if (d.id in predictions) { // Verificar si el id del nodo está en predictions
           d3.select(this)

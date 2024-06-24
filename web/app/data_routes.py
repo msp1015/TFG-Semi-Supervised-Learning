@@ -229,6 +229,69 @@ def datosgraphs():
     for i in range(len(steps)):
         steps[i] = build_enlaces_json(steps[i])
     predicciones = predicciones[len(L):].tolist()
+    
+    print("Etiquetas iniciales: ", U_y)
+    print("Etiquetas finales: ", predicciones)
+    print(mapa)
+    
+    
+    from sklearn.metrics import confusion_matrix, classification_report
+    print(confusion_matrix(U_y, predicciones).tolist())
+    conf_matrix = confusion_matrix(U_y, predicciones)
+    report = classification_report(U_y, predicciones)
+    print("\nReporte de Clasificación:")
+    print(report)
+    # guardar dato de recall de la clase 1
+    recall = report.split("\n")[3].split(" ")[-2]
+    print(recall)
+    def calculate_metrics_from_conf_matrix(conf_matrix):
+        metrics = {}
+        num_classes = conf_matrix.shape[0]
+
+        for i in range(num_classes):
+            tp = conf_matrix[i, i]
+            fp = conf_matrix[:, i].sum() - tp
+            fn = conf_matrix[i, :].sum() - tp
+            tn = conf_matrix.sum() - (tp + fp + fn)
+
+            precision = tp / (tp + fp) if (tp + fp) != 0 else 0
+            recall = tp / (tp + fn) if (tp + fn) != 0 else 0
+            f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) != 0 else 0
+            accuracy = (tp + tn) / (tp + tn + fp + fn)
+
+            metrics[mapa[i]] = {
+                'TP': tp,
+                'FP': fp,
+                'FN': fn,
+                'TN': tn,
+                'Precision': precision,
+                'Recall': recall,
+                'F1-Score': f1,
+                'Accuracy': accuracy
+            }
+
+        # Calcular métricas generales
+        overall_accuracy = np.trace(conf_matrix) / np.sum(conf_matrix)
+        
+        metrics['Overall'] = {
+            'Accuracy': overall_accuracy
+        }
+
+        return metrics
+
+    metrics = calculate_metrics_from_conf_matrix(conf_matrix)
+    print(metrics)
+    for cls, cls_metrics in metrics.items():
+        print(f"{cls}:")
+        for metric, value in cls_metrics.items():
+            print(f"  {metric}: {value:.4f}")
+    
+    
+    
+    
+    
+    
+    
     predicciones_json = {}
     for i, prediccion in enumerate(predicciones):
         predicciones_json[str(i + len(L))] = prediccion
