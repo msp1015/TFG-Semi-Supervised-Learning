@@ -10,32 +10,14 @@ Esta es una aplicación web diseñada para la visualización de algoritmos semis
 
 ## Tecnologías Utilizadas
 
-<div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-    <a href="https://www.python.org/" target="_blank">
-        <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python"/>
-    </a>
-    <a href="https://flask.palletsprojects.com/" target="_blank">
-        <img src="https://img.shields.io/badge/flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask"/>
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">
-        <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS"/>
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">
-        <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML"/>
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-        <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript"/>
-    </a>
-    <a href="https://getbootstrap.com/" target="_blank">
-        <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap"/>
-    </a>
-    <a href="https://d3js.org/" target="_blank">
-        <img src="https://img.shields.io/badge/d3-F9A03C?style=for-the-badge&logo=d3.js&logoColor=white" alt="D3"/>
-    </a>
-    <a href="https://jupyter.org/" target="_blank">
-        <img src="https://img.shields.io/badge/jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white" alt="Notebooks"/>
-    </a>
-</div>
+[![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/flask-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
+[![css](https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![HTML](https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![Javascript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Bootstrap](https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
+[![D3](https://img.shields.io/badge/d3-F9A03C?style=for-the-badge&logo=d3.js&logoColor=white)](https://d3js.org/)
+[![Notebook](https://img.shields.io/badge/jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)](https://jupyter.org/)
 
 ## Características
 
