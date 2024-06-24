@@ -1,4 +1,4 @@
-# Visualización de Algoritmos Semisupervisados - Versión 2.0
+# Visualizador de Algoritmos Semi-Supervisados - Versión 2.0
 
 <div align="center">
     <img src="vass2Icon.png" alt="Icono de la Aplicación" width="200"/>
@@ -6,8 +6,9 @@
 
 ## Descripción
 
-Esta es una aplicación web diseñada para la visualización de algoritmos semisupervisados. La herramienta permite a los usuarios interactuar y comprender mejor cómo funcionan estos algoritmos a través de visualizaciones intuitivas y detalladas.
+Esta es una extensión de una aplicación web diseñada para la visualización de algoritmos semisupervisados. La herramienta permite a los usuarios interactuar y comprender mejor cómo funcionan estos algoritmos a través de visualizaciones intuitivas y detalladas.
 
+Para ver el proyecto de la primera versión, consulta el repositorio de [David Martínez Acha](https://github.com/dmacha27/TFG-SemiSupervisado).
 ## Tecnologías Utilizadas
 
 [![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
