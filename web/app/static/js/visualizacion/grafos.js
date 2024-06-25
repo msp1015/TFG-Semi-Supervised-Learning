@@ -275,6 +275,7 @@ function inferLabels() {
   button.disabled = false;
   button.classList.remove('disabled');
   selectedNode = null;
+  button.click();
   node.each(function(d) {
       if (d.id in predictions) { // Verificar si el id del nodo está en predictions
           d3.select(this)
@@ -307,5 +308,32 @@ function dragended(event) {
     event.subject.fy = null;
 }
 
+/*
+* Espacio usado para intercambiar estado y visibilidad de los botones
+*/
+document.addEventListener('DOMContentLoaded', function () {
+  // Función para activar un botón y desactivar el otro
+  function cambiarEstado(activeButtonId, inactiveButtonId) {
+    document.getElementById(activeButtonId).classList.add('active');
+    document.getElementById(inactiveButtonId).classList.remove('active');
+  }
 
+  // Función para mostrar un elemento y ocultar otro
+  function cambiarVisibilidad(showElementId, hideElementId) {
+    document.getElementById(showElementId).style.display = 'block';
+    document.getElementById(hideElementId).style.display = 'none';
+  }
 
+  // Manejador para el botón de fases del grafo
+  document.getElementById('btn-fases-grafo').addEventListener('click', function () {
+    cambiarEstado('btn-fases-grafo', 'btn-inferencia');
+    cambiarVisibilidad('fases_grafo', 'inferencia');
+  });
+
+  // Manejador para el botón de inferencia
+  document.getElementById('btn-inferencia').addEventListener('click', function () {
+    cambiarEstado('btn-inferencia', 'btn-fases-grafo');
+    cambiarVisibilidad('inferencia', 'fases_grafo');
+  });
+
+});

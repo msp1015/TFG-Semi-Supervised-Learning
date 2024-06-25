@@ -1,54 +1,70 @@
 <style>
-    .step {
-        display: none;
-    }
-    .active {
-        display: block;
-    }
-  </style>
+  .step {
+    display: none;
+  }
+  .active {
+    display: block;
+  }
+</style>
 <div id="step-0" class="step active">
-    <h2>{{gettext('Step')}} 0: {{gettext('Initial Data')}}</h2>
-    <p> Se inicializa el gráfico con el conjunto de nodos (uno por cada entrada del conjunto de datos). Se calcula la matriz de distancias (teniendo en cuenta la distancia Euclidea).</p>
-    <img
-        src="{{ gettext('/pseudocodigos/en/gbili/gbili_0.png') }}"
-        width="75%"
-        alt="GBILI Paso 0"
-    />
+  <h3>{{gettext('Step')}} 0: {{gettext('Initial Data')}}</h3>
+  <p>
+    Se inicializa el gráfico con el conjunto de nodos (uno por cada entrada del
+    conjunto de datos). Se calcula la matriz de distancias (teniendo en cuenta
+    la distancia Euclidea).
+  </p>
+  <img
+    src="{{ gettext('/pseudocodigos/en/gbili/gbili_0.png') }}"
+    width="100%"
+    alt="GBILI Paso 0"
+  />
 </div>
 <div id="step-1" class="step">
-    <h2>{{gettext('Step')}} 1: {{gettext('K nearest neighbors')}}</h2>
-    <p>En este paso se calculan los K vecinos más cercanos de cada nodo teniendo en cuenta la matriz de distancias D.</p>
-    <img
-        src="{{ gettext('/pseudocodigos/en/gbili/gbili_1.png') }}"
-        width="75%"
-        alt="GBILI Paso 1"
-    />
+  <h3>{{gettext('Step')}} 1: {{gettext('K nearest neighbors')}}</h3>
+  <p>
+    En este paso se calculan los K vecinos más cercanos de cada nodo teniendo en
+    cuenta la matriz de distancias D.
+  </p>
+  <img
+    src="{{ gettext('/pseudocodigos/en/gbili/gbili_1.png') }}"
+    width="100%"
+    alt="GBILI Paso 1"
+  />
 </div>
 <div id="step-2" class="step">
-    <h2>{{gettext('Step')}} 2: {{gettext('Mutual K nearest neighbors')}}</h2>
-    <p>Se muestran los vecinos más cercanos mutuos, es decir, i es vecino más cercano de j y j es vecino más cercano de i.</p>
-    <img
-        src="{{ gettext('/pseudocodigos/en/gbili/gbili_2.png') }}"
-        width="75%"
-        alt="GBILI Paso 2"
-    />
+  <h3>{{gettext('Step')}} 2: {{gettext('Mutual K nearest neighbors')}}</h3>
+  <p>
+    Se muestran los vecinos más cercanos mutuos, es decir, i es vecino más
+    cercano de j y j es vecino más cercano de i.
+  </p>
+  <img
+    src="{{ gettext('/pseudocodigos/en/gbili/gbili_2.png') }}"
+    width="100%"
+    alt="GBILI Paso 2"
+  />
 </div>
 <div id="step-3" class="step">
-    <h2>{{gettext('Step')}} 3: {{gettext('Minimum distances')}}</h2>
-    <p>Se recorre la lista de vecinos mutuos y se calcula la distancia mínima hasta un punto etiquetado.</p>
-    <img
-        src="{{ gettext('/pseudocodigos/en/gbili/gbili_3.png') }}"
-        width="75%"
-        alt="GBILI Paso 3"
-    />
+  <h3>{{gettext('Step')}} 3: {{gettext('Minimum distances')}}</h3>
+  <p>
+    Se recorre la lista de vecinos mutuos y se calcula la distancia mínima hasta
+    un punto etiquetado.
+  </p>
+  <img
+    src="{{ gettext('/pseudocodigos/en/gbili/gbili_3.png') }}"
+    width="100%"
+    alt="GBILI Paso 3"
+  />
 </div>
 <div id="step-4" class="step">
-    <h2>{{gettext('Step')}} 4: {{gettext('Final graph')}}</h2>
-    <p>Se distinguen los subgrafos o componentes. Se unirán nodos si el componente del nodo no tiene ningun dato etiquetado y si alguno de sus vecinos sí que se encuentra en un componente etiquetado.</p>
-    <img
-        src="{{ gettext('/pseudocodigos/en/gbili/gbili_4.png') }}"
-        width="75%"
-        alt="GBILI Paso 4"
-    />
+  <h3>{{gettext('Step')}} 4: {{gettext('Final graph')}}</h3>
+  <p>
+    Se distinguen los subgrafos o componentes. Se unirán nodos si el componente
+    del nodo no tiene ningun dato etiquetado y si alguno de sus vecinos sí que
+    se encuentra en un componente etiquetado.
+  </p>
+  <img
+    src="{{ gettext('/pseudocodigos/en/gbili/gbili_4.png') }}"
+    width="100%"
+    alt="GBILI Paso 4"
+  />
 </div>
-

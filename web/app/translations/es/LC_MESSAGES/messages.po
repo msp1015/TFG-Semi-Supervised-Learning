@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-24 01:06+0200\n"
+"POT-Creation-Date: 2024-06-25 22:25+0200\n"
 "PO-Revision-Date: 2023-02-26 14:39+0100\n"
 "Last-Translator: David Martínez Acha <dmacha@ubu.es>\n"
 "Language: es\n"
@@ -252,7 +252,7 @@ msgstr "Iniciar sesión"
 msgid "Success"
 msgstr "Éxito"
 
-#: templates/base.html:158 templates/visualizacion/base_visualizacion.html:118
+#: templates/base.html:158 templates/visualizacion/base_visualizacion.html:158
 msgid "Warning"
 msgstr "Advertencia"
 
@@ -561,8 +561,8 @@ msgstr ""
 #: templates/configuracion/graphsconfig.html:260 templates/inicio.html:397
 #: templates/subida.html:112 templates/usuarios/miespacio.html:59
 #: templates/usuarios/perfil.html:80
-#: templates/visualizacion/base_visualizacion.html:188
-#: templates/visualizacion/graphs.html:201
+#: templates/visualizacion/base_visualizacion.html:228
+#: templates/visualizacion/graphs.html:196
 msgid "Next"
 msgstr "Siguiente"
 
@@ -570,8 +570,8 @@ msgstr "Siguiente"
 #: templates/configuracion/graphsconfig.html:261 templates/inicio.html:398
 #: templates/subida.html:113 templates/usuarios/miespacio.html:60
 #: templates/usuarios/perfil.html:81
-#: templates/visualizacion/base_visualizacion.html:189
-#: templates/visualizacion/graphs.html:202
+#: templates/visualizacion/base_visualizacion.html:229
+#: templates/visualizacion/graphs.html:197
 msgid "Previous"
 msgstr "Anterior"
 
@@ -579,8 +579,8 @@ msgstr "Anterior"
 #: templates/configuracion/graphsconfig.html:262 templates/inicio.html:399
 #: templates/subida.html:114 templates/usuarios/miespacio.html:61
 #: templates/usuarios/perfil.html:82
-#: templates/visualizacion/base_visualizacion.html:190
-#: templates/visualizacion/graphs.html:203
+#: templates/visualizacion/base_visualizacion.html:230
+#: templates/visualizacion/graphs.html:198
 msgid "Done"
 msgstr "Hecho"
 
@@ -818,7 +818,7 @@ msgstr "Configuración del algoritmo"
 
 #: templates/configuracion/base_config_inductivos.html:10
 #: templates/configuracion/graphsconfig.html:17
-#: templates/visualizacion/base_visualizacion.html:14
+#: templates/visualizacion/base_visualizacion.html:15
 #: templates/visualizacion/graphs.html:15
 msgid "Dataset"
 msgstr "Conjunto de datos"
@@ -898,13 +898,20 @@ msgid ""
 "  scenarios where labels are scarce or expensive to obtain."
 msgstr ""
 "Esta técnica se basa en la idea de utilizar múltiples clasificadores\n"
-"  (árboles de decisión, en este caso), los cuales se entrenan de forma iterativa con un\n"
-"  conjunto inicial de datos etiquetados. A medida que el algoritmo avanza, cada árbol intenta\n"
-"  clasificar los datos no etiquetados y las predicciones más confiables se añaden al\n"
-"  conjunto de entrenamiento como si fueran etiquetas reales. Este proceso de \"enseñanza\n"
-"  mutua\" entre los clasificadores permite mejorar progresivamente el rendimiento del modelo\n"
-"  a medida que se incorpora más información de los datos no etiquetados. Co-forest\n"
-"  aprovecha la diversidad entre los árboles de decisión para mejorar la generalización del modelo\n"
+"  (árboles de decisión, en este caso), los cuales se entrenan de forma "
+"iterativa con un\n"
+"  conjunto inicial de datos etiquetados. A medida que el algoritmo "
+"avanza, cada árbol intenta\n"
+"  clasificar los datos no etiquetados y las predicciones más confiables "
+"se añaden al\n"
+"  conjunto de entrenamiento como si fueran etiquetas reales. Este proceso"
+" de \"enseñanza\n"
+"  mutua\" entre los clasificadores permite mejorar progresivamente el "
+"rendimiento del modelo\n"
+"  a medida que se incorpora más información de los datos no etiquetados. "
+"Co-forest\n"
+"  aprovecha la diversidad entre los árboles de decisión para mejorar la "
+"generalización del modelo\n"
 "  frente a datos nuevos o desconocidos, haciéndolo especialmente útil en\n"
 "  escenarios donde las etiquetas son escasas o costosas de obtener."
 
@@ -914,7 +921,6 @@ msgid "/pseudocodigos/en/CoForest.png"
 msgstr "/pseudocodigos/es/CoForest.png"
 
 #: templates/configuracion/coforestconfig.html:45
-#, fuzzy
 msgid "Co-Forest Pseudocode"
 msgstr "Pseudocódigo de Co-Forest"
 
@@ -1346,71 +1352,142 @@ msgstr "Este es tu perfil."
 msgid "Here you can modify the basic data of your profile."
 msgstr "Aquí puedes modificar los datos básicos de tu perfil."
 
-#: templates/visualizacion/base_visualizacion.html:29
+#: templates/visualizacion/Gbili.html:10 templates/visualizacion/Gbili.html:25
+#: templates/visualizacion/Gbili.html:37 templates/visualizacion/Gbili.html:49
+#: templates/visualizacion/Gbili.html:61 templates/visualizacion/Rgcli.html:10
+#: templates/visualizacion/Rgcli.html:20 templates/visualizacion/Rgcli.html:30
+msgid "Step"
+msgstr "Paso"
+
+#: templates/visualizacion/Gbili.html:10 templates/visualizacion/Rgcli.html:10
+#: templates/visualizacion/graphs.html:55
+#: templates/visualizacion/graphs.html:130
+#: templates/visualizacion/graphs.html:135
+msgid "Initial Data"
+msgstr "Datos iniciales"
+
+#: templates/visualizacion/Gbili.html:17
+msgid "/pseudocodigos/en/gbili/gbili_0.png"
+msgstr "/pseudocodigos/es/gbili/gbili_0.png"
+
+#: templates/visualizacion/Gbili.html:25
+#: templates/visualizacion/graphs.html:131
+msgid "K nearest neighbors"
+msgstr "K vecinos más cercanos"
+
+#: templates/visualizacion/Gbili.html:31
+msgid "/pseudocodigos/en/gbili/gbili_1.png"
+msgstr "/pseudocodigos/es/gbili/gbili_1.png"
+
+#: templates/visualizacion/Gbili.html:37
+#: templates/visualizacion/graphs.html:132
+msgid "Mutual K nearest neighbors"
+msgstr "K vecinos más cercanos mutuos"
+
+#: templates/visualizacion/Gbili.html:43
+msgid "/pseudocodigos/en/gbili/gbili_2.png"
+msgstr "/pseudocodigos/es/gbili/gbili_2.png"
+
+#: templates/visualizacion/Gbili.html:49
+#: templates/visualizacion/graphs.html:133
+msgid "Minimum distances"
+msgstr "Distancias mínimas"
+
+#: templates/visualizacion/Gbili.html:55
+msgid "/pseudocodigos/en/gbili/gbili_3.png"
+msgstr "/pseudocodigos/es/gbili/gbili_3.png"
+
+#: templates/visualizacion/Gbili.html:61 templates/visualizacion/Rgcli.html:30
+#: templates/visualizacion/graphs.html:134
+msgid "Final graph"
+msgstr "Grafo final"
+
+#: templates/visualizacion/Gbili.html:68
+msgid "/pseudocodigos/en/gbili/gbili_4.png"
+msgstr "/pseudocodigos/es/gbili/gbili_4.png"
+
+#: templates/visualizacion/Rgcli.html:13
+msgid "/pseudocodigos/en/rgcli/rgcli_0.png"
+msgstr "/pseudocodigos/es/rgcli/rgcli_0.png"
+
+#: templates/visualizacion/Rgcli.html:20
+#: templates/visualizacion/graphs.html:136
+msgid "Ke nearest neighbors"
+msgstr "Ke vecinos más cercanos"
+
+#: templates/visualizacion/Rgcli.html:23
+msgid "/pseudocodigos/en/rgcli/rgcli_1.png"
+msgstr "/pseudocodigos/es/rgcli/rgcli_1.png"
+
+#: templates/visualizacion/Rgcli.html:33
+msgid "/pseudocodigos/en/rgcli/rgcli_2.png"
+msgstr "/pseudocodigos/es/rgcli/rgcli_2.png"
+
+#: templates/visualizacion/base_visualizacion.html:32
 #: templates/visualizacion/graphs.html:35
 msgid "Main visualization"
 msgstr "Visualización principal"
 
-#: templates/visualizacion/base_visualizacion.html:39
+#: templates/visualizacion/base_visualizacion.html:49
 #: templates/visualizacion/graphs.html:52
 msgid "Zoom reset"
 msgstr "Reiniciar Zoom"
 
-#: templates/visualizacion/base_visualizacion.html:41
-#: templates/visualizacion/base_visualizacion.html:114
+#: templates/visualizacion/base_visualizacion.html:52
+#: templates/visualizacion/base_visualizacion.html:154
 msgid "Iteration"
 msgstr "Iteración"
 
-#: templates/visualizacion/base_visualizacion.html:63
+#: templates/visualizacion/base_visualizacion.html:91
 msgid "Pseudocode"
 msgstr "Pseudocódigo"
 
-#: templates/visualizacion/base_visualizacion.html:75
+#: templates/visualizacion/base_visualizacion.html:107
 msgid "General statistics"
 msgstr "Estadísticas generales"
 
-#: templates/visualizacion/base_visualizacion.html:108
+#: templates/visualizacion/base_visualizacion.html:148
 msgid "Initial data"
 msgstr "Dato inicial"
 
-#: templates/visualizacion/base_visualizacion.html:109
+#: templates/visualizacion/base_visualizacion.html:149
 msgid "Label"
 msgstr "Etiqueta"
 
-#: templates/visualizacion/base_visualizacion.html:110
+#: templates/visualizacion/base_visualizacion.html:150
 msgid "Classifier"
 msgstr "Clasificador"
 
-#: templates/visualizacion/base_visualizacion.html:111
+#: templates/visualizacion/base_visualizacion.html:151
 msgid "Classifier: Not classified"
 msgstr "Clasificador: No clasificado"
 
-#: templates/visualizacion/base_visualizacion.html:112
+#: templates/visualizacion/base_visualizacion.html:152
 msgid "Label: Not classified"
 msgstr "Etiqueta: No clasificado"
 
-#: templates/visualizacion/base_visualizacion.html:113
+#: templates/visualizacion/base_visualizacion.html:153
 msgid "Measure"
 msgstr "Valor"
 
-#: templates/visualizacion/base_visualizacion.html:115
+#: templates/visualizacion/base_visualizacion.html:155
 msgid "Point"
 msgstr "Punto"
 
-#: templates/visualizacion/base_visualizacion.html:116
+#: templates/visualizacion/base_visualizacion.html:156
 msgid "Position"
 msgstr "Posición"
 
-#: templates/visualizacion/base_visualizacion.html:117
+#: templates/visualizacion/base_visualizacion.html:157
 msgid "overlapping points"
 msgstr "puntos solapados"
 
-#: templates/visualizacion/base_visualizacion.html:142
-#: templates/visualizacion/graphs.html:179
+#: templates/visualizacion/base_visualizacion.html:182
+#: templates/visualizacion/graphs.html:174
 msgid "Visualization area"
 msgstr "Área de visualización"
 
-#: templates/visualizacion/base_visualizacion.html:143
+#: templates/visualizacion/base_visualizacion.html:183
 msgid ""
 "This page is the heart of the application. Here, you can observe the "
 "algorithm training process."
@@ -1418,11 +1495,11 @@ msgstr ""
 "Esta página es el núcleo de la aplicación. Aquí podrás observar el "
 "proceso de entrenamiento del algoritmo."
 
-#: templates/visualizacion/base_visualizacion.html:147
+#: templates/visualizacion/base_visualizacion.html:187
 msgid "This is the main chart area."
 msgstr "Esta es la zona del gráfico principal."
 
-#: templates/visualizacion/base_visualizacion.html:152
+#: templates/visualizacion/base_visualizacion.html:192
 msgid ""
 "This chart will display the data classified by the algorithm. It's "
 "interactive; you can zoom in, scroll around, or select a data point (to "
@@ -1432,8 +1509,8 @@ msgstr ""
 "algoritmo. Es interactivo, puedes aplicar zoom, desplazarte o seleccionar"
 " un dato (para mostrar información de interés)."
 
-#: templates/visualizacion/base_visualizacion.html:156
-#: templates/visualizacion/graphs.html:188
+#: templates/visualizacion/base_visualizacion.html:196
+#: templates/visualizacion/graphs.html:183
 msgid ""
 "You can proceed through the algorithm steps manually or automatically "
 "while visualizing the events."
@@ -1441,11 +1518,11 @@ msgstr ""
 "Puedes avanzar sobre los pasos del algoritmo de forma manual o automática"
 " mientras se visualizan los eventos."
 
-#: templates/visualizacion/base_visualizacion.html:160
+#: templates/visualizacion/base_visualizacion.html:200
 msgid "This is the statistics area."
 msgstr "Esta es la zona de estadísticas."
 
-#: templates/visualizacion/base_visualizacion.html:165
+#: templates/visualizacion/base_visualizacion.html:205
 msgid ""
 "Here, the statistics extracted in each iteration are displayed in a "
 "general way, as if it were a single model."
@@ -1453,7 +1530,7 @@ msgstr ""
 "Aquí se muestran las estadísticas extraídas en cada iteración de forma "
 "general, como si fuera un único modelo."
 
-#: templates/visualizacion/base_visualizacion.html:172
+#: templates/visualizacion/base_visualizacion.html:212
 msgid ""
 "Here, the statistics extracted in each iteration for each base classifier"
 " are displayed."
@@ -1461,19 +1538,18 @@ msgstr ""
 "Aquí se muestran las estadísticas extraídas en cada iteración por cada "
 "clasificador base."
 
-#: templates/visualizacion/base_visualizacion.html:176
+#: templates/visualizacion/base_visualizacion.html:216
 msgid "Through this selector, you can choose the metric you want to see."
 msgstr "Mediante este selector puedes elegir la métrica que deseas ver."
 
-#: templates/visualizacion/base_visualizacion.html:180
+#: templates/visualizacion/base_visualizacion.html:220
 msgid "This allows you to select which base classifier to display."
 msgstr "Esto permite seleccionar qué clasificador base mostrar."
 
-#: templates/visualizacion/graphs.html:55
-#: templates/visualizacion/graphs.html:144
-#: templates/visualizacion/graphs.html:152
-msgid "Initial Data"
-msgstr "Datos iniciales"
+#: templates/visualizacion/coforest.html:9
+#: templates/visualizacion/singleview.html:3
+msgid "Specific statistics"
+msgstr "Estadísticas específicas"
 
 #: templates/visualizacion/graphs.html:76
 msgid "Infer labels"
@@ -1491,28 +1567,71 @@ msgstr "Fases de grafos"
 msgid "Inference results"
 msgstr "Resultados de inferencia"
 
+#: templates/visualizacion/graphs.html:103
+msgid "Confusion matrix"
+msgstr "Matriz de confusión"
+
+#: templates/visualizacion/graphs.html:137
+msgid "Ki nearest neighbors"
+msgstr "Ki vecinos más cercanos"
+
+#: templates/visualizacion/graphs.html:138
+msgid "Real"
+msgstr "Real"
+
+#: templates/visualizacion/graphs.html:139
+msgid "Prediction"
+msgstr "Predicción"
+
+#: templates/visualizacion/graphs.html:140
+msgid "Accuracy"
+msgstr "Exactitud"
+
+#: templates/visualizacion/graphs.html:141
+msgid "Precision"
+msgstr "Precisión"
+
+#: templates/visualizacion/graphs.html:142
+msgid "Recall"
+msgstr "Sensibilidad"
+
+#: templates/visualizacion/graphs.html:143
+msgid "F1-score"
+msgstr "Medida-F1"
+
+#: templates/visualizacion/graphs.html:144
+msgid "Error"
+msgstr "Error"
+
 #: templates/visualizacion/graphs.html:145
-msgid "K nearest neighbors"
-msgstr "K vecinos más cercanos"
+msgid "True Positive"
+msgstr "Verdaderos Positivos"
 
 #: templates/visualizacion/graphs.html:146
-msgid "Mutual K nearest neighbors"
-msgstr "K vecinos más cercanos mutuos"
+msgid "True Negative"
+msgstr "Verdaderos Negativos"
 
 #: templates/visualizacion/graphs.html:147
-msgid "Minimum distances"
-msgstr "Distancias mínimas"
+msgid "False Positive"
+msgstr "Falsos Positivos"
 
 #: templates/visualizacion/graphs.html:148
-#: templates/visualizacion/graphs.html:154
-msgid "Final graph"
-msgstr "Grafo final"
+msgid "False Negative"
+msgstr "Falsos Negativos"
 
-#: templates/visualizacion/graphs.html:153
-msgid "Ke nearest neighbors"
-msgstr "Ke vecinos más cercanos"
+#: templates/visualizacion/graphs.html:149
+msgid "Average results"
+msgstr "Resultados promedios"
 
-#: templates/visualizacion/graphs.html:180
+#: templates/visualizacion/graphs.html:150
+msgid "Class metrics"
+msgstr "Métricas de clase"
+
+#: templates/visualizacion/graphs.html:151
+msgid "Average metrics"
+msgstr "Métricas generales"
+
+#: templates/visualizacion/graphs.html:175
 msgid ""
 "This page is the heart of the application. Here, you can observe graph "
 "based algorithm training process."
@@ -1520,7 +1639,7 @@ msgstr ""
 "Esta página es el núcleo de la aplicación. Aquí podrás observar el "
 "proceso de entrenamiento del algoritmo."
 
-#: templates/visualizacion/graphs.html:184
+#: templates/visualizacion/graphs.html:179
 msgid ""
 "This chart will display the graph phases of the algorithm. It's "
 "interactive; you can zoom in, scroll around, or select a data point (to "
@@ -1530,17 +1649,13 @@ msgstr ""
 "algoritmo. Es interactivo, puedes aplicar zoom, desplazarte o seleccionar"
 " un dato (para mostrar información de interés)."
 
-#: templates/visualizacion/graphs.html:192
+#: templates/visualizacion/graphs.html:187
 msgid ""
 "This is where you can see the steps explained theoretically, plus a "
 "summary of results."
 msgstr ""
 "Aquí es donde puedes ver los pasos explicados teóricamente, además de un "
 "resumen de los resultados."
-
-#: templates/visualizacion/singleview.html:3
-msgid "Specific statistics"
-msgstr "Estadísticas específicas"
 
 #~ msgid "One classifier"
 #~ msgstr "Un clasificador"

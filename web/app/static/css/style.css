@@ -337,7 +337,7 @@ footer {
     padding: 8px;
 }
 .confusion-matrix th {
-    background-color: #6e8ef7;
+    background-color: #bebebe;
 }
 .confusion-matrix td {
     background-color: #ffffaa;

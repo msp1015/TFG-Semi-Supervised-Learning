@@ -4,7 +4,6 @@ head %} {{ super() }}
 <script type="text/javascript" src="/js/visualizacion/inicializar.js"></script>
 <script type="text/javascript" src="/js/visualizacion/grafos.js"></script>
 <script type="text/javascript" src="/js/visualizacion/inferencia.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script
   type="text/javascript"
   src="/js/visualizacion/funciones_comunes.js"
@@ -104,30 +103,17 @@ head %} {{ super() }}
           <h4 class="title-mulish">{{ gettext('Confusion matrix') }}</h4>
           <table id="confusion-matrix" class="confusion-matrix"></table>
         </div>
-        <div id="metrics-container" class="row text-center">
-        </div>
+        <div id="selector" class="center"></div>
+        <div
+          id="metricas"
+          class="d-flex justify-content-around align-items-center"
+        ></div>
       </div>
     </div>
   </div>
 </div>
 {{ modalerror() }}
 
-<script>
-  $(document).ready(function () {
-    $("#btn-fases-grafo").click(function () {
-      $("#btn-fases-grafo").addClass("active");
-      $("#btn-inferencia").removeClass("active");
-      $("#fases_grafo").show();
-      $("#inferencia").hide();
-    });
-    $("#btn-inferencia").click(function () {
-      $("#btn-inferencia").addClass("active");
-      $("#btn-fases-grafo").removeClass("active");
-      $("#inferencia").show();
-      $("#fases_grafo").hide();
-    });
-  });
-</script>
 <script>
 
   /**
@@ -140,22 +126,33 @@ head %} {{ super() }}
    */
   function traducir(texto) {
 
-      let pasos_gbili = {
+      let textos = {
           'GBILI_0': "{{gettext('Initial Data')}}",
           'GBILI_1': "{{gettext('K nearest neighbors')}}",
           'GBILI_2': "{{gettext('Mutual K nearest neighbors')}}",
           'GBILI_3': "{{gettext('Minimum distances')}}",
-          'GBILI_4': "{{gettext('Final graph')}}"
-      }
-
-      let pasos_rgcli = {
+          'GBILI_4': "{{gettext('Final graph')}}",
           'RGCLI_0': "{{gettext('Initial Data')}}",
           'RGCLI_1': "{{gettext('Ke nearest neighbors')}}",
-          'RGCLI_2': "{{gettext('Ki nearest neighbors')}}"
+          'RGCLI_2': "{{gettext('Ki nearest neighbors')}}",
+          'Real': "{{gettext('Real')}}",
+          'Prediction': "{{gettext('Prediction')}}",
+          'Accuracy': "{{gettext('Accuracy')}}",
+          'Precision': "{{gettext('Precision')}}",
+          'Recall': "{{gettext('Recall')}}",
+          'F1-score': "{{gettext('F1-score')}}",
+          'Error': "{{gettext('Error')}}",
+          'TP': "{{gettext('True Positive')}}",
+          'TN': "{{gettext('True Negative')}}",
+          'FP': "{{gettext('False Positive')}}",
+          'FN': "{{gettext('False Negative')}}",
+          'Average results': "{{gettext('Average results')}}",
+          'Class metrics': "{{gettext('Class metrics')}}",
+          'Average metrics': "{{gettext('Average metrics')}}"
       }
 
-      if ( texto in pasos_gbili || texto in pasos_rgcli) {
-          return pasos_gbili[texto] || pasos_rgcli[texto]
+      if ( texto in textos) {
+          return textos[texto];
       }
 
       return texto
@@ -168,8 +165,6 @@ head %} {{ super() }}
   {% for param in params %}
       elementos.push({nombre: "{{ param.nombre }}", valor: "{{ param.valor }}"});
   {% endfor %}
-
-  let cx = "{{ cx }}", cy = "{{ cy }}";
 
   var nombreAlgoritmo = "{{ nombreGrafo }}";
 

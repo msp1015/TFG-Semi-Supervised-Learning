@@ -1,6 +1,3 @@
-function gettext(text) {
-    return text; // Aquí gestionar la internacionalización
-}
 
 var matriz_confusion = [];
 var mapa_clases = {};
@@ -17,14 +14,15 @@ function dibujaEstadisticas(datos) {
     tabla.html("");
 
     const filaCabecera = tabla.append("tr");
-    filaCabecera.append("th").text(gettext("Real/Predicción"));
+    filaCabecera.append("th").text(traducir("Real") + "\\" + 
+    traducir("Prediction"));
     matriz_confusion[0].forEach((_, i) => {
-        filaCabecera.append("th").text(gettext(mapa_clases[i]));
+        filaCabecera.append("th").text(mapa_clases[i]);
     });
 
     matriz_confusion.forEach((fila, i) => {
         const filaTabla = tabla.append("tr");
-        filaTabla.append("th").text(gettext(mapa_clases[i]));
+        filaTabla.append("th").text(mapa_clases[i]);
         fila.forEach((valor, j) => {
             filaTabla.append("td")
                 .attr("id", `cell-${i}-${j}`)
@@ -36,10 +34,10 @@ function dibujaEstadisticas(datos) {
 }
 
 function crearDropdown() {
-    const container = d3.select("#metrics-container");
-    container.html("");
+    const selector = d3.select("#selector");
+    selector.html("");
 
-    const dropdownContainer = container.append("div")
+    const dropdownContainer = selector.append("div")
         .attr("class", "dropdown-container");
 
     const select = dropdownContainer.append("select")
@@ -49,7 +47,7 @@ function crearDropdown() {
 
     select.append("option")
         .attr("value", "general")
-        .text(gettext("Vista General"));
+        .text(traducir("Average results"));
 
     Object.keys(mapa_clases).forEach(key => {
         select.append("option")
@@ -62,10 +60,9 @@ function crearDropdown() {
 
 function actualizarGrafico() {
     const seleccion = d3.select("#class-selector").node().value;
-    const container = d3.select("#metrics-container");
+    const container = d3.select("#metricas");
     container.select("#chart").remove();
-    container.select("#legend").remove();
-    container.select("#metrics").remove();
+    container.select("#resultados").remove();
 
     if (seleccion === "general") {
         resetearColores();
@@ -75,30 +72,34 @@ function actualizarGrafico() {
 
     const metricas = metricas_clase[seleccion];
     const data = [
-        { label: "TP", value: metricas.TP },
-        { label: "FP", value: metricas.FP },
-        { label: "FN", value: metricas.FN },
-        { label: "TN", value: metricas.TN }
+        { etiq: "TP", valor: metricas.TP },
+        { etiq: "FP", valor: metricas.FP },
+        { etiq: "FN", valor: metricas.FN },
+        { etiq: "TN", valor: metricas.TN }
     ];
 
-    const width = 450;
-    const height = 450;
+    const width = 350;
+    const height = 350;
     const margin = 40;
     const radius = Math.min(width, height) / 2 - margin;
 
-    const svg = container.append("svg")
-        .attr("id", "chart")
+    const containerTarta = container.append("div")
+    .attr("id", "chart")
+    .attr("class", "d-flex flex-column align-items-center m-auto");
+
+    const svg = containerTarta.append("svg")
+        .attr("id", "piechart")
         .attr("width", width)
         .attr("height", height)
         .append("g")
         .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
     const color = d3.scaleOrdinal()
-        .domain(data.map(d => d.label))
+        .domain(data.map(d => d.etiq))
         .range(d3.schemeCategory10);
 
     const pie = d3.pie()
-        .value(d => d.value);
+        .value(d => d.valor);
 
     const data_ready = pie(data);
 
@@ -110,7 +111,7 @@ function actualizarGrafico() {
         .data(data_ready)
         .join('path')
         .attr('d', arc)
-        .attr('fill', d => color(d.data.label))
+        .attr('fill', d => color(d.data.etiq))
         .attr("stroke", "white")
         .style("stroke-width", "2px")
         .style("opacity", 0.7);
@@ -118,7 +119,7 @@ function actualizarGrafico() {
     svg.selectAll('whatever')
         .data(data_ready)
         .join('text')
-        .text(d => d.data.value > 0 ? d.data.label + ":" + d.data.value : "")
+        .text(d => d.data.valor > 0 ? d.data.etiq + ":" + d.data.valor : "")
         .attr("transform", d => `translate(${arc.centroid(d)})`)
         .style("text-anchor", "middle")
         .style("font-size", 15)
@@ -152,24 +153,30 @@ function actualizarGrafico() {
                     .attr("y", outerY + (outerY - lineY) * 0.3 + offset)
                     .attr("dy", "0.35em")
                     .style("text-anchor", outerX > 0 ? "start" : "end")
-                    .text(d.data.label + ":" + d.data.value);
+                    .text(d.data.etiq + ":" + d.data.valor);
                 label.remove();
             }
         });
+    const containerPie = container.select("#chart");
+    const leyenda = containerPie.append("div")
+    .attr("id", "leyenda")
+    .style("display", "grid") // Usar display grid para el contenedor de la leyenda
+    .style("grid-template-columns", "repeat(2, 1fr)") // Crear dos columnas
+    .style("gap", "10px"); // Espacio entre los elementos de la cuadrícula
 
-    const legend = container.append("div").attr("id", "legend");
     data.forEach(d => {
-        const legendItem = legend.append("div").style("display", "flex").style("align-items", "center");
-        legendItem.append("div")
+        const itemLeyenda = leyenda.append("div")
+            .style("display", "flex") // Corregir "d-flex" a "flex"
+            .style("align-items", "center"); // Alinear ítems al centro
+        itemLeyenda.append("div")
             .style("width", "15px")
             .style("height", "15px")
-            .style("background-color", color(d.label))
+            .style("background-color", color(d.etiq))
             .style("margin-right", "10px");
-        legendItem.append("span").text(`${d.label}: ${d.desc}`);
+        itemLeyenda.append("span").text(`${traducir(d.etiq)}`);
     });
 
     colorearCeldas(seleccion, color);
-
     mostrarMetricasClase(container, metricas);
 }
 
@@ -198,24 +205,24 @@ function colorearCeldas(clase, color) {
 
 function mostrarMetricasGenerales(container) {
     const metricsDiv = container.append("div")
-        .attr("id", "metrics")
-        .attr("class", "metrics-summary");
+        .attr("id", "resultados")
+        .attr("class", "m-2");
 
-    metricsDiv.append("h4").text(gettext("Métricas Generales"));
+    metricsDiv.append("h4").text(traducir("Average metrics"));
     Object.keys(metricas_generales).forEach(key => {
-        metricsDiv.append("p").text(`${gettext(key)}: ${metricas_generales[key].toFixed(4)}`);
+        metricsDiv.append("p").text(`${traducir(key)}: ${metricas_generales[key].toFixed(4)}`);
     });
 }
 
 function mostrarMetricasClase(container, metricas) {
     const metricsDiv = container.append("div")
-        .attr("id", "metrics")
-        .attr("class", "metrics-summary");
+        .attr("id", "resultados")
+        .attr("class", "m-2 p-2");
 
-    metricsDiv.append("h4").text(gettext("Métricas de Clase"));
+    metricsDiv.append("h4").text(traducir("Class metrics"));
     Object.keys(metricas).forEach(key => {
         if (key !== "TP" && key !== "FP" && key !== "FN" && key !== "TN") {
-            metricsDiv.append("p").text(`${gettext(key)}: ${metricas[key].toFixed(4)}`);
+            metricsDiv.append("p").text(`${traducir(key)}: ${metricas[key].toFixed(4)}`);
         }
     });
 }
