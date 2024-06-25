@@ -1,6 +1,7 @@
 function gettext(text) {
     return text; // Aquí gestionar la internacionalización
 }
+
 var matriz_confusion = [];
 var mapa_clases = {};
 var metricas_generales = {};
@@ -25,25 +26,25 @@ function dibujaEstadisticas(datos) {
         const filaTabla = tabla.append("tr");
         filaTabla.append("th").text(gettext(mapa_clases[i]));
         fila.forEach((valor, j) => {
-            filaTabla.append("td").text(valor);
+            filaTabla.append("td")
+                .attr("id", `cell-${i}-${j}`)
+                .text(valor);
         });
     });
 
     crearDropdown();
 }
 
-
 function crearDropdown() {
     const container = d3.select("#metrics-container");
     container.html("");
 
-    // Añade una clase al contenedor del dropdown
     const dropdownContainer = container.append("div")
         .attr("class", "dropdown-container");
 
     const select = dropdownContainer.append("select")
         .attr("id", "class-selector")
-        .attr("class", "styled-dropdown") // Añade la clase CSS al dropdown
+        .attr("class", "styled-dropdown")
         .on("change", actualizarGrafico);
 
     select.append("option")
@@ -67,6 +68,7 @@ function actualizarGrafico() {
     container.select("#metrics").remove();
 
     if (seleccion === "general") {
+        resetearColores();
         mostrarMetricasGenerales(container);
         return;
     }
@@ -122,7 +124,7 @@ function actualizarGrafico() {
         .style("font-size", 15)
         .each(function(d) {
             const label = d3.select(this);
-            if (d.endAngle - d.startAngle < 0.2) { // Ángulo pequeño
+            if (d.endAngle - d.startAngle < 0.2) {
                 const [lineX, lineY] = arc.centroid(d);
                 const outerArc = d3.arc()
                     .innerRadius(radius)
@@ -166,9 +168,33 @@ function actualizarGrafico() {
         legendItem.append("span").text(`${d.label}: ${d.desc}`);
     });
 
+    colorearCeldas(seleccion, color);
+
     mostrarMetricasClase(container, metricas);
 }
 
+function colorearCeldas(clase, color) {
+    const index = Object.keys(mapa_clases).find(key => mapa_clases[key] === clase);
+
+    if (index !== undefined) {
+        d3.selectAll("td").style("background-color", "");
+
+        const tp = `cell-${index}-${index}`;
+        d3.select(`#${tp}`).style("background-color", color("TP"));
+
+        matriz_confusion.forEach((fila, i) => {
+            fila.forEach((_, j) => {
+                if (i === parseInt(index) && j !== parseInt(index)) {
+                    d3.select(`#cell-${i}-${j}`).style("background-color", color("FN"));
+                } else if (i !== parseInt(index) && j === parseInt(index)) {
+                    d3.select(`#cell-${i}-${j}`).style("background-color", color("FP"));
+                } else if (i !== parseInt(index) && j !== parseInt(index)) {
+                    d3.select(`#cell-${i}-${j}`).style("background-color", color("TN"));
+                }
+            });
+        });
+    }
+}
 
 function mostrarMetricasGenerales(container) {
     const metricsDiv = container.append("div")
@@ -192,4 +218,8 @@ function mostrarMetricasClase(container, metricas) {
             metricsDiv.append("p").text(`${gettext(key)}: ${metricas[key].toFixed(4)}`);
         }
     });
+}
+
+function resetearColores() {
+    d3.selectAll("td").style("background-color", "");
 }
