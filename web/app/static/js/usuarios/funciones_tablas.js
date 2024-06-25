@@ -91,7 +91,9 @@ const idiomas = {
 const titulos = {'selftraining': 'Self-Training',
     'cotraining': 'Co-Training',
     'democraticcolearning': 'Democratic Co-Learning',
-    'tritraining': 'Tri-Training'};
+    'tritraining': 'Tri-Training',
+    'coforest': 'Co-Forest',
+    'graphs': 'GSSL'};
 
 /**
  *
