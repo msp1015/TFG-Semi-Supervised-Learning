@@ -381,6 +381,12 @@ export function generateDatasetTable(datasets, locale, all_users) {
             let triraining = document.getElementById('tritraining_link');
             triraining.setAttribute('href', '/seleccionar/tritraining/' + file);
 
+            let coforest = document.getElementById('coforest_link');
+            coforest.setAttribute('href', '/seleccionar/coforest/' + file);
+
+            let graphs = document.getElementById('graphs_link');
+            graphs.setAttribute('href', '/seleccionar/graphs/' + file);
+
         }
     });
 }

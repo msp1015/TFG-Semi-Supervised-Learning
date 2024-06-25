@@ -108,18 +108,15 @@ def subida():
         if file_received.filename == '':
             return redirect(request.url)
         if file_received:
-            filename = secure_filename(
-                file_received.filename) + "-" + str(int(datetime.now().timestamp()))
-            if current_user.is_authenticated:
-                complete_path = os.path.join(
-                    current_app.config['CARPETA_DATASETS_REGISTRADOS'], filename)
-                session['FICHERO'] = complete_path
-            else:
-                complete_path = os.path.join(
-                    current_app.config['CARPETA_DATASETS_ANONIMOS'], filename)
-                session['FICHERO'] = complete_path
+            base_folder = current_app.config['CARPETA_DATASETS_REGISTRADOS'] if current_user.is_authenticated else current_app.config['CARPETA_DATASETS_ANONIMOS']
 
-            if file_received.filename.upper().endswith('.ARFF') or file_received.filename.upper().endswith('.CSV'):
+            # Construir el nombre del archivo con timestamp
+            filename = secure_filename(file_received.filename) + "-" + str(int(datetime.now().timestamp()))
+            complete_path = os.path.join(base_folder, filename)
+            session['FICHERO'] = complete_path
+
+            # Comprobar si la extensión del archivo es válida
+            if file_received.filename.upper().endswith(('.ARFF', '.CSV')):
                 file_received.save(complete_path)
 
                 # Si está logeado, se puede guardar el fichero en base de datos
