@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-25 22:25+0200\n"
+"POT-Creation-Date: 2024-06-26 00:48+0200\n"
 "PO-Revision-Date: 2023-02-26 14:39+0100\n"
 "Last-Translator: David Martínez Acha <dmacha@ubu.es>\n"
 "Language: es\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Generated-By: Babel 2.14.0\n"
 
 #: __init__.py:70 templates/base.html:54
-#: templates/configuracion/graphsconfig.html:20 templates/inicio.html:117
+#: templates/configuracion/graphsconfig.html:26 templates/inicio.html:117
 #: templates/visualizacion/graphs.html:19
 msgid "Graphs"
 msgstr "Grafos"
@@ -403,19 +403,19 @@ msgstr ""
 "propagar etiquetas\n"
 "              desde los datos etiquetados a los no etiquetados."
 
-#: templates/inicio.html:129 templates/inicio.html:167
-#: templates/inicio.html:207 templates/inicio.html:247
-#: templates/inicio.html:288 templates/inicio.html:329
+#: templates/inicio.html:129 templates/inicio.html:168
+#: templates/inicio.html:209 templates/inicio.html:250
+#: templates/inicio.html:292 templates/inicio.html:334
 msgid "Select"
 msgstr "Seleccionar"
 
-#: templates/inicio.html:137 templates/inicio.html:175
-#: templates/inicio.html:215 templates/inicio.html:255
-#: templates/inicio.html:296 templates/inicio.html:337
+#: templates/inicio.html:138 templates/inicio.html:177
+#: templates/inicio.html:218 templates/inicio.html:259
+#: templates/inicio.html:301 templates/inicio.html:343
 msgid "Paper"
 msgstr "Artículo"
 
-#: templates/inicio.html:159
+#: templates/inicio.html:160
 msgid ""
 "Ensemble that uses multiple decision trees to\n"
 "              iteratively add confident predictions to the training set,\n"
@@ -426,11 +426,11 @@ msgstr ""
 "de entrenamiento,\n"
 "              mejorando el aprendizaje mutuo."
 
-#: templates/inicio.html:196
+#: templates/inicio.html:198
 msgid "Self-Training"
 msgstr "Self-Training"
 
-#: templates/inicio.html:199
+#: templates/inicio.html:201
 msgid ""
 "Uses a base classifier initially trained with labeled\n"
 "              data and iteratively retrains with pseudo-labeled data "
@@ -442,11 +442,11 @@ msgstr ""
 "              y se reentrena iterativamente con datos pseudo-etiquetados\n"
 "              hasta que se cumple un criterio de parada."
 
-#: templates/inicio.html:236
+#: templates/inicio.html:239
 msgid "Co-Training"
 msgstr "Co-Training"
 
-#: templates/inicio.html:239
+#: templates/inicio.html:242
 msgid ""
 "Uses multiple classifiers trained on different\n"
 "              attribute subsets, iteratively predicting and selecting "
@@ -459,11 +459,11 @@ msgstr ""
 "              etiquetas confiables para construir nuevos conjuntos de "
 "entrenamiento."
 
-#: templates/inicio.html:276
+#: templates/inicio.html:280
 msgid "Tri-Training"
 msgstr "Tri-Training"
 
-#: templates/inicio.html:279
+#: templates/inicio.html:283
 msgid ""
 "Uses three classifiers to pseudo-label data, requiring\n"
 "              two of them to agree, and iterates (with new empty data) "
@@ -475,11 +475,11 @@ msgstr ""
 "datos vacíos)\n"
 "              hasta que no se añadan nuevas etiquetas."
 
-#: templates/inicio.html:318
+#: templates/inicio.html:323
 msgid "Democratic Co-Learning"
 msgstr "Democratic Co-Learning"
 
-#: templates/inicio.html:321
+#: templates/inicio.html:326
 msgid ""
 "Uses multiple classifiers to pseudo-label data by\n"
 "              majority vote, retraining misclassified instances until "
@@ -491,15 +491,15 @@ msgstr ""
 "hasta que\n"
 "              la precisión deje de mejorar."
 
-#: templates/inicio.html:351
+#: templates/inicio.html:357
 msgid "Welcome"
 msgstr "Bienvenido/a"
 
-#: templates/inicio.html:352
+#: templates/inicio.html:358
 msgid "Welcome to VASS! This is a basic tutorial."
 msgstr "¡Bienvenido/a a Vass! Esto es un tutorial básico."
 
-#: templates/inicio.html:356
+#: templates/inicio.html:362
 msgid ""
 "Here's a quick rundown of some theoretical concepts and what the app aims"
 " to do."
@@ -507,7 +507,7 @@ msgstr ""
 "Aquí se realiza una pequeña introducción de conceptos teóricos y del "
 "objetivo de la aplicación."
 
-#: templates/inicio.html:360
+#: templates/inicio.html:366
 msgid ""
 "By selecting any of these algorithms, you'll be able to upload a dataset "
 "to work with."
@@ -515,13 +515,13 @@ msgstr ""
 "Al seleccionar cualquiera de estos algoritmos podrás subir un conjunto de"
 " datos con el que trabajar."
 
-#: templates/inicio.html:364
+#: templates/inicio.html:370
 msgid "Likewise, you can select any algorithm using these selectors."
 msgstr ""
 "Del mismo modo, puede seleccionar cualquier algoritmo mediante estos "
 "selectores."
 
-#: templates/inicio.html:368
+#: templates/inicio.html:374
 msgid ""
 "On every page of the application, you'll always find a basic tutorial by "
 "clicking on this button."
@@ -529,7 +529,7 @@ msgstr ""
 "En todas las páginas de la aplicación siempre encontrarás un tutorial "
 "básico pulsando en este botón."
 
-#: templates/inicio.html:372
+#: templates/inicio.html:378
 msgid ""
 "At any time, you can refer to the application's guide by clicking on this"
 " button."
@@ -537,11 +537,11 @@ msgstr ""
 "En cualquier momento puedes consultar el manual de la aplicación en este "
 "botón."
 
-#: templates/inicio.html:376
+#: templates/inicio.html:382
 msgid "You can also choose the desired language."
 msgstr "También puedes elegir el idioma deseado."
 
-#: templates/inicio.html:384
+#: templates/inicio.html:390
 msgid ""
 "You can log in or register in the application. This will allow you to "
 "store datasets and even save executions."
@@ -549,7 +549,7 @@ msgstr ""
 "Puedes iniciar sesión o registrarte en la aplicación. Esto permitirá "
 "almacenar conjuntos de datos e incluso guardar ejecuciones."
 
-#: templates/inicio.html:389
+#: templates/inicio.html:395
 msgid ""
 "Here you can access the profile and personal space with datasets and "
 "executions."
@@ -558,28 +558,28 @@ msgstr ""
 "datos y ejecuciones."
 
 #: templates/configuracion/base_config_inductivos.html:91
-#: templates/configuracion/graphsconfig.html:260 templates/inicio.html:397
+#: templates/configuracion/graphsconfig.html:266 templates/inicio.html:403
 #: templates/subida.html:112 templates/usuarios/miespacio.html:59
 #: templates/usuarios/perfil.html:80
-#: templates/visualizacion/base_visualizacion.html:228
+#: templates/visualizacion/base_visualizacion.html:230
 #: templates/visualizacion/graphs.html:196
 msgid "Next"
 msgstr "Siguiente"
 
 #: templates/configuracion/base_config_inductivos.html:92
-#: templates/configuracion/graphsconfig.html:261 templates/inicio.html:398
+#: templates/configuracion/graphsconfig.html:267 templates/inicio.html:404
 #: templates/subida.html:113 templates/usuarios/miespacio.html:60
 #: templates/usuarios/perfil.html:81
-#: templates/visualizacion/base_visualizacion.html:229
+#: templates/visualizacion/base_visualizacion.html:231
 #: templates/visualizacion/graphs.html:197
 msgid "Previous"
 msgstr "Anterior"
 
 #: templates/configuracion/base_config_inductivos.html:93
-#: templates/configuracion/graphsconfig.html:262 templates/inicio.html:399
+#: templates/configuracion/graphsconfig.html:268 templates/inicio.html:405
 #: templates/subida.html:114 templates/usuarios/miespacio.html:61
 #: templates/usuarios/perfil.html:82
-#: templates/visualizacion/base_visualizacion.html:230
+#: templates/visualizacion/base_visualizacion.html:232
 #: templates/visualizacion/graphs.html:198
 msgid "Done"
 msgstr "Hecho"
@@ -643,7 +643,7 @@ msgstr ""
 "pero con el mismo tipo (-1, -1.0 o \"?\")"
 
 #: templates/macros.html:143 templates/macros.html:283
-#: templates/macros.html:355
+#: templates/macros.html:367
 msgid "Close"
 msgstr "Cerrar"
 
@@ -683,7 +683,7 @@ msgid "Run date"
 msgstr "Fecha de ejecución"
 
 #: templates/configuracion/base_config_inductivos.html:35
-#: templates/configuracion/graphsconfig.html:133 templates/macros.html:209
+#: templates/configuracion/graphsconfig.html:139 templates/macros.html:209
 #: templates/macros.html:270
 msgid "Parameters"
 msgstr "Parámetros"
@@ -716,7 +716,7 @@ msgstr "Eliminar"
 msgid "Select algorithm"
 msgstr "Selecciona un algoritmo"
 
-#: templates/macros.html:346
+#: templates/macros.html:358
 msgid "An error occurred"
 msgstr "Ha ocurrido un error"
 
@@ -725,7 +725,7 @@ msgid "Dataset upload"
 msgstr "Carga del conjunto de datos"
 
 #: templates/configuracion/base_config_inductivos.html:10
-#: templates/configuracion/graphsconfig.html:16 templates/subida.html:11
+#: templates/configuracion/graphsconfig.html:22 templates/subida.html:11
 #: templates/usuarios/admin.html:12 templates/usuarios/base_form.html:4
 #: templates/usuarios/base_user.html:4
 #: templates/visualizacion/base_visualizacion.html:14
@@ -811,40 +811,40 @@ msgstr "Una vez cargado podrás pasar a la configuración del algoritmo "
 
 #: templates/configuracion/base_config_inductivos.html:7
 #: templates/configuracion/base_config_inductivos.html:13
-#: templates/configuracion/graphsconfig.html:8
-#: templates/configuracion/graphsconfig.html:20
+#: templates/configuracion/graphsconfig.html:14
+#: templates/configuracion/graphsconfig.html:26
 msgid "Algorithm configuration"
 msgstr "Configuración del algoritmo"
 
 #: templates/configuracion/base_config_inductivos.html:10
-#: templates/configuracion/graphsconfig.html:17
+#: templates/configuracion/graphsconfig.html:23
 #: templates/visualizacion/base_visualizacion.html:15
 #: templates/visualizacion/graphs.html:15
 msgid "Dataset"
 msgstr "Conjunto de datos"
 
 #: templates/configuracion/base_config_inductivos.html:21
-#: templates/configuracion/graphsconfig.html:29
+#: templates/configuracion/graphsconfig.html:35
 msgid "Theory"
 msgstr "Teoría"
 
 #: templates/configuracion/base_config_inductivos.html:52
-#: templates/configuracion/graphsconfig.html:182
+#: templates/configuracion/graphsconfig.html:188
 msgid "Run"
 msgstr "Ejecutar"
 
 #: templates/configuracion/base_config_inductivos.html:71
-#: templates/configuracion/graphsconfig.html:240
+#: templates/configuracion/graphsconfig.html:246
 msgid "Configuration area"
 msgstr "Área de configuración"
 
 #: templates/configuracion/base_config_inductivos.html:72
-#: templates/configuracion/graphsconfig.html:241
+#: templates/configuracion/graphsconfig.html:247
 msgid "On this page, you'll be able to customize the parameters of algorithm "
 msgstr "En esta página podrás personalizar los parámetros del algoritmo."
 
 #: templates/configuracion/base_config_inductivos.html:76
-#: templates/configuracion/graphsconfig.html:245
+#: templates/configuracion/graphsconfig.html:251
 msgid ""
 "You can gain a deeper understanding of the algorithm by reviewing its "
 "theory and pseudocode."
@@ -853,12 +853,12 @@ msgstr ""
 "pseudocódigo."
 
 #: templates/configuracion/base_config_inductivos.html:80
-#: templates/configuracion/graphsconfig.html:249
+#: templates/configuracion/graphsconfig.html:255
 msgid "Here you can select the desired parameters."
 msgstr "Aquí puedes seleccionar los parámetros deseados."
 
 #: templates/configuracion/base_config_inductivos.html:84
-#: templates/configuracion/graphsconfig.html:253
+#: templates/configuracion/graphsconfig.html:259
 msgid ""
 "It's crucial to select the column of data that acts as the target "
 "correctly. The rest of the parameters can be used as default."
@@ -867,7 +867,7 @@ msgstr ""
 "actúa como objetivo. El resto de parámetros pueden servir por defecto."
 
 #: templates/configuracion/base_config_inductivos.html:88
-#: templates/configuracion/graphsconfig.html:257
+#: templates/configuracion/graphsconfig.html:263
 msgid ""
 "And finally, execute the algorithm. The application may take a few "
 "seconds to display the complete execution."
@@ -1042,15 +1042,15 @@ msgstr "/pseudocodigos/es/DemocraticCoLearningCombinar.png"
 msgid "Democratic Co-Learning Combine Pseudocode"
 msgstr "Pseudocódigo de la Combinación de Democratic Co-Learning"
 
-#: templates/configuracion/graphsconfig.html:33
+#: templates/configuracion/graphsconfig.html:39
 msgid "Graph construction"
 msgstr "Construcción del grafo"
 
-#: templates/configuracion/graphsconfig.html:36
+#: templates/configuracion/graphsconfig.html:42
 msgid "Inference"
 msgstr "Inferencia"
 
-#: templates/configuracion/graphsconfig.html:45
+#: templates/configuracion/graphsconfig.html:51
 msgid ""
 " The GBILI algorithm, standing for Graph Building\n"
 "                based on the Informativeness of Labeled Instances, is a "
@@ -1082,11 +1082,11 @@ msgid ""
 "                learning."
 msgstr ""
 
-#: templates/configuracion/graphsconfig.html:64
+#: templates/configuracion/graphsconfig.html:70
 msgid "/pseudocodigos/en/gbili.png"
 msgstr "/pseudocodigos/es/gbili.png"
 
-#: templates/configuracion/graphsconfig.html:72
+#: templates/configuracion/graphsconfig.html:78
 msgid ""
 "The RGCLI (Refined Graph Construction based on\n"
 "                Labeled Instance Information) algorithm enhances semi-"
@@ -1115,11 +1115,11 @@ msgid ""
 "                while facilitating effective label propagation."
 msgstr ""
 
-#: templates/configuracion/graphsconfig.html:89
+#: templates/configuracion/graphsconfig.html:95
 msgid "/pseudocodigos/en/rgcli.png"
 msgstr "/pseudocodigos/es/rgcli.png"
 
-#: templates/configuracion/graphsconfig.html:100
+#: templates/configuracion/graphsconfig.html:106
 msgid ""
 "The Graph-based Local and Global Consistency (LGC)\n"
 "              algorithm is a semi-supervised learning method designed\n"
@@ -1155,11 +1155,11 @@ msgid ""
 "              plentiful."
 msgstr ""
 
-#: templates/configuracion/graphsconfig.html:121
+#: templates/configuracion/graphsconfig.html:127
 msgid "/pseudocodigos/en/LGC.png"
 msgstr "/pseudocodigos/es/LGC.png"
 
-#: templates/configuracion/graphsconfig.html:160
+#: templates/configuracion/graphsconfig.html:166
 msgid ""
 "If already\n"
 "                semi-supervised, it will be ignored"
@@ -1352,10 +1352,10 @@ msgstr "Este es tu perfil."
 msgid "Here you can modify the basic data of your profile."
 msgstr "Aquí puedes modificar los datos básicos de tu perfil."
 
-#: templates/visualizacion/Gbili.html:10 templates/visualizacion/Gbili.html:25
-#: templates/visualizacion/Gbili.html:37 templates/visualizacion/Gbili.html:49
-#: templates/visualizacion/Gbili.html:61 templates/visualizacion/Rgcli.html:10
-#: templates/visualizacion/Rgcli.html:20 templates/visualizacion/Rgcli.html:30
+#: templates/visualizacion/Gbili.html:10 templates/visualizacion/Gbili.html:23
+#: templates/visualizacion/Gbili.html:35 templates/visualizacion/Gbili.html:47
+#: templates/visualizacion/Gbili.html:59 templates/visualizacion/Rgcli.html:10
+#: templates/visualizacion/Rgcli.html:19 templates/visualizacion/Rgcli.html:28
 msgid "Step"
 msgstr "Paso"
 
@@ -1370,39 +1370,39 @@ msgstr "Datos iniciales"
 msgid "/pseudocodigos/en/gbili/gbili_0.png"
 msgstr "/pseudocodigos/es/gbili/gbili_0.png"
 
-#: templates/visualizacion/Gbili.html:25
+#: templates/visualizacion/Gbili.html:23
 #: templates/visualizacion/graphs.html:131
 msgid "K nearest neighbors"
 msgstr "K vecinos más cercanos"
 
-#: templates/visualizacion/Gbili.html:31
+#: templates/visualizacion/Gbili.html:29
 msgid "/pseudocodigos/en/gbili/gbili_1.png"
 msgstr "/pseudocodigos/es/gbili/gbili_1.png"
 
-#: templates/visualizacion/Gbili.html:37
+#: templates/visualizacion/Gbili.html:35
 #: templates/visualizacion/graphs.html:132
 msgid "Mutual K nearest neighbors"
 msgstr "K vecinos más cercanos mutuos"
 
-#: templates/visualizacion/Gbili.html:43
+#: templates/visualizacion/Gbili.html:41
 msgid "/pseudocodigos/en/gbili/gbili_2.png"
 msgstr "/pseudocodigos/es/gbili/gbili_2.png"
 
-#: templates/visualizacion/Gbili.html:49
+#: templates/visualizacion/Gbili.html:47
 #: templates/visualizacion/graphs.html:133
 msgid "Minimum distances"
 msgstr "Distancias mínimas"
 
-#: templates/visualizacion/Gbili.html:55
+#: templates/visualizacion/Gbili.html:53
 msgid "/pseudocodigos/en/gbili/gbili_3.png"
 msgstr "/pseudocodigos/es/gbili/gbili_3.png"
 
-#: templates/visualizacion/Gbili.html:61 templates/visualizacion/Rgcli.html:30
+#: templates/visualizacion/Gbili.html:59 templates/visualizacion/Rgcli.html:28
 #: templates/visualizacion/graphs.html:134
 msgid "Final graph"
 msgstr "Grafo final"
 
-#: templates/visualizacion/Gbili.html:68
+#: templates/visualizacion/Gbili.html:66
 msgid "/pseudocodigos/en/gbili/gbili_4.png"
 msgstr "/pseudocodigos/es/gbili/gbili_4.png"
 
@@ -1410,16 +1410,16 @@ msgstr "/pseudocodigos/es/gbili/gbili_4.png"
 msgid "/pseudocodigos/en/rgcli/rgcli_0.png"
 msgstr "/pseudocodigos/es/rgcli/rgcli_0.png"
 
-#: templates/visualizacion/Rgcli.html:20
+#: templates/visualizacion/Rgcli.html:19
 #: templates/visualizacion/graphs.html:136
 msgid "Ke nearest neighbors"
 msgstr "Ke vecinos más cercanos"
 
-#: templates/visualizacion/Rgcli.html:23
+#: templates/visualizacion/Rgcli.html:22
 msgid "/pseudocodigos/en/rgcli/rgcli_1.png"
 msgstr "/pseudocodigos/es/rgcli/rgcli_1.png"
 
-#: templates/visualizacion/Rgcli.html:33
+#: templates/visualizacion/Rgcli.html:31
 msgid "/pseudocodigos/en/rgcli/rgcli_2.png"
 msgstr "/pseudocodigos/es/rgcli/rgcli_2.png"
 
@@ -1482,12 +1482,20 @@ msgstr "Posición"
 msgid "overlapping points"
 msgstr "puntos solapados"
 
-#: templates/visualizacion/base_visualizacion.html:182
+#: templates/visualizacion/base_visualizacion.html:159
+msgid "All"
+msgstr "Todos"
+
+#: templates/visualizacion/base_visualizacion.html:160
+msgid "None"
+msgstr "Ninguno"
+
+#: templates/visualizacion/base_visualizacion.html:184
 #: templates/visualizacion/graphs.html:174
 msgid "Visualization area"
 msgstr "Área de visualización"
 
-#: templates/visualizacion/base_visualizacion.html:183
+#: templates/visualizacion/base_visualizacion.html:185
 msgid ""
 "This page is the heart of the application. Here, you can observe the "
 "algorithm training process."
@@ -1495,11 +1503,11 @@ msgstr ""
 "Esta página es el núcleo de la aplicación. Aquí podrás observar el "
 "proceso de entrenamiento del algoritmo."
 
-#: templates/visualizacion/base_visualizacion.html:187
+#: templates/visualizacion/base_visualizacion.html:189
 msgid "This is the main chart area."
 msgstr "Esta es la zona del gráfico principal."
 
-#: templates/visualizacion/base_visualizacion.html:192
+#: templates/visualizacion/base_visualizacion.html:194
 msgid ""
 "This chart will display the data classified by the algorithm. It's "
 "interactive; you can zoom in, scroll around, or select a data point (to "
@@ -1509,7 +1517,7 @@ msgstr ""
 "algoritmo. Es interactivo, puedes aplicar zoom, desplazarte o seleccionar"
 " un dato (para mostrar información de interés)."
 
-#: templates/visualizacion/base_visualizacion.html:196
+#: templates/visualizacion/base_visualizacion.html:198
 #: templates/visualizacion/graphs.html:183
 msgid ""
 "You can proceed through the algorithm steps manually or automatically "
@@ -1518,11 +1526,11 @@ msgstr ""
 "Puedes avanzar sobre los pasos del algoritmo de forma manual o automática"
 " mientras se visualizan los eventos."
 
-#: templates/visualizacion/base_visualizacion.html:200
+#: templates/visualizacion/base_visualizacion.html:202
 msgid "This is the statistics area."
 msgstr "Esta es la zona de estadísticas."
 
-#: templates/visualizacion/base_visualizacion.html:205
+#: templates/visualizacion/base_visualizacion.html:207
 msgid ""
 "Here, the statistics extracted in each iteration are displayed in a "
 "general way, as if it were a single model."
@@ -1530,7 +1538,7 @@ msgstr ""
 "Aquí se muestran las estadísticas extraídas en cada iteración de forma "
 "general, como si fuera un único modelo."
 
-#: templates/visualizacion/base_visualizacion.html:212
+#: templates/visualizacion/base_visualizacion.html:214
 msgid ""
 "Here, the statistics extracted in each iteration for each base classifier"
 " are displayed."
@@ -1538,11 +1546,11 @@ msgstr ""
 "Aquí se muestran las estadísticas extraídas en cada iteración por cada "
 "clasificador base."
 
-#: templates/visualizacion/base_visualizacion.html:216
+#: templates/visualizacion/base_visualizacion.html:218
 msgid "Through this selector, you can choose the metric you want to see."
 msgstr "Mediante este selector puedes elegir la métrica que deseas ver."
 
-#: templates/visualizacion/base_visualizacion.html:220
+#: templates/visualizacion/base_visualizacion.html:222
 msgid "This allows you to select which base classifier to display."
 msgstr "Esto permite seleccionar qué clasificador base mostrar."
 

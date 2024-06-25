@@ -142,7 +142,7 @@ function generarcheckboxes_clasificadores(id_div_objetivo, id_div_estadisticas, 
         actualizarSeleccionTodosNinguno();
     });
     div_objetivo.appendChild(selectAllCheckbox);
-    div_objetivo.appendChild(document.createTextNode("_All_"));
+    div_objetivo.appendChild(document.createTextNode(traducir('All')));
 
     // Crear checkbox para deseleccionar todos
     let deselectAllCheckbox = document.createElement("input");
@@ -163,7 +163,7 @@ function generarcheckboxes_clasificadores(id_div_objetivo, id_div_estadisticas, 
         actualizarSeleccionTodosNinguno();
     });
     div_objetivo.appendChild(deselectAllCheckbox);
-    div_objetivo.appendChild(document.createTextNode("_None_"));
+    div_objetivo.appendChild(document.createTextNode(traducir('None')));
 
     for (let index in clasificadores) {
         let clasificador = clasificadores[index];
