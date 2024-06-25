@@ -232,8 +232,12 @@ def datosgraphs():
         steps[i] = build_enlaces_json(steps[i])
     predicciones = predicciones[len(L):].tolist()
     conf_matrix = confusion_matrix(U_y, predicciones)
+    mi_reporte = calcular_reporte(conf_matrix, mapa)
+    print(mi_reporte)
     medidas = calculate_log_statistics(U_y, predicciones)
-    metricas = {"accuracy": medidas[0], "precision": medidas[1], "error": medidas[2], "f1-score": medidas[3], "recall": medidas[4]}
+    metricas_generales = {"accuracy": medidas[0], "precision": medidas[1], 
+                          "error": medidas[2], "f1-score": medidas[3],
+                          "recall": medidas[4]}
 
     predicciones_json = {}
     for i, prediccion in enumerate(predicciones):
@@ -244,7 +248,8 @@ def datosgraphs():
                    "predicciones": predicciones_json,
                    "mapa": json.dumps(mapa),
                    "confusion_matrix": conf_matrix.tolist(),
-                   "average_metrics": metricas}
+                   "metricas_generales": metricas_generales,
+                   "metricas_clase": mi_reporte}
     print(info_grafos)
     if current_user.is_authenticated:
         date = int(datetime.now().timestamp())
@@ -262,6 +267,7 @@ def datosgraphs():
         
         try:
             db.session.add(run)
+            print("Añadido")
         except SQLAlchemyError:
             db.session.rollback()
             os.remove(os.path.join(
@@ -480,3 +486,34 @@ def build_enlaces_json(grafo):
             if {"source": str(node), "target": str(neighbor)} not in enlaces and {"source": str(neighbor), "target": str(node)} not in enlaces:
                 enlaces.append({"source": str(node), "target": str(neighbor)})
     return enlaces
+
+
+
+def calcular_reporte(matriz, mapa):
+    metricas = {}
+    num_clases = matriz.shape[0]
+    
+    for i in range(num_clases):
+        tp = int(matriz[i,i])
+        fp = int(matriz[:,i].sum() - tp)
+        fn = int(matriz[i,:].sum() - tp)
+        tn = int(matriz.sum() - tp - fp - fn)
+
+        precision = tp / (tp + fp) if (tp + fp) != 0 else 0
+        recall = tp / (tp + fn) if (tp + fn) != 0 else 0
+        f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) != 0 else 0
+        accuracy = (tp + tn) / (tp + tn + fp + fn)
+        error = 1 - accuracy
+        
+        metricas[mapa[i]] = {
+            'TP': tp,
+            'FP': fp,
+            'FN': fn,
+            'TN': tn,
+            'Precision': precision,
+            'Recall': recall,
+            'F1-Score': f1,
+            'Accuracy': accuracy,
+            'Error': error
+        }
+    return metricas

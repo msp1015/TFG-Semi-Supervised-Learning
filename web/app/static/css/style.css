@@ -321,16 +321,43 @@ footer {
     padding: 10px 15px; 
 }
 
-.confusion-matrix .metrics {
-    overflow: auto;
-    max-width: 100%;
+.table-container {
+    overflow-x: auto;
+    overflow-y: auto; 
+    max-height: 400px; 
+    margin-bottom: 20px;
 }
-table {
-    width: 100%;
+.confusion-matrix {
     border-collapse: collapse;
+    width: 100%;
 }
-th, td {
-    border: 1px solid #000;
-    padding: 8px;
+.confusion-matrix th, .confusion-matrix td {
+    border: 2px solid #050000;
     text-align: center;
+    padding: 8px;
+}
+.confusion-matrix th {
+    background-color: #6e8ef7;
+}
+.confusion-matrix td {
+    background-color: #ffffaa;
+}
+
+.dropdown-container {
+    margin: 20px;
+    text-align: center;
+}
+
+/* Estilos para el dropdown */
+.styled-dropdown {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+/* Estilos para las opciones del dropdown */
+.styled-dropdown option {
+    padding: 10px;
 }

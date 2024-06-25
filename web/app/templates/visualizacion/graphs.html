@@ -100,8 +100,12 @@ head %} {{ super() }}
         {% include '/visualizacion/' ~ nombreGrafo ~ '.html' %}
       </div>
       <div id="inferencia" class="m-2 p-2" style="display: none">
-        <div id="matrix-container" class="confusion-matrix"></div>
-        <div id="metrics-container" class="metrics"></div>
+        <div class="table-container text-center">
+          <h4 class="title-mulish">{{ gettext('Confusion matrix') }}</h4>
+          <table id="confusion-matrix" class="confusion-matrix"></table>
+        </div>
+        <div id="metrics-container" class="row text-center">
+        </div>
       </div>
     </div>
   </div>
