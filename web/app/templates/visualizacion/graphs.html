@@ -1,6 +1,11 @@
 {% extends "base.html" %} {% from "macros.html" import modalerror %} {% block
 head %} {{ super() }}
 <script type="text/javascript" src="/js/visualizacion/d3.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+  crossorigin="anonymous"
+></script>
 <script type="text/javascript" src="/js/visualizacion/inicializar.js"></script>
 <script type="text/javascript" src="/js/visualizacion/grafos.js"></script>
 <script type="text/javascript" src="/js/visualizacion/inferencia.js"></script>
@@ -100,14 +105,18 @@ head %} {{ super() }}
       </div>
       <div id="inferencia" class="m-2 p-2" style="display: none">
         <div class="table-container text-center">
-          <h4 class="title-mulish">{{ gettext('Confusion matrix') }}</h4>
+          <h4 class="title-mulish" id="title_cm">{{ gettext('Confusion matrix') }}</h4>
           <table id="confusion-matrix" class="confusion-matrix"></table>
         </div>
         <div id="selector" class="center"></div>
         <div
           id="metricas"
-          class="d-flex justify-content-around align-items-center"
+          class="d-flex justify-content-around"
         ></div>
+        <div id="no_evaluacion" style="display:none">
+          <i class="bi bi-exclamation-circle"></i> 
+          <p> {{ gettext('Dataset is unlabelled so there is no posible evaluation. If there is no label on each data entry, predictions can not be compared.')}}</p>  
+        </div>
       </div>
     </div>
   </div>
@@ -206,7 +215,13 @@ head %} {{ super() }}
   inicializar("/datos/{{ session['ALGORITMO'] }}", elementos)
     .then(function (datos) {
       inicializarDatos(datos);
-      dibujaEstadisticas(datos);
+      if (datos['dataset_no_etiquetado'] == false) {
+        dibujaEstadisticas(datos); 
+      }else{
+        $('#title_cm').hide();
+        $('#no_evaluacion').show();
+      }
+      
       inicializarGrafo();
       updateGraph();
     })

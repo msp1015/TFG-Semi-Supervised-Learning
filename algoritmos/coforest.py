@@ -68,7 +68,7 @@ class CoForest:
         Returns:
             dict: Un diccionario que contiene los árboles de decisión entrenados.
         """
-        L, y_l, U = obtain_train_unlabelled(X_train, Y_train)
+        L, y_l, U, _ = obtain_train_unlabelled(X_train, Y_train)
         log = pd.DataFrame(L, columns=features)
         log['iters'] = [[0]] * len(log)
         log['targets'] = [[lab] for lab in y_l]

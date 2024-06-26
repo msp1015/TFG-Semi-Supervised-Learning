@@ -1,3 +1,4 @@
+from copy import deepcopy
 import json
 import os
 from datetime import datetime
@@ -199,17 +200,21 @@ def datosgraphs():
     inferencia = request.form['inferencia']
     datasetloader = DatasetLoader(session['FICHERO'])
     datasetloader.set_target(request.form['target'])
-    p_unlabelled=int(request.form['p_unlabelled']) / 100
 
     x, y, mapa, is_unlabelled = datasetloader.get_x_y()
-    x = np.array(x)
-    y = np.array(y).ravel()
-    L, U, L_y, U_y = train_test_split(x, y, test_size=p_unlabelled, stratify=y, random_state=42)
+    (L, L_y, U, U_y) = data_split(x,
+                                    y,
+                                    is_unlabelled,
+                                    p_unlabelled=int(
+                                        request.form['p_unlabelled']) / 100,
+                                    is_inductive=False)
+    U_y_iniciales = deepcopy(U_y)
+    if not is_unlabelled:
+        U_y = np.full(len(U), -1)
     todas_etiquetas = np.concatenate((L_y, U_y))
     params_constructor = obtener_parametros_clasificador("Graphs", constructor, "constructor")
     params_inferancia = obtener_parametros_clasificador("Inference", inferencia, "inferencia")
-    for key in params_inferancia.keys():
-        print(key, type(params_inferancia[key]))
+
     steps = []
     # Construcción del grafo
     if constructor == "GBILI":
@@ -220,25 +225,18 @@ def datosgraphs():
         solver = RGCLI(U, L, todas_etiquetas, **params_constructor)
         lista_knn, grafoFinal = solver.construir_grafo()
         steps = [lista_knn, grafoFinal]
-        
+  
     if inferencia == "LGC":
         propagacion = LGC(grafoFinal, solver.nodos, solver.etiquetas_etiquetados, **params_inferancia)
         predicciones = propagacion.inferir_etiquetas()
     else:
         pass
-    
-    nodos_iniciales = build_nodos_json(grafoFinal, solver.etiquetas_modificadas) 
+
+    nodos_iniciales = build_nodos_json(grafoFinal, todas_etiquetas)
+    print(nodos_iniciales)
     for i in range(len(steps)):
         steps[i] = build_enlaces_json(steps[i])
     predicciones = predicciones[len(L):].tolist()
-    conf_matrix = confusion_matrix(U_y, predicciones)
-    mi_reporte = calcular_reporte(conf_matrix, mapa)
-    print(mi_reporte)
-    medidas = calculate_log_statistics(U_y, predicciones)
-    metricas_generales = {"accuracy": medidas[0], "precision": medidas[1], 
-                          "error": medidas[2], "f1-score": medidas[3],
-                          "recall": medidas[4]}
-
     predicciones_json = {}
     for i, prediccion in enumerate(predicciones):
         predicciones_json[str(i + len(L))] = prediccion
@@ -247,9 +245,21 @@ def datosgraphs():
                    "enlaces": steps, 
                    "predicciones": predicciones_json,
                    "mapa": json.dumps(mapa),
-                   "confusion_matrix": conf_matrix.tolist(),
-                   "metricas_generales": metricas_generales,
-                   "metricas_clase": mi_reporte}
+                   "dataset_no_etiquetado": True if is_unlabelled else False
+    }
+
+    if not is_unlabelled:
+        conf_matrix = confusion_matrix(U_y_iniciales, predicciones)
+        mi_reporte = calcular_reporte(conf_matrix, mapa)
+        medidas = calculate_log_statistics(U_y_iniciales, predicciones)
+        metricas_generales = {"accuracy": medidas[0], "precision": medidas[1], 
+                            "error": medidas[2], "f1-score": medidas[3],
+                            "recall": medidas[4]}
+
+        info_grafos["confusion_matrix"] = conf_matrix.tolist()
+        info_grafos["metricas_generales"] = metricas_generales
+        info_grafos["metricas_clase"] = mi_reporte
+
     print(info_grafos)
     if current_user.is_authenticated:
         date = int(datetime.now().timestamp())
@@ -267,7 +277,6 @@ def datosgraphs():
         
         try:
             db.session.add(run)
-            print("Añadido")
         except SQLAlchemyError:
             db.session.rollback()
             os.remove(os.path.join(

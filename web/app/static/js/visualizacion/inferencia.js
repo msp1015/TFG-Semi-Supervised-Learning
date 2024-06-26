@@ -85,7 +85,7 @@ function actualizarGrafico() {
 
     const containerTarta = container.append("div")
     .attr("id", "chart")
-    .attr("class", "d-flex flex-column align-items-center m-auto");
+    .attr("class", "d-flex flex-column align-items-center");
 
     const svg = containerTarta.append("svg")
         .attr("id", "piechart")

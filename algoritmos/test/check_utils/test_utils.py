@@ -18,7 +18,7 @@ def test_obtain_train_unlabelled():
     expected = (np.array([[1, 1], [3, 3], [4, 4]]), [1, 2, 0], np.array([[0, 0], [2, 2]]))
     #          -------------x_train--------------   -y_train-  ---------unlabelled-------
 
-    x_train, y_train, x_u = obtain_train_unlabelled(data[0], data[1])
+    x_train, y_train, x_u, _ = obtain_train_unlabelled(data[0], data[1])
 
     assert (expected[0] == x_train).all()
     assert (expected[1] == y_train).all()
@@ -32,7 +32,7 @@ def test_obtain_train_unlabelled_all_labelled():
     expected = (np.array([[i, i] for i in range(5)]), np.array([0, 1, 2, 2, 0]))
     #          -------------x_train--------------     ---------y_train---------
 
-    x_train, y_train, x_u = obtain_train_unlabelled(data[0], data[1])
+    x_train, y_train, x_u, _ = obtain_train_unlabelled(data[0], data[1])
 
     assert (expected[0] == x_train).all()
     assert (expected[1] == y_train).all()
@@ -46,7 +46,7 @@ def test_obtain_train_unlabelled_all_unlabelled():
     expected = np.array([[i, i] for i in range(5)])
     #          ------------unlabelled-------------
 
-    x_train, y_train, x_u = obtain_train_unlabelled(data[0], data[1])
+    x_train, y_train, x_u, _ = obtain_train_unlabelled(data[0], data[1])
 
     assert not x_train
     assert not y_train

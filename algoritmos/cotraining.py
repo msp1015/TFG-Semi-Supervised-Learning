@@ -67,7 +67,7 @@ class CoTraining:
                 realizadas.
         """
 
-        x_train, y_train, x_u = obtain_train_unlabelled(x, y)
+        x_train, y_train, x_u, _ = obtain_train_unlabelled(x, y)
 
         log = pd.DataFrame(x_train, columns=features)
         log['iter'] = 0

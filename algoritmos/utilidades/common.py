@@ -25,8 +25,9 @@ def obtain_train_unlabelled(x: ndarray, y: ndarray):
     x_u = x[~mask]
     x_train = x[mask]
     y_train = y[mask]
+    y_u = y[~mask]
 
-    return x_train, y_train, x_u
+    return x_train, y_train, x_u, y_u
 
 
 def calculate_log_statistics(y_test, predicted):
