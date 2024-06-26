@@ -2,9 +2,12 @@
 {% from "macros.html" import tooltip, modalcondiciones %}
 {% block head %}
     {{ super() }}
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="/js/subida.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-{% endblock %}
+    {%endblock %}
 {% block title %}{{ gettext('Dataset upload') }}{% endblock %}
 {% block content %}
     <button id="btn_volver" type="button" onclick="history.back()" class="btn sticky-top">
@@ -14,8 +17,8 @@
         <h1 class="title-mulish text-bold">{{ gettext('Dataset upload') }}</h1>
         <hr class="separacion w-14"/>
     </div>
-    <div class="d-flex justify-content-center align-items-center">
-        <div id="card_subida" class="rounded-4 mt-4 mb-5 m-auto p-4 shadow-lg d-inline-block position-relative">
+    <div class="d-flex justify-content-around align-items-center">
+        <div id="card_subida" class="rounded-4 mt-4 mb-5 p-4 shadow-lg d-inline-block position-relative">
             <button id="btn_condiciones" class='btn btn-warning text-white'>{{ gettext('Conditions') }}</button>
             <div class="d-flex justify-content-center align-items-center">
                 <p class="h2 text-center title-mulish">{{ gettext('File selection') }}</p>
@@ -73,11 +76,18 @@
                 </form>
             </div>
         </div>
+        {% if session['FICHERO'] %}
+        <div class="rounded-4 mt-4 mb-5 p-4 shadow-lg" style="max-width: 100%; overflow-x: auto;">
+            <h2 class="title-mulish text-center">{{ session['FICHERO']|nombredataset }}</h2>
+            <div style="overflow-x: auto;">
+                <table id="csvTable" class="display" style="width:100%"></table>
+            </div>
+        </div>
+        {% endif %}
     </div>
     {{ modalcondiciones() }}
-
     <script>
-
+        
         document.getElementById('inicio_tutorial').addEventListener('click', function () {
             this.style.animation = "none";
             introJs().setOptions({
@@ -117,5 +127,5 @@
         });
 
     </script>
-{% endblock %}
+{%endblock%}
 

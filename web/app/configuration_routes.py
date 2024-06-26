@@ -6,8 +6,6 @@ from flask import flash, jsonify, render_template, redirect, session, url_for, B
 from flask_babel import gettext
 from .forms import FormConfiguracionGrafos, FormConfiguracionSelfTraining, FormConfiguracionCoTraining, FormConfiguracionSingleView, FormConfiguracionCoForest
 
-src_path = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-sys.path.append(src_path)
 from algoritmos.utilidades.datasetloader import DatasetLoader
 
 configuration_bp = Blueprint('configuration_bp', __name__)

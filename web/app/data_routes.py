@@ -198,89 +198,101 @@ def datosgraphs():
     """
     constructor = request.form['constructor']
     inferencia = request.form['inferencia']
-    datasetloader = DatasetLoader(session['FICHERO'])
-    datasetloader.set_target(request.form['target'])
+    try:
+        datasetloader = DatasetLoader(session['FICHERO'])
+        datasetloader.set_target(request.form['target'])
 
-    x, y, mapa, is_unlabelled = datasetloader.get_x_y()
-    (L, L_y, U, U_y) = data_split(x,
-                                    y,
-                                    is_unlabelled,
-                                    p_unlabelled=int(
-                                        request.form['p_unlabelled']) / 100,
-                                    is_inductive=False)
-    U_y_iniciales = deepcopy(U_y)
-    if not is_unlabelled:
-        U_y = np.full(len(U), -1)
-    todas_etiquetas = np.concatenate((L_y, U_y))
-    params_constructor = obtener_parametros_clasificador("Graphs", constructor, "constructor")
-    params_inferancia = obtener_parametros_clasificador("Inference", inferencia, "inferencia")
+        x, y, mapa, is_unlabelled = datasetloader.get_x_y()
+        (L, L_y, U, U_y) = data_split(x,
+                                        y,
+                                        is_unlabelled,
+                                        p_unlabelled=int(
+                                            request.form['p_unlabelled']) / 100,
+                                        is_inductive=False)
+        U_y_iniciales = deepcopy(U_y)
+        if not is_unlabelled:
+            U_y = np.full(len(U), -1)
+        todas_etiquetas = np.concatenate((L_y, U_y))
+        params_constructor = obtener_parametros_clasificador("Graphs", constructor, "constructor")
+        params_inferancia = obtener_parametros_clasificador("Inference", inferencia, "inferencia")
 
-    steps = []
-    # Construcción del grafo
-    if constructor == "GBILI":
-        solver = Gbili(U, L, todas_etiquetas, **params_constructor)
-        list_knn, list_mknn, distmin, grafoFinal = solver.construir_grafo()
-        steps = [list_knn, list_mknn, distmin, grafoFinal]
-    elif constructor == "RGCLI":
-        solver = RGCLI(U, L, todas_etiquetas, **params_constructor)
-        lista_knn, grafoFinal = solver.construir_grafo()
-        steps = [lista_knn, grafoFinal]
-  
-    if inferencia == "LGC":
-        propagacion = LGC(grafoFinal, solver.nodos, solver.etiquetas_etiquetados, **params_inferancia)
-        predicciones = propagacion.inferir_etiquetas()
-    else:
-        pass
+        steps = []
+        # Construcción del grafo
+        if constructor == "GBILI":
+            solver = Gbili(U, L, todas_etiquetas, **params_constructor)
+            list_knn, list_mknn, distmin, grafoFinal = solver.construir_grafo()
+            steps = [list_knn, list_mknn, distmin, grafoFinal]
+        elif constructor == "RGCLI":
+            solver = RGCLI(U, L, todas_etiquetas, **params_constructor)
+            lista_knn, grafoFinal = solver.construir_grafo()
+            steps = [lista_knn, grafoFinal]
+    
+        if inferencia == "LGC":
+            propagacion = LGC(grafoFinal, solver.nodos, solver.etiquetas_etiquetados, **params_inferancia)
+            predicciones = propagacion.inferir_etiquetas()
+        else:
+            pass
 
-    nodos_iniciales = build_nodos_json(grafoFinal, todas_etiquetas)
-    for i in range(len(steps)):
-        steps[i] = build_enlaces_json(steps[i])
-    predicciones = predicciones[len(L):].tolist()
-    predicciones_json = {}
-    for i, prediccion in enumerate(predicciones):
-        predicciones_json[str(i + len(L))] = prediccion
+        nodos_iniciales = build_nodos_json(grafoFinal, todas_etiquetas)
+        for i in range(len(steps)):
+            steps[i] = build_enlaces_json(steps[i])
+        predicciones = predicciones[len(L):].tolist()
+        predicciones_json = {}
+        for i, prediccion in enumerate(predicciones):
+            predicciones_json[str(i + len(L))] = prediccion
 
-    info_grafos = {"nodos": nodos_iniciales, 
-                   "enlaces": steps, 
-                   "predicciones": predicciones_json,
-                   "mapa": json.dumps(mapa),
-                   "dataset_no_etiquetado": True if is_unlabelled else False
-    }
+        info_grafos = {"nodos": nodos_iniciales, 
+                    "enlaces": steps, 
+                    "predicciones": predicciones_json,
+                    "mapa": json.dumps(mapa),
+                    "dataset_no_etiquetado": True if is_unlabelled else False
+        }
 
-    if not is_unlabelled:
-        conf_matrix = confusion_matrix(U_y_iniciales, predicciones)
-        mi_reporte = calcular_reporte(conf_matrix, mapa)
-        medidas = calculate_log_statistics(U_y_iniciales, predicciones)
-        metricas_generales = {"accuracy": medidas[0], "precision": medidas[1], 
-                            "error": medidas[2], "f1-score": medidas[3],
-                            "recall": medidas[4]}
+        if not is_unlabelled:
+            conf_matrix = confusion_matrix(U_y_iniciales, predicciones)
+            mi_reporte = calcular_reporte(conf_matrix, mapa)
+            medidas = calculate_log_statistics(U_y_iniciales, predicciones)
+            metricas_generales = {"accuracy": medidas[0], "precision": medidas[1], 
+                                "error": medidas[2], "f1-score": medidas[3],
+                                "recall": medidas[4]}
 
-        info_grafos["confusion_matrix"] = conf_matrix.tolist()
-        info_grafos["metricas_generales"] = metricas_generales
-        info_grafos["metricas_clase"] = mi_reporte
+            info_grafos["confusion_matrix"] = conf_matrix.tolist()
+            info_grafos["metricas_generales"] = metricas_generales
+            info_grafos["metricas_clase"] = mi_reporte
 
-    if current_user.is_authenticated:
-        date = int(datetime.now().timestamp())
+        if current_user.is_authenticated:
+            date = int(datetime.now().timestamp())
 
-        with open(os.path.join(current_app.config['CARPETA_RUNS'], f'run-{current_user.id}-{date}.json'), 'w') as f:
-            json.dump(info_grafos, f)
-        
-        run = Run()
-        run.algorithm = session['ALGORITMO']
-        run.json_parameters = generar_json_parametros_grafos()
-        run.filename = os.path.basename(session['FICHERO'])
-        run.date = datetime.now()
-        run.jsonfile = f'run-{current_user.id}-{date}.json'
-        run.user_id = current_user.id
-        
-        try:
-            db.session.add(run)
-        except SQLAlchemyError:
-            db.session.rollback()
-            os.remove(os.path.join(
-                current_app.config['CARPETA_RUNS'], f'run-{current_user.id}-{date}.json'))
+            with open(os.path.join(current_app.config['CARPETA_RUNS'], f'run-{current_user.id}-{date}.json'), 'w') as f:
+                json.dump(info_grafos, f)
+            
+            run = Run()
+            run.algorithm = session['ALGORITMO']
+            run.json_parameters = generar_json_parametros_grafos()
+            run.filename = os.path.basename(session['FICHERO'])
+            run.date = datetime.now()
+            run.jsonfile = f'run-{current_user.id}-{date}.json'
+            run.user_id = current_user.id
+            
+            try:
+                db.session.add(run)
+            except SQLAlchemyError:
+                db.session.rollback()
+                os.remove(os.path.join(
+                    current_app.config['CARPETA_RUNS'], f'run-{current_user.id}-{date}.json'))
         else:
             db.session.commit()
+    except ValueError as e:
+        return jsonify({
+            "status": "warning",
+            "error": str(e)
+        }), 500
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "error": str(e)
+        }), 500
+    
     return info_grafos
 
 def obtener_info_inductivo(algoritmo):

@@ -1,10 +1,14 @@
 import os
+import sys
 from datetime import datetime
 
-from flask import flash, render_template, request, redirect, session, url_for, send_from_directory, Blueprint, current_app, abort
+from flask import flash, jsonify, render_template, request, redirect, session, url_for, send_from_directory, Blueprint, current_app, abort
 from flask_babel import gettext
 from flask_login import current_user, login_required
 from werkzeug.utils import secure_filename
+src_path = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+sys.path.append(src_path)
+from algoritmos.utilidades.datasetloader import DatasetLoader
 
 from . import db
 from .models import Dataset
@@ -102,7 +106,6 @@ def subida():
             ya_hay_fichero = True
         else:
             session.pop('FICHERO', None)
-
     if request.method == 'POST':
         file_received = request.files['archivo']
         if file_received.filename == '':
@@ -127,5 +130,21 @@ def subida():
                     dataset.user_id = current_user.id
                     db.session.add(dataset)
                     db.session.commit()
+    datosTabla = {}
+    if 'FICHERO' not in session:
+        return render_template('subida.html', ya_hay_fichero=ya_hay_fichero, datosTabla=datosTabla)
+    
+    datasetloader = DatasetLoader(session['FICHERO'])
+    dataSet = datasetloader._get_data()
+    for column in dataSet.columns:
+        # Convertir a utf-8 si es necesario (para datos de tipo bytes)
+        # Si no no deja pasarlo a json
+        dataSet[column] = dataSet[column].apply(lambda x: x.decode('utf-8') if isinstance(x, bytes) else x)
+    columnas = [{"title": col} for col in dataSet.columns]
+    data = dataSet.to_numpy().tolist()
+    
+    datosTabla = {"columns": columnas, "data": data}
+    datosJson = jsonify(datosTabla)
+    print(datosJson.data)
+    return render_template('subida.html', ya_hay_fichero=ya_hay_fichero, datosTabla=datosTabla)
 
-    return render_template('subida.html', ya_hay_fichero=ya_hay_fichero)

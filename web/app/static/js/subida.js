@@ -53,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         nombre_fichero.textContent = archivo[0].name;
-
         let xhr = new XMLHttpRequest();
         xhr.open('post', '/subida', true);
         xhr.onreadystatechange = function () {
@@ -63,6 +62,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById("config_btn").disabled = false;
                 } else {
                     button.style.display = "none";
+                }
+                // Aquí se recibe la respuesta con los datos de la tabla
+                let response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    actualizarTabla(response.data);
                 }
             }
         };
@@ -80,5 +84,16 @@ document.addEventListener('DOMContentLoaded', function () {
         let params = new FormData();
         params.append('archivo', archivo[0])
         xhr.send(params);
+    }
+
+    function actualizarTabla(datosTabla) {
+        console.log(datosTabla);
+        $('#csvTable').DataTable().clear().destroy();
+        var data = datosTabla.data;
+        var columns = datosTabla.columns;
+        $('#csvTable').DataTable({
+            data: data,
+            columns: columns
+        });
     }
 });
