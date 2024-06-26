@@ -233,7 +233,6 @@ def datosgraphs():
         pass
 
     nodos_iniciales = build_nodos_json(grafoFinal, todas_etiquetas)
-    print(nodos_iniciales)
     for i in range(len(steps)):
         steps[i] = build_enlaces_json(steps[i])
     predicciones = predicciones[len(L):].tolist()
@@ -260,7 +259,6 @@ def datosgraphs():
         info_grafos["metricas_generales"] = metricas_generales
         info_grafos["metricas_clase"] = mi_reporte
 
-    print(info_grafos)
     if current_user.is_authenticated:
         date = int(datetime.now().timestamp())
 
@@ -363,7 +361,6 @@ def obtener_info_inductivo(algoritmo):
                 current_app.config['CARPETA_RUNS'], f'run-{current_user.id}-{date}.json'))
         else:
             db.session.commit()
-    print(info["mapa"])
     return info
 
 

@@ -42,7 +42,6 @@ def configurar_algoritmo(algoritmo):
     dl = DatasetLoader(session['FICHERO'])
     with open(os.path.join(os.path.dirname(__file__), os.path.normpath("static/json/parametros.json"))) as f:
         clasificadores = json.load(f)
-        print(clasificadores)
     caracteristicas = list(dl.get_allfeatures())
     clasificadores_inductivos = clasificadores["Inductive"]
     clasificadores_inductivos_keys = list(clasificadores_inductivos.keys())

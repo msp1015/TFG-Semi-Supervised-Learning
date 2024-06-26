@@ -87,9 +87,9 @@ class RGCLI:
                 if euclidean(self.nodos[vi], self.nodos[vj]) <= euclidean(self.nodos[vj], self.nodos[self.F[vj]]):
                     e = (vi, vj)
                     epsilon[e] = euclidean(self.nodos[vi], self.nodos[vj]) + euclidean(self.nodos[vj], self.nodos[self.L[vj]])
-            E_prime = sorted(epsilon, key=epsilon.get)[:self.ki]
-            self.E.extend(E_prime)
-            for e in E_prime:
+            E_estrella = sorted(epsilon, key=epsilon.get)[:self.ki]
+            self.E.extend(E_estrella)
+            for e in E_estrella:
                 self.W[e] = 1
                 if e[0] not in self.grafoFinal:
                     self.grafoFinal[e[0]] = []

@@ -286,5 +286,3 @@ def incorporar_clasificadores_grafos_params(nombre_clasificadores, params):
             for key in clasificadores_grafos[clasificador].keys():
                 params.append({"nombre": f"constructor_" + key,
                                "valor": request.form.get(f"constructor_" + key, -1)})
-                
-    print(params)

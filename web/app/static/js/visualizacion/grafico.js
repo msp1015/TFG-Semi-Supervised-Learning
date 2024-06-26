@@ -668,7 +668,6 @@ function preparardataset_democraticcolearning_coforest(datos) {
             }
         }
     }
-    console.log(dataset)
     clf_forma = Array.from(clasificadores)
     return dataset;
 }
