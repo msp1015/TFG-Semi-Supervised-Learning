@@ -7,12 +7,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let area = document.getElementById('soltar');
     area.param = 'soltar';
-
+    
     let progreso = document.getElementById('progreso');
     let porcentaje_progreso = document.getElementById('porcentaje_progreso');
     let nombre_fichero = document.getElementById('nombre_fichero');
-
+    let titulo_fichero = document.getElementById('titulo_fichero');
     let boton = document.getElementById('archivo');
+    let tableWarning = document.getElementById('table_warning');
+    let tableContainer = document.getElementById('table_container');
+    let dataContainer = document.getElementById('container_data');
     boton.param = 'boton';
 
     area.addEventListener('drop', subir, false)
@@ -56,19 +59,22 @@ document.addEventListener('DOMContentLoaded', function () {
         let xhr = new XMLHttpRequest();
         xhr.open('post', '/subida', true);
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                let button = document.querySelector("#fichero-previo");
-                if (button == null) {
-                    document.getElementById("config_btn").disabled = false;
-                } else {
-                    button.style.display = "none";
-                }
-                // Aquí se recibe la respuesta con los datos de la tabla
-                let response = JSON.parse(xhr.responseText);
-                if (response.success) {
-                    actualizarTabla(response.data);
+            if (xhr.readyState === 4){
+                if(xhr.status === 200) {
+                    let button = document.querySelector("#fichero-previo");
+                    if (button == null) {
+                        document.getElementById("config_btn").disabled = false;
+                    } else {
+                        button.style.display = "none";
+                    }    
+                    titulo_fichero.innerText = archivo[0].name;
+                    tableContainer.style.display = 'block';
+                    dataContainer.style.display = 'block';
+                    tableWarning.style.display = 'none';
+                    actualizarTabla();
                 }
             }
+                
         };
 
         xhr.upload.onprogress = function (evento) {
@@ -86,14 +92,45 @@ document.addEventListener('DOMContentLoaded', function () {
         xhr.send(params);
     }
 
-    function actualizarTabla(datosTabla) {
-        console.log(datosTabla);
-        $('#csvTable').DataTable().clear().destroy();
-        var data = datosTabla.data;
-        var columns = datosTabla.columns;
-        $('#csvTable').DataTable({
-            data: data,
-            columns: columns
-        });
-    }
+    // Llama a actualizarTabla al cargar la página para manejar el caso en que ya exista un fichero en sesión
+    actualizarTabla();
 });
+
+function actualizarTabla() {
+
+    const idiomasDataTables = {
+        'es': '//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json',
+        'en': '//cdn.datatables.net/plug-ins/1.10.21/i18n/English.json'
+    };
+    const urlIdioma = idiomasDataTables[idiomaActual] || idiomasDataTables['en'];
+
+    fetch('/obtenerDatosTabla')
+        .then(response => response.json())
+        .then(data => {
+            if ($.fn.DataTable.isDataTable('#csvTable')) {
+                // Destruir la instancia actual de DataTable para resetear completamente la tabla
+                $('#csvTable').DataTable().destroy();
+                
+                // Limpiar el contenido HTML de la tabla para eliminar las columnas antiguas
+                $('#csvTable').empty();
+            }
+            
+            // Inicializar DataTable con los nuevos datos y configuraciones de columnas
+            $('#csvTable').DataTable({
+                data: data.data,
+                columns: data.columns,
+                language: {
+                    url: urlIdioma
+                },
+                responsive: true,
+                scrollCollapse: true,
+                paging: true
+            });
+        }).catch(error => {
+            console.error('Error actualizando la tabla:', error);
+            let tableWarning = document.getElementById('table_warning');
+            let csvContainer = document.getElementById('container_data');
+            csvContainer.style.display = 'none';
+            tableWarning.style.display = 'block';
+        });
+}

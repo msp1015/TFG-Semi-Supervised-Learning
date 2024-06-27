@@ -93,7 +93,7 @@ def subida():
     el "timestamp" para hacerlo único. Finalmente, guarda este fichero en el sistema
     y lo enlaza, si corresponde, al usuario en base de datos
 
-    :return: :return: función que genera la página.
+    :return: función que genera la página.
     """
 
     if 'ALGORITMO' not in session:
@@ -130,10 +130,15 @@ def subida():
                     dataset.user_id = current_user.id
                     db.session.add(dataset)
                     db.session.commit()
-    datosTabla = {}
-    if 'FICHERO' not in session:
-        return render_template('subida.html', ya_hay_fichero=ya_hay_fichero, datosTabla=datosTabla)
     
+    return render_template('subida.html', ya_hay_fichero=ya_hay_fichero)
+
+@main_bp.route('/obtenerDatosTabla', methods=['GET'])
+def obtenerDatosTabla():
+    """ Obtiene los datos de la tabla del fichero cargado en la sesión y los devuelve en formato JSON
+    
+    :return: datos de la tabla en formato JSON
+    """
     datasetloader = DatasetLoader(session['FICHERO'])
     dataSet = datasetloader._get_data()
     for column in dataSet.columns:
@@ -144,7 +149,4 @@ def subida():
     data = dataSet.to_numpy().tolist()
     
     datosTabla = {"columns": columnas, "data": data}
-    datosJson = jsonify(datosTabla)
-    print(datosJson.data)
-    return render_template('subida.html', ya_hay_fichero=ya_hay_fichero, datosTabla=datosTabla)
-
+    return jsonify(datosTabla)

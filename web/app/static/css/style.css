@@ -278,13 +278,25 @@ footer {
     transform: translate(12%, -50%);
 }
 
+#btn_volver {
+    border-radius: 20px;
+    border-style: solid;
+    border-color: #0056b3;
+    padding: 5px 10px; 
+}
+
+#btn_volver:hover {
+    background-color: #0056b3; 
+    color: #fff; 
+}
+
 @media (max-width: 750px) {
-    #theory-card {
+    #theory-card{
         width: 95vw;
         margin: 1rem auto !important;
     }
 
-    #parameters-card {
+    #parameters-card, #table_container {
         width: 95vw;
         margin: 1rem auto !important;
     }
@@ -295,6 +307,8 @@ footer {
         max-height: 300px;
     }
 }
+
+
 
 .cargando {
     border: 16px solid #a09c9c;
@@ -362,21 +376,21 @@ footer {
     padding: 10px;
 }
 
-#no_evaluacion {
-    text-align: center; /* Centra el contenido */
-    background-color: #ffcccb; /* Fondo rojo claro para el efecto de advertencia */
-    padding: 20px; /* Espaciado interno */
-    border-radius: 5px; /* Bordes redondeados */
-    margin: 20px; /* Margen externo */
-  }
-  #no_evaluacion i {
-    font-size: 48px; /* Hace el icono grande */
-    color: red; /* Icono en rojo */
-  }
-  #no_evaluacion p {
-    color: red; /* Texto en rojo */
-    text-align: left; /* Alinea el texto a la izquierda */
-    display: inline-block; /* Hace que el párrafo se comporte como un bloque en línea */
-    width: 100%; /* Ocupa el ancho completo */
-    margin-top: 10px; /* Espacio antes del texto */
-  }
+#no_evaluacion, #table_warning {
+    text-align: center;
+    background-color: #ffcccb; 
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px;
+}
+#no_evaluacion, #table_warning i {
+    font-size: 48px; 
+    color: red;
+}
+#no_evaluacion, #table_warning p {
+    color: red; 
+    text-align: left; 
+    display: inline-block; 
+    width: 100%; 
+    margin-top: 10px; 
+}
