@@ -27,21 +27,18 @@ Para ver el proyecto de la primera versión, consulta el repositorio de [David M
 
 ## Instalación
 
-1. Clona el repositorio:
-    ```bash
-    git clone 
-    ```
-
+1. Clonar el repositorio
+   ```bash
+   git clone https://github.com/msp1015/TFG-Semi-Supervised-Learning
+   ```
 2. Navega al directorio del proyecto:
     ```bash
-    cd 
+    cd TFG-Semi-Supervised-Learning
     ```
-
-3. Crea un entorno virtual:
-    ```bash
-    python -m venv venv
-    ```
-
+3. Crear entorno virtual
+   ```bash   
+   python -m venv ./venv
+   ```
 4. Activa el entorno virtual:
 
     - En Windows:
@@ -53,19 +50,27 @@ Para ver el proyecto de la primera versión, consulta el repositorio de [David M
         ```bash
         source venv/bin/activate
         ```
-
-5. Instala las dependencias:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
+5. Instalar dependencias
+   ```bash
+   pip install -r requirements.txt
+   ```
+6. Creación de directorios
+   ```bash
+   cd web/app
+   mkdir runs
+   mkdir datasets/anonimos
+   mkdir datasets/registrados
+   ```
+7. Compilar traducciones (web/app)
+   ```bash
+   pybabel compile -d translations
+   ```
 ## Uso
 
 1. Ejecuta la aplicación:
-    ```bash
-    python
-    ```
-
+   ```bash
+   cd .. #Ir a directorio ./web
+   flask run #--debug
 2. Abre tu navegador y navega a `http://localhost:5000` para acceder a la aplicación.
 
 ## Contribución
