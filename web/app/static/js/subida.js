@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     actualizarTabla();
                 }
             }
-                
         };
 
         xhr.upload.onprogress = function (evento) {
@@ -123,8 +122,11 @@ function actualizarTabla() {
                     url: urlIdioma
                 },
                 responsive: true,
-                scrollCollapse: true,
-                paging: true
+                paging: true,
+                pageLength: 20,
+                lengthChange: false,
+                scrollY: '50vh',
+                scrollX: true
             });
         }).catch(error => {
             console.error('Error actualizando la tabla:', error);
@@ -133,4 +135,46 @@ function actualizarTabla() {
             csvContainer.style.display = 'none';
             tableWarning.style.display = 'block';
         });
+}
+
+function establecerFicheroPrueba(fichero) {
+    console.log('Estableciendo fichero de prueba:', fichero);
+    console.log(JSON.stringify({ fichero: fichero }));
+    fetch('/establecer_prueba', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ fichero: fichero })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        if (data.error) {
+            console.error(data.error);
+            alert(data.error);
+        } else {
+            let texto = document.querySelector("#fichero-previo");
+            if (texto == null) {
+                document.getElementById("config_btn").disabled = false;
+            } else {
+                texto.style.display = "none";
+            }
+            let titulo_fichero = document.getElementById('titulo_fichero');
+            titulo_fichero.innerText = fichero + '.arff';
+            let tableWarning = document.getElementById('table_warning');
+            let csvContainer = document.getElementById('container_data');
+            csvContainer.style.display = 'block';
+            tableWarning.style.display = 'none';
+            let nombre_fichero = document.getElementById('nombre_fichero');
+            nombre_fichero.textContent = "";
+            let tableContainer = document.getElementById('table_container');
+            tableContainer.style.display = 'block';
+            actualizarTabla();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }

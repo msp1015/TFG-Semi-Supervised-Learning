@@ -336,10 +336,9 @@ footer {
 }
 
 .table-container {
-    overflow-x: auto;
-    overflow-y: auto; 
-    max-height: 400px; 
-    margin-bottom: 20px;
+
+    max-height: 800px; 
+    margin-bottom: 10px;
 }
 .confusion-matrix {
     border-collapse: collapse;

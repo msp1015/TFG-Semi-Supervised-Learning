@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 from datetime import datetime
 
@@ -70,21 +71,6 @@ def seleccionar_algoritmo_ejecutar(algoritmo, fichero):
         current_app.config['CARPETA_DATASETS_REGISTRADOS'], fichero)
     return redirect(url_for('configuration_bp.configurar_algoritmo', algoritmo=algoritmo))
 
-
-@main_bp.route('/descargar_prueba')
-def descargar_prueba():
-    """
-    Gestiona la descarga de un fichero de prueba (en la carga del conjunto de datos).
-
-    :return: fichero de prueba.
-    """
-
-    fichero = request.args.get('fichero')
-
-    directorio = 'datasets/seleccionar/'
-    return send_from_directory(directory=directorio, path=fichero + '.arff', as_attachment=True)
-
-
 @main_bp.route('/subida', methods=['GET', 'POST'])
 def subida():
     """
@@ -117,7 +103,7 @@ def subida():
             filename = secure_filename(file_received.filename) + "-" + str(int(datetime.now().timestamp()))
             complete_path = os.path.join(base_folder, filename)
             session['FICHERO'] = complete_path
-
+            print(session['FICHERO'])
             # Comprobar si la extensión del archivo es válida
             if file_received.filename.upper().endswith(('.ARFF', '.CSV')):
                 file_received.save(complete_path)
@@ -150,3 +136,26 @@ def obtenerDatosTabla():
     
     datosTabla = {"columns": columnas, "data": data}
     return jsonify(datosTabla)
+
+@main_bp.route('/establecer_prueba', methods=['POST'])
+def establecer_prueba():
+    """
+    Gestiona la configuración de un fichero de prueba (en la carga del conjunto de datos).
+    Guarda el fichero de prueba en la sesión.
+    
+    :return: redirecciona a la página de subida con el fichero en la sesión.
+    """
+    fichero = request.json.get('fichero')
+    directorio = 'app/datasets/seleccionar/'
+    print(os.path.join(directorio, fichero + '.arff'))
+    archivo_path = os.path.join(directorio, fichero + '.arff')
+    print(os.path)
+    # Configurar el archivo en la sesión
+    base_folder = current_app.config['CARPETA_DATASETS_REGISTRADOS'] if current_user.is_authenticated else current_app.config['CARPETA_DATASETS_ANONIMOS']
+    filename = secure_filename(fichero + '.arff') + "-" + str(int(datetime.now().timestamp()))
+    complete_path = os.path.join(base_folder, filename)
+    print(complete_path)
+    shutil.copyfile(archivo_path, complete_path)
+    session['FICHERO'] = complete_path
+    print(session['FICHERO'])
+    return jsonify({"message": "File set in session"}), 200

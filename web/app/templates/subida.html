@@ -2,9 +2,9 @@
 {% from "macros.html" import tooltip, modalcondiciones %}
 {% block head %}
     {{ super() }}
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" integrity="sha384-CkbBL/n3ZOZkc8ovstsrGxoxn5rrvlQXBesVNiMgEo17kPWvANS0hFBRkMl0Omh4" crossorigin="anonymous">
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" integrity="sha384-RxzVJNpULMjRDJ3nd+aAVYb11VBDmhgIonMdvYdLxYvylOdEl6pprk4R4PK0t3xG" crossorigin="anonymous"></script>
     <script type="text/javascript" src="/js/subida.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {%endblock %}
@@ -49,20 +49,20 @@
                         </div>
                     </div>
                     <div class="btn-group">
-                        <a id="fichero_prueba" class="btn btn-success"
-                           href="{{ url_for('main_bp.descargar_prueba', fichero="iris") }}">{{ gettext('Download test file') }}</a>
+                        <button id="fichero_prueba" class="btn btn-success" onclick="establecerFicheroPrueba('iris')">
+                            {{ gettext('Set test file') }}
+                        </button>
                         <button id="mas_fichero_prueba" type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url_for('main_bp.descargar_prueba', fichero="iris") }}">Iris</a>
-                            </li>
-                            <li><a class="dropdown-item" href="{{ url_for('main_bp.descargar_prueba', fichero="breast") }}">Breast
-                                Cancer</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('main_bp.descargar_prueba', fichero="diabetes") }}">Diabetes</a>
-                            </li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="establecerFicheroPrueba('iris')">Iris</a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="establecerFicheroPrueba('breast')">Breast Cancer</a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="establecerFicheroPrueba('breast.w.ss')">Breast Cancer (SS)</a></li>
+                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="establecerFicheroPrueba('diabetes')">Diabetes</a></li>
                         </ul>
                     </div>
+                    <br>
                     <br>
                     <form action="{{ url_for('configuration_bp.configurar_algoritmo', algoritmo=session['ALGORITMO']) }}">
                         {% if ya_hay_fichero %}
@@ -85,7 +85,7 @@
                     {% endif %}
                 </div>
                 <hr class="separacion w-8"/>
-                <div id="container_data" style="overflow-y: auto;">
+                <div id="container_data" >
                     <table id="csvTable" class="display" style="width:100%"></table>
                 </div>
                 <div id="table_warning" style="display: none;">
