@@ -105,17 +105,20 @@ head %} {{ super() }}
       </div>
       <div id="inferencia" class="m-2 p-2" style="display: none">
         <div class="table-container text-center">
-          <h4 class="title-mulish" id="title_cm">{{ gettext('Confusion matrix') }}</h4>
+          <h4 class="title-mulish" id="title_cm">
+            {{ gettext('Confusion matrix') }}
+          </h4>
           <table id="confusion-matrix" class="confusion-matrix"></table>
         </div>
         <div id="selector" class="center"></div>
-        <div
-          id="metricas"
-          class="d-flex justify-content-around"
-        ></div>
-        <div id="no_evaluacion" style="display:none">
-          <i class="bi bi-exclamation-circle"></i> 
-          <p> {{ gettext('Dataset is unlabelled so there is no posible evaluation. If there is no label on each data entry, predictions can not be compared.')}}</p>  
+        <div id="metricas" class="d-flex justify-content-around"></div>
+        <div id="no_evaluacion" style="display: none">
+          <i class="bi bi-exclamation-circle"></i>
+          <p>
+            {{ gettext('Dataset is unlabelled so there is no posible evaluation.
+            If there is no label on each data entry, predictions can not be
+            compared.')}}
+          </p>
         </div>
       </div>
     </div>
@@ -144,7 +147,7 @@ head %} {{ super() }}
           'RGCLI_0': "{{gettext('Initial Data')}}",
           'RGCLI_1': "{{gettext('Ke nearest neighbors')}}",
           'RGCLI_2': "{{gettext('Ki nearest neighbors')}}",
-          'Real': "{{gettext('Real')}}",
+          'Real': "{{gettext('Actual')}}",
           'Prediction': "{{gettext('Prediction')}}",
           'Accuracy': "{{gettext('Accuracy')}}",
           'Precision': "{{gettext('Precision')}}",
@@ -215,13 +218,13 @@ head %} {{ super() }}
   inicializar("/datos/{{ session['ALGORITMO'] }}", elementos)
     .then(function (datos) {
       inicializarDatos(datos);
-      if (datos['dataset_no_etiquetado'] == false) {
-        dibujaEstadisticas(datos); 
-      }else{
-        $('#title_cm').hide();
-        $('#no_evaluacion').show();
+      if (datos["dataset_no_etiquetado"] == false) {
+        dibujaEstadisticas(datos);
+      } else {
+        $("#title_cm").hide();
+        $("#no_evaluacion").show();
       }
-      
+
       inicializarGrafo();
       updateGraph();
     })

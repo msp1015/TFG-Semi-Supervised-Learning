@@ -125,16 +125,23 @@ def obtenerDatosTabla():
     
     :return: datos de la tabla en formato JSON
     """
-    datasetloader = DatasetLoader(session['FICHERO'])
-    dataSet = datasetloader._get_data()
-    for column in dataSet.columns:
-        # Convertir a utf-8 si es necesario (para datos de tipo bytes)
-        # Si no no deja pasarlo a json
-        dataSet[column] = dataSet[column].apply(lambda x: x.decode('utf-8') if isinstance(x, bytes) else x)
-    columnas = [{"title": col} for col in dataSet.columns]
-    data = dataSet.to_numpy().tolist()
-    
-    datosTabla = {"columns": columnas, "data": data}
+    try:
+        datasetloader = DatasetLoader(session['FICHERO'])
+        dataSet = datasetloader._get_data()
+        for column in dataSet.columns:
+            # Convertir a utf-8 si es necesario (para datos de tipo bytes)
+            # Si no no deja pasarlo a json
+            dataSet[column] = dataSet[column].apply(lambda x: x.decode('utf-8') if isinstance(x, bytes) else x)
+        columnas = [{"title": col} for col in dataSet.columns]
+        data = dataSet.to_numpy().tolist()
+        
+        datosTabla = {"columns": columnas, "data": data}
+    except Exception as e:
+        print(e)
+        return jsonify({
+            "status": "ERROR",
+            "error": str(e)
+        }), 500    
     return jsonify(datosTabla)
 
 @main_bp.route('/establecer_prueba', methods=['POST'])

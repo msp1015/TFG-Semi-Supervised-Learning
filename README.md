@@ -9,6 +9,7 @@
 Esta es una extensión de una aplicación web diseñada para la visualización de algoritmos semisupervisados. La herramienta permite a los usuarios interactuar y comprender mejor cómo funcionan estos algoritmos a través de visualizaciones intuitivas y detalladas.
 
 Para ver el proyecto de la primera versión, consulta el repositorio de [David Martínez Acha](https://github.com/dmacha27/TFG-SemiSupervisado).
+
 ## Tecnologías Utilizadas
 
 [![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
@@ -27,29 +28,33 @@ Para ver el proyecto de la primera versión, consulta el repositorio de [David M
 
 ## Instalación
 
+Abra una terminal en su equipo y siga los siguienes pasos:
+
 1. Clonar el repositorio
    ```bash
    git clone https://github.com/msp1015/TFG-Semi-Supervised-Learning
    ```
 2. Navega al directorio del proyecto:
-    ```bash
-    cd TFG-Semi-Supervised-Learning
-    ```
+   ```bash
+   cd TFG-Semi-Supervised-Learning
+   ```
 3. Crear entorno virtual
-   ```bash   
+   ```bash
    python -m venv ./venv
    ```
 4. Activa el entorno virtual:
 
-    - En Windows:
-        ```bash
-        .\venv\Scripts\activate
-        ```
+   - En Windows:
 
-    - En macOS/Linux:
-        ```bash
-        source venv/bin/activate
-        ```
+     ```bash
+     .\venv\Scripts\activate
+     ```
+
+   - En macOS/Linux:
+     ```bash
+     source venv/bin/activate
+     ```
+
 5. Instalar dependencias
    ```bash
    pip install -r requirements.txt
@@ -58,36 +63,48 @@ Para ver el proyecto de la primera versión, consulta el repositorio de [David M
    ```bash
    cd web/app
    mkdir runs
-   mkdir datasets/anonimos
-   mkdir datasets/registrados
+   ```
+   - En Windows:
+   ```bash
+    mkdir datasets\anonimos
+    mkdir datasets\registrados
+   ```
+   - En macOS/Linux:
+   ```bash
+    mkdir datasets/anonimos
+    mkdir datasets/registrados
    ```
 7. Compilar traducciones (web/app)
    ```bash
    pybabel compile -d translations
    ```
+
 ## Uso
 
 1. Ejecuta la aplicación:
    ```bash
-   cd .. #Ir a directorio ./web
-   flask run #--debug
+   cd ..
+   flask run
+   ```
 2. Abre tu navegador y navega a `http://localhost:5000` para acceder a la aplicación.
+
+3. (Opcional) Añade `--debug` al final del comando `flask run` para entrar en modo desarrollo.
 
 ## Contribución
 
 1. Haz un fork del proyecto.
 2. Crea una nueva rama con tus cambios:
-    ```bash
-    git checkout -b feature/nueva-caracteristica
-    ```
+   ```bash
+   git checkout -b feature/nueva-caracteristica
+   ```
 3. Realiza los cambios y haz commit:
-    ```bash
-    git commit -m 'Añadir nueva característica'
-    ```
+   ```bash
+   git commit -m 'Añadir nueva característica'
+   ```
 4. Sube los cambios a tu fork:
-    ```bash
-    git push origin feature/nueva-caracteristica
-    ```
+   ```bash
+   git push origin feature/nueva-caracteristica
+   ```
 5. Abre un Pull Request en GitHub.
 
 ## Licencia
@@ -96,8 +113,8 @@ Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE)
 
 ## Autores
 
-- **Mario Sanz Pérez** - *Desarrollador Principal* - [msp1015](https://github.com/msp1015)
-- **Álvar Arnaiz González** - *Tutor / Revisor* - [alvarag](https://github.com/alvarag)
+- **Mario Sanz Pérez** - _Desarrollador Principal_ - [msp1015](https://github.com/msp1015)
+- **Álvar Arnaiz González** - _Tutor / Revisor_ - [alvarag](https://github.com/alvarag)
 
 ---
 

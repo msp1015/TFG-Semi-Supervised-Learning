@@ -336,7 +336,6 @@ footer {
 }
 
 .table-container {
-
     max-height: 800px; 
     margin-bottom: 10px;
 }
@@ -382,11 +381,11 @@ footer {
     border-radius: 5px;
     margin: 20px;
 }
-#no_evaluacion, #table_warning i {
+#no_evaluacion i, #table_warning i {
     font-size: 48px; 
     color: red;
 }
-#no_evaluacion, #table_warning p {
+#no_evaluacion p, #table_warning p {
     color: red; 
     text-align: left; 
     display: inline-block; 

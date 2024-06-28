@@ -104,8 +104,17 @@ function actualizarTabla() {
     const urlIdioma = idiomasDataTables[idiomaActual] || idiomasDataTables['en'];
 
     fetch('/obtenerDatosTabla')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al obtener los datos de la tabla');
+            }
+            return response.json();
+        })
         .then(data => {
+            if (data.status && data.status === "ERROR") {
+                // Si el cuerpo de la respuesta contiene un estado de error, lanza una excepción con el mensaje de error
+                throw new Error(data.error);
+            }
             if ($.fn.DataTable.isDataTable('#csvTable')) {
                 // Destruir la instancia actual de DataTable para resetear completamente la tabla
                 $('#csvTable').DataTable().destroy();
@@ -123,8 +132,8 @@ function actualizarTabla() {
                 },
                 responsive: true,
                 paging: true,
-                pageLength: 20,
-                lengthChange: false,
+                pageLength: 25,
+                lengthChange: true,
                 scrollY: '50vh',
                 scrollX: true
             });
