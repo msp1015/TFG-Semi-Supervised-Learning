@@ -8,8 +8,7 @@
   src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
   integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
   crossorigin="anonymous"
->
-</script>
+></script>
 {% endblock %} {% block title %}{{ gettext('Algorithm configuration')
 }}{%endblock %} {% block content %}
 <button
@@ -33,7 +32,11 @@
         <div class="text-center">
           <h4 class="title-mulish">{{ gettext('Theory') }}</h4>
           <hr class="separacion w-8" />
-          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <div
+            id="switchTheory"
+            class="btn-group btn-group-toggle"
+            data-toggle="buttons"
+          >
             <label class="btn btn-outline-info active" id="btn-grafos">
               {{ gettext('Graph construction') }}
             </label>
@@ -74,10 +77,10 @@
             </div>
             <div id="rgcli" style="display: none">
               <p>
-                {{ gettext('The RGCLI (Refined Graph Construction based on
-                Labeled Instance Information) algorithm enhances semi-supervised
-                learning by efficiently constructing graphs in large datasets.
-                It operates under the assumption that nearby or structurally
+                {{ gettext('The RGCLI (Robust Graph Construction that Considers
+                Labeled Instances) algorithm enhances semi-supervised learning
+                by efficiently constructing graphs in large datasets. It
+                operates under the assumption that nearby or structurally
                 similar points share the same label. The algorithm utilizes two
                 parameters: ke for the broader neighborhood and ki for
                 establishing actual connections based on proximity to labeled
@@ -243,11 +246,15 @@
           steps: [
               {
                   title: "{{ gettext("Configuration area") }}",
-                  intro: "{{ gettext("On this page, you'll be able to customize the parameters of algorithm ") }}" + "{{ titulos[session['ALGORITMO']] }}."
+                  intro: "{{ gettext("On this page, you'll be able to customize the parameters of graphs algorithms ") }}"
               },
               {
                   element: '#theory-card',
                   intro: "{{ gettext("You can gain a deeper understanding of the algorithm by reviewing its theory and pseudocode.") }}"
+              },
+              {
+                element: '#switchTheory',
+                intro: "{{ gettext("Here you can switch between the graph construction and inference theory.") }}"
               },
               {
                   element: '#parameters-card',

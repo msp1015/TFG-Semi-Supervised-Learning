@@ -9,9 +9,9 @@
 <div id="step-0" class="step active">
   <h3>{{gettext('Step')}} 0: {{gettext('Initial Data')}}</h3>
   <p>
-    Se inicializa el gráfico con el conjunto de nodos (uno por cada entrada del
-    conjunto de datos). Se calcula la matriz de distancias (teniendo en cuenta
-    la distancia Euclidea).
+    {{ gettext('The graph is initialized with the set of nodes (one for each
+    entry in the dataset). The matrix of distances is calculated taking into
+    account Euclidean distance.') }}
   </p>
   <img
     src="{{ gettext('/pseudocodigos/en/gbili/gbili_0.png') }}"
@@ -22,8 +22,8 @@
 <div id="step-1" class="step">
   <h3>{{gettext('Step')}} 1: {{gettext('K nearest neighbors')}}</h3>
   <p>
-    En este paso se calculan los K vecinos más cercanos de cada nodo teniendo en
-    cuenta la matriz de distancias D.
+    {{gettext('In this step, the K nearest neighbors of each node are calculated
+    taking into account the distance matrix D.')}}
   </p>
   <img
     src="{{ gettext('/pseudocodigos/en/gbili/gbili_1.png') }}"
@@ -34,8 +34,8 @@
 <div id="step-2" class="step">
   <h3>{{gettext('Step')}} 2: {{gettext('Mutual K nearest neighbors')}}</h3>
   <p>
-    Se muestran los vecinos más cercanos mutuos, es decir, i es vecino más
-    cercano de j y j es vecino más cercano de i.
+    {{gettext('Mutual nearest neighbors are shown, i.e., i is j`s nearest
+    neighbor and j is i`s nearest neighbor.')}}
   </p>
   <img
     src="{{ gettext('/pseudocodigos/en/gbili/gbili_2.png') }}"
@@ -46,8 +46,8 @@
 <div id="step-3" class="step">
   <h3>{{gettext('Step')}} 3: {{gettext('Minimum distances')}}</h3>
   <p>
-    Se recorre la lista de vecinos mutuos y se calcula la distancia mínima hasta
-    un punto etiquetado.
+    {{gettext('The list of mutual neighbors is traversed and the minimum
+    distance in mutuals neighborhood to a labeled point is calculated.')}}
   </p>
   <img
     src="{{ gettext('/pseudocodigos/en/gbili/gbili_3.png') }}"
@@ -58,9 +58,9 @@
 <div id="step-4" class="step">
   <h3>{{gettext('Step')}} 4: {{gettext('Final graph')}}</h3>
   <p>
-    Se distinguen los subgrafos o componentes. Se unirán nodos si el componente
-    del nodo no tiene ningun dato etiquetado y si alguno de sus vecinos sí que
-    se encuentra en un componente etiquetado.
+    {{gettext('Subnetworks or components are distinguished. Nodes will be joined
+    if the component of the node has no labeled data and if any of its neighbors
+    is in a labeled component.')}}
   </p>
   <img
     src="{{ gettext('/pseudocodigos/en/gbili/gbili_4.png') }}"

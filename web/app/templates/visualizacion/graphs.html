@@ -90,7 +90,7 @@ head %} {{ super() }}
       <div class="text-center">
         <h4 class="title-mulish">{{ gettext('Algorithm Steps') }}</h4>
         <hr class="separacion w-10" />
-        <div class="btn-group btn-group-toggle">
+        <div id="switchSteps" class="btn-group btn-group-toggle">
           <label class="btn btn-outline-primary active" id="btn-fases-grafo">
             {{ gettext('Graph phases') }}
           </label>
@@ -195,9 +195,17 @@ head %} {{ super() }}
               intro: "{{ gettext("You can proceed through the algorithm steps manually or automatically while visualizing the events.") }}"
           },
           {
+              element: '#leyenda_visualizacion',
+              intro: "{{ gettext("Here you can see the legend of the graph. Also you can click on each option to see original data.") }}"
+          },
+          {
               element: '#pasos_grafos',
               intro: "{{ gettext("This is where you can see the steps explained theoretically, plus a summary of results.") }}",
               position: 'left'
+          },
+          {
+              element: '#switchSteps',
+              intro: "{{ gettext("You can switch between graph phases and inference results. Initially inference results will be disabled. ") }}"
           }
       ];
 

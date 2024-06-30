@@ -36,7 +36,7 @@ block content %}
   <div class="row justify-content-center">
     <div
       id="card_subida"
-      class="col-md-5 rounded-4 m-2 p-3 shadow-lg position-relative"
+      class="col-md-4 rounded-4 m-2 p-3 shadow-lg position-relative"
     >
       <button id="btn_condiciones" class="btn btn-warning text-white">
         {{ gettext('Conditions') }}
@@ -161,7 +161,7 @@ block content %}
     </div>
     <div
       id="table_container"
-      class="col-md-6 rounded-4 m-2 p-3 shadow-lg"
+      class="col-md-7 rounded-4 m-2 p-3 shadow-lg"
       style="display: none"
     >
       <div id="titulo_fichero" class="h2 title-mulish text-center">
@@ -191,42 +191,54 @@ block content %}
       let tableContainer = document.getElementById('table_container');
       tableContainer.style.display = 'block';
   {% endif %}
-  document.getElementById('inicio_tutorial').addEventListener('click', function () {
+
+  document.addEventListener('DOMContentLoaded', function () {
+    let steps= [
+        {
+            title: "{{ gettext("Data upload") }}",
+            intro: "{{ gettext("On this page, you can upload a dataset to test the algorithm. You can follow along with this tutorial while doing the process.") }}"
+        },
+        {
+            element: '#btn_condiciones',
+            intro: "{{ gettext("It's important that the dataset meets certain conditions.") }}"
+        },
+        {
+            element: '#fichero_prueba',
+            intro: "{{ gettext("If you don't have a dataset available, you can select this example one (Iris).") }}"
+        },
+        {
+            element: '#mas_fichero_prueba',
+            position: 'top',
+            intro: "{{ gettext("You can also choose between other examples.") }}"
+        },
+        {
+            element: '#soltar',
+            intro: "{{ gettext("If you have one, you can drag and drop it or select it from your file system.") }}"
+        }
+        ,
+        {
+            element: '#config_btn',
+            intro: "{{ gettext("Once loaded, you can proceed to configure the algorithm ") }}" + "{{ titulos[session['ALGORITMO']] }}."
+        }];
+
+    if(document.getElementById('table_container')) {
+      steps.push({
+        element: '#table_container',
+        intro: "{{ gettext("Here you can see the content of the file you uploaded. If you see the data correctly, you can proceed to configure the algorithm.") }}"
+      });
+    }
+    document.getElementById('inicio_tutorial').addEventListener('click', function () {
       this.style.animation = "none";
       introJs().setOptions({
-          steps: [
-              {
-                  title: "{{ gettext("Data upload") }}",
-                  intro: "{{ gettext("On this page, you can upload a dataset to test the algorithm. You can follow along with this tutorial while doing the process.") }}"
-              },
-              {
-                  element: '#btn_condiciones',
-                  intro: "{{ gettext("It's important that the dataset meets certain conditions.") }}"
-              },
-              {
-                  element: '#fichero_prueba',
-                  intro: "{{ gettext("If you don't have a dataset available, you can download this example one (Iris).") }}"
-              },
-              {
-                  element: '#mas_fichero_prueba',
-                  position: 'top',
-                  intro: "{{ gettext("You can also choose between two other examples.") }}"
-              },
-              {
-                  element: '#soltar',
-                  intro: "{{ gettext("If you have one, you can drag and drop it or select it from your file system.") }}"
-              }
-              ,
-              {
-                  element: '#config_btn',
-                  intro: "{{ gettext("Once loaded, you can proceed to configure the algorithm ") }}" + "{{ titulos[session['ALGORITMO']] }}."
-              }
-          ],
+
+          steps: steps,
           'nextLabel': "{{ gettext("Next") }}",
           'prevLabel': "{{ gettext("Previous") }}",
           'doneLabel': "{{ gettext("Done") }}",
           'showProgress': true
       }).start();
+  });
+
   });
 </script>
 {%endblock%}

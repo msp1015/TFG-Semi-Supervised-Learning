@@ -1,5 +1,11 @@
 {% extends "base.html" %} {% block title %}{{ gettext('Home') }}{% endblock %}
-{% block content %}
+%} {% block head %} {{ super() }}
+<script
+  src="https://code.jquery.com/jquery-3.5.1.min.js"
+  integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
+  crossorigin="anonymous"
+></script>
+{%endblock %} {% block content %}
 <div class="p-3 pb-1 A text-white text-center">
   <h1 class="title-mulish text-bold">VASS</h1>
   <h4 class="title-mulish">
@@ -104,8 +110,8 @@
   </div>
 </div>
 <div class="dos-colores container-fluid text-center">
-  <div class="row justify-content-center">
-    <!-- Card 1 https://www.geeksforgeeks.org/create-responsive-flip-cards-with-bootstrap-5/-->
+  <div class="row justify-content-center p-2">
+    <!-- Card 1 -->
     <div class="card m-2 shadow" style="max-width: 570px">
       <div class="row g-0">
         <div class="col-md-6">
@@ -129,6 +135,7 @@
                 {{ gettext('Select') }}
               </a>
               <a
+                id="btn_paper"
                 href="https://arxiv.org/abs/2102.13303"
                 class="btn btn-secondary stretched-link d-flex"
                 style="position: relative; z-index: 1"
@@ -239,9 +246,9 @@
               {{ gettext('Co-Training') }}
             </h5>
             <p class="card-text">
-              {{ gettext('Uses multiple classifiers trained on different
-              attribute subsets, iteratively predicting and selecting confident
-              labels to build new training sets.') }}
+              {{ gettext('Uses two classifiers trained on different attribute
+              subsets, iteratively predicting and selecting confident labels to
+              build new training sets.') }}
             </p>
             <div class="d-flex justify-content-center">
               <a
@@ -352,59 +359,63 @@
 <br />
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-      let steps = [{
-              title: "{{ gettext('Welcome') }}",
-              intro: "{{ gettext('Welcome to VASS! This is a basic tutorial.') }}"
-          },
-          {
-              element: '#card_inicial',
-              intro: "{{ gettext("Here's a quick rundown of some theoretical concepts and what the app aims to do.") }}"
-          },
-          {
-              element: '.card',
-              intro: "{{ gettext("By selecting any of these algorithms, you'll be able to upload a dataset to work with.") }}"
-          },
-          {
-              element: '#selectores_algoritmo',
-              intro: "{{ gettext("Likewise, you can select any algorithm using these selectors.") }}"
-          },
-          {
-              element: '#inicio_tutorial',
-              intro: "{{ gettext("On every page of the application, you'll always find a basic tutorial by clicking on this button.") }}"
-          },
-          {
-              element: '#link_manual',
-              intro: "{{ gettext("At any time, you can refer to the application's guide by clicking on this button.") }}"
-          },
-          {
-              element: '#selector_idioma',
-              intro: "{{ gettext("You can also choose the desired language.") }}"
-          }
-      ];
+    let steps = [{
+            title: "{{ gettext('Welcome') }}",
+            intro: "{{ gettext('Welcome to VASS! This is a basic tutorial.') }}"
+        },
+        {
+            element: '#card_inicial',
+            intro: "{{ gettext("Here's a quick rundown of some theoretical concepts and what the app aims to do.") }}"
+        },
+        {
+            element: '.card',
+            intro: "{{ gettext("By selecting any of these algorithms, you'll be able to upload a dataset to work with.") }}"
+        },
+        {
+            element: '#btn_paper',
+            intro: "{{ gettext("You can also access the paper that describes the algorithm.") }}"
+        },
+        {
+            element: '#selectores_algoritmo',
+            intro: "{{ gettext("Likewise, you can select any algorithm using these selectors.") }}"
+        },
+        {
+            element: '#inicio_tutorial',
+            intro: "{{ gettext("On every page of the application, you'll always find a basic tutorial by clicking on this button.") }}"
+        },
+        {
+            element: '#link_manual',
+            intro: "{{ gettext("At any time, you can refer to the application's guide by clicking on this button.") }}"
+        },
+        {
+            element: '#selector_idioma',
+            intro: "{{ gettext("You can also choose the desired language.") }}"
+        }
+    ];
 
-      if (document.getElementById('inicio_sesion')) {
-          steps.push({
-              element: '#inicio_sesion',
-              position: 'left',
-              intro: "{{ gettext("You can log in or register in the application. This will allow you to store datasets and even save executions.") }}"
-          });
-      } else {
-          steps.push({
-              element: '#nombre_usuario',
-              intro: "{{ gettext("Here you can access the profile and personal space with datasets and executions.") }}"
-          });
-      }
+    if (document.getElementById('inicio_sesion')) {
+        steps.push({
+            element: '#inicio_sesion',
+            position: 'left',
+            intro: "{{ gettext("You can log in or register in the application. This will allow you to store datasets and even save executions.") }}"
+        });
+    } else {
+        steps.push({
+            element: '#nombre_usuario',
+            intro: "{{ gettext("Here you can access the profile and personal space with datasets and executions.") }}"
+        });
+    }
 
-      document.getElementById('inicio_tutorial').addEventListener('click', function () {
-          this.style.animation = "none";
-          introJs().setOptions({
-              steps: steps,
-              'nextLabel': "{{ gettext("Next") }}",
-              'prevLabel': "{{ gettext("Previous") }}",
-              'doneLabel': "{{ gettext("Done") }}",
-          }).start();
-      });
+
+
+  document.getElementById('inicio_tutorial').addEventListener('click', function () {
+      this.style.animation = "none";
+      introJs().setOptions({
+        steps: steps,
+          'nextLabel': "{{ gettext("Next") }}",
+          'prevLabel': "{{ gettext("Previous") }}",
+          'doneLabel': "{{ gettext("Done") }}",
+      }).start();
   });
 </script>
-{% endblock %}
+{%endblock%}
