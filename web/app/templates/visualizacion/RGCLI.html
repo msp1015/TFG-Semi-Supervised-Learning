@@ -7,8 +7,8 @@
   }
 </style>
 <div id="step-0" class="step active">
-  <h2>{{gettext('Step')}} 0: {{gettext('Initial Data')}}</h2>
-  <p></p>
+  <h3>{{gettext('Step')}} 0: {{gettext('Initial Data')}}</h2>
+  <p>{{gettext('In this step, the algorithm is initialized, creating the necessary structures to store data such as nodes, links, kdtree, etc.')}}</p>
   <img
     src="{{ gettext('/pseudocodigos/en/rgcli/rgcli_0.png') }}"
     width="100%"
@@ -16,8 +16,8 @@
   />
 </div>
 <div id="step-1" class="step">
-  <h2>{{gettext('Step')}} 1: {{gettext('Ke nearest neighbors')}}</h2>
-  <p></p>
+  <h3>{{gettext('Step')}} 1: {{gettext('Ke nearest neighbors')}}</h2>
+  <p>{{gettext('This method is used to calculate the Ke nearest neighbors using a kdtree and other lists to be used later.')}}</p>
   <img
     src="{{ gettext('/pseudocodigos/en/rgcli/rgcli_1.png') }}"
     width="100%"
@@ -25,8 +25,8 @@
   />
 </div>
 <div id="step-2" class="step">
-  <h2>{{gettext('Step')}} 2: {{gettext('Final graph')}}</h2>
-  <p></p>
+  <h3>{{gettext('Step')}} 2: {{gettext('Final graph')}}</h2>
+  <p>{{gettext('This method is used to calculate the ki neighbors of each node that have the smallest distance to labeled points. For this purpose, the previously calculated list is traversed.')}}</p>
   <img
     src="{{ gettext('/pseudocodigos/en/rgcli/rgcli_2.png') }}"
     width="100%"

@@ -83,17 +83,6 @@ Los aspectos clave de PEP8 adoptados en el proyecto son:
 	\item \textbf{Guía de Importaciones}: Los módulos se importan de una manera ordenada y coherente, evitando conflictos y facilitando la identificación de dependencias.
 	\item \textbf{Comentarios y \textit{Docstrings}}: Se utilizan comentarios y cadenas de documentación para explicar el propósito y el funcionamiento de todos los bloques de código, mejorando así su comprensibilidad.
 \end{itemize}
-\subsection{Principios SOLID}
-Se ha adoptado los principios SOLID como fundamentos clave para un diseño de software eficiente y mantenible. Estos principios orientan la estructura del código, asegurando que sea flexible ante cambios y extensiones futuras. 
-\begin{mdframed}[linewidth=1pt, linecolor=black, leftmargin=10, rightmargin=10, backgroundcolor=gray!10, roundcorner=30pt]
-		\begin{itemize}
-		\item \textbf{S} (Responsabilidad Única): Cada componente tiene un solo propósito, facilitando las pruebas y minimizando las dependencias.
-		\item \textbf{O} (Abierto/Cerrado): El código está preparado para la expansión sin necesidad de modificar lo existente, reduciendo los errores al introducir nuevas funcionalidades.
-		\item \textbf{L} (Sustitución de Liskov): Las clases derivadas pueden sustituir a sus clases base sin alterar el comportamiento esperado, garantizando la consistencia del sistema.
-		\item \textbf{I} (Segregación de Interfaces): Se utilizan interfaces específicas para evitar la implementación de métodos innecesarios, promoviendo un código más limpio y modular.
-		\item \textbf{D} (Inversión de Dependencias): se debe depender de abstracciones en lugar de implementaciones concretas, lo que disminuye el acoplamiento y mejora la testabilidad.
-	\end{itemize}
-\end{mdframed}
 
 \section{Herramientas}
 En este proyecto, se ha empleado una variedad de herramientas esenciales que han facilitado un desarrollo eficiente y efectivo. A continuación, se detallan las herramientas clave utilizadas y cómo han ayudado en los resultados finales.
@@ -142,6 +131,10 @@ En la figura \ref{fig:../img/memoria/lighthouse.png} se ve como cada área estud
 \subsubsection{IA Generativa}
 El uso de herramientas de IA generativa como ChatGPT, GitHub Copilot y DALL·E en proyectos de desarrollo como el de este proyecto aumenta la productividad. Permiten encontrar, reducir y solucionar errores de manera rápida, mejorar la calidad del trabajo y evitar tareas tediosas y poco significativas como la creación de imágenes.
 
+\subsubsection{SonarCloud}
+Es una plataforma en la nube para la inspección continua de la calidad del código. Permite analizar el código fuente para detectar errores, vulnerabilidades, y problemas de mantenibilidad. SonarCloud proporciona informes detallados y métricas que ayudan a los desarrolladores a mejorar la calidad del código y seguir las mejores prácticas de desarrollo. A su vez, también puede generar falsos positivos, es decir, puede detectar una vulnerabilidad que en realidad no afecta en nada al sistema. Por ello todo debe ser revisado por el desarrollador para decidir si hacer cambios o no. Más información en \url{https://sonarcloud.io/}.
+
+
 \subsection{Bibliotecas}
 El desarrollo de este proyecto se ha apoyado en una serie de bibliotecas esenciales tanto para el \textit{backend} como para el \textit{frontend}, proporcionando una amplia gama de funcionalidades, desde el desarrollo web hasta el análisis de datos. A continuación, se detalla una lista de las principales bibliotecas empleadas, mayormente heredadas del anterior trabajo:
 
@@ -164,4 +157,6 @@ El desarrollo de este proyecto se ha apoyado en una serie de bibliotecas esencia
 	Uno de los usos más populares y que se usa en este trabajo es la construcción de grafos de fuerza (\textit{force-directed graphs}), que son una forma de visualización utilizada para mostrar relaciones entre entidades. Estos gráficos utilizan simulaciones físicas para posicionar los nodos de manera que las conexiones entre ellos sean claras y comprensibles. Las simulaciones de fuerza en D3.js permiten ajustar diversas fuerzas, como la atracción entre nodos conectados y la repulsión entre nodos no conectados, para lograr una disposición equilibrada y legible del grafo.
 	
 	D3.js también es ampliamente utilizada para crear otros tipos de visualizaciones de datos, como gráficos de barras, líneas, áreas, etc. Y todos ellos se encuentran en el sitio web \url{https://observablehq.com/@d3/gallery}.
+	\item \textbf{DataTables}: Es una extensión de \textit{jQuery} que proporciona características avanzadas para el manejo de tablas HTML. Permite la paginación, búsqueda, y ordenación de manera sencilla y eficiente. DataTables es altamente personalizable y extensible, lo que lo hace ideal para la presentación de grandes volúmenes de datos como pueden ser los archivos de entrada. Más información en \url{https://datatables.net}
+	
 \end{itemize}

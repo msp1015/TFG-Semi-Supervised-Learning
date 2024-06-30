@@ -19,28 +19,28 @@ La elección de este trabajo se realiza por el gran interés en la inteligencia 
 
 El plan original era hacer mi propia página web educativa desde cero, pero mostrando otra serie de algoritmos semisupervisados (ensembles y grafos) en lugar de los ya existentes. Con el desarrollo del primer algoritmo surge la idea por parte del tutor de basar el proyecto en esta otra página desarrollada por David Martínez. De esta manera, el tiempo que hubiera empleado en aprender e implementar la web desde cero, se emplea en comprender todo el código programado por David, aprovechando también la gestión de cuentas de usuarios. Aún así, se deja total libertad para cambiar e implementar lo que haga falta para mejorar el proyecto original.
 
-El tiempo empleado en familiarizarse con el nuevo código fue de dos sprints, ya que no solo trataba de leer código, sino de comprender las técnicas de HTML, css y javascript que se utilizan, junto con bibliotecas como \textit{Bootstrap}.
-Aún así, el tiempo ganado es considerable y da pie a poder implementar más algoritmos y pensar en ideas que mejoran la web.
-Inicialmente se piensa que con un fork a su repositorio de GitHub,~\cite{GH:VASS}, se puede trabajar mejor, pero de esta manera se perderían las tareas y commits hechos hasta la fecha en el repositorio de este proyecto. Por esto se decide descargar el contenido y copiarlo a el proyecto ya en desarrollo.
+Inicialmente se piensa que con un fork a su repositorio de GitHub,~\cite{GH:VASS}, se puede trabajar mejor, pero de esta manera se perderían las tareas y commits hechos hasta la fecha en el repositorio de este proyecto. Por esto se decide descargar el contenido y copiarlo al proyecto ya en desarrollo.
 
-La documentación de David~\cite{TFG:David}, sirve de gran ayuda y también se heredan partes de ella, como los trabajos relacionados y conceptos teóricos. También se tiene en cuenta las líneas de trabajo futuras desarrolladas para poder implementarlas en este trabajo.
+La documentación de David~\cite{TFG:David}, sirve de gran ayuda y también se heredan partes de ella, como los trabajos relacionados, requisitos o técnicas. 
+
 \subsubsection{Cambios en la web}
 Gran parte de la web se reutiliza, pero a medida que se desarrolla el proyecto surgen nuevas ideas que modifican parte del comportamiento de la web que ya existía. Esta sección servirá para remarcar esas pequeñas o grandes modificaciones que sufre el diseño inicial y cual es la idea de esta nueva funcionalidad. 
 La primera idea de cambio que surge es la de modificar la funcionalidad de configuración de un algoritmo. Visualizando páginas web, se da con una página que muestra algoritmos de aprendizaje automático~ \cite{web:ml-visualizer}, pero no de la misma manera que David. En esta página se permite configurar y ver resultados y estadísticas en una única ventana, con la gran diferencia de que no muetra el paso a paso en cada algoritmo, sino directamente el resultado final de la clasificación.
-El primer prototipo se hace pensando en esta idea,quedando algo parecido a la figura \ref{fig:../img/memoria/prototipo_coforest.png}:
-\imagen{../img/memoria/prototipo_coforest.png}{Prototipo de visualizacion de algoritmo Co-Forest}{1}
+
 Posteriormente, gracias al tutor nos damos cuenta de que si la idea es mostrar la ejecución paso a paso, que los parámetros de configuración estén en la misma pantalla, no es de gran ayuda. Por esto, se decide volver a la versión del trabajo base y modificar las plantillas necesarias para adaptarlas a los nuevos algoritmos.
 
-\textbf{Configuración de parámetros:} Cuando tratamos con archivos de datos preparados para estos algoritmos, siempre se suele dar el caso de que la clase o etiqueta suele ser la última columna. Por esto, se ha mantenido la opción de seleccionar el atributo deseado, pero saldrá por defecto la clase en la caja de entrada. Esto además permite mayor agilidad a la hora de hacer pruebas de visualización ya que no hay que gastar tiempo en seleccionar esta opción.
+\textbf{Configuración de parámetros:} Cuando tratamos con archivos de datos preparados para estos algoritmos, siempre se suele dar el caso de que la clase o etiqueta suele ser la última columna. Por esto, se ha mantenido la opción de seleccionar el atributo deseado, pero saldrá por defecto la clase en la caja de entrada. Esto además permite mayor agilidad a la hora de hacer pruebas de visualización ya que no hay que emplear tiempo en seleccionar esta opción.
 
 \textbf{Gráfica de estadísticas específicas:} el cambio que se ha realizado en esta parte ha sido la opción de marcar o desmarcar todos los clasificadores para ver su traza en la gráfica de estadísticas. Sirve sobretodo en el caso del Co-Forest por el hecho de que puede haber gran cantidad de árboles, y querer ver uno concreto con la configuración anterior llevaba una perdida de tiempo innecesaria desmarcando uno por uno el resto de clasificadores.
 
-\textbf{Utilizar fichero por defecto}: en la versión anterior se dedica una ventana entera a la selección del archivo, permitiendo descargar varios ficheros de prueba para luego subirlos. La idea aquí es agilizar el proceso de utilizar estos ficheros de prueba, aunque manteniendo la opción de descarga, permitiendo que al pulsar en un dataset de prueba pase a la fase de configuración directamente, sin tener que cargarlo desde las descargas.
+\textbf{Utilizar fichero por defecto}: en la versión anterior se dedica una ventana entera a la selección del archivo, permitiendo descargar varios ficheros de prueba para luego subirlos. La idea aquí es agilizar el proceso de utilizar estos ficheros de prueba, permitiendo que al pulsar en un dataset de prueba se cargue en la sesión directamente, sin tener que actualizarlo desde las descargas. Además, se muestra el contenido de este archivo en forma de tabla.
+
+\textbf{Tarjetas de selección iniciales}: se da un nuevo estilo a las tarjetas iniciales de selección de algoritmos, orientándolas de manera horizontal y añadiendo algo más de contexto para el usuario primerizo. Además, se añade la opción de encontrar el artículo en el que se ha basado la implementación.
 \section{Algoritmos}
 En esta sección se comentarán los aspectos más relevantes en la implementación de los algoritmos semisupervisados.
 \subsection{Co-Forest}\label{sec5:coforest}
 En la implementación de este algoritmo de nuevo se parte con una gran ventaja. El año anterior otra alumna había implementado el mismo algoritmo para otro proyecto. Dentro de esta aplicación, Patricia Hernando, hizo sus propios estudios, los cuales se han aprovechado en este trabajo.
-Basado fuertemente en el pseudocodigo del artículo \cite{IEEE:CoForest}, la implementación se ve alterada por el parámetro $W$, el cual establece la confianza en las muestras para ser seleccionada o no. Resumiendo el estudio de Patricia, como se puede ver en el pseudocodigo del articulo, hay una ecuación donde el valor de W esta dividiendo. Esto es un problema ya que según establece el algoritmo puede llegar a valer cero, provocando así una indeterminación. Uno de los estudios de Patricia determina que una de las mejores soluciones a esto es iniciar el parámetro W al minimo entre 100 y el 10\% de la cantidad de muestras etiquetadas que hay. Como se puede ver en el pseudocodigo de la sección tres, esto se aprovecha, evitando así posibles problemas.
+Basado en el pseudocodigo del artículo \cite{IEEE:CoForest}, la implementación se ve alterada por el parámetro $W$, el cual establece la confianza en las muestras para ser seleccionada o no. Resumiendo el estudio de Patricia, como se puede ver en el pseudocodigo del articulo, hay una ecuación donde el valor de W esta dividiendo. Esto es un problema ya que según establece el algoritmo puede llegar a valer cero, provocando así una indeterminación. Uno de los estudios de Patricia determina que una de las mejores soluciones a esto es iniciar el parámetro W al minimo entre 100 y el 10\% de la cantidad de muestras etiquetadas que hay. Como se puede ver en el pseudocodigo de la sección tres, esto se aprovecha, evitando así posibles problemas.
 Para determinar si el algoritmo definitivo es bueno, se compara con el de Patricia, evaluando como varía el valor de \textit{accuracy} en cada iteración del algoritmo. Los resultados se muestran en la figura \ref{fig:../img/memoria/ComparacionCoForest.png}
 \imagenflotante{../img/memoria/ComparacionCoForest.png}{Comparación algoritmo CoForest utilizando diversos datasets}{1}
 
@@ -132,3 +132,77 @@ Para comprobar esto, se realizará otro estudio ahora con un rango de valores en
 En cuanto a los dos primeros gráficos, se observa que los resultados son muy buenos a lo largo de todo el gráfico, con una \textit{accuracy} cerca o por encima del 90\% en todos los casos. Esto indica que para estos conjuntos de datos, el algoritmo es altamente efectivo y logra clasificaciones muy precisas.
 
 En cambio, al evaluar el último gráfico, se ve que, aun disminuyendo los valores de tolerancia, la precisión no ha conseguido mejorar como en los otros dos casos. Este comportamiento sugiere que el tercer conjunto de datos presenta un desafío mayor para el algoritmo, lo que impide alcanzar altos niveles de precisión. Es importante reflexionar que algunos conjuntos de datos (en este caso el dataset \textit{wine}) son inherentemente más complejos que otros, ya sea por su distribución de clases, por sus atributos u otras características intrínsecas.
+
+\subsection{Despliegue de la Aplicación Web}
+
+En este trabajo, se ha desplegado una aplicación web utilizando diversas herramientas y servicios. A continuación, se detallan los pasos seguidos y la teoría detrás de cada uno de ellos~\cite{deployApp}.
+
+\subsubsection{Preparación del Entorno de Despliegue}
+
+Para desplegar la aplicación web, se ha utilizado un servidor en la nube proporcionado por \textit{Azure}, aprovechando el mes gratuito que ofrece este proveedor. El primer paso consistió en crear una cuenta en \textit{Azure} y configurar una máquina virtual (VM) adecuada para ejecutar la aplicación.
+
+\begin{itemize}
+	\item \textbf{Creación de la VM en \textit{Azure}}: Se selecciona una imagen de sistema operativo (Ubuntu en mi caso) y se configuran los parámetros de red, almacenamiento y seguridad. \textit{Azure} proporciona una interfaz gráfica para facilitar este proceso.
+\end{itemize}
+
+\subsubsection{Configuración del Servidor Web}
+
+Para manejar las solicitudes HTTP, se ha utilizado Nginx como servidor web. \textit{Nginx} es conocido por su alto rendimiento y eficiencia en la gestión de conexiones concurrentes. La configuración de \textit{Nginx} se realiza mediante un archivo de configuración, donde se definen aspectos como el servidor que escucha en el puerto 80 y el \textit{proxy} hacia \textit{gunicorn}.
+
+\begin{itemize}
+	\item \textbf{Instalación de \textit{Nginx}}: Se instala Nginx en la VM mediante el gestor de paquetes correspondiente.
+	\item \textbf{Configuración de Nginx}: Se crea y edita un archivo de configuración ubicado en \texttt{/etc/nginx/sites-available/} y se crea un enlace simbólico en \texttt{/etc/nginx/sites-enabled/}. Este archivo contiene las directivas para redirigir las solicitudes al servicio de \textit{gunicorn} (figura~\ref{fig:../img/memoria/nginxFile.png}).
+\end{itemize}
+
+\imagen{../img/memoria/nginxFile.png}{Parte de configuración del archivo \texttt{/etc/nginx/sites-enabled/default}}{1}
+
+\subsubsection{Implementación del Servidor de Aplicaciones}
+
+\textit{Gunicorn} se utiliza como servidor de aplicaciones \textit{WSGI} para ejecutar la aplicación web desarrollada en Python. \textit{Gunicorn} es eficiente y compatible con varios \textit{frameworks} web de Python.
+
+\begin{itemize}
+	\item \textbf{Instalación de gunicorn}: Se instala gunicorn en la VM utilizando \texttt{pip}.
+	\item \textbf{Creación del servicio de gunicorn}: Se configura un servicio de \textit{systemd} para \textit{gunicorn}, permitiendo su gestión como un servicio del sistema. El archivo de configuración del servicio se guarda en \texttt{/etc/systemd/system/app-flask.service} (figura~\ref{fig:../img/memoria/app-flask.png}).
+\end{itemize}
+
+\imagen{../img/memoria/app-flask.png}{Archivo de configuración del servicio \textit{app-flask}}{1}
+
+\subsubsection{Gestión de Conexiones SSH}
+
+Para la conexión segura a la VM y la gestión remota de los servicios, se ha utilizado \textit{MobaXterm}. Esta herramienta permite la conexión SSH y proporciona una interfaz gráfica para la administración de archivos y ejecución de comandos.
+
+\begin{itemize}
+	\item \textbf{Configuración de MobaXterm}: Se configura una nueva sesión SSH utilizando la dirección IP de la VM y las credenciales correspondientes.
+\end{itemize}
+
+\subsubsection{Adquisición de Dominio}
+
+Finalmente, se adquirió un dominio mediante \textbf{Namecheap} para asociarlo con la aplicación web. Este paso incluye la configuración de los registros DNS para que apunten a la dirección IP de la VM.
+
+\begin{itemize}
+	\item \textbf{Compra del dominio}: Se adquiere un dominio a través de Namecheap.
+	\item \textbf{Configuración de DNS}: Se configuran los registros A en Namecheap para que apunten a la IP de la VM, permitiendo que el dominio redirija correctamente las solicitudes.
+\end{itemize}
+
+\subsubsection{Obtención de Certificado de Seguridad}
+
+Para asegurar la comunicación entre el cliente y el servidor, se ha obtenido un certificado de seguridad SSL utilizando \textbf{\textit{Certbot}}. \textit{Certbot} es una herramienta gratuita y automatizada para obtener y renovar certificados SSL de \textit{Let's Encrypt}.
+
+\begin{itemize}
+	\item \textbf{Instalación de \textit{Certbot}}: Se instala en la VM utilizando el gestor de paquetes correspondiente.
+	\item \textbf{Obtención del certificado}: Se ejecuta con el comando adecuado para obtener el certificado SSL para el dominio adquirido. \textit{Certbot} configura automáticamente Nginx para utilizar el certificado.
+\end{itemize}
+
+
+\subsubsection{Flujo de Trabajo Completo}
+
+Teóricamente, el flujo de trabajo completo involucra los siguientes pasos:
+
+\begin{enumerate}
+	\item El usuario realiza una solicitud HTTPS utilizando el dominio adquirido.
+	\item Nginx recibe la solicitud y actúa como \textit{proxy}, redirigiendo la solicitud al puerto donde \textit{Gunicorn} está escuchando.
+	\item \textit{Gunicorn} procesa la solicitud mediante la aplicación web Python y genera una respuesta.
+	\item Nginx recibe la respuesta de Gunicorn y la envía de vuelta al usuario, asegurando la comunicación con el certificado SSL.
+\end{enumerate}
+
+Este flujo asegura que la aplicación web sea accesible y manejable de manera eficiente, aprovechando las capacidades de cada componente del sistema.
