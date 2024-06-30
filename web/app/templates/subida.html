@@ -1,147 +1,232 @@
-{% extends "base.html" %}
-{% from "macros.html" import tooltip, modalcondiciones %}
-{% block head %}
-    {{ super() }}
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" integrity="sha384-CkbBL/n3ZOZkc8ovstsrGxoxn5rrvlQXBesVNiMgEo17kPWvANS0hFBRkMl0Omh4" crossorigin="anonymous">
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" integrity="sha384-RxzVJNpULMjRDJ3nd+aAVYb11VBDmhgIonMdvYdLxYvylOdEl6pprk4R4PK0t3xG" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/js/subida.js"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    {%endblock %}
-{% block title %}{{ gettext('Dataset upload') }}{% endblock %}
-{% block content %}
-    <button id="btn_volver" type="button" onclick="history.back()" class="btn sticky-top">
-        <i class="bi bi-caret-left-fill"></i>{{ gettext('Go back') }}</button>| {{ gettext('Algorithm') }}:
-    {{ titulos[session['ALGORITMO']] }}
-    <div class="text-center pb-3">
-        <h1 class="title-mulish text-bold">{{ gettext('Dataset upload') }}</h1>
-        <hr class="separacion w-14"/>
-    </div>
-    <div class="container-fluid mt-4">
-        <div class="row justify-content-center">
-            <div id="card_subida" class="col-md-5 rounded-4 mt-4 mb-5 p-4 shadow-lg position-relative">
-                <button id="btn_condiciones" class='btn btn-warning text-white'>{{ gettext('Conditions') }}</button>
-                <div class="d-flex justify-content-center align-items-center">
-                    <p class="h2 text-center title-mulish">{{ gettext('File selection') }}</p>
-                </div>
-                <hr class="separacion w-8"/>
-                <br>
-                <div class="container text-center pb-5">
-                    <div class="d-flex align-items-center flex-column">
-                        <div class="mb-3">
-                            <div id="soltar" class="rounded-4">
-                                {{ tooltip(gettext('Allowed extensions: .CSV & .ARFF')) }}
-                                <p>{{ gettext('Drag and drop your file') }}</p>
-                                <p>{{ gettext('or') }}</p>
-                                <input type=file id="archivo" accept=".arff,.csv" name=archivo>
-                                <label for="archivo">{{ gettext('Choose file') }}</label>
-                                <span id="nombre_fichero"> </span>
-                            </div>
-                        </div>
-                        <div class="mb-2 w-75">
-                            <div class="rounded-4 m-2 p-4 text-start">
-                                <span id="porcentaje_progreso">0%</span> {{ gettext('completed') }}<br>
-                                <div class="progress">
-                                    <div id="progreso" class="progress-bar bg-warning" role="progressbar" aria-valuemin="0"
-                                         aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="btn-group">
-                        <button id="fichero_prueba" class="btn btn-success" onclick="establecerFicheroPrueba('iris')">
-                            {{ gettext('Set test file') }}
-                        </button>
-                        <button id="mas_fichero_prueba" type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="establecerFicheroPrueba('iris')">Iris</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="establecerFicheroPrueba('breast')">Breast Cancer</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="establecerFicheroPrueba('breast.w.ss')">Breast Cancer (SS)</a></li>
-                            <li><a class="dropdown-item" href="javascript:void(0)" onclick="establecerFicheroPrueba('diabetes')">Diabetes</a></li>
-                        </ul>
-                    </div>
-                    <br>
-                    <br>
-                    <form action="{{ url_for('configuration_bp.configurar_algoritmo', algoritmo=session['ALGORITMO']) }}">
-                        {% if ya_hay_fichero %}
-                            <p id="fichero-previo">
-                                {{ gettext('Previous file detected: ') }}{{ session['FICHERO']|nombredataset }}</p>
-                            <input id="config_btn" class="btn btn-primary" type="submit"
-                                   value="{{ gettext('Configure algorithm') }}"/>
-                        {% else %}
-                            <input id="config_btn" class="btn btn-primary" type="submit"
-                                   value="{{ gettext('Configure algorithm') }}" disabled/>
-                        {% endif %}
-                    </form>
-                </div>
+{% extends "base.html" %} {% from "macros.html" import tooltip, modalcondiciones
+%} {% block head %} {{ super() }}
+<script
+  src="https://code.jquery.com/jquery-3.5.1.min.js"
+  integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
+  crossorigin="anonymous"
+></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"
+  integrity="sha384-CkbBL/n3ZOZkc8ovstsrGxoxn5rrvlQXBesVNiMgEo17kPWvANS0hFBRkMl0Omh4"
+  crossorigin="anonymous"
+/>
+<script
+  src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"
+  integrity="sha384-RxzVJNpULMjRDJ3nd+aAVYb11VBDmhgIonMdvYdLxYvylOdEl6pprk4R4PK0t3xG"
+  crossorigin="anonymous"
+></script>
+<script type="text/javascript" src="/js/subida.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+{%endblock %} {% block title %}{{ gettext('Dataset upload') }}{% endblock %} {%
+block content %}
+<button
+  id="btn_volver"
+  type="button"
+  onclick="history.back()"
+  class="btn sticky-top"
+>
+  <i class="bi bi-caret-left-fill"></i>{{ gettext('Go back') }}</button
+>| {{ gettext('Algorithm') }}: {{ titulos[session['ALGORITMO']] }}
+<div class="text-center pb-3">
+  <h1 class="title-mulish text-bold">{{ gettext('Dataset upload') }}</h1>
+  <hr class="separacion w-14" />
+</div>
+<div class="container-fluid mt-4">
+  <div class="row justify-content-center">
+    <div
+      id="card_subida"
+      class="col-md-5 rounded-4 m-2 p-3 shadow-lg position-relative"
+    >
+      <button id="btn_condiciones" class="btn btn-warning text-white">
+        {{ gettext('Conditions') }}
+      </button>
+      <div class="d-flex justify-content-center align-items-center">
+        <p class="h2 text-center title-mulish">
+          {{ gettext('File selection') }}
+        </p>
+      </div>
+      <hr class="separacion w-8" />
+      <br />
+      <div class="container text-center pb-5">
+        <div class="d-flex align-items-center flex-column">
+          <div class="mb-3">
+            <div id="soltar" class="rounded-4">
+              {{ tooltip(gettext('Allowed extensions: .CSV & .ARFF')) }}
+              <p>{{ gettext('Drag and drop your file') }}</p>
+              <p>{{ gettext('or') }}</p>
+              <input
+                type="file"
+                id="archivo"
+                accept=".arff,.csv"
+                name="archivo"
+              />
+              <label for="archivo">{{ gettext('Choose file') }}</label>
+              <span id="nombre_fichero"> </span>
             </div>
-            
-            <div id="table_container" class="col-md-7 rounded-4 mt-4 mb-5 p-4 shadow-lg" style="overflow-x: auto; display: none;">
-                <div id="titulo_fichero" class="h2 title-mulish text-center">
-                    {% if ya_hay_fichero %}
-                        {{ session['FICHERO']|nombredataset }}
-                    {% endif %}
-                </div>
-                <hr class="separacion w-8"/>
-                <div id="container_data" >
-                    <table id="csvTable" class="display" style="width:100%"></table>
-                </div>
-                <div id="table_warning" style="display: none;">
-                    <i class="bi bi-exclamation-circle"></i> 
-                    <p>{{ gettext('It seems that something is wrong with the file, remember that it has to be a CSV or an ARFF. You should also review its content and format.') }}</p>
-                </div>
+          </div>
+          <div class="mb-2 w-75">
+            <div class="rounded-4 m-2 p-4 text-start">
+              <span id="porcentaje_progreso">0%</span> {{ gettext('completed')
+              }}<br />
+              <div class="progress">
+                <div
+                  id="progreso"
+                  class="progress-bar bg-warning"
+                  role="progressbar"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
             </div>
-            
+          </div>
         </div>
+        <div class="btn-group">
+          <button
+            id="fichero_prueba"
+            class="btn btn-success"
+            onclick="establecerFicheroPrueba('iris')"
+          >
+            {{ gettext('Set test file') }}
+          </button>
+          <button
+            id="mas_fichero_prueba"
+            type="button"
+            class="btn btn-success dropdown-toggle dropdown-toggle-split"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          ></button>
+          <ul class="dropdown-menu">
+            <li>
+              <a
+                class="dropdown-item"
+                href="javascript:void(0)"
+                onclick="establecerFicheroPrueba('iris')"
+                >Iris</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="javascript:void(0)"
+                onclick="establecerFicheroPrueba('breast')"
+                >Breast Cancer</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="javascript:void(0)"
+                onclick="establecerFicheroPrueba('breast.w.ss')"
+                >Breast Cancer (SS)</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="javascript:void(0)"
+                onclick="establecerFicheroPrueba('diabetes')"
+                >Diabetes</a
+              >
+            </li>
+          </ul>
+        </div>
+        <br />
+        <br />
+        <form
+          action="{{ url_for('configuration_bp.configurar_algoritmo', algoritmo=session['ALGORITMO']) }}"
+        >
+          {% if ya_hay_fichero %}
+          <p id="fichero-previo">
+            {{ gettext('Previous file detected: ') }}{{
+            session['FICHERO']|nombredataset }}
+          </p>
+          <input
+            id="config_btn"
+            class="btn btn-primary"
+            type="submit"
+            value="{{ gettext('Configure algorithm') }}"
+          />
+          {% else %}
+          <input
+            id="config_btn"
+            class="btn btn-primary"
+            type="submit"
+            value="{{ gettext('Configure algorithm') }}"
+            disabled
+          />
+          {% endif %}
+        </form>
+      </div>
     </div>
-    {{ modalcondiciones() }}
-    <script>
-        var idiomaActual = "{{ idioma_actual }}";
-        
-        {% if ya_hay_fichero %}
-            let tableContainer = document.getElementById('table_container');
-            tableContainer.style.display = 'block';
-        {% endif %}
-        document.getElementById('inicio_tutorial').addEventListener('click', function () {
-            this.style.animation = "none";
-            introJs().setOptions({
-                steps: [
-                    {
-                        title: "{{ gettext("Data upload") }}",
-                        intro: "{{ gettext("On this page, you can upload a dataset to test the algorithm. You can follow along with this tutorial while doing the process.") }}"
-                    },
-                    {
-                        element: '#btn_condiciones',
-                        intro: "{{ gettext("It's important that the dataset meets certain conditions.") }}"
-                    },
-                    {
-                        element: '#fichero_prueba',
-                        intro: "{{ gettext("If you don't have a dataset available, you can download this example one (Iris).") }}"
-                    },
-                    {
-                        element: '#mas_fichero_prueba',
-                        position: 'top',
-                        intro: "{{ gettext("You can also choose between two other examples.") }}"
-                    },
-                    {
-                        element: '#soltar',
-                        intro: "{{ gettext("If you have one, you can drag and drop it or select it from your file system.") }}"
-                    }
-                    ,
-                    {
-                        element: '#config_btn',
-                        intro: "{{ gettext("Once loaded, you can proceed to configure the algorithm ") }}" + "{{ titulos[session['ALGORITMO']] }}."
-                    }
-                ],
-                'nextLabel': "{{ gettext("Next") }}",
-                'prevLabel': "{{ gettext("Previous") }}",
-                'doneLabel': "{{ gettext("Done") }}",
-                'showProgress': true
-            }).start();
-        });
+    <div
+      id="table_container"
+      class="col-md-6 rounded-4 m-2 p-3 shadow-lg"
+      style="display: none"
+    >
+      <div id="titulo_fichero" class="h2 title-mulish text-center">
+        {% if ya_hay_fichero %} {{ session['FICHERO']|nombredataset }} {% endif
+        %}
+      </div>
+      <hr class="separacion w-8" />
+      <div id="container_data">
+        <table id="csvTable" class="display" style="width: 100%"></table>
+      </div>
+      <div id="table_warning" style="display: none">
+        <i class="bi bi-exclamation-circle"></i>
+        <p>
+          {{ gettext('It seems that something is wrong with the file, remember
+          that it has to be a CSV or an ARFF. You should also review its content
+          and format.') }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{{ modalcondiciones() }}
+<script>
+  var idiomaActual = "{{ idioma_actual }}";
 
-    </script>
+  {% if ya_hay_fichero %}
+      let tableContainer = document.getElementById('table_container');
+      tableContainer.style.display = 'block';
+  {% endif %}
+  document.getElementById('inicio_tutorial').addEventListener('click', function () {
+      this.style.animation = "none";
+      introJs().setOptions({
+          steps: [
+              {
+                  title: "{{ gettext("Data upload") }}",
+                  intro: "{{ gettext("On this page, you can upload a dataset to test the algorithm. You can follow along with this tutorial while doing the process.") }}"
+              },
+              {
+                  element: '#btn_condiciones',
+                  intro: "{{ gettext("It's important that the dataset meets certain conditions.") }}"
+              },
+              {
+                  element: '#fichero_prueba',
+                  intro: "{{ gettext("If you don't have a dataset available, you can download this example one (Iris).") }}"
+              },
+              {
+                  element: '#mas_fichero_prueba',
+                  position: 'top',
+                  intro: "{{ gettext("You can also choose between two other examples.") }}"
+              },
+              {
+                  element: '#soltar',
+                  intro: "{{ gettext("If you have one, you can drag and drop it or select it from your file system.") }}"
+              }
+              ,
+              {
+                  element: '#config_btn',
+                  intro: "{{ gettext("Once loaded, you can proceed to configure the algorithm ") }}" + "{{ titulos[session['ALGORITMO']] }}."
+              }
+          ],
+          'nextLabel': "{{ gettext("Next") }}",
+          'prevLabel': "{{ gettext("Previous") }}",
+          'doneLabel': "{{ gettext("Done") }}",
+          'showProgress': true
+      }).start();
+  });
+</script>
 {%endblock%}
-
