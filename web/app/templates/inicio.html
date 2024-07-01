@@ -40,37 +40,31 @@
             <div class="m-2 p-2">
               {{ gettext('<strong>Semi-supervised learning</strong> is the
               branch of machine learning that refers to the simultaneous use of
-              data both <strong>labeled</strong> and
-              <strong>unlabeled</strong> to perform learning tasks. It sits
-              between supervised and unsupervised learning.<br /><br />Among all
-              <strong>semi-supervised algorithms</strong>, the core of this
-              project is based on <strong>inductive methods</strong>. Their idea
-              is very simple: they try to create a classifier that predicts
-              labels for new data. The proposed algorithms have this objective,
-              albeit with a bit more specificity:
-              <strong>wrapper methods</strong>. The well-known
-              <strong>wrapper methods</strong> are based on
-              <strong>pseudo-labeling</strong>, which is the process where
-              classifiers trained with labeled data generate labels for the
-              unlabeled ones. Once this process is completed, the classifier is
-              retrained, incorporating these new labels.') }}
+              both labeled and unlabeled data to perform learning tasks. It
+              straddles the line between supervised and unsupervised learning.
+              This project attempts to represent both inductive and inductive
+              methods. As for the inductive ones, their idea is very simple,
+              they try to create a classifier that predicts labels for new data.
+              The well-known wrapper methods are based on pseudo-labeling
+              (pseudo-labelling), the process in which classifiers trained on
+              labeled data generate labels for unlabeled data. Once this process
+              is completed, the classifier is retrained, but adding these new
+              ones. Multi-classifier methods seek to combine the predictions of
+              multiple individual classifiers to improve the overall accuracy of
+              the model. Transductive or graph-based methods (GSSL) focus on
+              using the underlying structure of the data to improve
+              classification. The idea is that data that are similar or close in
+              feature space have similar labels.') }}
             </div>
             <div class="m-2 p-2">
-              {{ gettext('In the following cards, four of the most
-              representative algorithms of semi-supervised learning are
-              presented: <strong>Self-Training</strong>,
-              <strong>Co-Training</strong>, <strong>Tri-Training</strong> and
-              <strong>Democratic Co-Learning</strong>. <br /><br />
-              Internally, each algorithm utilizes one or several classifiers
-              (wrapper methods). Additionally, the number of views on the data
-              is distinguished (a view being the subset of attributes of the
-              dataset that the algorithm uses to learn the model). Unlike
-              <strong>Single-view</strong>, a
-              <strong>Multi-view</strong> algorithm views the dataset attributes
-              as multiple subsets. For example, in the Co-Training algorithm,
-              the first classifier might only "see" half of the attributes while
-              the second one sees the other half. Each of them will work with
-              its specific subset of attributes.') }}
+              {{ gettext('The cards below present some of the most
+              representative semi-supervised learning algorithms:
+              <strong>Self-Training</strong>, <strong>Co-Training</strong>,
+              <strong>Tri-Training</strong>,
+              <strong>Democratic Co-Learning</strong>,
+              <strong>Co-Forest</strong> and an option to set up
+              <strong>graph-based methods</strong>. The GSSLs contain two main
+              phases that can be used in the following ways.') }}
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-30 20:21+0200\n"
+"POT-Creation-Date: 2024-07-01 19:31+0200\n"
 "PO-Revision-Date: 2023-02-26 14:39+0100\n"
 "Last-Translator: David Martínez Acha <dmacha@ubu.es>\n"
 "Language: es\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Generated-By: Babel 2.14.0\n"
 
 #: __init__.py:70 templates/base.html:54
-#: templates/configuracion/graphsconfig.html:24 templates/inicio.html:123
+#: templates/configuracion/graphsconfig.html:24 templates/inicio.html:117
 #: templates/visualizacion/graphs.html:24
 msgid "Graphs"
 msgstr "Grafos"
@@ -214,7 +214,7 @@ msgstr "¡Cuenta actualizada!"
 msgid "You must select the parameters of the algorithm"
 msgstr "Debe seleccionar los parámetros del algoritmo"
 
-#: visualization_routes.py:221
+#: visualization_routes.py:228
 msgid "Classifiers must be different (diverse) to ensure proper execution"
 msgstr ""
 "Los clasificadores deben ser diferentes (diversos) para asegurar una "
@@ -281,93 +281,57 @@ msgid ""
 "<strong>Semi-supervised learning</strong> is the\n"
 "              branch of machine learning that refers to the simultaneous "
 "use of\n"
-"              data both <strong>labeled</strong> and\n"
-"              <strong>unlabeled</strong> to perform learning tasks. It "
-"sits\n"
-"              between supervised and unsupervised learning.<br /><br "
-"/>Among all\n"
-"              <strong>semi-supervised algorithms</strong>, the core of "
-"this\n"
-"              project is based on <strong>inductive methods</strong>. "
-"Their idea\n"
-"              is very simple: they try to create a classifier that "
-"predicts\n"
-"              labels for new data. The proposed algorithms have this "
-"objective,\n"
-"              albeit with a bit more specificity:\n"
-"              <strong>wrapper methods</strong>. The well-known\n"
-"              <strong>wrapper methods</strong> are based on\n"
-"              <strong>pseudo-labeling</strong>, which is the process "
-"where\n"
-"              classifiers trained with labeled data generate labels for "
-"the\n"
-"              unlabeled ones. Once this process is completed, the "
-"classifier is\n"
-"              retrained, incorporating these new labels."
-msgstr ""
-"El <strong>aprendizaje semi-supervisado</strong> es la rama del "
-"aprendizaje automático referido al uso simultáneo de datos tanto "
-"<strong>etiquetados</strong> como <strong>no etiquetados</strong> para "
-"realizar tareas de aprendizaje. Se encuentra a caballo entre el "
-"aprendizaje supervisado y el no supervisado.<br><br>Dentro de todos los "
-"algoritmos semi-supervisados, el núcleo de este proyecto está basado en "
-"los <strong>métodos inductivos</strong>. Su idea es muy sencilla, tratan "
-"de crear un clasificador que prediga etiquetas para datos nuevos. Los "
-"algoritmos propuestos tienen este objetivo, Los conocidos métodos wrapper"
-" se basan en el <strong>pseudo-etiquetado</strong> (pseudo-labelling), es"
-" el proceso en el que los clasificadores entrenados con datos etiquetados"
-" generan etiquetas para los no etiquetados. Una vez completado este "
-"proceso, el clasificador se vuelve a entrenar pero añadiendo estos "
-"nuevos."
-
-#: templates/inicio.html:59
-#, fuzzy
-msgid ""
-"In the following cards, four of the most\n"
-"              representative algorithms of semi-supervised learning are\n"
-"              presented: <strong>Self-Training</strong>,\n"
-"              <strong>Co-Training</strong>, <strong>Tri-Training</strong>"
-" and\n"
-"              <strong>Democratic Co-Learning</strong>. <br /><br />\n"
-"              Internally, each algorithm utilizes one or several "
-"classifiers\n"
-"              (wrapper methods). Additionally, the number of views on the"
-" data\n"
-"              is distinguished (a view being the subset of attributes of "
-"the\n"
-"              dataset that the algorithm uses to learn the model). Unlike"
+"              both labeled and unlabeled data to perform learning tasks. "
+"It\n"
+"              straddles the line between supervised and unsupervised "
+"learning.\n"
+"              This project attempts to represent both inductive and "
+"inductive\n"
+"              methods. As for the inductive ones, their idea is very "
+"simple,\n"
+"              they try to create a classifier that predicts labels for "
+"new data.\n"
+"              The well-known wrapper methods are based on pseudo-labeling"
 "\n"
-"              <strong>Single-view</strong>, a\n"
-"              <strong>Multi-view</strong> algorithm views the dataset "
-"attributes\n"
-"              as multiple subsets. For example, in the Co-Training "
-"algorithm,\n"
-"              the first classifier might only \"see\" half of the "
-"attributes while\n"
-"              the second one sees the other half. Each of them will work "
-"with\n"
-"              its specific subset of attributes."
+"              (pseudo-labelling), the process in which classifiers "
+"trained on\n"
+"              labeled data generate labels for unlabeled data. Once this "
+"process\n"
+"              is completed, the classifier is retrained, but adding these"
+" new\n"
+"              ones. Multi-classifier methods seek to combine the "
+"predictions of\n"
+"              multiple individual classifiers to improve the overall "
+"accuracy of\n"
+"              the model. Transductive or graph-based methods (GSSL) focus"
+" on\n"
+"              using the underlying structure of the data to improve\n"
+"              classification. The idea is that data that are similar or "
+"close in\n"
+"              feature space have similar labels."
 msgstr ""
-"En las tarjetas que aparecen a continuación se presentan cuatro de los "
-"algoritmos más representativos del aprendizaje semi-supervisado: <strong"
-">Self-Training</strong>, <strong>Co-Training</strong>, <strong>Tri-"
-"Training</strong> y <strong>Democratic Co-Learning</strong>. "
-"<br><br>Internamente cada algoritmo utiliza uno o varios clasificadores "
-"(métodos de envoltura). Y además, se distingue el número de vistas sobre "
-"los datos (una vista es el subconjunto de atributos del conjunto de datos"
-" que usa el algoritmo para aprender el modelo). Al contrario que <strong"
-">Single-view</strong>, un algoritmo <strong>Multi-view</strong> verá el "
-"conjunto de atributos de los datos como varios subconjuntos. Por ejemplo,"
-" en el algoritmo Co-Training, el primer clasificador podría solo \"ver\" "
-"la mitad de atributos mientras que el segundo la otra mitad. Cada uno de "
-"ellos trabajará con su subconjunto de atributos concreto."
-
-#: templates/inicio.html:88 templates/inicio.html:94
+"<strong>El aprendizaje semi-supervisado</strong> es la rama del aprendizaje automático que se refiere al uso simultáneo de datos etiquetados y no etiquetados para realizar tareas de aprendizaje. Se encuentra a caballo entre el aprendizaje supervisado y no supervisado. Este proyecto intenta representar tanto métodos inductivos como transductivos. En cuanto a los inductivos, su idea es muy sencilla: tratan de crear un clasificador que prediga etiquetas para datos nuevos. Los conocidos métodos wrapper se basan en el pseudo-etiquetado (pseudo-labelling), el proceso en el cual los clasificadores entrenados con datos etiquetados generan etiquetas para los datos no etiquetados. Una vez completado este proceso, el clasificador se vuelve a entrenar, pero añadiendo estos nuevos datos. Los métodos de multiclasificadores buscan combinar las predicciones de múltiples clasificadores individuales para mejorar la precisión general del modelo. Los métodos transductivos o basados en grafos (GSSL) se enfocan en utilizar la estructura subyacente de los datos para mejorar la clasificación. La idea es que los datos que son similares o cercanos en el espacio de características tengan etiquetas similares.
+"
+#: templates/inicio.html:60
+msgid ""
+"The cards below present some of the most\n"
+"              representative semi-supervised learning algorithms:\n"
+"              <strong>Self-Training</strong>, <strong>Co-"
+"Training</strong>,\n"
+"              <strong>Tri-Training</strong>,\n"
+"              <strong>Democratic Co-Learning</strong>,\n"
+"              <strong>Co-Forest</strong> and an option to set up\n"
+"              <strong>graph-based methods</strong>. The GSSLs contain two"
+" main\n"
+"              phases that can be used in the following ways."
+msgstr ""
+"Las tarjetas a continuación presentan algunos de los algoritmos más representativos del aprendizaje semi-supervisado: <strong>Self-Training</strong>, <strong>Co-Training</strong>, <strong>Tri-Training</strong>, <strong>Democratic Co-Learning</strong>, <strong>Co-Forest</strong> y una opción para configurar <strong>métodos basados en grafos</strong>. Los GSSL contienen dos fases principales que se pueden utilizar de las siguientes maneras.
+"
+#: templates/inicio.html:82 templates/inicio.html:88
 msgid "Objective"
 msgstr "Objetivo"
 
-#: templates/inicio.html:98
-#, fuzzy
+#: templates/inicio.html:92
 msgid ""
 "The aim of this tool is to facilitate, through\n"
 "              visualizations, the understanding of how the main semi-"
@@ -390,7 +354,7 @@ msgstr ""
 "algoritmo con los parámetros deseados y finalmente obtener una "
 "visualización del entrenamiento."
 
-#: templates/inicio.html:126
+#: templates/inicio.html:120
 msgid ""
 "Construct similarity graphs to represent sample\n"
 "              similarities, then use these graphs to propagate labels "
@@ -402,19 +366,19 @@ msgstr ""
 "etiquetas\n"
 "              desde los datos etiquetados."
 
-#: templates/inicio.html:135 templates/inicio.html:175
-#: templates/inicio.html:216 templates/inicio.html:257
-#: templates/inicio.html:299 templates/inicio.html:341
+#: templates/inicio.html:129 templates/inicio.html:169
+#: templates/inicio.html:210 templates/inicio.html:251
+#: templates/inicio.html:293 templates/inicio.html:335
 msgid "Select"
 msgstr "Seleccionar"
 
-#: templates/inicio.html:145 templates/inicio.html:184
-#: templates/inicio.html:225 templates/inicio.html:266
-#: templates/inicio.html:308 templates/inicio.html:350
+#: templates/inicio.html:139 templates/inicio.html:178
+#: templates/inicio.html:219 templates/inicio.html:260
+#: templates/inicio.html:302 templates/inicio.html:344
 msgid "Paper"
 msgstr "Artículo"
 
-#: templates/inicio.html:167
+#: templates/inicio.html:161
 msgid ""
 "Ensemble that uses multiple decision trees to\n"
 "              iteratively add confident predictions to the training set,\n"
@@ -425,11 +389,11 @@ msgstr ""
 "de entrenamiento,\n"
 "              mejorando el aprendizaje mutuo."
 
-#: templates/inicio.html:205
+#: templates/inicio.html:199
 msgid "Self-Training"
 msgstr "Self-Training"
 
-#: templates/inicio.html:208
+#: templates/inicio.html:202
 msgid ""
 "Uses a base classifier initially trained with labeled\n"
 "              data and iteratively retrains with pseudo-labeled data "
@@ -440,11 +404,11 @@ msgstr ""
 "              y se reentrena con datos pseudo-etiquetados\n"
 "              hasta cumplir un criterio de parada."
 
-#: templates/inicio.html:246
+#: templates/inicio.html:240
 msgid "Co-Training"
 msgstr "Co-Training"
 
-#: templates/inicio.html:249
+#: templates/inicio.html:243
 msgid ""
 "Uses two classifiers trained on different attribute\n"
 "              subsets, iteratively predicting and selecting confident "
@@ -455,11 +419,11 @@ msgstr ""
 "              subconjuntos de atributos, trabajando iterativamente para "
 "construir nuevos datos de entrenamiento."
 
-#: templates/inicio.html:287
+#: templates/inicio.html:281
 msgid "Tri-Training"
 msgstr "Tri-Training"
 
-#: templates/inicio.html:290
+#: templates/inicio.html:284
 msgid ""
 "Uses three classifiers to pseudo-label data, requiring\n"
 "              two of them to agree, and iterates (with new empty data) "
@@ -470,11 +434,11 @@ msgstr ""
 "              que dos de ellos estén de acuerdo, e itera hasta que no se "
 "añadan nuevas etiquetas."
 
-#: templates/inicio.html:330
+#: templates/inicio.html:324
 msgid "Democratic Co-Learning"
 msgstr "Democratic Co-Learning"
 
-#: templates/inicio.html:333
+#: templates/inicio.html:327
 msgid ""
 "Uses multiple classifiers to pseudo-label data by\n"
 "              majority vote, retraining misclassified instances until "
@@ -485,15 +449,15 @@ msgstr ""
 "              voto mayoritario, reentrenando malas instancias hasta que\n"
 " deje de mejorar."
 
-#: templates/inicio.html:363
+#: templates/inicio.html:357
 msgid "Welcome"
 msgstr "Bienvenido/a"
 
-#: templates/inicio.html:364
+#: templates/inicio.html:358
 msgid "Welcome to VASS! This is a basic tutorial."
 msgstr "¡Bienvenido/a a Vass! Esto es un tutorial básico."
 
-#: templates/inicio.html:368
+#: templates/inicio.html:362
 msgid ""
 "Here's a quick rundown of some theoretical concepts and what the app aims"
 " to do."
@@ -501,7 +465,7 @@ msgstr ""
 "Aquí se realiza una pequeña introducción de conceptos teóricos y del "
 "objetivo de la aplicación."
 
-#: templates/inicio.html:372
+#: templates/inicio.html:366
 msgid ""
 "By selecting any of these algorithms, you'll be able to upload a dataset "
 "to work with."
@@ -509,17 +473,17 @@ msgstr ""
 "Al seleccionar cualquiera de estos algoritmos podrás subir un conjunto de"
 " datos con el que trabajar."
 
-#: templates/inicio.html:376
+#: templates/inicio.html:370
 msgid "You can also access the paper that describes the algorithm."
 msgstr "También puedes acceder al artículo que describe el algoritmo."
 
-#: templates/inicio.html:380
+#: templates/inicio.html:374
 msgid "Likewise, you can select any algorithm using these selectors."
 msgstr ""
 "Del mismo modo, puede seleccionar cualquier algoritmo mediante estos "
 "selectores."
 
-#: templates/inicio.html:384
+#: templates/inicio.html:378
 msgid ""
 "On every page of the application, you'll always find a basic tutorial by "
 "clicking on this button."
@@ -527,7 +491,7 @@ msgstr ""
 "En todas las páginas de la aplicación siempre encontrarás un tutorial "
 "básico pulsando en este botón."
 
-#: templates/inicio.html:388
+#: templates/inicio.html:382
 msgid ""
 "At any time, you can refer to the application's guide by clicking on this"
 " button."
@@ -535,11 +499,11 @@ msgstr ""
 "En cualquier momento puedes consultar el manual de la aplicación en este "
 "botón."
 
-#: templates/inicio.html:392
+#: templates/inicio.html:386
 msgid "You can also choose the desired language."
 msgstr "También puedes elegir el idioma deseado."
 
-#: templates/inicio.html:400
+#: templates/inicio.html:394
 msgid ""
 "You can log in or register in the application. This will allow you to "
 "store datasets and even save executions."
@@ -547,7 +511,7 @@ msgstr ""
 "Puedes iniciar sesión o registrarte en la aplicación. Esto permitirá "
 "almacenar conjuntos de datos e incluso guardar ejecuciones."
 
-#: templates/inicio.html:405
+#: templates/inicio.html:399
 msgid ""
 "Here you can access the profile and personal space with datasets and "
 "executions."
@@ -556,7 +520,7 @@ msgstr ""
 "datos y ejecuciones."
 
 #: templates/configuracion/base_config_inductivos.html:105
-#: templates/configuracion/graphsconfig.html:272 templates/inicio.html:415
+#: templates/configuracion/graphsconfig.html:272 templates/inicio.html:409
 #: templates/subida.html:235 templates/usuarios/miespacio.html:59
 #: templates/usuarios/perfil.html:80
 #: templates/visualizacion/base_visualizacion.html:235
@@ -565,7 +529,7 @@ msgid "Next"
 msgstr "Siguiente"
 
 #: templates/configuracion/base_config_inductivos.html:106
-#: templates/configuracion/graphsconfig.html:273 templates/inicio.html:416
+#: templates/configuracion/graphsconfig.html:273 templates/inicio.html:410
 #: templates/subida.html:236 templates/usuarios/miespacio.html:60
 #: templates/usuarios/perfil.html:81
 #: templates/visualizacion/base_visualizacion.html:236
@@ -574,7 +538,7 @@ msgid "Previous"
 msgstr "Anterior"
 
 #: templates/configuracion/base_config_inductivos.html:107
-#: templates/configuracion/graphsconfig.html:274 templates/inicio.html:417
+#: templates/configuracion/graphsconfig.html:274 templates/inicio.html:411
 #: templates/subida.html:237 templates/usuarios/miespacio.html:61
 #: templates/usuarios/perfil.html:82
 #: templates/visualizacion/base_visualizacion.html:237
@@ -1143,18 +1107,31 @@ msgid ""
 "                while facilitating effective label propagation."
 msgstr ""
 "El algoritmo RGCLI (Construcción Robusta de Grafos que Considera\n"
-"                Instancias Etiquetadas) mejora el aprendizaje semi-supervisado\n"
-"                al construir grafos de manera eficiente en grandes conjuntos de datos. Opera\n"
-"                bajo la suposición de que los puntos cercanos o estructuralmente similares\n"
-"                comparten la misma etiqueta. El algoritmo utiliza dos parámetros:\n"
-"                ke para el vecindario más amplio y ki para establecer conexiones reales\n"
-"                basadas en la proximidad a los vértices etiquetados. RGCLI comienza\n"
-"                identificando los ke vecinos más cercanos usando un Kd-tree, calcula una\n"
-"                puntuación basada en las distancias desde un punto hasta un vecino mutuo y\n"
-"                el vértice etiquetado más cercano, y luego conecta cada punto con ki vecinos\n"
-"                mutuos que minimicen esta distancia. Este enfoque asegura un grafo escaso y\n"
-"                significativo que se adhiere a las suposiciones de consistencia del\n"
-"                aprendizaje semi-supervisado mientras facilita una efectiva propagación de etiquetas."
+"                Instancias Etiquetadas) mejora el aprendizaje semi-"
+"supervisado\n"
+"                al construir grafos de manera eficiente en grandes "
+"conjuntos de datos. Opera\n"
+"                bajo la suposición de que los puntos cercanos o "
+"estructuralmente similares\n"
+"                comparten la misma etiqueta. El algoritmo utiliza dos "
+"parámetros:\n"
+"                ke para el vecindario más amplio y ki para establecer "
+"conexiones reales\n"
+"                basadas en la proximidad a los vértices etiquetados. "
+"RGCLI comienza\n"
+"                identificando los ke vecinos más cercanos usando un Kd-"
+"tree, calcula una\n"
+"                puntuación basada en las distancias desde un punto hasta "
+"un vecino mutuo y\n"
+"                el vértice etiquetado más cercano, y luego conecta cada "
+"punto con ki vecinos\n"
+"                mutuos que minimicen esta distancia. Este enfoque asegura"
+" un grafo escaso y\n"
+"                significativo que se adhiere a las suposiciones de "
+"consistencia del\n"
+"                aprendizaje semi-supervisado mientras facilita una "
+"efectiva propagación de etiquetas."
+
 #: templates/configuracion/graphsconfig.html:97
 msgid "/pseudocodigos/en/rgcli.png"
 msgstr "/pseudocodigos/es/rgcli.png"
@@ -2049,5 +2026,179 @@ msgstr ""
 #~ "                adheres to semi-supervised "
 #~ "learning`s consistency assumptions\n"
 #~ "                while facilitating effective label propagation."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "<strong>Semi-supervised learning</strong> is the\n"
+#~ "              branch of machine learning "
+#~ "that refers to the simultaneous use "
+#~ "of\n"
+#~ "              data both <strong>labeled</strong> and\n"
+#~ "              <strong>unlabeled</strong> to perform"
+#~ " learning tasks. It sits\n"
+#~ "              between supervised and "
+#~ "unsupervised learning.<br /><br />Among all"
+#~ "\n"
+#~ "              <strong>semi-supervised "
+#~ "algorithms</strong>, the core of this\n"
+#~ "              project is based on "
+#~ "<strong>inductive methods</strong>. Their idea\n"
+#~ ""
+#~ "              is very simple: they try"
+#~ " to create a classifier that predicts"
+#~ "\n"
+#~ "              labels for new data. The"
+#~ " proposed algorithms have this objective,"
+#~ "\n"
+#~ "              albeit with a bit more specificity:\n"
+#~ "              <strong>wrapper methods</strong>. The well-known\n"
+#~ "              <strong>wrapper methods</strong> are based on\n"
+#~ "              <strong>pseudo-labeling</strong>, "
+#~ "which is the process where\n"
+#~ "              classifiers trained with labeled"
+#~ " data generate labels for the\n"
+#~ "              unlabeled ones. Once this "
+#~ "process is completed, the classifier is"
+#~ "\n"
+#~ "              retrained, incorporating these new labels."
+#~ msgstr ""
+#~ "El <strong>aprendizaje semi-supervisado</strong> "
+#~ "es la rama del aprendizaje automático"
+#~ " referido al uso simultáneo de datos"
+#~ " tanto <strong>etiquetados</strong> como "
+#~ "<strong>no etiquetados</strong> para realizar "
+#~ "tareas de aprendizaje. Se encuentra a"
+#~ " caballo entre el aprendizaje supervisado"
+#~ " y el no supervisado.<br><br>Dentro de "
+#~ "todos los algoritmos semi-supervisados, "
+#~ "el núcleo de este proyecto está "
+#~ "basado en los <strong>métodos "
+#~ "inductivos</strong>. Su idea es muy "
+#~ "sencilla, tratan de crear un "
+#~ "clasificador que prediga etiquetas para "
+#~ "datos nuevos. Los algoritmos propuestos "
+#~ "tienen este objetivo, Los conocidos "
+#~ "métodos wrapper se basan en el "
+#~ "<strong>pseudo-etiquetado</strong> (pseudo-"
+#~ "labelling), es el proceso en el "
+#~ "que los clasificadores entrenados con "
+#~ "datos etiquetados generan etiquetas para "
+#~ "los no etiquetados. Una vez completado"
+#~ " este proceso, el clasificador se "
+#~ "vuelve a entrenar pero añadiendo estos"
+#~ " nuevos."
+
+#~ msgid ""
+#~ "In the following cards, four of the most\n"
+#~ "              representative algorithms of "
+#~ "semi-supervised learning are\n"
+#~ "              presented: <strong>Self-Training</strong>,\n"
+#~ "              <strong>Co-Training</strong>, <strong"
+#~ ">Tri-Training</strong> and\n"
+#~ "              <strong>Democratic Co-Learning</strong>. <br /><br />\n"
+#~ "              Internally, each algorithm "
+#~ "utilizes one or several classifiers\n"
+#~ "              (wrapper methods). Additionally, "
+#~ "the number of views on the data"
+#~ "\n"
+#~ "              is distinguished (a view "
+#~ "being the subset of attributes of "
+#~ "the\n"
+#~ "              dataset that the algorithm "
+#~ "uses to learn the model). Unlike\n"
+#~ "              <strong>Single-view</strong>, a\n"
+#~ "              <strong>Multi-view</strong> algorithm"
+#~ " views the dataset attributes\n"
+#~ "              as multiple subsets. For "
+#~ "example, in the Co-Training algorithm,"
+#~ "\n"
+#~ "              the first classifier might "
+#~ "only \"see\" half of the attributes "
+#~ "while\n"
+#~ "              the second one sees the"
+#~ " other half. Each of them will "
+#~ "work with\n"
+#~ "              its specific subset of attributes."
+#~ msgstr ""
+#~ "En las tarjetas que aparecen a "
+#~ "continuación se presentan cuatro de los"
+#~ " algoritmos más representativos del "
+#~ "aprendizaje semi-supervisado: <strong>Self-"
+#~ "Training</strong>, <strong>Co-Training</strong>, "
+#~ "<strong>Tri-Training</strong> y <strong>Democratic"
+#~ " Co-Learning</strong>. <br><br>Internamente cada"
+#~ " algoritmo utiliza uno o varios "
+#~ "clasificadores (métodos de envoltura). Y "
+#~ "además, se distingue el número de "
+#~ "vistas sobre los datos (una vista "
+#~ "es el subconjunto de atributos del "
+#~ "conjunto de datos que usa el "
+#~ "algoritmo para aprender el modelo). Al"
+#~ " contrario que <strong>Single-view</strong>, "
+#~ "un algoritmo <strong>Multi-view</strong> verá"
+#~ " el conjunto de atributos de los "
+#~ "datos como varios subconjuntos. Por "
+#~ "ejemplo, en el algoritmo Co-Training,"
+#~ " el primer clasificador podría solo "
+#~ "\"ver\" la mitad de atributos mientras"
+#~ " que el segundo la otra mitad. "
+#~ "Cada uno de ellos trabajará con su"
+#~ " subconjunto de atributos concreto."
+
+#~ msgid ""
+#~ "<strong>Semi-supervised learning</strong> is the\n"
+#~ "              branch of machine learning "
+#~ "that refers to the simultaneous use "
+#~ "of\n"
+#~ "              both labeled and unlabeled "
+#~ "data to perform learning tasks. It\n"
+#~ ""
+#~ "              straddles the line between "
+#~ "supervised and unsupervised learning.\n"
+#~ "              This project attempts to "
+#~ "represent both inductive and inductive\n"
+#~ "              methods. As for the "
+#~ "inductive ones, their idea is very "
+#~ "simple,\n"
+#~ "              they try to create a "
+#~ "classifier that predicts labels for new"
+#~ " data.\n"
+#~ "              The well-known wrapper "
+#~ "methods are based on pseudo-labeling"
+#~ "\n"
+#~ "              (pseudo-labelling), the process"
+#~ " in which classifiers trained on\n"
+#~ "              labeled data generate labels "
+#~ "for unlabeled data. Once this process"
+#~ "\n"
+#~ "              is completed, the classifier "
+#~ "is retrained, but adding these new\n"
+#~ ""
+#~ "              ones. Multi-classifier methods"
+#~ " seek to combine the predictions of"
+#~ "\n"
+#~ "              multiple individual classifiers "
+#~ "to improve the overall accuracy of\n"
+#~ ""
+#~ "              the model. Transductive or "
+#~ "graph-based methods (GSSL) focus on\n"
+#~ ""
+#~ "              using the underlying structure of the data to improve\n"
+#~ "              classification. The idea is "
+#~ "that data that are similar or "
+#~ "close in\n"
+#~ "              feature space have similar "
+#~ "labels. The cards below present some "
+#~ "of\n"
+#~ "              the most representative semi-"
+#~ "supervised learning algorithms:\n"
+#~ "              Self-Training, Co-Training, Tri-Training and Democratic\n"
+#~ "              Co-Learning, Co-Forest and"
+#~ " an option to set up graph-"
+#~ "based\n"
+#~ "              methods. The GSSLs contain "
+#~ "two main phases that can be used"
+#~ " in the\n"
+#~ "              following ways."
 #~ msgstr ""
 
