@@ -438,7 +438,7 @@ def generar_json_parametros():
         clasificadores = json.load(f)
     clasificadores = clasificadores["Inductive"]
     formulario = dict(request.form)
-
+    print(formulario)
     claves_clasificadores = [
         k for k, _ in request.form.items() if 'clasificador' in k and "_" not in k]
     clasificadores_reales = [
@@ -466,16 +466,43 @@ def generar_json_parametros():
 
     for r in resto_de_parametros:
         pre_json[r] = formulario[r]
-    print(pre_json)
     return json.dumps(pre_json)
 
 def generar_json_parametros_grafos():
-    """_summary_
-
     """
-    # TODO: Implementar
+    Genera un JSON como cadena de texto. Recopila toda la configuración
+    de ejecución que el usuario ha introducido para ser almacenada en base de datos
+    para los algoritmos relacionados con grafos.
+
+    :return: json con la información de todos los parámetros.
+    """
     
-    return json.dumps({})
+    formulario = dict(request.form)
+    
+    pre_json = dict()
+
+    constructor_parametros = {k: v for k, v in formulario.items() if k.startswith('constructor')}
+    inferencia_parametros = {k: v for k, v in formulario.items() if k.startswith('inferencia')}
+    otros_parametros = {k: v for k, v in formulario.items() if not (k.startswith('constructor') or k.startswith('inferencia'))}
+
+    if 'constructor' in formulario:
+        constructor_name = formulario['constructor']
+        pre_json[constructor_name] = {}
+        for k, v in constructor_parametros.items():
+            param_name = k.replace('constructor_', '')
+            pre_json[constructor_name][param_name] = v
+
+    if 'inferencia' in formulario:
+        inferencia_name = formulario['inferencia']
+        pre_json[inferencia_name] = {}
+        for k, v in inferencia_parametros.items():
+            param_name = k.replace('inferencia_', '')
+            pre_json[inferencia_name][param_name] = v
+
+    for k, v in otros_parametros.items():
+        pre_json[k] = v
+
+    return json.dumps(pre_json)
 
 def build_nodos_json(grafo, etiquetas_modificadas):
     """Construye y guarda los nodos en formato JSON.
