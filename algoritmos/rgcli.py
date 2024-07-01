@@ -59,14 +59,15 @@ class RGCLI:
         Returns:
             dict: Un diccionario que mapea cada nodo en self.V a sus `ke` vecinos más cercanos.
         """
+
         for v in self.V:
-            all_neighbors = self.kdtree.query([self.nodos[v]], k=len(self.nodos), return_distance=False)[0]
-            self.kNN[v] = all_neighbors[1:self.ke + 1].tolist()
+            vecinos_ordenados = self.kdtree.query([self.nodos[v]], k=len(self.nodos), return_distance=False)[0]
+            self.kNN[v] = vecinos_ordenados[1:self.ke + 1].tolist()
             self.grafo_knn[v] = self.kNN[v]
 
-            labeled_neighbors = self.l_kdtree.query([self.nodos[v]], k=2, return_distance=False)[0]
-            self.L[v] = self.nodos_etiquetados[labeled_neighbors[labeled_neighbors != v][0]]
-            self.F[v] = all_neighbors[-self.ke]
+            vecinos_etiquetados = self.l_kdtree.query([self.nodos[v]], k=2, return_distance=False)[0]
+            self.L[v] = self.nodos_etiquetados[vecinos_etiquetados[vecinos_etiquetados != v][0]]
+            self.F[v] = vecinos_ordenados[-self.ke]
         return self.kNN
 
     def search_rgcli(self):
