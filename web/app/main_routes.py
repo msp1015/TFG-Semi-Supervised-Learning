@@ -103,7 +103,6 @@ def subida():
             filename = secure_filename(file_received.filename) + "-" + str(int(datetime.now().timestamp()))
             complete_path = os.path.join(base_folder, filename)
             session['FICHERO'] = complete_path
-            print(session['FICHERO'])
             # Comprobar si la extensión del archivo es válida
             if file_received.filename.upper().endswith(('.ARFF', '.CSV')):
                 file_received.save(complete_path)
@@ -137,7 +136,6 @@ def obtenerDatosTabla():
         
         datosTabla = {"columns": columnas, "data": data}
     except Exception as e:
-        print(e)
         return jsonify({
             "status": "ERROR",
             "error": str(e)
@@ -154,15 +152,11 @@ def establecer_prueba():
     """
     fichero = request.json.get('fichero')
     directorio = 'app/datasets/seleccionar/'
-    print(os.path.join(directorio, fichero + '.arff'))
     archivo_path = os.path.join(directorio, fichero + '.arff')
-    print(os.path)
     # Configurar el archivo en la sesión
     base_folder = current_app.config['CARPETA_DATASETS_REGISTRADOS'] if current_user.is_authenticated else current_app.config['CARPETA_DATASETS_ANONIMOS']
     filename = secure_filename(fichero + '.arff') + "-" + str(int(datetime.now().timestamp()))
     complete_path = os.path.join(base_folder, filename)
-    print(complete_path)
     shutil.copyfile(archivo_path, complete_path)
     session['FICHERO'] = complete_path
-    print(session['FICHERO'])
     return jsonify({"message": "File set in session"}), 200

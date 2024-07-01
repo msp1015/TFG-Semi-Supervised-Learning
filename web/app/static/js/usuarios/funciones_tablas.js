@@ -150,7 +150,6 @@ export const generateRunList = async (id=null) => {
         for (let run of data) {
             //["id", "algorithm","filename","date","user", "cx", "cy", "jsonfile", "json_parameters"]
             let aux = JSON.parse(run);
-            console.log(aux)
             //Añadir una columna usuario en el <table>                             | //OCULTO
             historial.push([aux[1], nombredataset(aux[2]), aux[3], aux[10], aux[4], aux[0], aux[5], aux[6], aux[9]]);
         }
@@ -158,7 +157,6 @@ export const generateRunList = async (id=null) => {
         let aux = JSON.parse(data);
         historial = [[aux[1], nombredataset(aux[2]), aux[3], aux[10], aux[4], aux[0], aux[5], aux[6], aux[9]]];
     }
-    console.log(historial)
     return historial;
 }
 
@@ -609,7 +607,6 @@ export function generateUserTable(usuarios, locale) {
                         "user_id": user
                     })
                 }).then(function (response) {
-                    console.log()
                     if (!response.ok){
                         let error_modal = new bootstrap.Modal(document.getElementById('modal_error'));
                         error_modal.show();

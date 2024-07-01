@@ -147,8 +147,6 @@ function actualizarTabla() {
 }
 
 function establecerFicheroPrueba(fichero) {
-    console.log('Estableciendo fichero de prueba:', fichero);
-    console.log(JSON.stringify({ fichero: fichero }));
     fetch('/establecer_prueba', {
         method: 'POST',
         headers: {
@@ -159,7 +157,6 @@ function establecerFicheroPrueba(fichero) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         if (data.error) {
             console.error(data.error);
             alert(data.error);

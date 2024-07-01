@@ -123,7 +123,6 @@ def parametros_grafos():
     # Los parámetros anteriores no incluyen los propios parámetros de los clasificadores
     # (SVM, GaussianNB...), esta función lo incluye
     incorporar_clasificadores_grafos_params([constructor, inferencia], params)
-    print(params)
     return params
 def parametros_selftraining():
     """
@@ -227,7 +226,6 @@ def parametros_democraticcolearning_tritraining():
     if len(set(lista_clasificadores)) != len(lista_clasificadores) and session['ALGORITMO'] == "democraticcolearning":
         flash(gettext(
             "Classifiers must be different (diverse) to ensure proper execution"), category='warning')
-    print(params)
     return params
 
 
@@ -255,7 +253,6 @@ def parametros_coforest():
         {"nombre": "p_test", "valor": request.form.get('p_test')},
     ]
     incorporar_clasificadores_inductivos_params([clasificador], params)
-    print(params)
     return params
 
 

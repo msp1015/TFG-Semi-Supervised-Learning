@@ -438,7 +438,6 @@ def generar_json_parametros():
         clasificadores = json.load(f)
     clasificadores = clasificadores["Inductive"]
     formulario = dict(request.form)
-    print(formulario)
     claves_clasificadores = [
         k for k, _ in request.form.items() if 'clasificador' in k and "_" not in k]
     clasificadores_reales = [
