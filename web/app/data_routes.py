@@ -273,6 +273,8 @@ def datosgraphs():
             run.date = datetime.now()
             run.jsonfile = f'run-{current_user.id}-{date}.json'
             run.user_id = current_user.id
+            run.graph_constructor = constructor
+            run.graph_inference = inferencia
             
             try:
                 db.session.add(run)
@@ -280,8 +282,8 @@ def datosgraphs():
                 db.session.rollback()
                 os.remove(os.path.join(
                     current_app.config['CARPETA_RUNS'], f'run-{current_user.id}-{date}.json'))
-        else:
-            db.session.commit()
+            else:
+                db.session.commit()
     except ValueError as e:
         return jsonify({
             "status": "warning",
@@ -464,7 +466,7 @@ def generar_json_parametros():
 
     for r in resto_de_parametros:
         pre_json[r] = formulario[r]
-
+    print(pre_json)
     return json.dumps(pre_json)
 
 def generar_json_parametros_grafos():

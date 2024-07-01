@@ -242,12 +242,22 @@ head %} {{ super() }}
 </script>
 {% else %}
 <script>
-  document.getElementById("div_cargando").remove();
-  document.getElementById("visualizacion").style.visibility = 'visible';
-  document.getElementById("titulo_visualizacion").style.visibility = 'visible';
-  let datos = {{ json_data|tojson }};
-  inicializarDatos(datos);
-  inicializarGrafo();
-  updateGraph();
+  try {
+    document.getElementById("div_cargando").remove();
+    document.getElementById("visualizacion").style.visibility = 'visible';
+    document.getElementById("titulo_visualizacion").style.visibility = 'visible';
+    let datos = {{ json_data|tojson }};
+    inicializarDatos(datos);
+    if (datos["dataset_no_etiquetado"] == false) {
+      dibujaEstadisticas(datos);
+    } else {
+      $("#title_cm").hide();
+      $("#no_evaluacion").show();
+    }
+    inicializarGrafo();
+    updateGraph();
+  } catch (error) {
+    console.error("Error al inicializar la visualización:", error);
+  }
 </script>
 {% endif %} {% endblock %}

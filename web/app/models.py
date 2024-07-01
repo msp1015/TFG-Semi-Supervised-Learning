@@ -45,10 +45,13 @@ class Run(db.Model):
     date = db.Column(db.DateTime, default=func.now())
     cx = db.Column(db.String(20))
     cy = db.Column(db.String(20))
+    graph_constructor = db.Column(db.String(50))
+    graph_inference = db.Column(db.String(50))
     jsonfile = db.Column(db.String(50), unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.id'))
     user = relationship("User", back_populates='runs')
 
     def to_list(self):
         return [self.id, self.algorithm, self.filename, self.date.strftime("%Y-%m-%d %H:%M:%S"),
-                self.user.email, self.cx, self.cy, self.jsonfile, self.json_parameters]
+                self.user.email, self.cx, self.cy, self.graph_constructor, self.graph_inference,
+                self.jsonfile, self.json_parameters]

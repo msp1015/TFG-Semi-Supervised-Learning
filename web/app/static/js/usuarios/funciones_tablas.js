@@ -150,14 +150,15 @@ export const generateRunList = async (id=null) => {
         for (let run of data) {
             //["id", "algorithm","filename","date","user", "cx", "cy", "jsonfile", "json_parameters"]
             let aux = JSON.parse(run);
+            console.log(aux)
             //Añadir una columna usuario en el <table>                             | //OCULTO
-            historial.push([aux[1], nombredataset(aux[2]), aux[3], aux[8], aux[4], aux[0], aux[5], aux[6], aux[7]]);
+            historial.push([aux[1], nombredataset(aux[2]), aux[3], aux[10], aux[4], aux[0], aux[5], aux[6], aux[9]]);
         }
     } else {
         let aux = JSON.parse(data);
-        historial = [[aux[1], nombredataset(aux[2]), aux[3], aux[8], aux[4], aux[0], aux[5], aux[6], aux[7]]];
+        historial = [[aux[1], nombredataset(aux[2]), aux[3], aux[10], aux[4], aux[0], aux[5], aux[6], aux[9]]];
     }
-
+    console.log(historial)
     return historial;
 }
 
@@ -502,9 +503,15 @@ export function generateHistoryTable(historial, locale, all_users) {
             let json = JSON.parse(row_data[3]);
             let modal = new bootstrap.Modal(document.getElementById('modal_parametros'));
             modal.show();
-
+            console.log(row_data)
+            console.log(row_data[0])
+            console.log(row_data[1])
+            console.log(row_data[2])
+            console.log(row_data[3])
             let readable_json = {}
+            
             for (let key of Object.keys(json)) {
+                console.log(key);
                 let aux = key;
                 if (key === "n") {
                     if (row_data[0] === "selftraining") {

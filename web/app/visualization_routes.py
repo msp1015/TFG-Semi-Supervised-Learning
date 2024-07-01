@@ -49,13 +49,13 @@ def visualizar_algoritmo(algoritmo):
     Realmente no se le pasa la información ejecutada, se realiza una petición POST
     desde Javascript con estos parámetros al renderizar la plantilla del algoritmo."""
     if es_grafo:
-        return render_template('visualizacion/' + session['ALGORITMO'] + '.html',
+        return render_template('visualizacion/graphs.html',
                                nombreGrafo=nombreGrafo,
                                nombreInferencia=nombreInferencia,
                                params=params,
                                ejecutar=True)
-    else:
-        return render_template('visualizacion/' + session['ALGORITMO'] + '.html',
+    
+    return render_template('visualizacion/' + session['ALGORITMO'] + '.html',
                            params=params,
                            cx=request.form.get('cx', 'C1'),
                            cy=request.form.get('cy', 'C2'),
@@ -87,7 +87,14 @@ def visualizar_algoritmo_json(algoritmo, run_id):
 
     with open(os.path.join(current_app.config['CARPETA_RUNS'], run.jsonfile)) as f:
         json_data = json.load(f)
-    # TODO: TENER EN CUENTA LOS GRAFOS (NO SE NECESITA TANTA INFORMACION PARA LA PLANTILLA)
+        
+    if algoritmo == "graphs":
+        return render_template('visualizacion/graphs.html',
+                               nombreGrafo=run.graph_constructor,
+                               nombreInferencia=run.graph_inference,
+                               ejecutar=False,
+                               json_data=json_data)
+    
     return render_template('visualizacion/' + algoritmo + '.html',
                            params=[],
                            cx=run.cx,
