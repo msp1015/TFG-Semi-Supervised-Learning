@@ -41,8 +41,8 @@ En esta sección se comentarán los aspectos más relevantes en la implementaci�
 \subsection{Co-Forest}\label{sec5:coforest}
 En la implementación de este algoritmo de nuevo se parte con una gran ventaja. El año anterior otra alumna había implementado el mismo algoritmo para otro proyecto. Dentro de esta aplicación, Patricia Hernando, hizo sus propios estudios, los cuales se han aprovechado en este trabajo.
 Basado en el pseudocodigo del artículo \cite{IEEE:CoForest}, la implementación se ve alterada por el parámetro $W$, el cual establece la confianza en las muestras para ser seleccionada o no. Resumiendo el estudio de Patricia, como se puede ver en el pseudocodigo del articulo, hay una ecuación donde el valor de W esta dividiendo. Esto es un problema ya que según establece el algoritmo puede llegar a valer cero, provocando así una indeterminación. Uno de los estudios de Patricia determina que una de las mejores soluciones a esto es iniciar el parámetro W al minimo entre 100 y el 10\% de la cantidad de muestras etiquetadas que hay. Como se puede ver en el pseudocodigo de la sección tres, esto se aprovecha, evitando así posibles problemas.
-Para determinar si el algoritmo definitivo es bueno, se compara con el de Patricia, evaluando como varía el valor de \textit{accuracy} en cada iteración del algoritmo. Los resultados se muestran en la figura \ref{fig:../img/memoria/ComparacionCoForest.png}
-\imagenflotante{../img/memoria/ComparacionCoForest.png}{Comparación algoritmo CoForest utilizando diversos datasets}{1}
+Para determinar si el algoritmo definitivo es bueno, se compara con el de Patricia, evaluando como varía el valor de \textit{accuracy} en cada iteración del algoritmo. Los resultados se muestran en la figura \ref{fig:../img/memoria/ComparacionCoForest.png}.
+\imagen{../img/memoria/ComparacionCoForest.png}{Comparación algoritmo CoForest utilizando diversos datasets}{0.75}
 
 \subsection{Grafos}
 En este apartado se comentarán todos los aspectos relevantes relacionados con la implementación de los algoritmos basados en grafos. Desde sus posibles interpretaciones y modificaciones con respecto al código original, a los diferentes estudios de comparación.
@@ -111,6 +111,9 @@ Con respecto al algoritmo \textit{GBILI}, surgen varias complicaciones o cuestio
 	\item Visualización con NetworkX: Para tener un primer acercamiento a una visualización y también para comprobar que el algoritmo ha seguido correctamente la influencia de los nodos etiquetados, se decide mostrar los 4 pasos gráficamente. Un aspecto importante en la implementación es que con networkX, a la hora de construir el grafo, debe estar ordenado de la misma manera que los datos de entrada al algoritmo, si no mostrará información falsa, como nodos pintados como etiquetados que no lo son.
 	\imagen{../img/memoria/networkxGBILI.png}{Visualización correcta de las 4 fases de construcción del grafo con el algoritmo GBILI utilizando el \textit{dataset} de \textit{iris data}. El color de la instancia representa su clase}{1}
 \end{enumerate}
+\subsubsection{Simplificación RGCLI}
+El algoritmo original~\cite{rgcli} está preparado para casos de uso en los que el conjunto de datos de entrada es muy grande, utilizando hilos para separar estos datos de entrada y optimizar la ejecución. La implementación que se ha realizado en este caso no es concurrente, teniendo en cuenta todos los datos de entrada en las llamadas a los métodos, facilitando así la ejecución en la web y su posterior visualización.
+
 \subsubsection{LGC adaptado a grafos}\label{sec5:LGC}
 En el algoritmo original de Consistencia Local y Global, la matriz de afinidad $W$ se construye utilizando una función exponencial sobre la matriz de distancias entre los puntos. Sin embargo, dado que en este caso ya se ha construido un grafo $G$, utilizaremos esta información para definir la matriz de afinidad $W$. Específicamente, $W$ será una matriz binaria donde $W_{ij}=1$ si hay un enlace entre los nodos $i$ y $j$ en el grafo $G$, y $W_{ij}=0$ de lo contrario. Esta modificación aprovecha la estructura del grafo previamente construida, además, es la misma seguida por los autores de~\cite{gbili}. Aunque es una opción algo <<brusca>>, debe funcionar cuando los parámetros de los algoritmos son lo suficientemente buenos.
 
@@ -133,8 +136,25 @@ En cuanto a los dos primeros gráficos, se observa que los resultados son muy bu
 
 En cambio, al evaluar el último gráfico, se ve que, aun disminuyendo los valores de tolerancia, la precisión no ha conseguido mejorar como en los otros dos casos. Este comportamiento sugiere que el tercer conjunto de datos presenta un desafío mayor para el algoritmo, lo que impide alcanzar altos niveles de precisión. Es importante reflexionar que algunos conjuntos de datos (en este caso el dataset \textit{wine}) son inherentemente más complejos que otros, ya sea por su distribución de clases, por sus atributos u otras características intrínsecas.
 
-\subsection{Despliegue de la Aplicación Web}
+\subsubsection{Grafos de fuerza en la web}
+Las simulaciones de fuerzas son una técnica comúnmente utilizada en la visualización de grafos para representar nodos y enlaces de manera que se asemejen a una disposición física natural. Estas simulaciones utilizan integradores numéricos, como el integrador de \textit{Verlet}~\cite{enwiki:verlet}, para calcular las posiciones y velocidades de los nodos a lo largo del tiempo bajo la influencia de diversas fuerzas. En particular, D3.js proporciona una implementación robusta de estas simulaciones, facilitando la creación de visualizaciones dinámicas e interactivas de grafos en la web~\cite{d3-simulation}.
 
+La simulación de fuerzas en D3.js se basa en un paso de tiempo constante $\Delta t = 1$ y una masa constante $m = 1$ para todas las partículas (nodos). Una fuerza $F$ actuando sobre una partícula es equivalente a una aceleración constante $a$ durante el intervalo de tiempo $\Delta t$, que se simula sumando esta fuerza a la velocidad de la partícula, y posteriormente sumando esta velocidad a la posición de la partícula.
+
+D3.js proporciona la función \texttt{d3.forceSimulation} para crear una nueva simulación con un conjunto especificado de nodos. La simulación empieza automáticamente y puede ser controlada mediante eventos \texttt{tick} que se disparan en cada iteración, permitiendo actualizar las posiciones y las visualizaciones de los nodos en cada paso.
+
+En este trabajo, se ha utilizado una simulación de fuerzas para representar un grafo en la web y destacan los siguientes aspectos de su configuración:
+
+\begin{itemize}
+	\item Se ha decidido hacer un grafo de fuerza central. Esta fuerza modifica las posiciones de los nodos en cada aplicación; no modifica las velocidades, ya que hacerlo normalmente haría que los nodos se sobrepasaran y oscilaran alrededor del centro deseado. Esta fuerza ayuda a mantener los nodos en el centro de la ventana gráfica~\cite{fuerzaCentral}. La fuerza de atracción tiene una intensidad de $0.1$. Aumentar este valor resultaría en una atracción más fuerte hacia el centro, concentrando los nodos. Disminuirlo reduciría la atracción, permitiendo una mayor dispersión.
+	\item \texttt{charge}: Añade una fuerza de repulsión entre los nodos. La fuerza de repulsión tiene una intensidad de $-100$. Un valor más negativo resultaría en una mayor repulsión entre nodos, dispersándolos más en el espacio. Un valor menos negativo (o positivo) disminuiría la repulsión, haciendo que los nodos se acerquen más entre sí. También se establece un valor de \texttt{theta(0.1)}: parámetro de precisión para el cálculo de la repulsión. Valores más bajos mejoran la precisión pero aumentan el tiempo de cálculo; valores más altos reducen la precisión y el tiempo de cálculo. Y por último un valor de \texttt{distanceMax(500)}: establece la distancia máxima a la que la fuerza de repulsión tiene efecto. Aumentar este valor incrementaría el rango de influencia de la repulsión, afectando a más nodos. Disminuirlo limitaría la repulsión a nodos más cercanos.
+	\item Durante cada evento \texttt{tick}, las posiciones de los nodos (\texttt{cx}, \texttt{cy}) y los enlaces (\texttt{x1}, \texttt{y1}, \texttt{x2}, \texttt{y2}) se actualizan para reflejar los cambios calculados por la simulación. Esto permite una representación dinámica y fluida del grafo en la interfaz web, mejorando la comprensión visual de la estructura y relaciones dentro del grafo.
+	
+\end{itemize}
+
+En resumen, la configuración de la simulación de fuerzas en D3.js permite controlar de manera precisa la disposición de los nodos y enlaces del grafo, ajustando las fuerzas de repulsión y atracción para obtener una representación visual óptima. En este caso se ha utilizado una configuración compacta para que el grafo se vea dentro del marco de visualización.
+
+\subsection{Despliegue de la Aplicación Web}
 En este trabajo, se ha desplegado una aplicación web utilizando diversas herramientas y servicios. A continuación, se detallan los pasos seguidos y la teoría detrás de cada uno de ellos~\cite{deployApp}.
 
 \subsubsection{Preparación del Entorno de Despliegue}

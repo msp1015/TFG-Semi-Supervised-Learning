@@ -66,30 +66,30 @@ En la tabla \ref{supervisado_VS_noSupervisado} se resumen las principales difere
 \section{Aprendizaje semisupervisado}
 Como el nombre sugiere, el aprendizaje semisupervisado se encuentra entre los dos tipos vistos anteriormente. Los algoritmos dentro de esta estrategia se basan en extender cualquiera de los aprendizajes, supervisado o no supervisado, para añadir información adicional que el otro no proporciona~\cite{Intro:SemiSupervised}.
 
-Los métodos de clasificación semi-supervisada intentan utilizar puntos de datos no etiquetados para generar un modelo cuyo rendimiento supere el de los modelos obtenidos al utilizar solo datos etiquetados ~\cite{Engelen:semi-supervised}. 
+Los métodos de clasificación semi-supervisada intentan utilizar puntos de datos no etiquetados para generar un modelo cuyo rendimiento supere el de los modelos obtenidos al utilizar solo datos etiquetados~\cite{Engelen:semi-supervised}. 
 
 Por ejemplo, imaginemos que se esta trabajando en la clasificación de imágenes médicas para identificar diferentes tipos de enfermedades. En este caso, consideramos específicamente la detección temprana de ciertos tipos de cáncer a partir de imágenes de tomografías. En un enfoque supervisado, podríamos entrenar un modelo utilizando un conjunto de datos etiquetado que incluye imágenes con diagnósticos de cáncer y sin cáncer. Sin embargo, la obtención de un gran conjunto de datos etiquetado puede ser costosa y consume tiempo. En un escenario de aprendizaje semisupervisado, además de los datos etiquetados, podríamos tener un conjunto de datos mucho más grande que incluye imágenes no etiquetadas. Algunas de estas pueden contener señales sutiles o características asociadas con el cáncer que no han sido previamente etiquetadas.
 
 El modelo de aprendizaje semisupervisado podría analizar estas imágenes no etiquetadas y descubrir patrones que podrian indicar la presencia temprana de cáncer. Por ejemplo, podría aprender a reconocer características microscopicas especificas de las imagenes que no son evidentes para el ojo humano. Cuando se encuentra con nuevas imágenes no etiquetadas que comparten estas características, el modelo podría clasificarlas como indicativas de la presencia de cáncer, incluso si no ha visto exactamente esas características en el conjunto de datos etiquetado.
-Existe una condición necesaria en el aprendizaje semisupervisado: la distribución marginal subyacente $p(x)$ sobre el espacio de entrada debe contener información acerca de la distribución posterior $p(x|y)$ ~\cite{Engelen:semi-supervised}. Es decir, la naturaleza de los datos no etiquetados debe contener información útil para inferir las etiquetas correspondientes.
+Existe una condición necesaria en el aprendizaje semisupervisado: la distribución marginal subyacente $p(x)$ sobre el espacio de entrada debe contener información acerca de la distribución posterior $p(x|y)$~\cite{Engelen:semi-supervised}. Es decir, la naturaleza de los datos no etiquetados debe contener información útil para inferir las etiquetas correspondientes.
 Esta suposición es básica y en la mayoría de los ejemplos se cumple. Aún asi, como la manera de interactuar entre $p(x)$ y  $p(x|y)$ no es siempre la misma, se pueden tomar malas decisiones que conllevarían un rendimiento cada vez peor. Por esta razón, existen tres principales suposiciones que todo conjunto de datos de un algoritmo semisupervisado debe cumplir para funcionar correctamente.
 \begin{itemize}
 	\item \textit{\textbf{Smoothness assumption}}: traducida como suposición de suavidad, consiste en que para dos puntos $x_{1}$ y $x_{2}$ que están cerca en una región densa, entonces sus correspodientes salidas (o etiquetas) $y_{1}$ y $y_{2}$ deben ser las mismas. Esto es útil sobretodo con datos no eitquetados, ya que por la propiedad transitiva, dos puntos que no estén relativamente cerca, pueden ser de la misma clase.
-	\item \textit{\textbf{Low-density assumption}}: esta suposición está definida sobre la distribución de datos de entrada $p(x)$ y dice que el límite de decisión en la clasificación debe pasar antes por un área de poca densidad que por una de mayor densidad. Esto se puede observar en la figura \ref{fig:../img/memoria/Smoothness-LowDensity.png}.
+	\item \textit{\textbf{Low-density assumption}}: esta suposición está definida sobre la distribución de datos de entrada $p(x)$ y dice que el límite de decisión en la clasificación debe pasar antes por un área de poca densidad que por una de mayor densidad. Esto se puede observar en la figura~\ref{fig:../img/memoria/Smoothness-LowDensity.png}.
 
 	\imagen{../img/memoria/Smoothness-LowDensity.png}{\textit{Smoothness assumption} y \textit{Low-density assumption}~\cite{Engelen:semi-supervised}}{0.5}
 	
-	\item \textit{\textbf{Manifold assumption}}: esta suposición afirma que los datos utilizados se encuentran en un \textit{manifold} de baja dimensión incrustado en un espacio de mayor dimensión. En otras palabras, los datos, en lugar de proceder de cualquier parte del espacio, deben proceder de estos \textit{manifolds} de dimensiones más bajas ~\cite{web:assumptions}.
+	\item \textit{\textbf{Manifold assumption}}: esta suposición afirma que los datos utilizados se encuentran en un \textit{manifold} de baja dimensión incrustado en un espacio de mayor dimensión. En otras palabras, los datos, en lugar de proceder de cualquier parte del espacio, deben proceder de estos \textit{manifolds} de dimensiones más bajas~\cite{web:assumptions}.
 	\imagen{../img/memoria/ManifoldAssumption.png}{\textit{Manifold assumption}~\cite{web:assumptions}}{0.45}
 \end{itemize}
 
-En algunas ocasiones, aparece una cuarta suposición: \textit{\textbf{cluster assumption}}. Esta indica que dos datos que pertenecen a un mismo \textit{cluster}, pertenecen también a la misma clase. Se tomará esta suposición como una generalización de las tres anteriores ~\cite{Engelen:semi-supervised}.
+En algunas ocasiones, aparece una cuarta suposición: \textit{\textbf{cluster assumption}}. Esta indica que dos datos que pertenecen a un mismo \textit{cluster}, pertenecen también a la misma clase. Se tomará esta suposición como una generalización de las tres anteriores~\cite{Engelen:semi-supervised}.
 
 \imagen{../img/memoria/ClusterAssumption.png}{\textit{Cluster assumption}~\cite{web:assumptions}}{0.6}
 
-\subsection{Taxonomía}
+\subsection{Taxonomía}\label{sec3:tax}
 No hay una clasificación oficial de algoritmos de aprendizaje semisupervisado, pero sí se pueden encontrar aproximaciones teniendo en cuenta las suposiciones en las que estan basadas los algoritmos y en cómo se relacionan con los algoritmos supervisados y no supervisados.
-\imagen{../img/memoria/Clasificacion-SemiSupervised}{Clasificación de los diferentes algoritmos que pretenden incorporar datos no etiquetados a métodos de clasificación. Basado en~\cite{Engelen:semi-supervised}}{1}
+\imagen{../img/memoria/Clasificacion-SemiSupervised}{Clasificación de los diferentes algoritmos que pretenden incorporar datos no etiquetados a métodos de clasificación~\cite{Engelen:semi-supervised}}{1}
 
 \subsection{Métodos inductivos}
 Los métodos inductivos en aprendizaje semi-supervisado tienen como objetivo construir un clasificador que pueda generar predicciones para cualquier objeto dentro del espacio de entrada. Durante la fase de entrenamiento de este clasificador, se pueden utilizar datos no etiquetados junto con los datos etiquetados disponibles. Una vez que el entrenamiento del modelo se ha completado, las predicciones que el clasificador realiza para nuevos datos son independientes entre sí. Esto significa que el modelo puede generalizar y hacer predicciones sobre nuevos ejemplos que no fueron vistos durante el entrenamiento, basándose en el conocimiento adquirido de los datos etiquetados y no etiquetados utilizados durante el entrenamiento~\cite{Engelen:semi-supervised}.
@@ -114,8 +114,8 @@ En el contexto del aprendizaje semi-supervisado basado en grafos (GSSL), la cons
 	\end{itemize}
 	\item \textbf{Métodos supervisados}: Estos métodos utilizan la información de las muestras etiquetadas para refinar el grafo durante su construcción. Algunos ejemplos son:
 	\begin{itemize}
-		\item \textbf{\textit{GBILI (Graph-based on Informativeness of Labeled Instances)}} [\ref{sec3:gbili}]: Utiliza información de las etiquetas para crear grafos más precisos y robustos.
-		\item \textbf{\textit{RGCLI (Robust Graph that Considers Labeled Instances)}} [\ref{sec3:rgcli}]: Optimiza la construcción del grafo para mejorar la precisión en tareas de inferencia posteriores.
+		\item \textbf{\textit{GBILI (Graph-based on Informativeness of Labeled Instances)}} [\hyperref[sec3:gbili]{3.2.4}]: Utiliza información de las etiquetas para crear grafos más precisos y robustos.
+		\item \textbf{\textit{RGCLI (Robust Graph that Considers Labeled Instances)}} [\hyperref[sec3:rgcli]{3.2.5}]: Optimiza la construcción del grafo para mejorar la precisión en tareas de inferencia posteriores.
 	\end{itemize}
 \end{itemize}
 
@@ -130,7 +130,7 @@ En la fase de inferencia del aprendizaje semisupervisado basado en grafos (GSSL)
 		\item \textbf{Propagación de etiquetas (\textit{Label propagation})}: Este método es uno de los más populares para la inferencia de etiquetas en GSSL. Se basa en la idea de que las etiquetas de algunos nodos (semillas) se pueden propagar a los nodos no etiquetados basándose en la similitud representada por el grafo.
 		\begin{itemize}
 			\item \textbf{Campos Aleatorios Gaussianos (\textit{Gaussian Random Fields})}: Utiliza una función de predicción que debe cumplir con ciertas restricciones para asegurar que los nodos conectados compartan etiquetas similares.
-			\item \textbf{Consistencia Local y Global (\textit{Local and Global Consistency)}} [\ref{sec3:LGC}]: Este método extiende el enfoque de GRF a un contexto multiclase y trata de minimizar una función objetivo que penaliza las diferencias entre las etiquetas inferidas y las etiquetas conocidas.
+			\item \textbf{Consistencia Local y Global (\textit{Local and Global Consistency)}} [\hyperref[sec3:LGC]{3.2.6}]: Este método extiende el enfoque de GRF a un contexto multiclase y trata de minimizar una función objetivo que penaliza las diferencias entre las etiquetas inferidas y las etiquetas conocidas.
 		\end{itemize}
 		\item \textbf{Regularización dirigida}: Este enfoque extiende la regularización a grafos dirigidos, utilizando caminos aleatorios para manejar la direccionalidad de los bordes.
 		\item \textbf{Regularización de variedad (\textit{Manifold Regularization})}:  Esta técnica aprovecha la geometría intrínseca de los datos.
@@ -157,7 +157,7 @@ Los pasos que sigue son:
 	\item Configuración de Parámetros: Se establece el parámetro $k$ con un valor natural y se genera una lista de puntos etiquetados	$L$.
 	\item Búsqueda de Vecinos Más Cercanos: Para cada vértice $v_i$, se encuentran sus $k$ vecinos más cercanos.
 	\item Determinación de Vecinos Mutuos: Se identifican los $k$ vecinos mutuos para $v_i$.
-	\item Cálculo de la Informatividad: Se calcula la suma de las distancias desde $v_i$ a cada elemento de vecinos mutuos y desde estos elementos hasta un punto etiquetado. Se establece una conexión entre $v_i$ y $v_j$ que minimice esta suma. Este aspecto puede verse confuso y por ello se comenta en la sección \ref{sec5:gbili}.
+	\item Cálculo de la Informatividad: Se calcula la suma de las distancias desde $v_i$ a cada elemento de vecinos mutuos y desde estos elementos hasta un punto etiquetado. Se establece una conexión entre $v_i$ y $v_j$ que minimice esta suma. Este aspecto puede verse confuso y por ello se comenta en la sección~\hyperref[sec5:gbili]{5.3.2.2}.
 	\item Post-procesamiento del Grafo: Se conectan los componentes aislados mediante una búsqueda en anchura (\textit{BFS}) para encontrar componentes en la red. Los componentes sin puntos etiquetados se conectan con componentes vecinos que tienen puntos etiquetados, limitando el número de nuevas conexiones para evitar una red demasiado densa.
 \end{enumerate}
 
@@ -206,10 +206,10 @@ Los pasos que sigue son:
 	\caption{\textit{GBILI}}
 \end{algorithm}
 
-Como se comenta en uno de los pasos, hay ciertos puntos en este algoritmo que deben ser comentados para evitar confusión en la implementación. Además, para este trabajo en concreto, el algoritmo sufre ciertas modificaciones (con la misma idea teórica) que se comentan en la sección \ref{sec5:gbili}.
+Como se comenta en uno de los pasos, hay ciertos puntos en este algoritmo que deben ser comentados para evitar confusión en la implementación. Además, para este trabajo en concreto, el algoritmo sufre ciertas modificaciones (con la misma idea teórica) que se comentan en la sección~\hyperref[sec5:gbili]{5.3.2.2}.
 \clearpage
 \subsection{\textit{Robust Graph that Considers Labeled Instances} (RGCLI)}\label{sec3:rgcli}
-El algoritmo \textbf{\textit{RGCLI}} (Grafo Robusto que Considera Instancias Etiquetadas) es una mejora del método GBILI, diseñado para la construcción de grafos robustos en el aprendizaje semi-supervisado \cite{rgcli}. Este método aprovecha la informatividad de las instancias etiquetadas para generar grafos más eficaces en la propagación de etiquetas, asegurando una mejor representación de la estructura de los datos y optimizando el rendimiento de las tareas de clasificación. GBILI tiene limitaciones significativas, como una alta complejidad temporal cuadrática, lo que dificulta su aplicación en conjuntos de datos grandes. RGCLI mejora GBILI al reducir la complejidad temporal de cuadrática a $O(nklogn)$, o que permite manejar conjuntos de datos grandes de manera más eficiente. Además, RGCLI demuestra matemáticamente que el grafo construido es óptimo para modelar la suposición de suavidad.
+El algoritmo \textbf{\textit{RGCLI}} (Grafo Robusto que Considera Instancias Etiquetadas) es una mejora del método GBILI, diseñado para la construcción de grafos robustos en el aprendizaje semi-supervisado~\cite{rgcli}. Este método aprovecha la informatividad de las instancias etiquetadas para generar grafos más eficaces en la propagación de etiquetas, asegurando una mejor representación de la estructura de los datos y optimizando el rendimiento de las tareas de clasificación. GBILI tiene limitaciones significativas, como una alta complejidad temporal cuadrática, lo que dificulta su aplicación en conjuntos de datos grandes. RGCLI mejora GBILI al reducir la complejidad temporal de cuadrática a $O(nklogn)$, o que permite manejar conjuntos de datos grandes de manera más eficiente. Además, RGCLI demuestra matemáticamente que el grafo construido es óptimo para modelar la suposición de suavidad.
 
 El algoritmo original de RGCLI sigue un enfoque optimizado para construir grafos que satisfacen las suposiciones de consistencia del aprendizaje semisupervisado, tanto a nivel local como global. Utiliza hilos para realizar una ejecución concurrente y estructuras poco costosas como \textit{kdtrees}\footnote{<<En ciencias de la computación, un Árbol kd es una estructura de datos de particionado del espacio que organiza los puntos en un espacio euclídeo de k dimensiones, empleando solo planos perpendiculares a uno de los ejes del sistema de coordenadas>>~\cite{eswiki:kdtree}.}. Como se puede observar en el algoritmo~\ref{alg:rgcli}, recibe dos parámetros, $k_e$ y $k_i$ que indican el número de vecinos a encontrar en cada fase del algoritmo. Después de incializar todas las estructuras necesarias, el algoritmo se divide en dos fases:
 \begin{enumerate}
@@ -331,7 +331,7 @@ La idea principal es que cada punto propague iterativamente su información de e
 	
 \end{algorithm}
 
-Este algoritmo, como se ha podido llegar a observar, podría no usar directamente la unión física entre nodos del grafo, es decir, no utilizar el paso anterior de construcción del grafo, y aún así, funcionar correctamente, ya que dispondría de la información que da la matriz de distancias. Por ello, para el interés de este trabajo, es necesario buscar una manera de utilizar esta información, la cual se comenta en la seccion \ref{sec5:LGC}.
+Este algoritmo, como se ha podido llegar a observar, podría no usar directamente la unión física entre nodos del grafo, es decir, no utilizar el paso anterior de construcción del grafo, y aún así, funcionar correctamente, ya que dispondría de la información que da la matriz de distancias. Por ello, para el interés de este trabajo, es necesario buscar una manera de utilizar esta información, la cual se comenta en la seccion~\hyperref[sec5:LGC]{5.3.2.4}.
 \clearpage
 \section{Ensembles}
 Los sistemas basados en \textit{ensembles} se refieren al proceso de combinar las opiniones de un conjunto de modelos diferentes para tomar una decisión final. Se ha descubierto que los \textit{ensembles} pueden producir resultados más favorables en comparación con los sistemas de un solo experto en una amplia gama de aplicaciones. La creación de un \textit{ensemble} implica generar componentes individuales del sistema y luego combinar sus clasificaciones. En este contexto, se destacan dos técnicas principales: \textit{bagging} y \textit{boosting}~\cite{ensembles}.
@@ -396,7 +396,7 @@ Inicialización de Variables:
 \begin{itemize}
 	\item Cada árbol del \textit{ensemble}, $h_i$, se inicializa entrenándolo con una muestra \textit{bootstrap} del conjunto etiquetado $L$.
 	\item Se establece un error estimado inicial, $\hat{e}_{i,t}$, a 0.5 para cada árbol.
-	\item Se asigna el sumatorio de confianzas inicial a cada árbol. Basado en el estudio comentado en la sección \ref{sec5:coforest}.
+	\item Se asigna el sumatorio de confianzas inicial a cada árbol. Basado en el estudio comentado en la sección~\hyperref[sec5:coforest]{5.3.1}.
 \end{itemize}
 
 Proceso iterativo:
