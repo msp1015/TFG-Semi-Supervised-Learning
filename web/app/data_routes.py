@@ -233,9 +233,9 @@ def datosgraphs():
         else:
             pass
 
-        nodos_iniciales = build_nodos_json(grafoFinal, todas_etiquetas)
+        nodos_iniciales = obtener_nodos_json(grafoFinal, todas_etiquetas)
         for i in range(len(steps)):
-            steps[i] = build_enlaces_json(steps[i])
+            steps[i] = obtener_enlaces_json(steps[i])
         predicciones = predicciones[len(L):].tolist()
         predicciones_json = {}
         for i, prediccion in enumerate(predicciones):
@@ -503,7 +503,7 @@ def generar_json_parametros_grafos():
 
     return json.dumps(pre_json)
 
-def build_nodos_json(grafo, etiquetas_modificadas):
+def obtener_nodos_json(grafo, etiquetas_modificadas):
     """Construye y guarda los nodos en formato JSON.
 
     Args:
@@ -517,7 +517,7 @@ def build_nodos_json(grafo, etiquetas_modificadas):
         nodos.append({"id": str(node), "class": int(etiquetas_modificadas[node])})
     return nodos
 
-def build_enlaces_json(grafo):
+def obtener_enlaces_json(grafo):
     """Construye y guarda los enlaces en formato JSON.
 
     Args:

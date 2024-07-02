@@ -199,7 +199,7 @@
           const div_parametros2 = document.querySelector('#parametros2');
 
           const todos_parametros = {{ parametros|tojson }};
-
+          console.log(todos_parametros);
           constructor.addEventListener('change', (event) => {
               generarFormParametros(event.target.value, div_parametros1, "constructor");
               if (constructor.value === 'GBILI') {

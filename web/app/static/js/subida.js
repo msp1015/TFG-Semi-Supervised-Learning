@@ -101,7 +101,7 @@ function actualizarTabla() {
         'es': '//cdn.datatables.net/plug-ins/1.10.21/i18n/Spanish.json',
         'en': '//cdn.datatables.net/plug-ins/1.10.21/i18n/English.json'
     };
-    const urlIdioma = idiomasDataTables[idiomaActual] || idiomasDataTables['en'];
+    const urlIdioma = idiomasDataTables[locale] || idiomasDataTables['en'];
 
     fetch('/obtenerDatosTabla')
         .then(response => {

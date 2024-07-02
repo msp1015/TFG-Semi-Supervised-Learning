@@ -55,7 +55,7 @@ function generarFormParametros(clasificador, div, div_clasificador) {
 
             let parametro = todos_parametros[clasificador][p];
             const label = document.createElement('label');
-            label.textContent = parametro.label;
+            label.textContent = parametro.label[locale];
 
             if (parametro.type === 'select') {
                 const select = document.createElement('select');

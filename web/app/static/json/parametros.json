@@ -2,7 +2,7 @@
   "Inductive": {
     "SVC": {
       "C": {
-        "label": "C",
+        "label": {"en": "C", "es": "C"},
         "type": "number",
         "step": 0.1,
         "min": 0.1,
@@ -10,7 +10,7 @@
         "default": 1.0
       },
       "max_iter": {
-        "label": "Number of iterations",
+        "label": {"en": "Number of iterations", "es": "Número de iteraciones"},
         "type": "number",
         "step": 1,
         "min": -1,
@@ -18,13 +18,13 @@
         "default": -1
       },
       "kernel": {
-        "label": "Kernel",
+        "label": {"en": "Kernel", "es": "Núcleo"},
         "type": "select",
         "options": ["linear", "poly", "rbf", "sigmoid", "precomputed"],
         "default": "rbf"
       },
       "gamma": {
-        "label": "Gamma",
+        "label": {"en": "Gamma", "es": "Gamma"},
         "type": "select",
         "options": ["scale", "auto"],
         "default": "scale"
@@ -32,7 +32,7 @@
     },
     "KNeighborsClassifier": {
       "n_neighbors": {
-        "label": "Neighbors number",
+        "label": {"en": "Neighbors number", "es": "Número de vecinos"},
         "type": "number",
         "step": 1,
         "min": 1,
@@ -40,19 +40,19 @@
         "default": 5
       },
       "weights": {
-        "label": "Weights",
+        "label": {"en": "Weights", "es": "Pesos"},
         "type": "select",
         "options": ["uniform", "distance"],
         "default": "uniform"
       },
       "algorithm": {
-        "label": "Algorithm",
+        "label": {"en": "Algorithm", "es": "Algoritmo"},
         "type": "select",
         "options": ["auto", "ball_tree", "kd_tree", "brute"],
         "default": "auto"
       },
       "p": {
-        "label": "p",
+        "label": {"en": "p", "es": "p"},
         "type": "number",
         "step": 1,
         "min": 1,
@@ -62,19 +62,19 @@
     },
     "DecisionTreeClassifier": {
       "criterion": {
-        "label": "Criterion",
+        "label": {"en": "Criterion", "es": "Criterio"},
         "type": "select",
         "options": ["gini", "entropy", "log_loss"],
         "default": "gini"
       },
       "splitter": {
-        "label": "Algorithm",
+        "label": {"en": "Algorithm", "es": "Algoritmo"},
         "type": "select",
         "options": ["best", "random"],
         "default": "best"
       },
       "max_features": {
-        "label": "Max features",
+        "label": {"en": "Max features", "es": "Máximo de características"},
         "type": "select",
         "options": ["sqrt", "log2"],
         "default": "log2"
@@ -86,7 +86,7 @@
   "Inference": {
     "LGC": {
       "alpha": {
-        "label": "Alpha",
+        "label": {"en": "Alpha", "es": "Alpha"},
         "type": "number",
         "step": 0.01,
         "min": 0.01,
@@ -94,7 +94,7 @@
         "default": 0.90
       },
       "tol": {
-        "label": "Tolerance",
+        "label": {"en": "Tolerance", "es": "Tolerancia"},
         "type": "number",
         "step": 0.001,
         "min": 0.001,
@@ -102,7 +102,7 @@
         "default": 0.001
       },
       "max_iter": {
-        "label": "Number of iterations",
+        "label": {"en": "Number of iterations", "es": "Número de iteraciones"},
         "type": "number",
         "step": 1,
         "min": 1,
@@ -114,7 +114,7 @@
   "Graphs": {
     "GBILI": {
       "k_vecinos": {
-        "label": "Neighbors number",
+        "label": {"en": "Neighbors number", "es": "Número de vecinos"},
         "type": "number",
         "step": 1,
         "min": 1,
@@ -124,7 +124,7 @@
     },
     "RGCLI": {
       "ke": {
-        "label": "Ke (KNN)",
+        "label": {"en": "Ke (KNN)", "es": "Ke (KNN)"},
         "type": "number",
         "step": 1,
         "min": 1,
@@ -132,7 +132,7 @@
         "default": 5
       },
       "ki": {
-        "label": "Ki (RGCLI)",
+        "label": {"en": "Ki (RGCLI)", "es": "Ki (RGCLI)"},
         "type": "number",
         "step": 1,
         "min": 1,
@@ -142,4 +142,3 @@
     }
   }
 }
-
