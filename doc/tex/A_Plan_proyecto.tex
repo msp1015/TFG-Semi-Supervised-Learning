@@ -40,7 +40,7 @@ Sprint correspondiente a las fechas entre el 15 de enero y el 1 de febrero. Se t
 	\item Continuar documentando los conceptos teóricos (ensembles, Co-Forest).
 \end{itemize}
 
-En este periodo se completa la lectura del artículo del algoritmo Co-Forest y del apartado del trabajo de Patricia y sus estudios relacionados con este algoritmo. El principal estudio que realiza consiste en resolver un error del pseudocódigo, donde un valor podía coger el valor 0 cuando se utiliza como divisor. Mediante tres propuestas, se inicializa este valor con diferentes operaciones y se muestran varias gráficas para poder evaluar la mejor opción.  %TODO Completar referencias
+En este periodo se completa la lectura del artículo del algoritmo Co-Forest y del apartado del trabajo de Patricia y sus estudios relacionados con este algoritmo. El principal estudio que realiza consiste en resolver un error del pseudocódigo, donde un valor podía coger el valor 0 cuando se utiliza como divisor. Mediante tres propuestas, se inicializa este valor con diferentes operaciones y se muestran varias gráficas para poder evaluar la mejor opción.
 
 Se realiza una búsqueda amplia de aplicaciones web para visualización de algoritmos, apuntando y explicando las más interesantes en el apartado 6 de la memoria.
 Se realiza la implementación de la técnica de Scrum en el apartado 4 de la memoria.
@@ -77,7 +77,7 @@ Se inicia con una reunión el 7 de marzo, surge un cambio de planes, dejando las
 	\item Continuar documentación (Co-Forest, trabajos relacionados)
 	\item El trabajo será una versión 2.0 del desarrollo de David.
 	\item Esto implica tener que familiarizarse con el trabajo de David, su estructura, web, etc.
-	\item Corregir estilo de programación. Estandarizar mediante la guía de estilo de python, PEP8 \cite{PEP8}. %TODO
+	\item Corregir estilo de programación. Estandarizar mediante la guía de estilo de python, PEP8 \cite{PEP8}.
 	\item Revisar Co-Forest debido a que la comparación con el de Patricia no es del todo buena.
 	
 \end{itemize} 
@@ -238,6 +238,7 @@ La página de inicio de la web sufre un cambio visual. Los contenedores o \texti
 Sprint correspondiente a los días entre el 6 de junio y 20 de junio. Se definen las siguientes tareas:
 \begin{itemize}
 	\item Finalizar parte de configuración y visualización de grafos.
+	\item Pantalla de subida de archivos.
 	\item Crear pseudocódigos específicos para la web.
 	\item Corregir y documentar parte de la memoria.
 	\item Finalizar con los anexos A, B y C.
@@ -247,8 +248,30 @@ El inicio de este Sprint se utiliza para ponerse al día con la documentación, 
 
 En la visualización, se pretende corregir: poner las imágenes definitivas de los pseudocódigos de cada algoritmo nuevo, conseguir que en la configuración la parte de teoría cambie dinámicamente según quiera el usuario ver la fase de construcción de grafos o la fase de inferencia y por último completar el paso a paso de los algoritmos para que de forma visual se vea qué parte está ejecutando.
 
+Además, se realiza el planteamiento que surgió en los primeros sprints de generar un resumen de los datos cada vez que se sube un archivo. Se añade también la funcionalidad de seleccionar un fichero por defecto, en lugar de tener que descargarlo.
+
 Al inicio de este periodo se descubre \textit{Lighthouse}, una herramienta la cual permite evaluar el rendimiento de una web. Proporciona tanto métricas como consejos de implementación para mejorar el rendimiento. Se pretende usar en lo que queda de tiempo para cumplir con los consejos y tener buenas métricas tanto en dispositivo móvil como en escritorio.
 
+\subsection{Sprint 19}
+Sprint correspondiente a los días entre el 20 de junio y 4 de julio. Se definen las siguientes tareas:
+\begin{itemize}
+	\item Depurar y finalizar la visualización de grafos.
+	\item Revisar todas las traducciones.
+	\item Desplegar la web en un servidor.
+	\item Testear web con \textit{Selenium IDE}.
+	\item Comprobar la integración completa con la gestión de usuarios.
+	\item Finalizar la memoria.
+	\item Revisar anexos del sprint anterior y finalizar los que faltan.
+\end{itemize}
+
+Este tiempo se utiliza principalmente para depurar la web y corregir errores. Primero se realiza el despliegue y después se van corrigiendo los errores que se van encontrando (mayormente traducciones y gestión de usuarios). 
+
+Una vez se considera que la web es definitiva y que no se van a realizar más cambios, se decide testearla con \textit{Selenium IDE} a la vez que se documentan los caso de prueba.
+
+Primero se revisa y finaliza la memoria con los nuevos cambios y por último se realizan los anexos.
+
+\subsection{Sprint 20}
+Sprint correspondiente a los días entre el 4 de julio y la fecha de entrega. Se utiliza para finalizar toda la documentación, tanto de memoria y anexos como del código. Se realizan los últimos cambios y se comprueba que todo está correcto.
 
 \section{Estudio de viabilidad}
 El estudio de viabilidad de un proyecto de software es una evaluación integral que analiza la posibilidad de llevar a cabo un proyecto considerando factores económicos, técnicos y legales. Este estudio ayuda a determinar si el proyecto es rentable, cumple con las regulaciones legales y es técnicamente factible. En este contexto, se abordarán específicamente la viabilidad económica, que analiza costes y beneficios, y la viabilidad legal, que examina el cumplimiento de normativas y leyes aplicables.
@@ -294,7 +317,7 @@ Contando con que solo dos personas conforman el equipo, en la tabla \ref{tabla:s
 	\label{tabla:salarios}
 \end{table}
 
-\paragraph{Costes de \textit{hardware}} Para realizar este proyecto el equipo necesitado ha sido el reflejado en la tabla~\ref{tabla:hw}. Las especificaciones del ordenador portátil, con una vida útil\footnote{La vida útil de un dispositivo es el período durante el cual se espera que funcione de manera eficiente antes de que sea necesario reemplazarlo debido al desgaste o a la obsolescencia tecnológica.} de 4 años, son: marca \textit{Asus VivoBook} con procesador \textit{Intel Core i7-1065G7}, 8GB de memoria RAM y 512 GB de SSD. Como ayuda para poder agilizar el trabajo también se utiliza un monitor \textit{Acer KA240H}. Y por úlitmo, para el despliegue de la aplicación, se utiliza un servidor con vida útil de 3 años y  %TODO
+\paragraph{Costes de \textit{hardware}} Para realizar este proyecto el equipo necesitado ha sido el reflejado en la tabla~\ref{tabla:hw}. Las especificaciones del ordenador portátil, con una vida útil\footnote{La vida útil de un dispositivo es el período durante el cual se espera que funcione de manera eficiente antes de que sea necesario reemplazarlo debido al desgaste o a la obsolescencia tecnológica.} de 4 años, son: marca \textit{Asus VivoBook} con procesador \textit{Intel Core i7-1065G7}, 8GB de memoria RAM y 512 GB de SSD. Como ayuda para poder agilizar el trabajo también se utiliza un monitor \textit{Acer KA240H}. Y por úlitmo, para el despliegue de la aplicación, se utiliza el servidor más pequeño de Microsot Azure con vida útil de 1 año y un precio de 5.0881€ al mes~\cite{azure:plans}.
 
 \begin{table}[H]
 	\centering
@@ -303,8 +326,8 @@ Contando con que solo dos personas conforman el equipo, en la tabla \ref{tabla:s
 		\textbf{Activo}      & \textbf{Coste (€)}      & \textbf{Coste amortizado (€)}      \\ \midrule
 		Ordenador portátil     & 829                    & 207.25                      \\
 		Monitor ayuda			& 105.99 						& 26.5							\\
-		Servidor             & X                    &  X                     \\ \midrule
-		\textbf{Total}       & X                   &  X                     \\ \midrule
+		Servidor             & 61.06                    &  45.8                     \\ \midrule
+		\textbf{Total}       & 1057.11                   & 279.55                      \\ \midrule
 	\end{tabular}
 	\caption{Costes para el \textit{hardware} del proyecto}
 	\label{tabla:hw}
@@ -319,13 +342,88 @@ Contando con que solo dos personas conforman el equipo, en la tabla \ref{tabla:s
 		\textbf{Activo}      & \textbf{Coste (€)}      & \textbf{Coste amortizado (€)}      \\ \midrule
 		Microsoft 365     & 69                    & 51.75                      \\
 		Github Copilot			& 228 						& 171							\\
-		Dominio web             & X                    &  X                     \\ \midrule
-		\textbf{Total}       & X                   &  X                     \\ \midrule
+		Dominio web             & 10.98                    & 8.24                     \\ \midrule
+		\textbf{Total}       & 348.75                   & 230.99                      \\ \midrule
 	\end{tabular}
 	\caption{Costes para el \textit{software} del proyecto}
 	\label{tabla:sw}
 \end{table}
 
+\paragraph{Costes adicionales} Además de los costes mencionados anteriormente, existen otros costes adicionales que deben considerarse. Estos incluyen la impresión y encuadernación de la documentación, así como otros costes generales de vida. 
+
+Para la impresión y encuadernación de la documentación del proyecto, se estima un coste de 50€. Los costes generales de vida, que abarcan el uso de servicios básicos como electricidad e internet durante el desarrollo del proyecto, se estiman en 100€.
+
+En la tabla~\ref{tabla:costes_totales} se presenta un resumen de los costes totales del proyecto, incluyendo los costes de empleados, hardware, software y otros costes adicionales.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lrr}
+        \toprule
+        \textbf{Concepto}      & \textbf{Coste Total (€)} \\ \midrule
+        Costes de empleados     & 12140.46                      \\
+        Costes de \textit{hardware} & 279.55                       \\
+        Costes de \textit{software} & 230.99                       \\
+        Costes adicionales      & 150                         \\ \midrule
+        \textbf{Coste Total}    & 12701.00                      \\ \bottomrule
+    \end{tabular}
+    \caption{Resumen de los costes totales del proyecto}
+    \label{tabla:costes_totales}
+\end{table}
+
+\subsubsection{Beneficios}
+Los beneficios de este proyecto no se miden en términos monetarios directos, dado que el objetivo principal de la web desarrollada es educativo. A continuación, se detallan los principales beneficios cualitativos y cuantitativos del proyecto.
+
+\begin{itemize}
+    \item Accesibilidad global a recursos educativos.
+    \item Mejora de la educación y el aprendizaje de los usuarios.
+    \item Desarrollo de habilidades técnicas y de gestión para el desarrollador.
+    \item Impacto positivo en la comunidad educativa.
+    \item Potencial para futuras expansiones y colaboraciones.
+\end{itemize}
 
 \subsection{Viabilidad legal}
+La viabilidad legal de un proyecto de software se refiere a la evaluación y aseguramiento de que el proyecto cumple con todas las leyes, regulaciones y licencias pertinentes. Esto incluye la revisión de las licencias de software utilizadas, la protección de la propiedad intelectual, y el cumplimiento de las normativas de privacidad y seguridad de datos. Es fundamental para evitar conflictos legales y asegurar que el software pueda ser utilizado, distribuido y modificado de manera legal.
 
+En este proyecto, se ha optado por utilizar la licencia MIT~\cite{eswiki:MIT}, una de las licencias de software libre más sencillas y permisivas. Sus principales características son:
+
+\begin{itemize}
+    \item Permite el uso comercial del software.
+    \item Permite la modificación del software.
+    \item Permite la distribución del software, incluyendo versiones modificadas.
+    \item Permite sublicenciar el software.
+    \item Permite el uso privado del software.
+\end{itemize}
+
+\subsubsection{Bibliotecas Utilizadas}
+
+En este proyecto se utilizan diversas bibliotecas, cada una con su propia versión y licencia. En la tabla~\ref{tabla:librerias} se muestran las bibliotecas utilizadas, sus versiones y sus licencias, junto con una breve descripción de cada una.
+
+\begin{longtable}{lcl}
+    \toprule
+    \textbf{Librería} & \textbf{Versión} & \textbf{Licencia} & \textbf{Descripción} \\ 
+    \midrule
+    Babel & 2.14.0 & BSD & Herramientas para la internacionalización. \\ 
+    Flask & 3.0.2 & BSD & Micro framework para aplicaciones web. \\ 
+    flask-babel & 4.0.0 & BSD & Extensión para Flask que agrega soporte para i18n. \\ 
+    Flask-Login & 0.6.3 & MIT & Manejo de sesiones de usuario para Flask. \\ 
+    Flask-SQLAlchemy & 3.1.1 & BSD & Extensión que añade soporte para SQLAlchemy a Flask. \\ 
+    Flask-WTF & 1.2.1 & BSD & Soporte para formularios WTForms en Flask. \\ 
+    gunicorn & 21.2.0 & MIT & Servidor HTTP WSGI para aplicaciones Python. \\ 
+    imbalanced-learn & 0.12.0 & MIT & Herramientas para el aprendizaje en conjuntos de datos desbalanceados. \\ 
+    matplotlib & 3.8.2 & PSF & Biblioteca para la creación de gráficos estáticos, animados e interactivos en Python. \\ 
+    mypy & 1.9.0 & MIT & Verificador de tipos para Python. \\ 
+    mypy-extensions & 1.0.0 & MIT & Extensiones para mypy. \\ 
+    numpy & 1.26.3 & BSD & Paquete fundamental para la computación científica con Python. \\ 
+    pandas & 2.2.0 & BSD & Biblioteca para el análisis y manipulación de datos. \\ 
+    pylint & 3.1.0 & GPL & Herramienta para la detección de errores y malas prácticas en Python. \\ 
+    pytest & 8.1.1 & MIT & Framework de testing para Python. \\ 
+    scikit-learn & 1.4.0 & BSD & Herramientas simples y eficientes para el análisis de datos y minería de datos. \\ 
+    scipy & 1.12.0 & BSD & Biblioteca para matemáticas, ciencias y ingeniería. \\ 
+    SQLAlchemy & 2.0.28 & MIT & Kit de herramientas SQL para Python. \\ 
+    sslearn & 1.0.4.1 & BSD & Biblioteca de aprendizaje supervisado. \\ 
+    Werkzeug & 3.0.1 & BSD & Biblioteca WSGI para desarrollo web. \\ 
+    WTForms & 3.1.2 & BSD & Biblioteca de formularios para aplicaciones web en Python. \\ 
+    \bottomrule
+    \caption{Librerías utilizadas, versiones y licencias}
+	\label{tabla:librerias}
+\end{longtable}

@@ -36,10 +36,6 @@ En este caso, al tratarse de un trabajo heredado, los requisitos son la mayoría
 		\item \textbf{RF-2.3 Carga de ficheros}: debe de haber una opción que permita cargar un archivo con las extensiones definidas. Tanto arrastrando el archivo como buscándolo en el explorador de ficheros.
 	\end{itemize} 
 	\item \textbf{RF-3 Visualizar datos de entrada en forma de tabla}: la aplicación debe permitir visualizar los datos de entrada en forma de tabla para que el usuario tenga más contexto del conjunto de datos que está usando.
-\begin{itemize}
-	\item \textbf{RF-3.1 Visualizar resumen en fase de selección}: desde la página de carga de conjunto de datos se debe permitir ver un resumen de los datos en forma de tabla.
-	\item \textbf{RF-3.2 Visualizar resultados clasificados}: la misma tabla se debe poder acceder a ella en la fase final, cuando todos los datos han sido clasificados, pudiendo ver la clasificación de cada entrada.
-\end{itemize}
 	\item \textbf{RF-4 Configuración del algoritmo}: la aplicación debe	permitir configurar la ejecución del algoritmo con los parámetros específicos del mismo.
 	\begin{itemize}
 		\item \textbf{RF-4.1 Configuración del clasificador}: el sistema debe permitir elegir que clasificador se quiere usar (si hay más de uno) y dentro de este, los parámetros que lo inician.
@@ -166,18 +162,20 @@ A continuación se definirán los casos de uso implementados y modificados en es
 	\centering
 	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
 		\toprule
-		\textbf{CU-3}    & \textbf{Cargar conjunto de datos}\\
+		\textbf{CU-3}    & \textbf{Seleccionar conjunto de datos}\\
 		\toprule
 		\textbf{Versión}              & 2.0    \\
 		\textbf{Autor}                & Mario Sanz Pérez \\
-		\textbf{Requisitos asociados} & RF-2, RF-3.1 \\
-		\textbf{Descripción}          & Carga en el sistema de un fichero ARFF o CSV con el conjunto de datos a utilizar. \\
+		\textbf{Requisitos asociados} & RF-2, RF-3 \\
+		\textbf{Descripción}          & Carga en el sistema o selección de un fichero ARFF o CSV con el conjunto de datos a utilizar. \\
 		\textbf{Precondición}         & Ejecutando el caso de uso 1 y haber ejecutado ya el caso de uso 2.\\
 		\textbf{Acciones}             &
 		\begin{enumerate}
 			\def\labelenumi{\arabic{enumi}.}
 			\tightlist
-			\item ***POR DEFINIR***
+			\item El usuario tiene dos opciones de selección de un fichero: cargar uno del equipo o seleccionar uno ya cargado.
+			\item Se establece en la sesión el fichero seleccionado.
+			\item Se muestra una tabla interactiva con los datos del fichero.
 		\end{enumerate}\\
 		\textbf{Extensiones}          & 3a Si el usuario estuviera registrado, el fichero será vinculado a su cuenta (en base de datos). \\
 		\textbf{Postcondición}        & Conjunto de datos almacenado en su sesión (y fichero local) y redirección a la página de configuración \\
@@ -188,7 +186,7 @@ A continuación se definirán los casos de uso implementados y modificados en es
 		\textbf{Importancia}          & Alta \\
 		\bottomrule
 	\end{tabularx}
-	\caption{Caso de uso 3: Cargar conjunto de datos.}
+	\caption{Caso de uso 3: Seleccionar conjunto de datos.}
 \end{table}
 
 
@@ -264,38 +262,12 @@ A continuación se definirán los casos de uso implementados y modificados en es
 \end{table}
 
 
-% Caso de uso 19 --> ver tablas con datos clasificados
+%Caso de uso 19 --> Acceder a documentación del algoritmo
 \begin{table}[p]
 	\centering
 	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
 		\toprule
-		\textbf{CU-19}    & \textbf{Ver tabla con resultados clasificados}\\
-		\toprule
-		\textbf{Versión}              & 1.0    \\
-		\textbf{Autor}                & Mario Sanz Pérez \\
-		\textbf{Requisitos asociados} & RF-5, RF-3.2 \\
-		\textbf{Descripción}          & Acceso a página con tabla que contiene los datos de entrada y su clasificación final. \\
-		\textbf{Precondición}         & Ejecutando el caso de uso 1 y haber ejecutado ya el caso de uso 4. \\
-		\textbf{Acciones}             &
-		\begin{enumerate}
-			\def\labelenumi{\arabic{enumi}.}
-			\tightlist
-			\item ***POR DEFINIR***
-		\end{enumerate}\\
-		\textbf{Postcondición}        & ***POR DEFINIR*** \\
-		\textbf{Excepciones}          & Sin excepciones \\
-		\textbf{Importancia}          & Alta \\
-		\bottomrule
-	\end{tabularx}
-	\caption{Caso de uso 19: Ver tabla con resultados clasificados.}
-\end{table}
-
-%Caso de uso 20 --> Acceder a documentación del algoritmo
-\begin{table}[p]
-	\centering
-	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
-		\toprule
-		\textbf{CU-20}    & \textbf{Acceder a documentación del algoritmo}\\
+		\textbf{CU-19}    & \textbf{Acceder a documentación del algoritmo}\\
 		\toprule
 		\textbf{Versión}              & 1.0    \\
 		\textbf{Autor}                & Mario Sanz Pérez \\
@@ -314,41 +286,46 @@ A continuación se definirán los casos de uso implementados y modificados en es
 		\textbf{Importancia}          & Baja \\
 		\bottomrule
 	\end{tabularx}
-	\caption{Caso de uso 20: Acceder a documentación del algoritmo}
+	\caption{Caso de uso 19: Acceder a documentación del algoritmo}
 \end{table}
 
-% Caso de uso 21 --> Ver resumen de datos de entrada
+% Caso de uso 20 --> Ver resumen de datos de entrada
 \begin{table}[p]
 	\centering
 	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
 		\toprule
-		\textbf{CU-21}    & \textbf{Ver tabla con resumen de datos de entrada}\\
+		\textbf{CU-20}    & \textbf{Ver tabla con resumen de datos de entrada}\\
 		\toprule
 		\textbf{Versión}              & 1.0    \\
 		\textbf{Autor}                & Mario Sanz Pérez \\
-		\textbf{Requisitos asociados} & RF-2, RF-3.1 \\
+		\textbf{Requisitos asociados} & RF-2, RF-3 \\
 		\textbf{Descripción}          & Visualización en forma de tabla de los datos de entrada. \\
-		\textbf{Precondición}         & Ejecutando el caso de uso 1 y haber ejecutado ya el caso de uso 2. \\
+		\textbf{Precondición}         & Ejecutando el caso de uso 1 y haber ejecutado ya el caso de uso 2 y 3 (hay fichero en la sesión). \\
 		\textbf{Acciones}             &
 		\begin{enumerate}
 			\def\labelenumi{\arabic{enumi}.}
 			\tightlist
-			\item ***POR DEFINIR***
+			\item Se mostrará una tabla con los datos de entrada.
+			\item El usuario podrá buscar entre los datos, ordenarlos o filtrarlos.
+			\item El usuario podrá mostrar las entradas que quiere ver en la tabla.
 		\end{enumerate}\\
-		\textbf{Postcondición}        & ***POR DEFINIR*** \\
-		\textbf{Excepciones}          & Sin excepciones \\
-		\textbf{Importancia}          & Alta \\
+		\textbf{Postcondición}        & El usuario puede interactuar con la tabla de datos. \\
+		\textbf{Excepciones}          & \begin{itemize}
+			\item Si el fichero no es un ARFF o CSV, se mostrará un mensaje de advertencia en lugar de la tabla.
+			\item Si el fichero no se puede leer por el formato, se mostrará un mensaje de error en lugar de la tabla.
+		\end{itemize} \\
+		\textbf{Importancia}          & Media \\
 		\bottomrule
 	\end{tabularx}
-	\caption{Caso de uso 21: Ver tabla con resumen de datos de entrada.}
+	\caption{Caso de uso 20: Ver tabla con resumen de datos de entrada.}
 \end{table}
 
-%Caso de uso 22 --> Visualizar tutoriales
+%Caso de uso 21 --> Visualizar tutoriales
 \begin{table}[p]
 	\centering
 	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
 		\toprule
-		\textbf{CU-22}    & \textbf{Visualizar tutoriales}\\
+		\textbf{CU-21}    & \textbf{Visualizar tutoriales}\\
 		\toprule
 		\textbf{Versión}              & 1.0    \\
 		\textbf{Autores}                & David Martínez Acha y Mario Sanz Pérez\\
@@ -359,10 +336,10 @@ A continuación se definirán los casos de uso implementados y modificados en es
 		\begin{enumerate}
 			\def\labelenumi{\arabic{enumi}.}
 			\tightlist
-			\item En la página de inicio: el tutorial consta de 7 pasos secuenciales.
-			\item En la página de selección de datos: ***POR DEFINIR***
-			\item En la página de configuración: el tutorial consta de 5 pasos.
-			\item En la página de visualización: si son métodos inductivos consta de 6 pasos y si son métodos de grafos consta de ***POR DEFINIR***.
+			\item En la página de inicio: el tutorial consta de 9 pasos.
+			\item En la página de selección de datos: el tutorial consta de 7 pasos.
+			\item En la página de configuración: en caso de inductivos consta de 5 pasos y en caso de grafos de 6.
+			\item En la página de visualización: si son métodos inductivos consta de 6 pasos tanto si son métodos de grafos como inductivos.
 			\item En cualquier paso del tutorial, este se puede cerrar.
 			\item Ver el siguiente o el anterior paso.
 		\end{enumerate}\\
@@ -371,5 +348,5 @@ A continuación se definirán los casos de uso implementados y modificados en es
 		\textbf{Importancia}          & Media \\
 		\bottomrule
 	\end{tabularx}
-	\caption{Caso de uso 22: Visualizar tutoriales.}
+	\caption{Caso de uso 21: Visualizar tutoriales.}
 \end{table}
