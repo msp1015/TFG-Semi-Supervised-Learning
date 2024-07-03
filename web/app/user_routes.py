@@ -186,7 +186,7 @@ def editar(user_id, redirect_page):
         usuario.name = new_name
         if new_password:
             usuario.password = generate_password_hash(
-                new_password, method='sha256')
+                new_password, method='pbkdf2')
         db.session.commit()
         if redirect_page == 'main_bp.inicio':
             login_user(usuario)
