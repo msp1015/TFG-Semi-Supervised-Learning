@@ -44,12 +44,13 @@
 % 1 --> Ruta absoluta/relativa de la figura
 % 2 --> Texto a pie de figura
 % 3 --> Tamaño en tanto por uno relativo al ancho de página
+% 4 --> Texto en el índice
 \usepackage{graphicx}
-\newcommand{\imagen}[3]{
+\newcommand{\imagen}[4]{
 	\begin{figure}[!h]
 		\centering
 		\includegraphics[width=#3\textwidth]{#1}
-		\caption{#2}\label{fig:#1}
+		\caption[#4]{#2}\label{fig:#1}
 	\end{figure}
 	\FloatBarrier
 }
@@ -424,9 +425,9 @@ Vº. Bº. del Tutor:\\[2cm]
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-En la práctica, el aprendizaje semi-supervisado es crucial debido a los retos y altos costos que implica obtener datos etiquetados de calidad. A pesar de su relevancia, estos algoritmos suelen ser ignorados, tanto en la investigación académica como en la educación, donde el énfasis generalmente recae en el aprendizaje supervisado o no supervisado.
+En la práctica, el aprendizaje semisupervisado es crucial debido a los retos y altos costos que implica obtener datos etiquetados de calidad. A pesar de su relevancia, a estos algoritmos no se les ha prestado suficiente atención, tanto en la investigación académica como en la educación, donde el énfasis generalmente recae en el aprendizaje supervisado y no supervisado.
 
-En un proyecto anterior, se desarrolló una biblioteca con cuatro de los más populares algoritmos semi-supervisados: Self-Training, Co-Training, Democratic Co-Learning y Tri-Training, además de una aplicación web para visualizar el proceso de entrenamiento de estos algoritmos.
+En un proyecto anterior, se desarrolló una biblioteca con cuatro de los más populares algoritmos de aprendizaje semisupervisados: Self-Training, Co-Training, Democratic Co-Learning y Tri-Training, además de una aplicación web para visualizar el proceso de entrenamiento de los mismos.
 
 En este trabajo, se ha continuado la herramienta docente, añadiendo nuevos algoritmos para ampliar su alcance y funcionalidad. Se ha incorporado el algoritmo Co-Forest para métodos de \textit{ensembles} y, para métodos transductivos basados en grafos, se han implementado los algoritmos GBILI y RGCLI en la fase de construcción de grafos, y el algoritmo LGC (\textit{Local and Global Consistency}) en la fase de inferencia de etiquetas.
 
@@ -445,9 +446,9 @@ aprendizaje automático, aprendizaje semisupervisado, ensembles, grafos, web
 % Abstract en inglés
 \renewcommand*\abstractname{Abstract}
 \begin{abstract}
-In practice, semi-supervised learning is crucial due to the challenges and high costs involved in obtaining quality labeled data. Despite its importance, these algorithms are often overlooked, both in academic research and education, where the focus generally falls on supervised or unsupervised learning.
+In practice, semi-supervised learning is crucial due to the challenges and high costs involved in obtaining quality labeled data. Despite their relevance, these algorithms have not been given enough attention, both in academic research and in education, where the emphasis generally falls on supervised and unsupervised learning.
 
-In a previous project, a library was developed with four of the most popular semi-supervised algorithms: Self-Training, Co-Training, Democratic Co-Learning, and Tri-Training, along with a web application to visualize the training process of these algorithms.
+In a previous project, a library was developed with four of the most popular semi-supervised learning algorithms: Self-Training, Co-Training, Democratic Co-Learning and Tri-Training, as well as a web application to visualize their training process.
 
 In this work, the educational tool has been continued, adding new algorithms to expand its scope and functionality. The Co-Forest algorithm for ensemble methods has been incorporated, and for graph-based transductive methods, the GBILI and RGCLI algorithms have been implemented in the graph construction phase, and the LGC (Local and Global Consistency) algorithm in the label inference phase.
 

@@ -6,7 +6,7 @@ Un artículo científico es un informe escrito y publicado en una revista con ci
 
 Para este trabajo se han leido dos tipos de artículos, los \textit{surveys} o resúmenes sobre un tema y los artículos de implementación de algoritmos:
 \begin{itemize}
-	\item \textbf{\textit{A Survey on Semi-Supervised Learning}}~\cite{Engelen:semi-supervised}: Este artículo proporciona una revisión exhaustiva del campo del aprendizaje semi-supervisado. Gracias a este artículo se consigue una base sólida en este tipo de aprendizaje y se comprenden cuales son los desafios actuales y las direcciones futuras en la investigación en este campo.
+	\item \textbf{\textit{A Survey on Semi-Supervised Learning}}~\cite{Engelen:semi-supervised}: Este artículo proporciona una revisión exhaustiva del campo del aprendizaje semisupervisado. Gracias a este artículo se consigue una base sólida en este tipo de aprendizaje y se comprenden cuales son los desafios actuales y las direcciones futuras en la investigación en este campo.
 	\item \textbf{\textit{Ensemble Based Systems in Decision Making}}~\cite{ensembles}: Este artículo revisa el uso de sistemas basados en \textit{ensembles} para la toma de decisiones. Estos sistemas combinan múltiples clasificadores para mejorar la precisión y la robustez del proceso de decisión. Destaca cómo los sistemas de ensamblaje pueden superar las limitaciones de los clasificadores individuales y proporcionar decisiones más confiables y precisas.
 	\item \textbf{\textit{Improve Computer-Aided Diagnosis With Machine Learning Techniques Using Undiagnosed Samples}}~\cite{IEEE:CoForest}: Los autores presentan el método Co-Forest, una técnica semi-supervisada que combina múltiples clasificadores de árboles de decisión para mejorar la precisión del diagnóstico. Se discuten los beneficios de incorporar datos no etiquetados en el proceso de entrenamiento y se presentan resultados experimentales que demuestran la eficacia de esta metodología en varias aplicaciones médicas.
 	\item \textbf{\textit{Graph-based Semi-supervised Learning: A Comprehensive Review}}~\cite{GSSL:review}: Proporciona una revisión exhaustiva de los métodos de aprendizaje semisupervisado basados en grafos (GSSL). Sus principales contribuciones son: nueva taxonomía, revisión completa de los algoritmos en las diferentes fases y direcciones futuras.
@@ -14,7 +14,7 @@ Para este trabajo se han leido dos tipos de artículos, los \textit{surveys} o r
 	\item \textbf{\textit{Learning with Local and Global Consistency}}~\cite{LGC}: Este artículo introduce un algoritmo para el aprendizaje con consistencia local y global. Los autores describen cómo el algoritmo itera para ajustar las etiquetas de las instancias no etiquetadas, combinando la información de las instancias vecinas y la información inicial. Se demuestra que este enfoque es eficaz para tareas de clasificación semi-supervisada.
 	\item \textbf{\textit{RGCLI: Robust Graph that Considers Labeled Instances for Semi-Supervised Learning}}~\cite{rgcli}: Presenta una mejora del método GBILI para la construcción de grafos. Los autores cuentan como RGCLI reduce la complejidad, permitiendo manejar conjuntos de datos grandes. Mejora la topología del grafo usando instancias etiquetadas, optimizando la propagación de etiquetas y logrando mayor precisión en la clasificación.
 \end{itemize}
-\section{Trabajo Preexistente}
+\section{Evolución de un Trabajo Preexistente}
 La elección de este trabajo se realiza por el gran interés en la inteligencia artificial y el aprendizaje automático, pero también por el hecho de que ya existía un trabajo realizado por otro alumno un año atrás (David Martínez Acha -- \url{https://vass.dmacha.dev/}). Esto ayudaría mucho en el desarrollo ya que serviría como referencia para muchas dudas.
 
 El plan original era hacer mi propia página web educativa desde cero, pero mostrando otra serie de algoritmos semisupervisados (ensembles y grafos) en lugar de los ya existentes. Con el desarrollo del primer algoritmo surge la idea por parte del tutor de basar el proyecto en esta otra página desarrollada por David Martínez. De esta manera, el tiempo que hubiera empleado en aprender e implementar la web desde cero, se emplea en comprender todo el código programado por David, aprovechando también la gestión de cuentas de usuarios. Aún así, se deja total libertad para cambiar e implementar lo que haga falta para mejorar el proyecto original.
@@ -42,7 +42,7 @@ En esta sección se comentarán los aspectos más relevantes en la implementaci�
 En la implementación de este algoritmo de nuevo se parte con una gran ventaja. El año anterior otra alumna había implementado el mismo algoritmo para otro proyecto. Dentro de esta aplicación, Patricia Hernando, hizo sus propios estudios, los cuales se han aprovechado en este trabajo.
 Basado en el pseudocodigo del artículo \cite{IEEE:CoForest}, la implementación se ve alterada por el parámetro $W$, el cual establece la confianza en las muestras para ser seleccionada o no. Resumiendo el estudio de Patricia, como se puede ver en el pseudocodigo del articulo, hay una ecuación donde el valor de W esta dividiendo. Esto es un problema ya que según establece el algoritmo puede llegar a valer cero, provocando así una indeterminación. Uno de los estudios de Patricia determina que una de las mejores soluciones a esto es iniciar el parámetro W al minimo entre 100 y el 10\% de la cantidad de muestras etiquetadas que hay. Como se puede ver en el pseudocodigo de la sección tres, esto se aprovecha, evitando así posibles problemas.
 Para determinar si el algoritmo definitivo es bueno, se compara con el de Patricia, evaluando como varía el valor de \textit{accuracy} en cada iteración del algoritmo. Los resultados se muestran en la figura \ref{fig:../img/memoria/ComparacionCoForest.png}.
-\imagen{../img/memoria/ComparacionCoForest.png}{Comparación algoritmo CoForest utilizando diversos datasets}{0.75}
+\imagen{../img/memoria/ComparacionCoForest.png}{Comparación algoritmo CoForest utilizando diversos datasets}{0.75}{Comparativa algoritmo Co-Forest}
 
 \subsection{Grafos}
 En este apartado se comentarán todos los aspectos relevantes relacionados con la implementación de los algoritmos basados en grafos. Desde sus posibles interpretaciones y modificaciones con respecto al código original, a los diferentes estudios de comparación.
@@ -86,7 +86,7 @@ Por lo tanto, descartada una opción, se realizará una pequeña prueba para lle
 Lo que se ha querido representar es el tiempo que tarda en construir el grafo y calcular los $k$ vecinos más cercanos \textit{(kNN)} para cada nodo. A su vez también se ha estudiado cuánta facilidad existe a la hora de convertir el grafo a formato \textit{JSON}, para que pueda ser procesado después por herramientas como \textit{d3.js}.
 
 Los resultados obtenidos han sido los siguientes:
-\\
+\\\\
 \begin{verbatim}
 	Ejecución 1:
 	NetworkX: Construction and kNN time: 0.0044 seconds
@@ -97,7 +97,7 @@ Los resultados obtenidos han sido los siguientes:
 	igraph: Construction and kNN time: 0.0111 seconds
 \end{verbatim}
 
-A su vez, en el uso del formato \textit{JSON} se encuentra más útil el uso de NetworkX ya que incluye un método propio de exportación (\textit{nx.readwrite.json\_graph}).
+A su vez, en el uso del formato \textit{JSON} se encuentra más útil el uso de NetworkX ya que incluye un método propio de exportación (\texttt{nx.readwrite.json\_graph}).
 Por el contrario, con \textit{igraph}, habría que constuir un diccionario recorriendo los nodos y enlaces y posteriormente pasarlo a formato \textit{JSON}.
 
 En conclusión, ante los resultados obtenidos la idea era usar \textit{NetworkX} para todas las fases del algoritmo, pero por simplicidad y facilidad en la implementación de los algoritmos, finalmente solo se utilizará para las ayudas en la visualización, y no como estructura principal de almacenamiento de los datos.
@@ -109,7 +109,7 @@ Con respecto al algoritmo \textit{GBILI}, surgen varias complicaciones o cuestio
 	\item Durante la implementación inicial del grafo, se asumió que cualquier enlace dentro del grafo sería bidireccional, asegurando así que el grafo fuera no dirigido. Sin embargo, en una de las primeras implementaciones, esta premisa no se respetó, lo que resultó en una estructura dirigida. Este error llevó a situaciones erróneas y confusas al realizar el seguimiento del código. Posteriormente, se corrigió la implementación para garantizar que todos los enlaces sean bidireccionales, asegurando así la correcta representación de un grafo no dirigido.
 	\item Dificultades de interpretación del pseucocódigo: en el código del artículo pueden surgir ciertas dudas de como hace algún paso. Estas son: al hacer la búsqueda en anchura, dice que debe retornar la componente (subgrafo aislado) del grafo completo, posteriormente, esta sintaxis la utiliza para los nodos individuales. Después de consultarlo con el tutor se llega a la conclusión de que la búsqueda en anchura realmente devuelve todo el conjunto de componentes del grafo y posteriormente se accede a la que pertenece cada nodo individual. Otra sintaxis que puede llevar a confusión es la que encontramos en la línea 20. Cuando comprueba que la distancia es mínima, la suma la hace dentro de los dos bucles, lo que puede llevar a interpretación de que esa condición se debe cumplir dentro del bucle interno. En esta situación, pongamos el siguiente ejemplo: la lista actual de vecinos mutuos es {0: [1, 2], 1: [0]...} y dos de los nodos etiquetados son [3, 4...]. Se accede a la lista de vecinos del nodo 0 y despues se recorre toda la lista de nodos etiquetados. Viendo esto sabríamos que obtendríamos una distancia mínima hasta un nodo etiquetado, pero siempre se estaría guardando el enlace entre los nodos vecinos, obteniendo la misma estructura que la lista de vecinos mutuos. Por ello, al implementarlo, hay que tener en cuenta que esta condición debe ir fuera del bucle interno, para poder coger de verdad la mínima distancia entre un nodo y sus vecinos.
 	\item Visualización con NetworkX: Para tener un primer acercamiento a una visualización y también para comprobar que el algoritmo ha seguido correctamente la influencia de los nodos etiquetados, se decide mostrar los 4 pasos gráficamente. Un aspecto importante en la implementación es que con networkX, a la hora de construir el grafo, debe estar ordenado de la misma manera que los datos de entrada al algoritmo, si no mostrará información falsa, como nodos pintados como etiquetados que no lo son.
-	\imagen{../img/memoria/networkxGBILI.png}{Visualización correcta de las 4 fases de construcción del grafo con el algoritmo GBILI utilizando el \textit{dataset} de \textit{iris data}. El color de la instancia representa su clase}{1}
+	\imagen{../img/memoria/networkxGBILI.png}{Visualización correcta de las 4 fases de construcción del grafo con el algoritmo GBILI utilizando el \textit{dataset} de \textit{iris data}. El color de la instancia representa su clase}{1}{GBILI: 4 fases de construcción del grafo}
 \end{enumerate}
 \subsubsection{Simplificación RGCLI}
 El algoritmo original~\cite{rgcli} está preparado para casos de uso en los que el conjunto de datos de entrada es muy grande, utilizando hilos para separar estos datos de entrada y optimizar la ejecución. La implementación que se ha realizado en este caso no es concurrente, teniendo en cuenta todos los datos de entrada en las llamadas a los métodos, facilitando así la ejecución en la web y su posterior visualización.
@@ -127,10 +127,10 @@ Para comprobar la buena funcionalidad del algoritmo \textit{LGC} se realizará u
 
 En una primera implementación, se quiere ver la zona de valores donde mejores resultados se obtienen. Los valores de \textit{alpha} y \textit{tolerance} en este caso tendrán un rango amplio para focalizarse después en una zona concreta. Después de tres ejecuciones con diferentes datasets, se pueden ver los resultados en la figura~\ref{fig:../img/memoria/output_LGC.png}.
 
-\imagen{../img/memoria/output_LGC.png}{Mapa de calor que representa el \textit{accuracy} para el algoritmo \textit{LGC} con rangos de valores \textit{tolerance}=[0.1, 8] y \textit{alpha}=[0.01, 1]. Se muestran los resultados para los \textit{datasets}: \textit{iris, breast cancer y wine}.}{0.8}
+\imagen{../img/memoria/output_LGC.png}{Mapa de calor que representa el \textit{accuracy} para el algoritmo \textit{LGC} con rangos de valores \textit{tolerance}=[0.1, 8] y \textit{alpha}=[0.01, 1]. Se muestran los resultados para los \textit{datasets}: \textit{iris, breast cancer y wine}.}{0.8}{LGC: estudio de influencia de parámetros}
 Lo que se puede observar en estas representaciones es que la tolerancia debe tener un valor más pequeño para que el algoritmo pueda realizar más de una iteración. En los tres gráficos coincide que las zonas rojas (valores más altos) se encuentran en la esquina inferior izquierda, es decir, tolerancia más pequeña y un valor de \textit{alpha} más cercano a 1. Partiendo de la premisa que nos dan los autores en el artículo~\cite{LGC}, en el que indican que utilizan un valor de \textit{alpha} de 0.99 para sus ejecuciones, la evaluación de momento va por buen camino. Cuánto mayor sea el conjunto de datos de entrada, como pasa con el ejemplo de \textit{wine}, la \textit{accuracy} disminuye para estos parámetros de entrada, una hipotesis ante esto es porque la tolerancia está frenando antes de que la matriz $F$ converja a valores reales.
 Para comprobar esto, se realizará otro estudio ahora con un rango de valores entre \textit{alpha}=[0.90, 0.99] y una tolerancia=[0.00001, 1]. Se puede observar en la figura \ref{fig:../img/memoria/output_LGC2.png}.
-\imagen{../img/memoria/output_LGC2.png}{Mapa de calor que representa el \textit{accuracy} para el algoritmo \textit{LGC} con rangos de valores \textit{alpha}=[0.90, 0.99] y \textit{tolerance}=[0.00001, 1]. Se muestran los resultados para los \textit{datasets}: \textit{iris, breast cancer y wine}.}{0.8}
+\imagen{../img/memoria/output_LGC2.png}{Mapa de calor que representa el \textit{accuracy} para el algoritmo \textit{LGC} con rangos de valores \textit{alpha}=[0.90, 0.99] y \textit{tolerance}=[0.00001, 1]. Se muestran los resultados para los \textit{datasets}: \textit{iris, breast cancer y wine}.}{0.8}{LGC: estudio de influencia de parámetros (ampliación)}
 
 En cuanto a los dos primeros gráficos, se observa que los resultados son muy buenos a lo largo de todo el gráfico, con una \textit{accuracy} cerca o por encima del 90\% en todos los casos. Esto indica que para estos conjuntos de datos, el algoritmo es altamente efectivo y logra clasificaciones muy precisas.
 
@@ -146,7 +146,7 @@ D3.js proporciona la función \texttt{d3.forceSimulation} para crear una nueva s
 En este trabajo, se ha utilizado una simulación de fuerzas para representar un grafo en la web y destacan los siguientes aspectos de su configuración:
 
 \begin{itemize}
-	\item Se ha decidido hacer un grafo de fuerza central. Esta fuerza modifica las posiciones de los nodos en cada aplicación; no modifica las velocidades, ya que hacerlo normalmente haría que los nodos se sobrepasaran y oscilaran alrededor del centro deseado. Esta fuerza ayuda a mantener los nodos en el centro de la ventana gráfica~\cite{fuerzaCentral}. La fuerza de atracción tiene una intensidad de $0.1$. Aumentar este valor resultaría en una atracción más fuerte hacia el centro, concentrando los nodos. Disminuirlo reduciría la atracción, permitiendo una mayor dispersión.
+	\item Se ha decidido hacer un grafo de fuerza central. Esta fuerza modifica las posiciones de los nodos en cada aplicación; no modifica las velocidades, ya que hacerlo normalmente haría que los nodos se sobrepasaran y oscilaran alrededor del centro deseado. Esta fuerza ayuda a mantener los nodos en el centro de la ventana gráfica~\cite{fuerzaCentral}. La fuerza de atracción tiene una intensidad de 0.1. Aumentar este valor resultaría en una atracción más fuerte hacia el centro, concentrando los nodos. Disminuirlo reduciría la atracción, permitiendo una mayor dispersión.
 	\item \texttt{charge}: Añade una fuerza de repulsión entre los nodos. La fuerza de repulsión tiene una intensidad de $-100$. Un valor más negativo resultaría en una mayor repulsión entre nodos, dispersándolos más en el espacio. Un valor menos negativo (o positivo) disminuiría la repulsión, haciendo que los nodos se acerquen más entre sí. También se establece un valor de \texttt{theta(0.1)}: parámetro de precisión para el cálculo de la repulsión. Valores más bajos mejoran la precisión pero aumentan el tiempo de cálculo; valores más altos reducen la precisión y el tiempo de cálculo. Y por último un valor de \texttt{distanceMax(500)}: establece la distancia máxima a la que la fuerza de repulsión tiene efecto. Aumentar este valor incrementaría el rango de influencia de la repulsión, afectando a más nodos. Disminuirlo limitaría la repulsión a nodos más cercanos.
 	\item Durante cada evento \texttt{tick}, las posiciones de los nodos (\texttt{cx}, \texttt{cy}) y los enlaces (\texttt{x1}, \texttt{y1}, \texttt{x2}, \texttt{y2}) se actualizan para reflejar los cambios calculados por la simulación. Esto permite una representación dinámica y fluida del grafo en la interfaz web, mejorando la comprensión visual de la estructura y relaciones dentro del grafo.
 	
@@ -174,7 +174,7 @@ Para manejar las solicitudes HTTP, se ha utilizado Nginx como servidor web. \tex
 	\item \textbf{Configuración de Nginx}: Se crea y edita un archivo de configuración ubicado en \texttt{/etc/nginx/sites-available/} y se crea un enlace simbólico en \texttt{/etc/nginx/sites-enabled/}. Este archivo contiene las directivas para redirigir las solicitudes al servicio de \textit{gunicorn} (figura~\ref{fig:../img/memoria/nginxFile.png}).
 \end{itemize}
 
-\imagen{../img/memoria/nginxFile.png}{Parte de configuración del archivo \texttt{/etc/nginx/sites-enabled/default}}{1}
+\imagen{../img/memoria/nginxFile.png}{Parte de configuración del archivo \texttt{/etc/nginx/sites-enabled/default}}{1}{Configuración de \texttt{nginx}}
 
 \subsubsection{Implementación del Servidor de Aplicaciones}
 
@@ -185,7 +185,7 @@ Para manejar las solicitudes HTTP, se ha utilizado Nginx como servidor web. \tex
 	\item \textbf{Creación del servicio de gunicorn}: Se configura un servicio de \textit{systemd} para \textit{gunicorn}, permitiendo su gestión como un servicio del sistema. El archivo de configuración del servicio se guarda en \texttt{/etc/systemd/system/app-flask.service} (figura~\ref{fig:../img/memoria/app-flask.png}).
 \end{itemize}
 
-\imagen{../img/memoria/app-flask.png}{Archivo de configuración del servicio \textit{app-flask}}{1}
+\imagen{../img/memoria/app-flask.png}{Archivo de configuración del servicio \textit{app-flask}}{1}{Servicio que ejecuta \texttt{gunicorn}}
 
 \subsubsection{Gestión de Conexiones SSH}
 
@@ -226,3 +226,12 @@ Teóricamente, el flujo de trabajo completo involucra los siguientes pasos:
 \end{enumerate}
 
 Este flujo asegura que la aplicación web sea accesible y manejable de manera eficiente, aprovechando las capacidades de cada componente del sistema.
+
+\section{Calidad del Producto}
+La calidad del producto ha sido una prioridad en la fase final del desarrollo. Para asegurar que el código cumple con los estándares, se han implementado diversas herramientas y metodologías de control de calidad.
+
+En primer lugar, se ha utilizado \textbf{\textit{SonarCloud}} para el análisis estático del código. Esta herramienta ha permitido identificar y corregir errores, vulnerabilidades y problemas de mantenimiento de manera proactiva. Los análisis se realizaron finalizando el proyecto y han asegurado que el código se mantiene limpio, seguro y eficiente.
+
+Adicionalmente, se ha empleado \textbf{\textit{Lighthouse}} para evaluar el rendimiento, accesibilidad y mejores prácticas del producto. Los informes generados por \textit{Lighthouse} han proporcionado valiosas recomendaciones para optimizar la experiencia del usuario final.
+
+Dentro del propio código se utilizan herramientas que lo auto-organizan como \textit{autopep8} o \textit{Prettier} y lo evaluan como \textit{pylint} o \textit{mypy}.

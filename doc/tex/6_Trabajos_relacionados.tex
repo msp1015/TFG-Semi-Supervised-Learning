@@ -8,23 +8,23 @@ La implementación web desarrollada por David se destaca por su claridad, ofreci
 En resumen, la aplicación de David tiene dos grandes funcionalidades separadas: los algoritmos y la gestión de usuarios. Lo que realmente importa para este proyecto es la implementación web de la parte de los algoritmos. Se tiene una pantalla principal donde permite seleccinar el algoritmo, una posterior donde se introduce el dataset, una ventana de configuración de parámetros del algoritmo y por úlitmo la visualización de los resultados.\\
 La idea es mantener las mismas funcionalidades en el mismo orden, pudiendo modificar o extender ciertas partes gráficas que unifiquen o lo hagan más sencillo.
 
-\imagen{../img/memoria/vass1.png}{Página principal de la web \url{https://vass.dmacha.dev/}}{1}
+\imagen{../img/memoria/vass1.png}{Página principal de la web \url{https://vass.dmacha.dev/}}{0.9}{Página inicial de VASS 1.0}
 \subsection{ML Algorithm Visualizer}
 Como ya se ha comentado en la sección anterior, esta página web fue importante en el planteamiento del primer diseño de la web. Se trata de una página web de visualización de algoritmos de aprendizaje automático, cuyo sitio web es \url{https://ml-visualizer.herokuapp.com/}. Con un diseño compacto permite seleccionar el modelo junto con la configuración de sus paramétros y unos segundos más tarde mostrará el resultado en la misma página, todo ello en una misma ventana como se puede ver en la imagen \ref{fig:../img/memoria/MLVisual-web.png}. Es aquí donde se diferencia del objetivo de este proyecto, donde se busca tener las ejecuciones separadas paso por paso.
 
-\imagen{../img/memoria/MLVisual-web.png}{Captura de pantalla de la web \textit{ML Algorithm Visualizer}.}{0.9}
+\imagen{../img/memoria/MLVisual-web.png}{Captura de pantalla de la web \textit{ML Algorithm Visualizer}.}{0.9}{\textit{ML Algorithm Visualizer}}
 
 \subsection{Clustering Visualizer}
 Entre las muchas páginas web que existen de visualización de algoritmos, esta es de las pocas que se asemejan a una implementación de grafos, con sus nodos y sus enlaces. Permite visualizar diferentes algoritmos de clustering y análisis de datos, y, aunque no tenga mucha relación con los algoritmos implementados en este trabajo, la parte gráfica es interesante. En la figura \ref{fig:../img/memoria/clustering-visualizer.png} se observa una representación de nodos y enlaces clara, con diferentes colores para cada \textit{cluster}, lo que puede ser de gran ayuda a la hora de pensar la visualización de los grafos.
-\imagen{../img/memoria/clustering-visualizer.png}{Ejecución de \textit{Kmeans} en la web \url{https://clustering-visualizer.web.app/}}{0.9}
+\imagen{../img/memoria/clustering-visualizer.png}{Ejecución de \textit{Kmeans} en la web \url{https://clustering-visualizer.web.app/}}{0.9}{Ejecución de \textit{K-Means} en \textit{Clustering Visualizer}}
 \subsection{Aprendizaje semisupervisado en ciberseguridad}
-Este trabajo corresponde con el Trabajo Fin de Grado de Patricia Hernando. Pese a ser una herramienta destinada a la ciberseguridad, tiene relación con el actual trabajo en el uso de algoritmos semisupervisados. Permite ver la implementación y la explicación del código del Co-forest. Como ya se ha comentado, son de gran ayuda los estudios realizados para mejorar este algoritmo, ya que sirven para mostrar en la web una opción que permita seleccionar distintos valores y localizar diferencias en los resultados.
+Este trabajo corresponde con el Trabajo Fin de Grado de Patricia Hernando~\cite{TFG:Patricia}. Pese a ser una herramienta destinada a la ciberseguridad, tiene relación con el actual trabajo en el uso de algoritmos semisupervisados. Permite ver la implementación y la explicación del código del Co-Forest. Como ya se ha comentado, son de gran ayuda los estudios realizados para mejorar este algoritmo, ya que sirven para mostrar en la web una opción que permita seleccionar distintos valores y localizar diferencias en los resultados.
 
 \subsection{Kaggle Notebooks}
-Kaggle es una plataforma en línea que permite a los profesionales de la ciencia de datos competir en desafíos de análisis de datos, compartir sus soluciones y colaborar en proyectos de aprendizaje automático. Proporciona acceso a una amplia variedad de datasets y herramientas que facilitan el desarrollo y la experimentación con modelos de machine learning.
+\textit{Kaggle} es una plataforma en línea que permite a los profesionales de la ciencia de datos competir en desafíos de análisis de datos, compartir sus soluciones y colaborar en proyectos de aprendizaje automático.
 
-Una de las características más destacadas de Kaggle es su entorno de notebooks interactivos, conocidos como Kaggle Notebooks. Estos notebooks permiten a los usuarios cargar y explorar datasets de manera intuitiva y visual. Cuando se carga un archivo de datos en un Kaggle Notebook, su contenido se muestra automáticamente en forma de tabla, lo que facilita la inspección y comprensión de los datos (figura~\ref{fig:../img/memoria/kaggleNote.png}).
+Una de las características más destacadas de \textit{Kaggle} es su entorno de \textit{notebooks} interactivos, conocidos como \textit{Kaggle Notebooks}. Estos \textit{notebooks} permiten a los usuarios cargar y explorar datasets de manera intuitiva y visual. Cuando se carga un archivo de datos en un \textit{Kaggle Notebook}, su contenido se muestra automáticamente en forma de tabla, lo que facilita la inspección y comprensión de los datos (ver figura~\ref{fig:../img/memoria/kaggleNote.png}).
 
-\imagen{../img/memoria/kaggleNote.png}{Visualización de datos en \url{https://www.kaggle.com/code}}{1}
+\imagen{../img/memoria/kaggleNote.png}{Visualización de datos en \url{https://www.kaggle.com/code}}{0.9}{Tabla de datos en \textit{Kaggle Notebook}}
 
 Esta capacidad de visualización inmediata y eficiente ha inspirado el uso de tablas en este trabajo para la visualización de datos. Al mostrar los datos en formato tabular, es más sencillo identificar patrones, detectar anomalías y realizar análisis preliminares antes de proceder con las siguientes fases. 
