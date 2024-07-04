@@ -164,9 +164,9 @@ Para desplegar la aplicación en un entorno de producción usando Gunicorn y Ngi
     sudo apt install python3-gunicorn nginx
     \end{verbatim}
 
-    \item Navegar al directorio del proyecto e iniciar Gunicorn en el puerto 8000:
+    \item Navegar al directorio del proyecto (creado con los pasos vistos en el punto anterior) e iniciar Gunicorn en el puerto 8000:
     \begin{verbatim}
-    cd /ruta/a/TFG-Semi-Supervised-Learning/web/app
+    cd /ruta/a/TFG-Semi-Supervised-Learning/web
     gunicorn -b 0.0.0.0:8000 'app:create_app()'
     \end{verbatim}
 
@@ -231,11 +231,14 @@ Esta sección del proyecto se centra en las pruebas de la aplicación web para g
 
 En el marco de este proyecto, se ha decidido heredar todos los casos de prueba definidos en el trabajo anterior, garantizando así la continuidad y la cobertura de pruebas ya establecidas. Y se han añadido nuevos casos de prueba para cubrir las nuevas funcionalidades implementadas en la versión 2.0. Se ha necesitado redefinir los anteriores para adaptarlos al nuevo dominio y a una ruta válida de subida de archivos.
 
-En la figura \ref{fig:../img/anexos/testplan.drawio.pdf} se muestra la lista de pruebas que se han hecho en Selenium IDE, organizados en \textit{Test Suites}.
+En la figura~\ref{fig:../img/anexos/testplan.drawio.pdf} se muestra la lista de pruebas que se han hecho en Selenium IDE, organizados en \textit{Test Suites}.
 
 \imagen{../img/anexos/testplan.drawio.pdf}{Conjunto de test organizados en Test Suites}{Test Plan de la Web}{1}
 
-\begin{longtable}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
+\begin{table}[ht]
+	\centering
+	\renewcommand{\arraystretch}{1.5} % Para aumentar el espaciado entre filas
+	\begin{tabular}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
     \hline
     \rowcolor{gray!20}
     \textbf{ID} & CP-18\\
@@ -277,10 +280,14 @@ En la figura \ref{fig:../img/anexos/testplan.drawio.pdf} se muestra la lista de 
     \rowcolor{white}
     \textbf{Estado} & Exitoso\\
     \hline
+\end{tabular}
 	\caption[CP18: Ejecución Grafos]{CP18: Ejecución correcta y completa de grafos.}
-\end{longtable}
+\end{table}
 
-\begin{longtable}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
+\begin{table}[ht]
+	\centering
+	\renewcommand{\arraystretch}{1.5} % Para aumentar el espaciado entre filas
+	\begin{tabular}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
     \hline
     \rowcolor{gray!20}
     \textbf{ID} & CP-19\\
@@ -322,10 +329,14 @@ En la figura \ref{fig:../img/anexos/testplan.drawio.pdf} se muestra la lista de 
     \rowcolor{white}
     \textbf{Estado} & Exitoso\\
     \hline
+\end{tabular}
 	\caption[CP19: Ejecución Co-Forest]{CP18: Ejecución correcta y completa de Co-Forest.}
-\end{longtable}
+\end{table}
 
-\begin{longtable}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
+\begin{table}[ht]
+	\centering
+	\renewcommand{\arraystretch}{1.5} % Para aumentar el espaciado entre filas
+	\begin{tabular}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
     \hline
     \rowcolor{gray!20}
     \textbf{ID} & CP-20\\
@@ -365,53 +376,62 @@ En la figura \ref{fig:../img/anexos/testplan.drawio.pdf} se muestra la lista de 
     \rowcolor{white}
     \textbf{Estado} & Exitoso\\
     \hline
+\end{tabular}
 	\caption[CP20: Subida de archivo con usuario registrado]{CP20: Subida de archivo con usuario registrado}
-\end{longtable}
+\end{table}
 
-\begin{longtable}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
-    \hline
-    \rowcolor{gray!20}
-    \textbf{ID} & CP-21\\
-    \hline
-    \rowcolor{white}
-    \textbf{Prioridad} & Media \\
-    \hline
-    \rowcolor{gray!20}
-    \textbf{Fecha de Ejecución} & 03/07/2024 \\
-    \hline
-    \rowcolor{white}
-    \textbf{Tester} & Mario Sanz Pérez \\
-    \hline
-    \rowcolor{gray!20}
-    \textbf{Descripción} & Subida de archivo no legible sin usuario en sesión\\
-    \hline
-    \rowcolor{white}
-    \textbf{Precondiciones} & Sistema en funcionamiento, archivo no legible disponible\\
-    \hline
-    \rowcolor{white}
-    \textbf{Datos Utilizados} & Archivo no legible \texttt{error.txt}\\
-    \hline
-    \rowcolor{gray!20}
-    \textbf{Pasos} & \begin{enumerate}
-        \item Seleccionar cualquier algoritmo.
-        \item Seleccionar la opción para subir un nuevo archivo del equipo.
-        \item Confirmar la subida del archivo.
-        \item Confirmar la aparición de un mensaje de advertencia en lugar de la tabla de datos.
-        \item Seleccionar el botón <<Configurar Algoritmo>>.
-        \item Comprobar redirección a página de inicio.
-        \item Confirmar aparición de mensaje de error.
-    \end{enumerate}\\
-    \rowcolor{gray!20}
-    \textbf{Resultados esperados} & El sistema muestra un mensaje de error indicando que el archivo no es legible y redirige a la página de inicio\\
-    \hline
-    \hline
-    \rowcolor{white}
-    \textbf{Estado} & Exitoso\\
-    \hline
+\begin{table}[ht]
+	\centering
+	\renewcommand{\arraystretch}{1.5} % Para aumentar el espaciado entre filas
+	\begin{tabular}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
+		\hline
+		\rowcolor{gray!20}
+		\textbf{ID} & CP-21\\
+		\hline
+		\rowcolor{white}
+		\textbf{Prioridad} & Media \\
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Fecha de Ejecución} & 03/07/2024 \\
+		\hline
+		\rowcolor{white}
+		\textbf{Tester} & Mario Sanz Pérez \\
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Descripción} & Subida de archivo no legible sin usuario en sesión\\
+		\hline
+		\rowcolor{white}
+		\textbf{Precondiciones} & Sistema en funcionamiento, archivo no legible disponible\\
+		\hline
+		\rowcolor{white}
+		\textbf{Datos Utilizados} & Archivo no legible \texttt{error.txt}\\
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Pasos} & \begin{enumerate}
+			\item Seleccionar cualquier algoritmo.
+			\item Seleccionar la opción para subir un nuevo archivo del equipo.
+			\item Confirmar la subida del archivo.
+			\item Confirmar la aparición de un mensaje de advertencia en lugar de la tabla de datos.
+			\item Seleccionar el botón <<Configurar Algoritmo>>.
+			\item Comprobar redirección a página de inicio.
+			\item Confirmar aparición de mensaje de error.
+		\end{enumerate}\\
+		\hline
+		\rowcolor{gray!20}
+		\textbf{Resultados esperados} & El sistema muestra un mensaje de error indicando que el archivo no es legible y redirige a la página de inicio\\
+		\hline
+		\rowcolor{white}
+		\textbf{Estado} & Exitoso\\
+		\hline
+	\end{tabular}
 	\caption[CP21: Subida de archivo ilegible]{CP21: Subida de archivo ilegible}
-\end{longtable}
+\end{table}
 
-\begin{longtable}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
+
+\begin{table}[ht]
+	\centering
+	\renewcommand{\arraystretch}{1.5} % Para aumentar el espaciado entre filas
+	\begin{tabular}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
     \hline
     \rowcolor{gray!20}
     \textbf{ID} & CP-22\\
@@ -454,10 +474,15 @@ En la figura \ref{fig:../img/anexos/testplan.drawio.pdf} se muestra la lista de 
     \rowcolor{white}
     \textbf{Estado} & Exitoso\\
     \hline
+	\end{tabular}
 	\caption[CP22: Ejecución con fichero SS]{CP22: Ejecución con fichero semisupervisado}
-\end{longtable}
+	
+\end{table}
 
-\begin{longtable}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
+\begin{table}[ht]
+	\centering
+	\renewcommand{\arraystretch}{1.5} % Para aumentar el espaciado entre filas
+	\begin{tabular}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
     \hline
     \rowcolor{gray!20}
     \textbf{ID} & CP-23\\
@@ -502,10 +527,15 @@ En la figura \ref{fig:../img/anexos/testplan.drawio.pdf} se muestra la lista de 
     \rowcolor{white}
     \textbf{Estado} & Exitoso\\
     \hline
+\end{tabular}
 	\caption[CP23: Ejecución SS en grafos]{CP23: Ejecución de con fichero semisupervisado en grafos}
-\end{longtable}
+	
+\end{table}
 
-\begin{longtable}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
+\begin{table}[ht]
+	\centering
+	\renewcommand{\arraystretch}{1.5} % Para aumentar el espaciado entre filas
+	\begin{tabular}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
     \hline
     \rowcolor{gray!20}
     \textbf{ID} & CP-24\\
@@ -541,10 +571,14 @@ En la figura \ref{fig:../img/anexos/testplan.drawio.pdf} se muestra la lista de 
     \rowcolor{white}
     \textbf{Estado} & Exitoso\\
     \hline
+\end{tabular}
 	\caption[CP24: Redirección a artículos]{CP24: Redirección a artículos científicos en la web}
-\end{longtable}
+\end{table}
 
-\begin{longtable}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
+\begin{table}[ht]
+	\centering
+	\renewcommand{\arraystretch}{1.5} % Para aumentar el espaciado entre filas
+	\begin{tabular}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
     \hline
     \rowcolor{gray!20}
     \textbf{ID} & CP-25\\
@@ -589,10 +623,14 @@ En la figura \ref{fig:../img/anexos/testplan.drawio.pdf} se muestra la lista de 
     \rowcolor{white}
     \textbf{Estado} & Exitoso\\
     \hline
+\end{tabular}
 	\caption[CP25: Ejecución de tutoriales]{CP25: Ejecución de tutoriales en todas las ventanas.}
-\end{longtable}
+\end{table}
 
-\begin{longtable}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
+\begin{table}[ht]
+	\centering
+	\renewcommand{\arraystretch}{1.5} % Para aumentar el espaciado entre filas
+	\begin{tabular}{>{\raggedright\arraybackslash}p{4cm} p{9.5cm}}
     \hline
     \rowcolor{gray!20}
     \textbf{ID} & CP-26\\
@@ -630,6 +668,7 @@ En la figura \ref{fig:../img/anexos/testplan.drawio.pdf} se muestra la lista de 
     \rowcolor{white}
     \textbf{Estado} & Exitoso\\
     \hline
+    \end{tabular}
 	\caption[CP26: Ejecución desde cuenta de usuario]{CP26: Ejecución desde cuenta de usuario registrado.}
-\end{longtable}
+\end{table}
 
