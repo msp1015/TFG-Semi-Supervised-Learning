@@ -1,11 +1,135 @@
 \apendice{Documentación de usuario}
 
 \section{Introducción}
+Esta sección proporciona una visión general de la aplicación web, describiendo su propósito y las principales funcionalidades que ofrece. Se detallan los requisitos necesarios para poder usarla.
 
 \section{Requisitos de usuarios}
+En esta sección se enumeran los requisitos mínimos que los usuarios deben cumplir para utilizar la aplicación web de manera efectiva. Esto incluye:
+\begin{itemize}[noitemsep, topsep=5pt]
+	\item Navegador web compatible: Los usuarios deben tener un navegador moderno (como Google Chrome, Mozilla Firefox, Microsoft Edge, Safari) actualizado a la última versión.
+	\item Conexión a Internet: Se requiere una conexión a Internet estable y de banda ancha para acceder y utilizar todas las funcionalidades de la aplicación web.
+	\item Sistema operativo: La aplicación web es compatible con los principales sistemas operativos (Windows, macOS, Linux, Android, iOS).
+\end{itemize}
 
 \section{Instalación}
+No es necesario llevar a cabo ninguna instalación para usar la aplicación web, ya que está disponible en línea. Sin embargo, para los desarrolladores que deseen contribuir al proyecto o modificar el código, se proporciona el enlace al repositorio de GitHub. Instrucciones sobre cómo clonar el repositorio y configurar el entorno de desarrollo se encontrarán en el anexo D del documento \url{https://github.com/msp1015/TFG-Semi-Supervised-Learning/blob/main/doc/anexos.pdf}.
+
 
 \section{Manual del usuario}
+Antes de iniciar el manual, se ha creado un usuario administrador (igual que un
+usuario registrado pero con más privilegios) para probar la aplicación.
 
+\begin{tcolorbox}[colback=violet!5!white,colframe=violet!75!black,fontupper=\footnotesize,title=Credenciales administrador]
+	\begin{itemize}
+		\item Email: admin@admin.es
+		\item Contraseña: 12345678
+	\end{itemize}
+\end{tcolorbox}
 
+Con la ayuda de imágenes capturadas directamente de la web, esta sección
+describe cómo se realizan todas las acciones de la aplicación.
+
+Dado que la documentación presente se encuentra en español, todas las interfaces
+se mostrarán en español. Aun así, la aplicación está preparada para el idioma
+inglés de igual forma.
+
+Este manual está pensado para los usuarios anónimos y los usuarios con cuenta
+registrada.
+
+\subsection{Visualizar un algoritmo}
+
+El flujo para visualizar un algoritmo en el siguiente:
+
+\imagen{../img/anexos/manual-usuario/FlujoVisualizarAlgoritmo}{Flujo de la visualización de un algoritmo}{Flujo de la visualización de un algoritmo}{1}
+
+\subsubsection{Seleccionar algoritmo}
+Para seleccionar un algoritmo, se puede hacer de dos formas. La primera es haciendo clic a los enlaces que aparecen en la barra de navegación (que además está siempre presente en todas las pestañas) y también haciendo clic en las tarjetas de presentación de cada algoritmo en la página principal (ver figura~\ref{fig:../img/anexos/manual-usuario/Inicio - VASS}).
+
+\imagen{../img/anexos/manual-usuario/Inicio - VASS}{Página principal}{VASS: Página Principal}{1}
+
+Todo el área de la tarjeta actúa como botón de selección, y una vez se haya seleccionado, será redirigido a la página de subida del fichero. 
+
+Otra característica de estas tarjetas es que tiene un botón secundario con el cual se puede acceder al artículo científico (o al medio que lo publica) que define el comportamiento de cada algoritmo. Se abrirá una ventana nueva por lo que la sesión seguirá en el navegador.
+
+\subsubsection{Carga del conjunto de datos}
+
+El fichero contendrá el conjunto de datos. Para subir un fichero, simplemente se
+puede arrastrar desde el propio sistema hasta la zona marcada con rayas o
+abriendo el explorador de archivos con el botón de <<Selecciona fichero>> (ver
+figura~\ref{fig:../img/anexos/manual-usuario/Carga del conjunto de datos - VASS}).
+Podrá ver durante la carga el progreso de la misma.
+
+\imagen{../img/anexos/manual-usuario/Carga del conjunto de datos - VASS}{Carga del conjunto de datos}{VASS: Carga del conjunto de datos}{1}
+
+Si el usuario no dispone de un fichero, la aplicación incluye cuatro posibilidades para probar la aplicación. Pulsando en el botón <<Usa un fichero de prueba>> se establecerá en la sesión el fichero \texttt{iris.arff}, y pulsando en el desplegable, se podrá elegir entre las opciones \textit{Iris}, \textit{Breast Cancer}, \textit{Breast Cancer (SS)} o \textit{Diabetes}.
+
+La carga o selección de un fichero implica que la sesión del usuario, esté registrado o no, tenga un fichero establecido por defecto para siguientes ejecuciones.
+
+Si hay un fichero establecido en la sesión, aparecerá su contenido en forma de tabla interactiva, como se puede ver en la figura~\ref{fig:../img/anexos/manual-usuario/Carga de datos tabla - VASS}. En ella se podrá filtrar por orden cada fila y buscar un elemento en concreto.
+
+\imagen{../img/anexos/manual-usuario/Carga de datos tabla - VASS}{Selección de ejemplo y vista de tabla}{VASS: Carga del conjunto de datos con tabla}{1}
+
+\paragraph{Consideraciones del conjunto de datos} En primer lugar, los ficheros
+subidos solo podrán tener extensiones ARFF o CSV, en caso contrario, al intentar
+pasar al siguiente paso, el usuario será devuelto a esta misma página con un
+mensaje de error.
+
+El contenido del fichero de datos tiene que cumplir un requisito fundamental
+derivado de la ausencia de un pre-procesado completo: 
+
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,fontupper=\footnotesize,title=Requisito fundamental]
+	Todos los atributos del conjunto de datos deben ser numéricos (internamente los
+	algoritmos requieren de este tipo de datos), esto \textbf{no} incluye al
+	atributo de la clase, que sí puede ser categórico/nominal (esa parte del
+	pre-procesado sí que es realizada).
+\end{tcolorbox}
+
+Además, si el conjunto de datos es semi-supervisado, este debe tener -1, -1.0 o
+<<?>> en los datos no etiquetados. Si en un dato apara un -1 el resto de no
+etiquetados deben ser también -1.
+
+Para el caso de ARFF se debe tener en cuenta su propio formato. Por ejemplo, si
+la clase está declarada con varios valores, las etiquetan tiene que ser uno de
+esos valores. En este sentido, si se quiere indicar un no etiquetado (o
+desconocido) es donde se incorpora <<?>> (ARFF permite este símbolo incluso
+cuando no es un valor declarado en la lista de posibles valores).
+
+Las condiciones de entrada vienen especificadas al pulsar en el botón de la
+esquina superior derecha del recuadro de selección de fichero <<Condiciones>>.
+Al pulsar en él aparecerá una ventana emergente con dichas condiciones (ver
+figura~\ref{fig:../img/anexos/manual-usuario/Condiciones - VASS}).
+
+\imagen{../img/anexos/manual-usuario/Condiciones - VASS}{Condiciones de entrada}{Dataset: Condiciones de entrada}{0.6}
+
+En el caso de que se suba un fichero con la extensión correcta pero que tenga un formato no legible o cuándo directamente la extensión no es correcta, se advertirá al usuario en el lugar donde iría la tabla con datos, como se observa en la figura~\ref{fig:../img/anexos/manual-usuario/VASS - error Tabla}
+
+\imagen{../img/anexos/manual-usuario/VASS - error Tabla}{Mensaje de advertencia en caso de carga de datos errónea}{Carga de datos errónea}{1}
+
+Es importante remarcar que salvo la condición de la extensión, la aplicación no puede controlar en este punto el resto de condiciones (ocurrirán mensajes de error en durante el manejo posterior).
+
+Una vez que el fichero ha sido cargado (porcentaje completado), se habrá habilitado el botón de configuración. Pulsando en él, se redirigirá a la siguiente página del flujo (configuración).
+
+\subsubsection{Configuración del algoritmo}
+\label{mu:configuracion}
+Se encontrará en la página de configuración del algoritmo, donde podrá observar un apartado teórico con sus conceptos generales y su pseudocódigo. Por otro lado, tendrá un formulario con todos los parámetros que se pueden configurar para ese algoritmo (ver figura~\ref{fig:anexos/manual-usuario/Configuración del algoritmo - VASS}).
+
+\imagen{anexos/manual-usuario/Configuración del algoritmo - VASS}{Configuración del algoritmo}{Configuración del algoritmo}{1}
+
+Todos los parámetros tienen establecido un valor por defecto (con la
+configuración <<estable>>), pero se tiene libertad completa para modificar cada
+uno de ellos. El atributo <<clase>> se establece por defecto al valor de la última columna del conjunto de datos, ya que por defecto suele estar colocada siempre en esta posición. El usuario puede ejecutar directamente sin cambiar ningún valor en el caso que lo desee.
+
+Esta pantalla sigue un estándar para todos las posibles selecciones, pero en el caso de los grafos (donde el algoritmo implementado se selecciona en la configuración), la pantalla de la teoría cambia mínimamente (ver figura~\ref{fig:anexos/manual-usuario/Tarjeta teoría grafos}). Se puede cambiar entre la teoría de inferencia y la de construcción del grafo, y el contenido dentro de este también cambiará dinámicamente según el algoritmo que esté seleccionado en el formulario de parámetros.
+
+\imagen{anexos/manual-usuario/Tarjeta teoría grafos}{Tarjeta de teoría en la configuración de grafos}{Tarjeta de teoría de grafos}{1}
+
+Una vez configurado, se puede visualizar el algoritmo pulsando en el botón de
+\button{Ejecutar}.
+
+\subsubsection{Visualización}
+\label{mu:visualizacion}
+Ya en la página de visualización, se mostrará durante unos momentos una animación de carga. Cuando el sistema haya finalizado la ejecución, se podrán ver los distintos gráficos (ver figura~\ref{fig:anexos/manual-usuario/Visualización - VASS}).
+
+En principio, los errores que ocurran en el sistema serán mostrados. Sin embargo, en el caso de que la animación dure un periodo de tiempo excesivo, se recomienda reintentar la configuración (podrían ser problemas de red simplemente).
+
+\imagen{anexos/manual-usuario/Visualización - VASS}{Vista general de una visualización}{Vista general de visualización}{1}

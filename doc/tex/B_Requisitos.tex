@@ -7,7 +7,7 @@ Los objetivos generales del sistema se podrían resumir en:
 
 \begin{enumerate}
 	\item Investigar sobre el aprendizaje semisupervisado: en que consisten los \textit{ensembles} y como funcionan los algoritmos basados en grafos.
-	\item Implementar los algoritmos: \textit{Co-Forest, GBILI, RGCLI, LGC y}
+	\item Implementar los algoritmos: \textit{Co-Forest, GBILI, RGCLI, LGC}
 	\item Mejorar y ampliar la web de visualización de estos algoritmos que otro alumno había desarrollado el año anterior.
 \end{enumerate}
 \section{Catálogo de requisitos}
@@ -29,11 +29,10 @@ En este caso, al tratarse de un trabajo heredado, los requisitos son la mayoría
 		\item \textbf{RF-1.2 Selección desde página de inicio}: la otra posibilidad de acceso a los algoritmos es a través de las tarjetas situadas en la página inicial.
 	\end{itemize}
 	\item \textbf{RF-2 Selección de conjunto de datos}: la aplicación debe
-	permitir elegir un fichero \texttt{ARFF} o \texttt{ACSV} para ejecutar el algoritmo.
+	permitir elegir un fichero \texttt{ARFF} o \texttt{CSV} para ejecutar el algoritmo.
 	\begin{itemize}
 		\item \textbf{RF-2.1 Selección ya cargada}: la aplicación debe dar la opción de usar un fichero sin necesidad de descargarlo o subirlo.
-		\item \textbf{RF-2.2 Descarga de conjunto de datos}: el sistema debe permitir la descarga de estos ficheros a los que se puede acceder y que la aplicación ya contiene.
-		\item \textbf{RF-2.3 Carga de ficheros}: debe de haber una opción que permita cargar un archivo con las extensiones definidas. Tanto arrastrando el archivo como buscándolo en el explorador de ficheros.
+		\item \textbf{RF-2.2 Carga de ficheros}: debe de haber una opción que permita cargar un archivo con las extensiones definidas. Tanto arrastrando el archivo como buscándolo en el explorador de ficheros.
 	\end{itemize} 
 	\item \textbf{RF-3 Visualizar datos de entrada en forma de tabla}: la aplicación debe permitir visualizar los datos de entrada en forma de tabla para que el usuario tenga más contexto del conjunto de datos que está usando.
 	\item \textbf{RF-4 Configuración del algoritmo}: la aplicación debe	permitir configurar la ejecución del algoritmo con los parámetros específicos del mismo.
@@ -54,8 +53,7 @@ En este caso, al tratarse de un trabajo heredado, los requisitos son la mayoría
 	\item \textbf{RF-7 Acceso a ayudas}: la aplicación debe dar varias opciones que ayuden al usuario a comprender el contenido de la web y a utilizarla de manera correcta.
 	\begin{itemize}
 		\item \textbf{RF-6.1 Acceso a teoría y pseudocódigos}: la aplicación debe permitir visualizar el pseudocódigo junto con algo de teoría para comprender mejor el contenido.
-		\item \textbf{RF-6.2 Acceso a implementación del código}: la aplicación debe permitir acceder a la implementación de los algoritmos como recurso por si se quiere utilizar en el equipo del usuario.
-		\item \textbf{RF-6.3 Acceso al manual de usuario}.
+		\item \textbf{RF-6.2 Acceso al manual de usuario}.
 	\end{itemize}
 	\item \textbf{RF-8 Acceder al artículo del algoritmo}: desde la página de inicio se puede acceder al artículo científico en el que se define el comportamiento de cada algoritmo concreto.
 \end{itemize}
@@ -67,10 +65,10 @@ Extraídos de la memoria de David~\cite{TFG:David}, se han resumido y reordenado
 	\item \textbf{RNF-2 Accesibilidad}: el sistema debe poder abarcar el mayor público posible, facilitando su acceso y su manejo independientemente de las capacidades personales.
 	\item \textbf{RNF-3 Interoperabilidad}: el sistema debe poder utilizarse en el mayor número posible de sistemas (sistemas operativos, navegadores) dada su naturaleza Web.
 	\item \textbf{RNF-4 Mantenibilidad}: el sistema debe ser fácil de modificar, mejorar o adaptar cuando se presenten nuevas necesidades.
-	\item \textbf{RNF-5 Seguridad}: el sistema debe asegurar la información sensible (mediante cifrado y controles de accesos) y debe ser accesible mediante protocolos segurizados (SSL).
+	\item \textbf{RNF-5 Seguridad}: el sistema debe asegurar la información sensible (mediante cifrado y controles de accesos) y debe ser accesible mediante protocolos segurizados (\textit{Secure Sockets Layer}, SSL).
 	\item \textbf{RNF-6 Privacidad}: el sistema debe respetar la información privada y, de ninguna forma, compartirla con terceros. Debe ser un espacio reservado confidencial con el usuario.
 	\item \textbf{RNF-7 Escalabilidad}: el sistema debe ser capaz de crecer para ajustarse a la carga de trabajo.
-	\item \textbf{RNF-8 Usabilidad}: el sistema debe ser altamente capaz de manejar los errores durante la ejecución (entradas erróneas,\textit{bugs}...), mostrando información precisa al usuario y recuperándos de ellos a una situación estable. Las interfaces deben ser intuitivas para facilitar al usuario sus tareas.
+	\item \textbf{RNF-8 Usabilidad}: el sistema debe ser altamente capaz de manejar los errores durante la ejecución (entradas erróneas, \textit{bugs}, etc.), mostrando información precisa al usuario y recuperándos de ellos a una situación estable. Las interfaces deben ser intuitivas para facilitar al usuario sus tareas.
 	\item \textbf{RNF-9 Internacionalización}: el sistema debe estar preparado para soportar el inglés y el español.
 	
 \end{itemize}
@@ -80,7 +78,7 @@ Un diagrama de casos de uso ayuda a visualizar el sistema desde la perspectiva d
 
 De nuevo, la mayoría de los casos de uso se heredan del trabajo anterior y se modifican o se crean unos pocos. Para facilitar la comprensión, en la figura~\ref{fig:../img/anexos/CasosDeUso.drawio.pdf} se han pintado de verde aquellos que se han modificado, de azul los nuevos y de negro los que ya existían.
 
-\imagen{../img/anexos/CasosDeUso.drawio.pdf}{Diagrama de casos de uso. En verde los modificados, en azul los nuevos y en negro los que ya existían}
+\imagen{../img/anexos/CasosDeUso.drawio.pdf}{Diagrama de casos de uso. En verde los modificados, en azul los nuevos y en negro los que ya existían}{Diagrama de casos de uso}{1}
 
 A continuación se definirán los casos de uso implementados y modificados en este proyecto. Para ver el resto de casos de uso, acceder a la documentación del archivo <<anexos.pdf>> en \url{https://github.com/dmacha27/TFG-SemiSupervisado/tree/main/doc}. Se utilizará el identificador del anterior trabajo para aquellos que se hayan modificado y se seguirá la secuencia para los nuevos.
 
@@ -118,7 +116,7 @@ A continuación se definirán los casos de uso implementados y modificados en es
 		\textbf{Importancia}          & Alta\\
 		\bottomrule
 	\end{tabularx}
-	\caption{Caso de uso 1: Visualizar un algoritmo.}
+	\caption[CU-01: Visualizar un algoritmo]{Caso de uso 1: Visualizar un algoritmo.}
 \end{table}
 
 % Caso de Uso 2 -> Seleccionar algoritmo.
@@ -154,7 +152,7 @@ A continuación se definirán los casos de uso implementados y modificados en es
 		\textbf{Importancia}          & Alta \\
 		\bottomrule
 	\end{tabularx}
-	\caption{Caso de uso 2: Seleccionar algoritmo.}
+	\caption[CU-02: Seleccionar un algoritmo]{Caso de uso 2: Seleccionar algoritmo.}
 \end{table}
 
 % Caso de Uso 3 -> Cargar conjunto de datos.
@@ -186,7 +184,7 @@ A continuación se definirán los casos de uso implementados y modificados en es
 		\textbf{Importancia}          & Alta \\
 		\bottomrule
 	\end{tabularx}
-	\caption{Caso de uso 3: Seleccionar conjunto de datos.}
+	\caption[CU-03: Seleccionar conjunto de datos]{Caso de uso 3: Seleccionar conjunto de datos.}
 \end{table}
 
 
@@ -227,7 +225,7 @@ A continuación se definirán los casos de uso implementados y modificados en es
 		\textbf{Importancia}          & Alta \\
 		\bottomrule
 	\end{tabularx}
-	\caption{Caso de uso 4: Configurar algoritmo.}
+	\caption[CU-04: Configurar un algoritmo]{Caso de uso 4: Configurar algoritmo.}
 \end{table}
 
 % Caso de Uso 5 -> Controlar visualizaciones GSSL.
@@ -258,7 +256,7 @@ A continuación se definirán los casos de uso implementados y modificados en es
 		\textbf{Importancia}          & Alta \\
 		\bottomrule
 	\end{tabularx}
-	\caption{Caso de uso 5: Controlar visualizaciones (grafos).}
+	\caption[CU-05: Controlar visualización de grafos]{Caso de uso 5: Controlar visualizaciones (grafos).}
 \end{table}
 
 
@@ -286,7 +284,7 @@ A continuación se definirán los casos de uso implementados y modificados en es
 		\textbf{Importancia}          & Baja \\
 		\bottomrule
 	\end{tabularx}
-	\caption{Caso de uso 19: Acceder a documentación del algoritmo}
+	\caption[CU-19: Acceder a documentación del algoritmo]{Caso de uso 19: Acceder a documentación del algoritmo}
 \end{table}
 
 % Caso de uso 20 --> Ver resumen de datos de entrada
@@ -317,7 +315,7 @@ A continuación se definirán los casos de uso implementados y modificados en es
 		\textbf{Importancia}          & Media \\
 		\bottomrule
 	\end{tabularx}
-	\caption{Caso de uso 20: Ver tabla con resumen de datos de entrada.}
+	\caption[CU-20: Ver tabla con resumen de datos de entrada]{Caso de uso 20: Ver tabla con resumen de datos de entrada.}
 \end{table}
 
 %Caso de uso 21 --> Visualizar tutoriales
@@ -348,5 +346,5 @@ A continuación se definirán los casos de uso implementados y modificados en es
 		\textbf{Importancia}          & Media \\
 		\bottomrule
 	\end{tabularx}
-	\caption{Caso de uso 21: Visualizar tutoriales.}
+	\caption[CU-21: Visualizar tutoriales]{Caso de uso 21: Visualizar tutoriales.}
 \end{table}
