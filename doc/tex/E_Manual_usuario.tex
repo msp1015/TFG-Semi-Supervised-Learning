@@ -102,11 +102,11 @@ figura~\ref{fig:../img/anexos/manual-usuario/Condiciones - VASS}).
 
 \imagen{../img/anexos/manual-usuario/Condiciones - VASS}{Condiciones de entrada}{Dataset: Condiciones de entrada}{0.6}
 
-En el caso de que se suba un fichero con la extensión correcta pero que tenga un formato no legible o cuándo directamente la extensión no es correcta, se advertirá al usuario en el lugar donde iría la tabla con datos, como se observa en la figura~\ref{fig:../img/anexos/manual-usuario/VASS - error Tabla}
+En el caso de que se suba un fichero con la extensión correcta pero que tenga un formato no legible o cuando directamente la extensión no es correcta, se advertirá al usuario en el lugar donde iría la tabla con datos, como se observa en la figura~\ref{fig:../img/anexos/manual-usuario/VASS - error Tabla}.
 
 \imagen{../img/anexos/manual-usuario/VASS - error Tabla}{Mensaje de advertencia en caso de carga de datos errónea}{Carga de datos errónea}{1}
 
-Es importante remarcar que salvo la condición de la extensión, la aplicación no puede controlar en este punto el resto de condiciones (ocurrirán mensajes de error en durante el manejo posterior).
+Es importante remarcar que salvo la condición de la extensión, la aplicación no puede controlar en este punto el resto de condiciones (ocurrirán mensajes de error durante el manejo posterior).
 
 Una vez que el fichero ha sido cargado (porcentaje completado), se habrá habilitado el botón de configuración. Pulsando en él, se redirigirá a la siguiente página del flujo (configuración).
 
@@ -135,18 +135,14 @@ Aun así, existen elementos comunes como una animación de carga mientras se eje
 
 En principio, los errores que ocurran en el sistema serán mostrados. Sin embargo, en el caso de que la animación dure un periodo de tiempo excesivo, se recomienda reintentar la configuración (podrían ser problemas de red simplemente).
 
-\paragraph{Visualización principal de algoritmos inductivos} En el gráfico principal se mostrará el conjunto de datos en dos dimensiones. Aquí podrá verse qué es lo que ocurre durante el proceso de entrenamiento del algoritmo (ver~\ref{fig:anexos/manual-usuario/Visualización principal}).
+\paragraph{Visualización principal de algoritmos inductivos} En el gráfico principal se mostrará el conjunto de datos en dos dimensiones. Aquí podrá verse qué es lo que ocurre durante el proceso de entrenamiento del algoritmo (ver~\ref{fig:anexos/manual-usuario/Visualizacion principal}).
 
-\imagen{anexos/manual-usuario/Visualización principal}{Visualización principal}
+\imagen{anexos/manual-usuario/Visualizacion principal}{Visualización principal}{Visualización principal}{1}
 
 Este gráfico es interactivo:
 \begin{itemize}
-    \item Permite realizar \texttt{zoom} sobre una zona deseada mediante el
-    doble clic o moviendo la ruleta del ratón.
-    \item Al pasar el ratón por uno de los puntos, se mostrará toda la
-    información relativa a esa posición en un recuadro informativo (aparecerá en
-    las proximidades del ratón). Esto se está ejemplificando en la imagen
-    anterior.
+    \item Permite realizar \texttt{zoom} sobre una zona deseada mediante el doble clic o moviendo la ruleta del ratón (ampliando si es táctil).
+ 	\item Al pasar el ratón por uno de los puntos, se mostrará toda la información relativa a esa posición en un recuadro informativo (aparecerá en las proximidades del ratón). Esto se está ejemplificando en la imagen~\ref{fig:anexos/manual-usuario/Visualizacion principal}.
 \end{itemize}
 
 Para controlar la evolución, en la parte inferior se encuentra un panel de
@@ -307,43 +303,71 @@ En este ejemplo solo un clasificador ha clasificado cada dato solapado. Se ha
 elegido este ejemplo porque, como es de esperar, si los tres clasificadores
 etiquetan, el \textit{tooltip} crecerá de igual manera.
 
-\paragraph{Gráficos estadísticos} Pasando a otra parte de la ventana completa de
-visualización, en la zona de la derecha se incluirá el resto de gráficos
+\paragraph{\textit{Tooltip}: \textit{Co-Forest}} el caso del algoritmo \textit{Co-Forest} es muy parecido al de \textit{Democratic Co-Learning}. Un dato puede ser clasificado por varios árboles de decisión en cada iteración, ya que cada árbol tiene su propio conjunto de entrenamiento. No es igual que \textit{Tri-Training} ya que un clasificador no puede clasificar dos veces al mismo dato. En este caso desaparece el dibujo que identifica cual es cada clasificador, ya que únicamente se utilizan árboles de decisión. Por ello directamente se identifican por <<CLF>> y el número del árbol, como se puede ver en la figura~\ref{fig:anexos/manual-usuario/tooltips/CF-ClasificadosFinal}.
+	
+\imagen{anexos/manual-usuario/tooltips/CF-ClasificadosFinal}{\textit{Tooltip} de ejecución final del Co-Forest}{\textit{Tooltip} del Co-Forest}{0.3}
+
+\paragraph{Gráficos estadísticos} Pasando a otra parte de la ventana completa de visualización, en la zona de la derecha se incluirá el resto de gráficos
 adicionales, que serán principalmente estadísticas.
 
 \imagen{anexos/manual-usuario/ZonaEstadisticas}{Gráficos estadísticos}{Gráficos estadísticos}{1}
 
-En la parte superior de esta zona se tiene un desplegable (contraído por
-defecto) que contiene el pseudocódigo (el mismo que en la fase de
-configuración). Si se desea consultar, simplemente se pulsa en cualquier parte
-del desplegable (ver figura~\ref{fig:anexos/manual-usuario/Pseudocodigo}).
+En la parte superior de esta zona se tiene un desplegable (contraído por defecto) que contiene el pseudocódigo (el mismo que en la fase de configuración). Si se desea consultar, simplemente se pulsa en cualquier parte del desplegable (ver figura~\ref{fig:anexos/manual-usuario/Pseudocodigo}).
 
 \imagen{anexos/manual-usuario/Pseudocodigo}{Desplegable pseudocódigo}{Desplegable pseudocódigo}{1}
 
 El gráfico de estadísticas generales simplemente será a interpretación del
 usuario (no puede realizar ninguna opción). 
 
-En el caso de las estadísticas específicas puede seleccionar qué estadística
-mostrar mediante el selector superior, y de qué clasificadores mostrarla
-mediante las casillas en la parte inferior (ver
-figura~\ref{fig:anexos/manual-usuario/ZonaEstadisticas}).
+En el caso de las estadísticas específicas puede seleccionar qué estadística mostrar mediante el selector superior, y de qué clasificadores mostrarla mediante las casillas en la parte inferior (ver figura~\ref{fig:anexos/manual-usuario/ZonaEstadisticas}).
 
-Ambos gráficos anteriores contienen información similar, en el eje $X$ se
-indican las iteraciones y en el eje $Y$ el valor de la estadística(s).
+Un caso particular es el gráfico de estadísticas específicas del \textit{Co-Forest}, ya que es común utilizar muchos árboles de decisión, puede que el usuario no interprete bien la información, y para facilitar la visualización existen dos selectores que permiten marcar todos los clasificadores o no marcar ninguno (ver figura~\ref{fig:anexos/manual-usuario/especificasCoForest})
 
-\paragraph{Visualización principal de algoritmos transductivos} %TODO: Añadir
+\imagen{anexos/manual-usuario/especificasCoForest}{Estadísticas específicas en \textit{Co-Forest}}{\textit{Co-Forest}: estadísticas específicas}{1}
 
+Ambos gráficos anteriores contienen información similar, en el eje $X$ se indican las iteraciones y en el eje $Y$ el valor de la estadística(s).
+
+\paragraph{Visualización principal de algoritmos transductivos} Entramos ahora en la otra posible visualización de algoritmos: los grafos. Como se ha comentado, la división de la pantalla es igual, pero con contenido diferente (ver figura~\ref{fig:anexos/manual-usuario/Visualizacion principal grafos}).
+
+\imagen{anexos/manual-usuario/Visualizacion principal grafos}{Página de visualización de grafos}{Visualización general de grafos}{1}
+
+La visualización principal se puede manejar usando los mismos botones que para los algoritmos inductivos, pero con un botón añadido.
+
+\imagen{anexos/manual-usuario/controlesGrafos}{Controles para grafos}{Controles de grafos}{0.5}
+
+Además de poder hacer zoom, el botón nuevo se puede ver en la figura~\ref{fig:anexos/manual-usario/controlesGrafos}. Este únicamente estará disponible al llegar al último paso del algoritmo. Detallar que el texto que aparece será la fase o paso del algoritmo actual en ese momento.
+
+La visualización principal muestra un grafo no dirigido representado por nodos y enlaces (ver figura~\ref{fig:anexos/manual-usuario/visualizacion grafos}).
+\imagen{anexos/manual-usuario/visualizacion grafos}{Visualización principal del grafo}{Visualización de un grafo}{1}
+
+Los nodos del grafo pueden ser pulsados para que resalte tanto él mismo, como los enlaces y sus vecinos en cada paso. Esto permite al usuario localizar cuales son los vecinos de un nodo en grafos que están muy <<apelotonados>>. Un clic en cualquier otra parte del gráfico quitará esta selección. Cuando se pasa de fase, si se mantiene pulsado, el nodo se actualizará con sus vecinos actuales (ver figura~\ref{fig:anexos/manual-usuario/nodo seleccionado dos pasos}).
+
+\imagen{anexos/manual-usuario/nodo seleccionado dos pasos}{Nodo seleccionado en dos fases seguidas del algoritmo}{Nodo seleccionado en grafo}{0.5}
+
+En la última iteración se permite al usuario <<jugar>> con el grafo, pudiendo arrastrar nodos y con ellos a sus vecinos. Además, como se ha comentado antes, se habilitará el botón de <<Inferir etiquetas>> visto en la figura~\ref{fig:anexos/manual-usuario/controlesGrafos}. Al pulsar este botón cambiarán los valores de las etiquetas de los nodos no clasificados con una transición (ver figura~\ref{fig:anexos/manual-usuario/transicion inferencia}), además de habilitar la sección que se explicará a continuación.
+
+\imagen{anexos/manual-usuario/transicion inferencia}{Instante de inferencia sobre los nodos}{Instantánea de fase de inferencia en nodos}{0.8}
+
+Como último detalle, la leyenda en este caso es interactiva, y si se pulsa en cualquiera de las clases o etiquetas, se verán los datos iniciales con esa clase, esté en la fase que esté el algoritmo, únicamente mostratá los iniciales, como es el caso de la figura~\ref{fig:anexos/manual-usuario/leyenda grafos}, en el que se han inferido las etiquetas y posteriormente se ha pulsado en una clase.
+
+\imagen{anexos/manual-usuario/leyenda grafos}{Datos iniciales de una clase}{Grafos: datos iniciales de una clase}{0.8}
+
+La sección de la parte derecha de la pantalla, vista en la figura~\ref{fig:anexos/manual-usuario/Visualizacion principal grafos}, inicialmente contendrá la explicación de cada fase junto con su pseudocódigo. De manera que a medida que el usuario vaya avanzando, este contenido cambie. Al inferir las etiquetas se mostrará lo siguiente en la parte derecha:
+
+\imagen{anexos/manual-usuario/resultados inferencia general}{Resultados de inferencia en grafos}{Resultados de inferencia en grafos}{0.8}
+
+Se considera importante destacar que esta sección se ha cambiado con respecto a los inductivos porque los grafos no contienen una fase de test, lo que hace que la evaluación tenga que ser sobre los datos que no estaban etiquetados. Inicialmente se ve la matriz de confusión y el cálculo de sus métricas, pero se puede cambiar para ver las métricas específicas de cada clase (ver figura~\ref{fig:anexos/manual-usuario/resultados inferencia clase}) 
+
+\imagen{anexos/manual-usuario/resultados inferencia clase}{Resultados de inferencia de una clase concreta}{Resultados de inferencia en grafos en clase concreta}{0.8}
+
+Indicar que los colores del gráfico de tarta son representativos con los de la matriz de confusión, representando así cómo se calcula cada valor del gráfico.
 \subsection{Tutoriales y cambio de idioma}
 
-Aunque la propia aplicación detecta el idioma más adecuado (entre español e
-inglés) que mostrar, se puede seleccionar el idioma de forma manual.
+Aunque la propia aplicación detecta el idioma más adecuado (entre español e inglés) que mostrar, se puede seleccionar el idioma de forma manual.
 
-En la barra de navegación hay un símbolo de traducción característico que al
-pulsar aparece un desplegable.
+En la barra de navegación hay un símbolo de traducción característico que al pulsar aparece un desplegable.
 
-También hay un icono con una interrogación, este es un enlace directo al manual
-de usuario de la aplicación (esta documentación). Al pulsar en él se abre una
-nueva pestaña con dicho manual (sin modificar la actual y sin descargar).
+También hay un icono con una interrogación, este es un enlace directo al manual de usuario de la aplicación (esta documentación). Al pulsar en él se abre una nueva pestaña con dicho manual (sin modificar la actual y sin descargar).
 
 Estas funciones pueden verse en la figura~\ref{fig:anexos/manual-usuario/Cambiar
 de idioma}.
@@ -375,7 +399,7 @@ deben rellenar los siguientes campos (todos obligatorios):
     \item Confirmar contraseña: misma contraseña que el campo anterior.
 \end{itemize}
 
-\imagen{anexos/manual-usuario/Registrarse - VASS}{Formulario de registro}
+\imagen{anexos/manual-usuario/Registrarse - VASS}{Formulario de registro}{Formulario de Registro}{0.5}
 
 Una vez enviado el formulario (y después de la comprobación de todos los
 campos), la cuenta quedará registrada y se habrá iniciado sesión
@@ -388,7 +412,7 @@ de navegación (en la parte derecha) que redirecciona al formulario de inicio de
 sesión (ver
 figura~\ref{fig:anexos/manual-usuario/Iniciar sesión - VASS}).
 
-\imagen{anexos/manual-usuario/Iniciar sesión - VASS}{Formulario de inicio de sesión}
+\imagen{anexos/manual-usuario/Iniciar sesión - VASS}{Formulario de inicio de sesión}{Formulario de inicio de sesión}{0.5}
 
 Este formulario es más sencillo y solo requiere el correo electrónico y
 contraseña introducidos en el registro, o los nuevos si se han modificado (la
@@ -504,7 +528,7 @@ Exactamente igual a los conjuntos de datos, las ejecuciones pueden
 una ventana emergente de confirmación similar a la anterior (ver
 figura~\ref{fig:anexos/manual-usuario/EliminarRun - VASS}).
 
-\imagen{anexos/manual-usuario/EliminarRun - VASS}{Eliminar ejecución}{Eliminar ejecución}{1}
+\imagen{anexos/manual-usuario/EliminarRun - VASS}{Eliminar ejecución}{Eliminar ejecución}{0.6}
 
 
 \section{Manual del administrador}
@@ -535,13 +559,12 @@ figura~\ref{fig:anexos/manual-usuario/DesplegablePanel}).
 
 Una vez dentro, se tiene un menú organizado en pestañas donde ver las tres
 tablas (ver figuras~\ref{fig:anexos/manual-usuario/PanelUsuarios - VASS}
-(Administración de usuarios),~\ref{fig:anexos/manual-usuario/PanelDatasets -
-VASS} (Conjuntos de datos subidos) y~\ref{fig:anexos/manual-usuario/PanelRuns -
+(Administración de usuarios),~\ref{fig:anexos/manual-usuario/PanelDatasets -VASS} (Conjuntos de datos subidos) y~\ref{fig:anexos/manual-usuario/PanelRuns -
 VASS} (Historial de ejecuciones)).
 
 \imagen{anexos/manual-usuario/PanelUsuarios - VASS}{Administración de usuarios}{Administración de usuarios}{1}
 
-\imagen{anexos/manual-usuario/PanelDatasets - VASS}{Conjuntos de datos subidos}{Conjuntos de datos subidos}{1}
+\imagen{anexos/manual-usuario/PanelDatasets -VASS}{Conjuntos de datos subidos}{Conjuntos de datos subidos}{1}
 
 \imagen{anexos/manual-usuario/PanelRuns - VASS}{Historial de ejecuciones}{Historial de ejecuciones}{1}
 
@@ -581,7 +604,4 @@ registro):
 
 Si lo que se quiere es \textbf{eliminar} un usuario, el proceso es el mismo que
 se ha visto para el resto de eliminaciones. Se debe pulsar en el botón
-\button[vassred]{\faTrash} y se pedirá confirmación del proceso (ver
-figura~\ref{fig:anexos/manual-usuario/EliminarUsuario - VASS}).
-
-\imagen{anexos/manual-usuario/EliminarUsuario - VASS}{Eliminación de usuario}{Eliminación de usuario}{1}
+\button[vassred]{\faTrash} y se pedirá confirmación del proceso.
