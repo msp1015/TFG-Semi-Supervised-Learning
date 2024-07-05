@@ -68,6 +68,27 @@ La estructura de directorios del proyecto es fundamental para entender cómo est
 \end{description}
 	
 \section{Manual del programador}
+En esta sección se comentarán aquellos aspectos que se consideran más relevantes para que un programador pueda entender el \textit{backend} de la aplicación. Para ello, se explicará el proceso típico de adición de un algoritmo, dejando de lado la gestión de usuarios en la que se centra más el trabajo~\cite{TFG:David}. 
+
+La primera fase consiste en la implementación del algoritmo. Hay que tener en cuenta que la versión de Python utilizada es la 3.11 (la más actual hasta el inicio del proyecto). Se debe añadir a la carpeta \texttt{algoritmos} el archivo que contendrá la clase que representa al algoritmo. En el caso de que sea inductivo, los métodos más típicos se deben denominar: \texttt{fit} y \texttt{predict}, para que cuando se lanze desde flask, todo esté automatizado. El método fit, a la vez que va ejecutando el algoritmo, debe ir almacenando en una estructura (preferiblemente \textit{DataFrame}) los datos que se van a representar en la visualización. Para ello el programador debe saber en que lugar y momento del código debe almacenar los datos.
+
+En el otro caso, con los métodos transductivos, existen dos posibles algoritmos, el de fase de construcción del grafo y el de fase de inferencia de etiquetas. De nuevo cada uno separado en un archivo que contendrá la definición de una clase. Los algoritmos de construcción de grafos vistos en artículos científicos generalmente reflejan una solución en forma de conjunto de enlaces o en forma de matriz de pesos. Esto no nos interesa en este caso, por lo que se debe buscar la manera de organizar el algoritmo en varias fases (las que se representarán en la web) y devolver los grafos de cada momento o fase. Es decir, lo que devolverá el método de \texttt{construirGrafo} serán varios diccionarios en representación a cada fase del algoritmo. Estos diccionarios deben tener la forma {Número de nodo: [Conjunto de vecinos enlazados], ...}. En cuanto a la fase de inferencia, el algoritmo que se quiera implementar, siempre va a necesitar el grafo final construido, para localizar sus enlaces y tenerlos en cuenta. El algoritmo de inferencia depende de cada caso, pero se debe tener un método final que prediga todas las etiquetas de los datos que no estaban etiquetados. En el caso del \textit{Local and Global Consistency} no tiene sentido separar por fases los resultados, ya que puede tener miles de iteraciones variando un mismo resultado esas mil veces, lo que no aporta información valiosa al usuario. En caso de que el algoritmo se pueda dividir en fases, habría que pensar en cómo almacenar los datos para su representación.
+
+Una vez se tienen los algoritmos implementados, es hora de utilizarlos en la web. Para ello, se deben crear los elementos estáticos, como la tarjeta de selección inicial, la opción en el menú de navegación, el pseudocódigo tanto en inglés como en español y un icono representativo. La parte previa a la ejecución de estos nuevos algoritmos será la de configuración. Para ello es importante destacar que existe un archivo llamado \texttt{parametros.json} el cual contiene todos los posibles parámetros de configuración de los clasificadores (en caso de los inductivos) y de los algoritmos (en caso de los transductivos) (ver figura~\ref{fig:anexos/parametros}).
+
+\imagen{anexos/parametros}{Estructura archivo \texttt{parametros.json}}{\texttt{parametros.json}}{0.8}
+
+Se debe distinguir en que clave de entre \textit{Inductive}, \textit{Inference} o \textit{Graphs} se deben incluir los parámetros. Otro detalle importante es que para traducir estos parámetros, como otro recurso diferente a \textit{Babel}, se utiliza un diccionario propio.
+
+Una vez se tienen estos parámetros, se debe seguir el proceso de crear o modificar los métodos:
+\begin{itemize}
+	\item En \texttt{configuration\_routes}: en el método \texttt{configurar\_algoritmo} se debe crear el formulario correspondiente a cada uno.
+	\item  En \texttt{visualization\_routes}: se debe crear un método \texttt{parametros\_algoritmoX}: recogerá los parámetros introducidos en el formulario de configuración y se los pasa a la plantilla HTML.
+	\item En la plantilla HTML del algoritmo, se debe crear una llamada al método \texttt{inicializar} o a métodos que hagan lo propio. Este método realiza una petición POST a una ruta no visualizada donde ejecuta los algoritmos. Los parámetros anteriores se pasarán a este nuevo plano y los tendrá en cuenta.
+	\item En \texttt{data\_routes}: crear método \texttt{datosAlgoritmoX} el cuál llamará, según su tipo, al método que devuelve toda la información (en formato JSON) de la ejecución. Estos métodos que obtiene los datos instancian la clase del algoritmo y obtienen su resultado. También se encargan de procesar los resultados. Es decir, en los grafos, es necesario sacar la información de: nodos, enlaces, predicciones y mapa de clases; y en los inductivos se deberá obtener: iteraciones, log, estadísticas y mapa de clases.
+\end{itemize}
+
+Una vez se tienen los datos procesados, se pueden usar en el javascript y HTML para crear los gráficos y elementos que se crean oportunos.
 
 \section{Compilación, Instalación y Ejecución del Proyecto}
 
