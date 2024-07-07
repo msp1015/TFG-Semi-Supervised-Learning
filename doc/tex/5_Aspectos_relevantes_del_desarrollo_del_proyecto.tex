@@ -154,10 +154,10 @@ En este trabajo, se ha utilizado una simulación de fuerzas para representar un 
 
 En resumen, la configuración de la simulación de fuerzas en D3.js permite controlar de manera precisa la disposición de los nodos y enlaces del grafo, ajustando las fuerzas de repulsión y atracción para obtener una representación visual óptima. En este caso se ha utilizado una configuración compacta para que el grafo se vea dentro del marco de visualización.
 
-\subsection{Despliegue de la Aplicación Web}
+\section{Despliegue de la Aplicación Web}
 En este trabajo, se ha desplegado una aplicación web utilizando diversas herramientas y servicios. A continuación, se detallan los pasos seguidos y la teoría detrás de cada uno de ellos~\cite{deployApp}.
 
-\subsubsection{Preparación del Entorno de Despliegue}
+\subsection{Preparación del Entorno de Despliegue}
 
 Para desplegar la aplicación web, se ha utilizado un servidor en la nube proporcionado por \textit{Azure}, aprovechando el mes gratuito que ofrece este proveedor. El primer paso consistió en crear una cuenta en \textit{Azure} y configurar una máquina virtual (VM) adecuada para ejecutar la aplicación.
 
@@ -165,7 +165,7 @@ Para desplegar la aplicación web, se ha utilizado un servidor en la nube propor
 	\item \textbf{Creación de la VM en \textit{Azure}}: Se selecciona una imagen de sistema operativo (Ubuntu en mi caso) y se configuran los parámetros de red, almacenamiento y seguridad. \textit{Azure} proporciona una interfaz gráfica para facilitar este proceso.
 \end{itemize}
 
-\subsubsection{Configuración del Servidor Web}
+\subsection{Configuración del Servidor Web}
 
 Para manejar las solicitudes HTTP, se ha utilizado Nginx como servidor web. \textit{Nginx} es conocido por su alto rendimiento y eficiencia en la gestión de conexiones concurrentes. La configuración de \textit{Nginx} se realiza mediante un archivo de configuración, donde se definen aspectos como el servidor que escucha en el puerto 80 y el \textit{proxy} hacia \textit{gunicorn}.
 
@@ -176,7 +176,7 @@ Para manejar las solicitudes HTTP, se ha utilizado Nginx como servidor web. \tex
 
 \imagen{../img/memoria/nginxFile.png}{Parte de configuración del archivo \texttt{/etc/nginx/sites-enabled/default}}{1}{Configuración de \texttt{nginx}}
 
-\subsubsection{Implementación del Servidor de Aplicaciones}
+\subsection{Implementación del Servidor de Aplicaciones}
 
 \textit{Gunicorn} se utiliza como servidor de aplicaciones \textit{WSGI} para ejecutar la aplicación web desarrollada en Python. \textit{Gunicorn} es eficiente y compatible con varios \textit{frameworks} web de Python.
 
@@ -187,7 +187,7 @@ Para manejar las solicitudes HTTP, se ha utilizado Nginx como servidor web. \tex
 
 \imagen{../img/memoria/app-flask.png}{Archivo de configuración del servicio \textit{app-flask}}{1}{Servicio que ejecuta \texttt{gunicorn}}
 
-\subsubsection{Gestión de Conexiones SSH}
+\subsection{Gestión de Conexiones SSH}
 
 Para la conexión segura a la VM y la gestión remota de los servicios, se ha utilizado \textit{MobaXterm}. Esta herramienta permite la conexión SSH y proporciona una interfaz gráfica para la administración de archivos y ejecución de comandos.
 
@@ -195,7 +195,7 @@ Para la conexión segura a la VM y la gestión remota de los servicios, se ha ut
 	\item \textbf{Configuración de MobaXterm}: Se configura una nueva sesión SSH utilizando la dirección IP de la VM y las credenciales correspondientes.
 \end{itemize}
 
-\subsubsection{Adquisición de Dominio}
+\subsection{Adquisición de Dominio}
 
 Finalmente, se adquirió un dominio mediante \textbf{Namecheap} para asociarlo con la aplicación web. Este paso incluye la configuración de los registros DNS para que apunten a la dirección IP de la VM.
 
@@ -204,7 +204,7 @@ Finalmente, se adquirió un dominio mediante \textbf{Namecheap} para asociarlo c
 	\item \textbf{Configuración de DNS}: Se configuran los registros A en Namecheap para que apunten a la IP de la VM, permitiendo que el dominio redirija correctamente las solicitudes.
 \end{itemize}
 
-\subsubsection{Obtención de Certificado de Seguridad}
+\subsection{Obtención de Certificado de Seguridad}
 
 Para asegurar la comunicación entre el cliente y el servidor, se ha obtenido un certificado de seguridad SSL utilizando \textbf{\textit{Certbot}}. \textit{Certbot} es una herramienta gratuita y automatizada para obtener y renovar certificados SSL de \textit{Let's Encrypt}.
 
@@ -214,7 +214,7 @@ Para asegurar la comunicación entre el cliente y el servidor, se ha obtenido un
 \end{itemize}
 
 
-\subsubsection{Flujo de Trabajo Completo}
+\subsection{Flujo de Trabajo Completo}
 
 Teóricamente, el flujo de trabajo completo involucra los siguientes pasos:
 
