@@ -1,69 +1,69 @@
 \apendice{Documentación técnica de programación}
 
 \section{Introducción}
-Este anexo proporciona una documentación detallada sobre la programación del proyecto. Aquí se abordan aspectos cruciales como la estructura de directorios, los pasos para la compilación, instalación y ejecución del proyecto, así como las pruebas del sistema. Este documento está dirigido a desarrolladores y contribuyentes que deseen entender y trabajar con el código fuente del proyecto.
+Este anexo proporciona una documentación detallada sobre la programación del proyecto. Aquí se abordan aspectos cruciales como la estructura de directorios, los pasos para la compilación, instalación y ejecución del proyecto, así como las pruebas del sistema. Este documento está dirigido a desarrolladores que deseen entender y trabajar con el código fuente del proyecto.
 
 \section{Estructura de directorios}
 La estructura de directorios del proyecto es fundamental para entender cómo está organizado el código y dónde se encuentran los diferentes componentes. A continuación se muestra una representación visual de la estructura de directorios:
 
 \begin{description}[style=nextline, labelindent=0pt, itemsep=1ex]
-    \item[TFG-Semi-Supervised-Learning/:] ruta padre del proyecto
+    \item[\texttt{TFG-Semi-Supervised-Learning/}:] ruta padre del proyecto
         \begin{description}[style=nextline, labelindent=0pt, itemsep=1ex]
-            \item[algoritmos/:] algoritmos de aprendizaje semisupervisado implementados. Cada uno de ellos está programado como una clase, para luego usarlo como un objeto en la aplicación web.
+            \item[\texttt{algoritmos/:}] algoritmos de aprendizaje semisupervisado implementados. Cada uno de ellos está programado como una clase, para luego usarlo como un objeto en la aplicación web.
                 \begin{description}[style=nextline, labelindent=0pt, itemsep=1ex]
-                    \item[experimentos:] contiene notebooks de Jupyter con experimentos y pruebas de los algoritmos de grafos. Puede ser ignorado ya que tiene un propósito de depuración.
-                    \item[utilidades:] utilidades que realizan ciertos pasos de la aplicación y de los algoritmos (comunes).
+                    \item[\texttt{experimentos:}] contiene notebooks de Jupyter con experimentos y pruebas de los algoritmos de grafos. Puede ser ignorado ya que tiene un propósito de depuración.
+                    \item[\texttt{utilidades:}] utilidades que realizan ciertos pasos de la aplicación y de los algoritmos (comunes).
                 \end{description}
-            \item[docs/:] documentación del proyecto hecha con \LaTeX{}.
+            \item[\texttt{docs/:}] documentación del proyecto hecha con \LaTeX{}.
                 \begin{description}[style=nextline, labelindent=0pt, itemsep=1ex]
-                    \item[img:] imágenes utilizadas en la documentación (tanto en la memoria como en la documentación técnica)
-                    \item[tex:] archivos \LaTeX{} de la memoria y anexos separados por secciones.
+                    \item[\texttt{img:}] imágenes utilizadas en la documentación (tanto en la memoria como en la documentación técnica)
+                    \item[\texttt{tex:}] archivos \LaTeX{} de la memoria y anexos separados por secciones.
                 \end{description}
-            \item[web/:] aplicación web de la versión 2.0 del proyecto.
+            \item[\texttt{web/:}] aplicación web de la versión 2.0 del proyecto.
                 \begin{description}[style=nextline, labelindent=0pt, itemsep=1ex]
-                    \item[app/:] contiene el código fuente de la aplicación web.
+                    \item[\texttt{app/:}] contiene el código fuente de la aplicación web.
                         \begin{description}[style=nextline, labelindent=0pt, itemsep=1ex]
-                            \item[\_\_init\_\_.py:] inicializa la aplicación y configura las rutas através del método \texttt{create\_app()}.
-                            \item[datasets/:] directorio donde se almacenan los archivos que se usarán en la web.
+                            \item[\texttt{\_\_init\_\_.py:}] inicializa la aplicación y configura las rutas através del método \texttt{create\_app()}.
+                            \item[\texttt{datasets/:}] directorio donde se almacenan los archivos que se usarán en la web.
                                 \begin{description}[style=nextline, labelindent=0pt, itemsep=1ex]
-                                    \item[anonimos/:] archivos anónimos subidos por los usuarios.
-                                    \item[registrados/:] archivos subidos por los usuarios registrados.
-                                    \item[seleccionar/:] archivos para probar la aplicación.
+                                    \item[\texttt{anonimos/:}] archivos anónimos subidos por los usuarios.
+                                    \item[\texttt{registrados/:}] archivos subidos por los usuarios registrados.
+                                    \item[\texttt{seleccionar/:}] archivos para probar la aplicación.
                                 \end{description}
-                            \item[static/:] contiene los archivos estáticos de la aplicación (CSS, JS, imágenes).
+                            \item[\texttt{static/:}] contiene los archivos estáticos de la aplicación (CSS, JS, imágenes).
                                 \begin{description}[style=nextline, labelindent=0pt, itemsep=1ex]
-                                    \item[css/:] contiene los estilos CSS de la aplicación. En un único archivo \texttt{style.css}.
-                                    \item[js/:] contiene los scripts de JavaScript de la aplicación.
+                                    \item[\texttt{css/:}] contiene los estilos CSS de la aplicación. En un único archivo \texttt{style.css}.
+                                    \item[\texttt{js/:}] contiene los scripts de JavaScript de la aplicación.
                                         \begin{description}[style=nextline, labelindent=0pt, itemsep=1ex]
-                                            \item[configuración/:] scripts de ventana configuración de los algoritmos.
-                                            \item[usuarios/:] scripts de ventanas de usuarios.
-                                            \item[visualización/:] scripts de ventanas de visualización.
+                                            \item[\texttt{configuración/:}] scripts de ventana configuración de los algoritmos.
+                                            \item[\texttt{usuarios/:}] scripts de ventanas de usuarios.
+                                            \item[\texttt{visualización/:}] scripts de ventanas de visualización.
                                         \end{description}
-                                    \item[json/:] contiene el archivo de parámetros de configuración de los algoritmos.
-                                    \item[pseudocodigos/:] imágenes de los pseudocódigos de los algoritmos (en formato PNG para la web y PDF para el usuario).
+                                    \item[\texttt{json/:}] contiene el archivo de parámetros de configuración de los algoritmos.
+                                    \item[\texttt{pseudocodigos/:}] imágenes de los pseudocódigos de los algoritmos (en formato PNG para la web y PDF para el usuario).
                                 \end{description}
-                            \item[runs/:] directorio donde se almacenan los resultados de las ejecuciones de los algoritmos (en formato JSON).
-                            \item[templates/:] contiene las plantillas HTML de la aplicación.
+                            \item[\texttt{runs/:}] directorio donde se almacenan los resultados de las ejecuciones de los algoritmos (en formato JSON).
+                            \item[\texttt{templates/:}] contiene las plantillas HTML de la aplicación.
                                 \begin{description}[style=nextline, labelindent=0pt, itemsep=1ex]
-                                    \item[configuracion/:] plantillas de configuración de los algoritmos.
-                                    \item[usuarios/:] plantillas de las ventanas de usuarios.
-                                    \item[visualizacion/:] plantillas de las ventanas de visualización.
+                                    \item[\texttt{configuracion/:}] plantillas de configuración de los algoritmos.
+                                    \item[\texttt{usuarios/:}] plantillas de las ventanas de usuarios.
+                                    \item[\texttt{visualizacion/:}] plantillas de las ventanas de visualización.
                                 \end{description}
                         \end{description}
-                    \item[translations/:]
+                    \item[\texttt{translations/:}]
                         \begin{description}[style=nextline, labelindent=0pt, itemsep=1ex]
-                            \item[es/:]
+                            \item[\texttt{es/:}]
                                 \begin{description}[style=nextline, labelindent=0pt, itemsep=1ex]
-                                    \item[LC\_MESSAGES/:] contiene los archivos de traducción de la aplicación, el .po será el archivo de traducción y el .mo el archivo compilado.
+                                    \item[\texttt{LC\_MESSAGES/:}] contiene los archivos de traducción de la aplicación, el .po será el archivo de traducción y el .mo el archivo compilado.
                                 \end{description}
                         \end{description}
-                    \item[instance:] contiene la base de datos de la aplicación (SQLite).
-                    \item[tests:] contiene el proyecto de pruebas de la aplicación web, hecho con Selenium IDE.
+                    \item[\texttt{instance:}] contiene la base de datos de la aplicación (SQLite).
+                    \item[\texttt{tests:}] contiene el proyecto de pruebas de la aplicación web, hecho con Selenium IDE.
                         \begin{description}[style=nextline, labelindent=0pt, itemsep=1ex]
-                            \item[ficheros:] ficheros que se utilizan en las pruebas, uno de error y otro válido.
+                            \item[\texttt{ficheros:}] ficheros que se utilizan en las pruebas, uno de error y otro válido.
                         \end{description}
                 \end{description}
-            \item[venv/:] entorno virtual de Python.
+            \item[\texttt{venv/:}] entorno virtual de Python.
         \end{description}
 \end{description}
 	
@@ -72,13 +72,13 @@ En esta sección se comentarán aquellos aspectos que se consideran más relevan
 
 La primera fase consiste en la implementación del algoritmo. Hay que tener en cuenta que la versión de Python utilizada es la 3.11 (la más actual hasta el inicio del proyecto). Se debe añadir a la carpeta \texttt{algoritmos} el archivo que contendrá la clase que representa al algoritmo. En el caso de que sea inductivo, los métodos más típicos se deben denominar: \texttt{fit} y \texttt{predict}, para que cuando se lanze desde flask, todo esté automatizado. El método fit, a la vez que va ejecutando el algoritmo, debe ir almacenando en una estructura (preferiblemente \textit{DataFrame}) los datos que se van a representar en la visualización. Para ello el programador debe saber en que lugar y momento del código debe almacenar los datos.
 
-En el otro caso, con los métodos transductivos, existen dos posibles algoritmos, el de fase de construcción del grafo y el de fase de inferencia de etiquetas. De nuevo cada uno separado en un archivo que contendrá la definición de una clase. Los algoritmos de construcción de grafos vistos en artículos científicos generalmente reflejan una solución en forma de conjunto de enlaces o en forma de matriz de pesos. Esto no nos interesa en este caso, por lo que se debe buscar la manera de organizar el algoritmo en varias fases (las que se representarán en la web) y devolver los grafos de cada momento o fase. Es decir, lo que devolverá el método de \texttt{construirGrafo} serán varios diccionarios en representación a cada fase del algoritmo. Estos diccionarios deben tener la forma {Número de nodo: [Conjunto de vecinos enlazados], ...}. En cuanto a la fase de inferencia, el algoritmo que se quiera implementar, siempre va a necesitar el grafo final construido, para localizar sus enlaces y tenerlos en cuenta. El algoritmo de inferencia depende de cada caso, pero se debe tener un método final que prediga todas las etiquetas de los datos que no estaban etiquetados. En el caso del \textit{Local and Global Consistency} no tiene sentido separar por fases los resultados, ya que puede tener miles de iteraciones variando un mismo resultado esas mil veces, lo que no aporta información valiosa al usuario. En caso de que el algoritmo se pueda dividir en fases, habría que pensar en cómo almacenar los datos para su representación.
+En el otro caso, con los métodos transductivos, existen dos posibles algoritmos, el de la fase de construcción del grafo y el de la fase de inferencia de etiquetas. De nuevo cada uno separado en un archivo que contendrá la definición de una clase. Los algoritmos de construcción de grafos vistos en artículos científicos generalmente reflejan una solución en forma de conjunto de enlaces o en forma de matriz de pesos. Esto no nos interesa en este caso, por lo que se debe buscar la manera de organizar el algoritmo en varias fases (las que se representarán en la web) y devolver los grafos de cada momento o fase. Es decir, lo que devolverá el método de \texttt{construirGrafo} serán varios diccionarios en representación a cada fase del algoritmo. Estos diccionarios deben tener la forma \texttt{\{Número de nodo: [Conjunto de vecinos enlazados], ...\}}. En cuanto a la fase de inferencia, el algoritmo que se quiera implementar, siempre va a necesitar el grafo final construido, para localizar sus enlaces y tenerlos en cuenta. El algoritmo de inferencia depende de cada caso, pero se debe tener un método final que prediga todas las etiquetas de los datos que no estaban etiquetados. En el caso del \textit{Local and Global Consistency} no tiene sentido separar por fases los resultados, ya que puede tener miles de iteraciones variando un mismo resultado esas mil veces, lo que no aporta información valiosa al usuario. En caso de que el algoritmo se pueda dividir en fases, habría que pensar en cómo almacenar los datos para su representación.
 
 Una vez se tienen los algoritmos implementados, es hora de utilizarlos en la web. Para ello, se deben crear los elementos estáticos, como la tarjeta de selección inicial, la opción en el menú de navegación, el pseudocódigo tanto en inglés como en español y un icono representativo. La parte previa a la ejecución de estos nuevos algoritmos será la de configuración. Para ello es importante destacar que existe un archivo llamado \texttt{parametros.json} el cual contiene todos los posibles parámetros de configuración de los clasificadores (en caso de los inductivos) y de los algoritmos (en caso de los transductivos) (ver figura~\ref{fig:anexos/parametros}).
 
-\imagen{anexos/parametros}{Estructura archivo \texttt{parametros.json}}{\texttt{parametros.json}}{0.8}
+\imagen{anexos/parametros}{Estructura archivo \texttt{parametros.json}}{Contenido del archivo \texttt{parametros.json}}{0.65}
 
-Se debe distinguir en que clave de entre \textit{Inductive}, \textit{Inference} o \textit{Graphs} se deben incluir los parámetros. Otro detalle importante es que para traducir estos parámetros, como otro recurso diferente a \textit{Babel}, se utiliza un diccionario propio.
+Se debe distinguir en qué clave de entre \textit{Inductive}, \textit{Inference} o \textit{Graphs} se deben incluir los parámetros. Otro detalle importante es que para traducir estos parámetros, como otro recurso diferente a \textit{Babel}, se utiliza un diccionario propio.
 
 Una vez se tienen estos parámetros, se debe seguir el proceso de crear o modificar los métodos:
 \begin{itemize}
@@ -160,7 +160,7 @@ Para instalar el proyecto, se deben seguir los siguientes pasos en una terminal 
 
 \subsection{Uso}
 
-Para ejecutar la aplicación, siga los siguientes pasos:
+Para ejecutar la aplicación, se deben seguir los siguientes pasos:
 
 \begin{enumerate}
     \item Iniciar la aplicación:

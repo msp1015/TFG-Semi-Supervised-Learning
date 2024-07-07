@@ -5,7 +5,7 @@ Este apéndice tiene como propósito proporcionar una visión detallada del proc
 Además, este documento explora en profundidad el estudio de viabilidad realizado, abarcando aspectos tanto legales como económicos. El análisis legal es crucial para asegurar que el proyecto cumpla con todas las normativas y legislaciones aplicables, minimizando así posibles riesgos legales. Por otro lado, el estudio económico proporciona una evaluación detallada de la viabilidad financiera del proyecto, incluyendo estimaciones de costes y beneficios.
 
 \section{Planificación temporal}
-Como se explica en la sección 4 de la memoria, la metodología a seguir es Scrum, salvando las distancias con el número de personas que suele haber en un contexto habitual, ya que únicamente habrá un desarrollador.
+Como se explica en la sección 4 de la memoria, el marco de desarrollo de trabajo a seguir es Scrum, salvando las distancias con el número de personas que suele haber en un contexto habitual, ya que únicamente habrá un desarrollador.
 El proyecto se elige antes de empezar el curso, únicamente para poder informarse y leer articulos relacionados con el tema del aprendizaje semi supervisado. Al inicio con sprint más largos y a medida que se avanza en el desarrollo los sprints se reducen a una o dos semanas de duración, realizando una reunión al inicio de cada uno.
 
 
@@ -17,7 +17,7 @@ Este sprint corresponde a las fechas entre el 7 de noviembre y el 18 de diciembr
 	\item Encontrar un programa adecuado para el seguimiento del proyecto que soporte Scrum.
 \end{itemize}
 
-El repositorio se crea siguiendo la plantilla de documentación ya creada en 2016 y publicada en Github, se puede acceder a través del enlace \url{https://github.com/msp1015/TFG-Semi-Supervised-Learning}. Para poder empezar a familiarizarse con \LaTeX{} es necesario instalar los programas necesarios en el equipo local. Se prueban TeXstudio y TeXworks como editores, y por gusto y comodidad se elige TeXstudio como editor de archivos. También se instala MiKTex, que es una distribución de TeX/\LaTeX{} para sistemas operativos Windows.
+El repositorio se crea siguiendo la plantilla de documentación ya creada en 2016 y publicada en Github, se puede acceder a través del enlace \url{https://github.com/msp1015/TFG-Semi-Supervised-Learning}. Para poder empezar a familiarizarse con \LaTeX{} es necesario instalar los programas necesarios en el equipo local. Se prueban TeXstudio y TeXworks como editores, y por gusto y comodidad se elige TeXstudio como editor de archivos. También se instala MiKTex, que es una distribución de \TeX/\LaTeX{} para sistemas operativos Windows.
 Se continua con la lectura establecida, adquiriendo conceptos de ensembles, estos son, ¿Qué es el boosting? ¿Qué es el bagging? ¿Qué posibilidades hay de combinar varios modelos? entre otros.
 
 En cuanto al programa utilizado para el seguimiento de las tareas y sprints, se prueban varios como Zenhub, Jira y Taiga. El primero era la mejor opción dado su relacion con Github, pero al ser de pago se descarta. Entre Jira y Taiga se elige la segunda por su accesibilidad, los numerosos problemas de Jira hacen que la plataforma de Taiga sea la elegida.
@@ -41,7 +41,7 @@ Sprint correspondiente a las fechas entre el 15 de enero y el 1 de febrero. Se t
 	\item Continuar documentando los conceptos teóricos (ensembles, Co-Forest).
 \end{itemize}
 
-En este periodo se completa la lectura del artículo del algoritmo Co-Forest y del apartado del trabajo de Patricia y sus estudios relacionados con este algoritmo. El principal estudio que realiza consiste en resolver un error del pseudocódigo, donde un valor podía coger el valor 0 cuando se utiliza como divisor. Mediante tres propuestas, se inicializa este valor con diferentes operaciones y se muestran varias gráficas para poder evaluar la mejor opción.
+En este periodo se completa la lectura del artículo del algoritmo Co-Forest y del apartado del trabajo de Patricia y sus estudios relacionados con este algoritmo. El principal estudio que realiza consiste en resolver un error del pseudocódigo, donde un valor podía coger el valor cero cuando se utiliza como divisor. Mediante tres propuestas, se inicializa este valor con diferentes operaciones y se muestran varias gráficas para poder evaluar la mejor opción.
 
 Se realiza una búsqueda amplia de aplicaciones web para visualización de algoritmos, apuntando y explicando las más interesantes en el apartado 6 de la memoria.
 Se realiza la implementación de la técnica de Scrum en el apartado 4 de la memoria.
@@ -78,7 +78,7 @@ Se inicia con una reunión el 7 de marzo, surge un cambio de planes, dejando las
 	\item Continuar documentación (Co-Forest, trabajos relacionados)
 	\item El trabajo será una versión 2.0 del desarrollo de David.
 	\item Esto implica tener que familiarizarse con el trabajo de David, su estructura, web, etc.
-	\item Corregir estilo de programación. Estandarizar mediante la guía de estilo de python, PEP8~\cite{PEP8}.
+	\item Corregir estilo de programación. Estandarizar mediante la guía de estilo de Python, PEP8~\cite{PEP8}.
 	\item Revisar Co-Forest debido a que la comparación con el de Patricia no es del todo buena.
 	
 \end{itemize} 
@@ -154,7 +154,7 @@ Este Sprint se utiliza sobretodo para leer e investigar acerca de los métodos t
  
 Se realiza un estudio para la elección de una biblioteca en el uso de grafos, que se puede encontrar en los aspectos relevantes. Finalmente se decide utilizar \textit{NetworkX} por su facilidad de uso y aprendizaje.
 
-En cuánto a los arreglos del Co-Forest, se realizan las dos primeras tareas marcadas y se deja para más adelante cambiar la visualización del \textit{tooltip}. El problema con la última iteración provenía de la manera en la que se devolvía el número de iteraciones. Los datos se guardaban correctamente, pero teniendo en cuenta que las iteraciones comienzan en 0, se estaba devolviendo un valor mayor del que debería. 
+En cuanto a los arreglos del Co-Forest, se realizan las dos primeras tareas marcadas y se deja para más adelante cambiar la visualización del \textit{tooltip}. El problema con la última iteración provenía de la manera en la que se devolvía el número de iteraciones. Los datos se guardaban correctamente, pero teniendo en cuenta que las iteraciones comienzan en 0, se estaba devolviendo un valor mayor del que debería. 
 
 \subsection{Sprint 12}
 Sprint correspondiente a la siguiente semana entre el 25 de abril y el 2 de mayo. Se mandan las siguientes tareas:
@@ -219,7 +219,7 @@ Sprint correspondiente a los días entre el 23 y el 30 de mayo. En la reunión s
 En este tiempo el trabajo no sufre gran cambio. Mientras se intenta integrar finalmente la visualización de los grafos en la web final, se realiza un proyecto en paralelo únicamente dedicado a la visualización de grafos en una web. Para ello se intenta simular una ejecución real en este subproyecto, generando un \textit{json} con los resultados de la ejecución, como se hacía con el \textit{Co-Forest} y después visualizando, con ayuda de la librería \textit{d3.js}, los grafos en cada paso. Esto lleva bastante tiempo debido a la inexperiencia con el uso de simulaciones en \textit{javascript} y a la complejidad de representar diferentes pasos dentro de un grafo.
 
 \subsection{Sprint 17}
-Sprint correspondiente a los días entre el 30 de mayo y el 6 de junio. Se decide llevar el trabajo a julio y se definen las siguientes tareas:
+Sprint correspondiente a los días entre el 30 de mayo y el 6 de junio. Se decide llevar el trabajo a segunda convocatoria (julio) y se definen las siguientes tareas:
 \begin{itemize}
 	\item Corregir \textit{RGCLI}.
 	\item Continuar la integración en la web de los algoritmos.
@@ -251,7 +251,7 @@ En la visualización, se pretende corregir: poner las imágenes definitivas de l
 
 Además, se realiza el planteamiento que surgió en los primeros sprints de generar un resumen de los datos cada vez que se sube un archivo. Se añade también la funcionalidad de seleccionar un fichero por defecto, en lugar de tener que descargarlo.
 
-Al inicio de este periodo se descubre \textit{Lighthouse}, una herramienta la cual permite evaluar el rendimiento de una web. Proporciona tanto métricas como consejos de implementación para mejorar el rendimiento. Se pretende usar en lo que queda de tiempo para cumplir con los consejos y tener buenas métricas tanto en dispositivo móvil como en escritorio.
+Al inicio de este periodo se descubre \textit{Lighthouse}, una herramienta que permite evaluar el rendimiento de una web. Proporciona tanto métricas como consejos de implementación para mejorar el rendimiento. Se pretende usar en lo que queda de tiempo para cumplir con los consejos y tener buenas métricas tanto en dispositivo móvil como en escritorio.
 
 \subsection{Sprint 19}
 Sprint correspondiente a los días entre el 20 de junio y 4 de julio. Se definen las siguientes tareas:
@@ -285,14 +285,14 @@ Los costes en el desarrollo de software son los recursos económicos necesarios 
 
 \paragraph{Costes de empleados}
 
-Los costes de empleados incluyen salarios y otros gastos asociados con la contratación y retención de personal cualificado, como desarrolladores, diseñadores, gestores de proyectos y personal de soporte. En este caso solo hay un desarrollador que tiene todas las funciones anteriores y un tutor que actúa como soporte y gestor del proyecto. Teniendo en cuenta que el salario mínimo de un programador \textit{junior} en España es de 23666€ actualizado a día 10 de junio de 2024~\cite{salario}, que un trabajador con jornada completa de forma anual trabaja alrededor de 1820 horas (consultado en~\cite{jornadaAnual}) y que el tiempo  empleado en el trabajo ha sido una media de 16 horas a la semana (contando días laborales y fin de semanas) durante 9 meses. El salario del desarrollador sale a:
+Los costes de empleados incluyen salarios y otros gastos asociados con la contratación y retención de personal cualificado, como desarrolladores, diseñadores, gestores de proyectos y personal de soporte. En este caso solo hay un desarrollador que tiene todas las funciones anteriores y un tutor que actúa como soporte y gestor del proyecto. Teniendo en cuenta que el salario mínimo de un programador \textit{junior} en España es de 23\,666€ actualizado a día 10 de junio de 2024~\cite{salario}, que un trabajador con jornada completa de forma anual trabaja alrededor de 1\,820 horas (consultado en~\cite{jornadaAnual}) y que el tiempo  empleado en el trabajo ha sido una media de 16 horas a la semana (contando días laborales y fin de semanas) durante 9 meses. El salario del desarrollador sale a:
 \begin{center}
-	$ \frac{23666\frac{\text{€}}{\text{año}}}{1820\frac{\text{horas}}{\text{año}}} \times (9\text{meses} \times 4\frac{\text{semanas}}{\text{mes}} \times 16\frac{\text{horas}}{\text{semana}}) = 7489.89\text{€} \approx 832.21\frac{\text{€}}{mes}$
+	$ \frac{23\,666\frac{\text{€}}{\text{año}}}{1\,820\frac{\text{horas}}{\text{año}}} \times (9\text{meses} \times 4\frac{\text{semanas}}{\text{mes}} \times 16\frac{\text{horas}}{\text{semana}}) = 7\,489.89\text{€} \approx 832.21\frac{\text{€}}{mes}$
 \end{center}
 
-En el caso del tutor académico se estima un tiempo medio de 1.5 hora a la semana. Si de nuevo buscamos en~\cite{salarioProfe}, suponemos un sueldo base promedio de 34.401€. Con las mismas suposiciones que antes, se calcula:
+En el caso del tutor académico se estima un tiempo medio de $1.5$ horas a la semana. Si de nuevo buscamos en~\cite{salarioProfe}, suponemos un sueldo base promedio de 34\,401€. Con las mismas suposiciones que antes, se calcula:
 \begin{center}
-	$ \frac{34.401\frac{\text{€}}{\text{año}}}{1820\frac{\text{horas}}{\text{año}}} \times (9\text{meses} \times 4\frac{\text{semanas}}{\text{mes}} \times 1.5\frac{\text{horas}}{\text{semana}}) = 1020.69\text{€} \approx 113.4\frac{\text{€}}{mes}$
+	$ \frac{34\,401\frac{\text{€}}{\text{año}}}{1\,820\frac{\text{horas}}{\text{año}}} \times (9\text{meses} \times 4\frac{\text{semanas}}{\text{mes}} \times 1.5\frac{\text{horas}}{\text{semana}}) = 1\,020.69\text{€} \approx 113.4\frac{\text{€}}{mes}$
 \end{center}
 
 Contando con que solo dos personas conforman el equipo, en la tabla \ref{tabla:salarios} se pueden ver los pagos definitivos después de aplicar los impuestos que ha de pagar la empresa~\cite{impuestos}. Esto es un porcentaje de contingencias, de desempleo, de FOGASA y de formación profesional, respectivamente con el orden visto en la fórmula:
@@ -306,11 +306,11 @@ Contando con que solo dos personas conforman el equipo, en la tabla \ref{tabla:s
 		\begin{tabular}{lrr}
 			\toprule
 			\textbf{Empleado}                               & \textbf{Salario bruto (€/mes)}       & \textbf{Coste de la empresa (€/mes)}      \\ \midrule
-			Desarrollador: Mario Sanz Pérez               & 832.21                    & 1187.17                      \\
-			Supervisor             & 113.4                      & 161.77                       \\
+			Desarrollador: Mario Sanz Pérez               & 832,21                    & 1\,187,17                      \\
+			Supervisor: Álvar Arnaiz González            & 113,4                      & 161,77                       \\
 			\midrule
-			\textbf{Total}                          & 945.61                    &  1384.94                     \\ \midrule
-			\textbf{Total 9 meses}                  & 8510.49                    & 12140.46                      \\ \bottomrule
+			\textbf{Total}                          & 945,61                    &  1\,384,94                     \\ \midrule
+			\textbf{Total 9 meses}                  & 8\,510,49                    & 12\,140,46                      \\ \bottomrule
 			
 		\end{tabular}%
 	}
@@ -318,41 +318,41 @@ Contando con que solo dos personas conforman el equipo, en la tabla \ref{tabla:s
 	\label{tabla:salarios}
 \end{table}
 
-\paragraph{Costes de \textit{hardware}} Para realizar este proyecto el equipo necesitado ha sido el reflejado en la tabla~\ref{tabla:hw}. Las especificaciones del ordenador portátil, con una vida útil\footnote{La vida útil de un dispositivo es el período durante el cual se espera que funcione de manera eficiente antes de que sea necesario reemplazarlo debido al desgaste o a la obsolescencia tecnológica.} de 4 años, son: marca \textit{Asus VivoBook} con procesador \textit{Intel Core i7-1065G7}, 8GB de memoria RAM y 512 GB de SSD. Como ayuda para poder agilizar el trabajo también se utiliza un monitor \textit{Acer KA240H}. Y por úlitmo, para el despliegue de la aplicación, se utiliza el servidor más pequeño de Microsot Azure con vida útil de 1 año y un precio de 5.0881€ al mes~\cite{azure:plans}.
+\paragraph{Costes de \textit{hardware}:} Para realizar este proyecto el equipo necesitado ha sido el reflejado en la tabla~\ref{tabla:hw}. Las especificaciones del ordenador portátil, con una vida útil\footnote{La vida útil de un dispositivo es el período durante el cual se espera que funcione de manera eficiente antes de que sea necesario reemplazarlo debido al desgaste o a la obsolescencia tecnológica.} de 4 años, son: marca \textit{Asus VivoBook} con procesador \textit{Intel Core i7-1065G7}, 8GB de memoria RAM y 512 GB de SSD. Como ayuda para poder agilizar el trabajo también se utiliza un monitor \textit{Acer KA240H}. Y por úlitmo, para el despliegue de la aplicación, se utiliza el servidor más pequeño de Microsot Azure con vida útil de 1 año y un precio de $5.0881€$ al mes~\cite{azure:plans}.
 
 \begin{table}[H]
 	\centering
 	\begin{tabular}{lrr}
 		\toprule
 		\textbf{Activo}      & \textbf{Coste (€)}      & \textbf{Coste amortizado (€)}      \\ \midrule
-		Ordenador portátil     & 829                    & 207.25                      \\
-		Monitor ayuda			& 105.99 						& 26.5							\\
-		Servidor             & 61.06                    &  45.8                     \\ \midrule
-		\textbf{Total}       & 1057.11                   & 279.55                      \\ \midrule
+		Ordenador portátil     & 829                    & 207,25                      \\
+		Monitor ayuda			& 105,99 						& 26,5							\\
+		Servidor             & 61,06                    &  45,8                     \\ \midrule
+		\textbf{Total}       & 1\,057,11                   & 279,55                      \\ \midrule
 	\end{tabular}
 	\caption{Costes para el \textit{hardware} del proyecto}
 	\label{tabla:hw}
 \end{table}
 
-\paragraph{Costes de \textit{software}}: para poder desarrollar el proyecto han sido necesarios varios programas cuya adquisición y licencias son gratuitos. Algunas de las excepciones son: \textit{Microsoft 365}, \textit{Github Copilot} y el dominio de la página web. El coste y su amortización se ven reflejados en la tabla~\ref{tabla:sw}, donde se ha considerado una vida útil de 1 año por cada activo (correspondiente al tiempo de pago).
+\paragraph{Costes de \textit{software}:} Para poder desarrollar el proyecto han sido necesarios varios programas cuya adquisición y licencias son gratuitos. Algunas de las excepciones son: \textit{Microsoft 365}, \textit{Github Copilot} y el dominio de la página web. El coste y su amortización se ven reflejados en la tabla~\ref{tabla:sw}, donde se ha considerado una vida útil de 1 año por cada activo (correspondiente al tiempo de pago).
 
 \begin{table}[H]
 	\centering
 	\begin{tabular}{lrr}
 		\toprule
 		\textbf{Activo}      & \textbf{Coste (€)}      & \textbf{Coste amortizado (€)}      \\ \midrule
-		Microsoft 365     & 69                    & 51.75                      \\
+		Microsoft 365     & 69                    & 51,75                      \\
 		Github Copilot			& 228 						& 171							\\
-		Dominio web             & 10.98                    & 8.24                     \\ \midrule
-		\textbf{Total}       & 348.75                   & 230.99                      \\ \midrule
+		Dominio web             & 10,98                    & 8,24                     \\ \midrule
+		\textbf{Total}       & 348,75                   & 230,99                      \\ \midrule
 	\end{tabular}
 	\caption{Costes para el \textit{software} del proyecto}
 	\label{tabla:sw}
 \end{table}
 
-\paragraph{Costes adicionales} Además de los costes mencionados anteriormente, existen otros costes adicionales que deben considerarse. Estos incluyen la impresión y encuadernación de la documentación, así como otros costes generales de vida. 
+\paragraph{Costes adicionales:} Además de los costes mencionados anteriormente, existen otros costes adicionales que deben considerarse. Estos incluyen la impresión y encuadernación de la documentación, así como otros costes generales de vida. 
 
-Para la impresión y encuadernación de la documentación del proyecto, se estima un coste de 50€. Los costes generales de vida, que abarcan el uso de servicios básicos como electricidad e internet durante el desarrollo del proyecto, se estiman en 100€.
+Para la impresión y encuadernación de la documentación del proyecto, se estima un coste de 25€. Los costes generales de vida, que abarcan el uso de servicios básicos como electricidad e internet durante el desarrollo del proyecto, se estiman en 100€.
 
 En la tabla~\ref{tabla:costes_totales} se presenta un resumen de los costes totales del proyecto, incluyendo los costes de empleados, hardware, software y otros costes adicionales.
 
@@ -361,11 +361,11 @@ En la tabla~\ref{tabla:costes_totales} se presenta un resumen de los costes tota
     \begin{tabular}{lrr}
         \toprule
         \textbf{Concepto}      & \textbf{Coste Total (€)} \\ \midrule
-        Costes de empleados     & 12140.46                      \\
-        Costes de \textit{hardware} & 279.55                       \\
-        Costes de \textit{software} & 230.99                       \\
-        Costes adicionales      & 150                         \\ \midrule
-        \textbf{Coste Total}    & 12701.00                      \\ \bottomrule
+        Costes de empleados     & 12\,140,46                      \\
+        Costes de \textit{hardware} & 279,55                       \\
+        Costes de \textit{software} & 230,99                       \\
+        Costes adicionales      & 125                         \\ \midrule
+        \textbf{Coste Total}    & 12\,776,00                      \\ \bottomrule
     \end{tabular}
     \caption{Resumen de los costes totales del proyecto}
     \label{tabla:costes_totales}
@@ -385,19 +385,21 @@ Los beneficios de este proyecto no se miden en términos monetarios directos, da
 \subsection{Viabilidad legal}
 La viabilidad legal de un proyecto de software se refiere a la evaluación y aseguramiento de que el proyecto cumple con todas las leyes, regulaciones y licencias pertinentes. Esto incluye la revisión de las licencias de software utilizadas, la protección de la propiedad intelectual, y el cumplimiento de las normativas de privacidad y seguridad de datos. Es fundamental para evitar conflictos legales y asegurar que el software pueda ser utilizado, distribuido y modificado de manera legal.
 
-En este proyecto, se ha optado por utilizar la licencia MIT~\cite{eswiki:MIT}, una de las licencias de software libre más sencillas y permisivas. Sus principales características son:
+En este proyecto, se ha optado por utilizar la licencia BSD 3-Clause (\url{https://opensource.org/license/bsd-3-clause}), ya que el trabajo base realizado por David~\cite{TFG:David} sobre el que se desarrolla este proyecto utiliza esta misma licencia. La licencia BSD 3-Clause es una licencia de software libre y permisiva que ofrece ciertas libertades y responsabilidades tanto para los desarrolladores como para los usuarios. Sus principales características son:
 
 \begin{itemize}
-    \item Permite el uso comercial del software.
-    \item Permite la modificación del software.
-    \item Permite la distribución del software, incluyendo versiones modificadas.
-    \item Permite sublicenciar el software.
-    \item Permite el uso privado del software.
+	\item Permite el uso comercial y privado del software.
+	\item Permite la modificación y distribución del software.
+	\item Requiere la inclusión de la licencia original en todas las copias distribuidas.
+	\item Prohíbe el uso de nombres de los contribuidores para promocionar productos derivados sin permiso.
+
 \end{itemize}
+
+Esta elección de licencia asegura que el proyecto se mantenga en línea con los términos y condiciones del trabajo base.
 
 \subsubsection{Bibliotecas Utilizadas}
 
-En este proyecto se utilizan diversas bibliotecas, cada una con su propia versión y licencia. En la tabla~\ref{tabla:librerias} se muestran las bibliotecas utilizadas, sus versiones y sus licencias, junto con una breve descripción de cada una.
+En este proyecto se utilizan diversas bibliotecas, cada una con su propia versión y licencia, todas ellas compatibles con la licencia BSD 3-Clause. En la tabla~\ref{tabla:librerias} se muestran las bibliotecas utilizadas, sus versiones y sus licencias, junto con una breve descripción de cada una.
 
 \begin{table}
 	

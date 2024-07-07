@@ -1,11 +1,67 @@
 \apendice{Especificación de diseño}
 
 \section{Introducción}
+En este apéndice se presenta la especificación de diseño del proyecto actual, abordando aspectos clave del diseño de datos, diseño procedimental y diseño de componentes web. Este documento es fundamental para comprender la estructura y funcionamiento del sistema, así como las modificaciones realizadas en comparación con trabajos previos.
 
+Es importante destacar que la mayoría del diseño web se ha mantenido conforme al trabajo anterior, asegurando consistencia y continuidad en la interfaz y experiencia del usuario. Sin embargo, algunos componentes y páginas han sido adaptados para incorporar nuevas funcionalidades requeridas en esta fase del proyecto.
+
+En cuanto al \textbf{diseño arquitectónico}, no se han realizado cambios significativos con respecto a la versión anterior, manteniéndose la misma estructura y principios fundamentales establecidos previamente (ver figura~\ref{fig:anexos/ArquitecturaVASS}). Los detalles se pueden encontrar en el anexo C del documento \url{https://github.com/dmacha27/TFG-SemiSupervisado/blob/main/doc/anexos.pdf}.
+
+\imagen{anexos/ArquitecturaVASS}{Diseño de arquitectura}{Diseño de arquitectura}{1}
 \section{Diseño de datos}
+En esta sección se detalla el diseño de datos del proyecto, teniendo en cuenta las similitudes y diferencias con respecto al trabajo previo y las nuevas funcionalidades implementadas.
 
+En primer lugar, es importante mencionar que se ha realizado una pequeña modificación en la base de datos (ver figura~\ref{fig:anexos/diagrama clases.drawio}), específicamente en la clase \textit{Runs}. Este cambio es menor y se relaciona con los datos que almacena esta clase, ya que para almacenar la ejecución en base de datos de grafos, se ha visto necesario guardar el algoritmo que se ha escogido en cada fase. De esta manera, si replicamos la ejecución, se tendrá información de qué algoritmos se han utilizado.
+
+\imagen{anexos/diagrama clases.drawio}{Diagrama de clases}{Diagrama de clases}{1}
+
+\subsection{Diseño de datos en Co-Forest}
+El diseño de datos para representar \textit{Co-Forest} en la web es idéntico al algoritmo \textit{Democratic Co-Learning}, con la diferencia de que los clasificadores son árboles de decisión siempre. Como se trata de un algoritmo inductivo, es decir, trata de construir un modelo que luego se puede evaluar en la fase de pruebas y además es iterativo, el objetivo es almacenar de manera eficiente toda esta información. Cada árbol de decisión tiene su propio subconjunto de datos, y estos datos pueden ser clasificados por cada clasificador una única vez. Se debe guardar la iteración en la que ocurre la clasificación, la clase que le da a esa entrada de datos y el clasificador. Todo ello se puede ver en la figura~\ref{fig:anexos/datos coforest}
+
+\imagen{anexos/datos coforest}{Datos de una ejecución del Co-Forest con 4 árboles de decisión}{Datos obtenidos de una ejecución del Co-Forest}{1}
+
+La separación que se ve es un corte hecho a propósito para que no se vean todos los datos iniciales, sino información de varios datos de entrada que no estaban clasificados.
+A su vez, también se necesita almacenar los resultados de evaluación, y para ello se almacena los resultados generales y específicos de cada árbol de decisión de las métricas \textit{Accuracy}, \textit{Precision}, \textit{Error}, \textit{F1-score} y \textit{Recall}.
+\subsection{Diseño de datos en grafos}
+En esta nueva funcionalidad, la representación es totalmente diferente, y con ella los datos que se utilizan. La mayoría de datos utilizados cae del lado de la construcción del grafo. En este trabajo se han estudiado dos algoritmos parecidos (\textit{GBILI} y \textit{RGCLI}) y se ha tenido que encontrar diferentes fases incluidas en ellos para su representación. Cada fase implica un grafo dibujado en la web, por lo que la estructura es la misma siempre, lo único que cambian los valores. Estas estructuras son repetitivas a la hora de representar, por ejemplo, el algoritmo \textit{GBILI} devuelve 4 diccionarios cada uno de ellos con nodos y enlaces como pares clave-valor. Lo que realmente le llega a \textit{JavaScript} es una estructura como la siguiente (con valores inventados): 
+
+\texttt{\{nodos: [\{id:0, class:1\}, ...], enlaces: [[\{source:0, target:1\}, ...], [\{source:30, target:10\}, ...], [\{source:12, target:2\}, ...], [\{source:0, target:19\}, ...]], predicciones: \{nodoX: 0, ...\}\}}
+
+Esto es porque de lo que devuelve el propio algoritmo al \textit{JavaScript}, primero se procesan los datos para sacar los nodos (comunes a todas las estructuras) y después se separan los enlaces en cada fase, ordenados según los nodos. Esto se hace así ya que el algoritmo previamente ordena los primeros datos como los etiquetados y los siguientes los deja sin etiquetar.
+
+Además, una vez se tienen las predicciones, también se pueden procesar para calcular la matriz de confusión y con ella todas las métricas necesarias para su visualización. 
 \section{Diseño procedimental}
+Este apartado consiste en mostrar la secuencia de pasos que se realizan en una ejecución normal de la aplicación web. Para ello, se utiliza un diagrama de secuencia dando un enfoque distinto al de David. En la figura~\ref{fig:anexos/diagrama secuencia.drawio} se muestran 4 <<objetos>> basados en la figura~\ref{fig:anexos/diagrama clases.drawio}: el usuario, la interfaz de usuario en el navegador web, la capa de flask y el servidor que incluye base de datos y lógica de los algoritmos. El anterior diagrama de secuencias incluia más detalle en cuánto a los métodos y atributos que ocurrían en las llamadas o ejecuciones de los algoritmos, pero este propone un ámbito más global que representa cualquier posible ejecución con las nuevas funcionalidades.
 
-\section{Diseño arquitectónico}
+La ejecución de un ejemplo concreto, por ejemplo grafos, seguiría los pasos: el usuario selecciona el algoritmo y es redirigido a la página de selección de archivos. En esta nueva versión, puede seleccionar uno por defecto (aunque esté registrado no se guardará en base de datos) o puede subir un archivo personal (si está registrado, se almacenará). Puede repetir este paso las veces que quiera ya que no será redirigido directamente (de ahí el \textit{loop} del diagrama). Una vez pulse para configurar el algoritmo, se muestra dicha página y, de nuevo, puede cambiar los parámetros que sean necesarios todas las veces que se quiera, ya que hasta que no quiera ejecutar, no cambiará de página. Una vez se pulse, lo que ocurre es una llamada a una ruta no visible de \textit{flask} la cúal ejecuta los algoritmos y guarda los datos en la base de datos (en caso de que esté registrado). Estos datos devueltos no serán los mismos que los de la ejecución, ya que se procesan primero por la capa de \textit{flask} para llegar al \textit{JavaScript} con el que trabaja el navegador web.
+\imagen{anexos/diagrama secuencia.drawio}{Diagrama de secuencia}{Diagrama de secuencia}{1}
+
+\section{Diseño de componenetes web}
+Como se ha comentado en la introducción, este apartado pretende comentar todos aquellos componentes de la página web que se han visto modificados y sus ideas originales de diseño.
+
+Como primera consideración, el proyecto empieza con una idea de diseño de la página de visualización que no seguía la norma del resto de algoritmos (ver figura~\ref{fig:anexos/prototipo coforest}). Pretendía seguir el diseño de la página web \url{https://ml-visualizer.herokuapp.com/}, donde la configuración, visualización y representación se encuentran en la misma página.
+
+\imagen{anexos/prototipo coforest}{Primer diseño de visualización del algoritmo \textit{Co-Forest}}{Primer prototipo de visualización}{0.9}
+
+Este diseño es rechazado por dos cuestiones: la primera y ya comentada es que no seguía la norma de fases del resto de algoritmos; y segundo, tener parámetros de configuración en la misma ventana en la que se muestra los resultados paso a paso de un algoritmo, no aporta gran utilidad.
+
+El segundo planteamiento de diseño viene con la idea de organizar de nuevo la pantalla de inicio, con las nuevas opciones de grafos y \textit{Co-Forest}. La información teórica mostrada de cada algoritmo en la primera versión de la web era insuficiente y por ello se considera hacer un nuevo diseño de tarjeta de selección. Se considera hacer un diseño interactivo el cual permite girar la tarjeta como si tuviera parte de atrás, donde se incluiría una explicación teórica, pero finalmente se diseña un prototipo de tarjeta orientada horizontalmente, basada en la idea original de \textit{Bootstrap} (\url{https://getbootstrap.com/docs/4.3/components/card/#horizontal}) (ver figura~\ref{fig:anexos/bootstrap card}). En esta nueva tarjeta se incluye una imagen o icono del algoritmo, el título del algoritmo, un texto explicativo y una agrupación de dos botones que permiten seleccionar el algoritmo o redirigirse a la página del artículo científico.
+\imagen{anexos/bootstrap card}{Tarjeta orientada horizontalmente}{Diseño de tarjeta de inicio}{1}
+Estas tarjetas llevan implícito el diseño de nuevos logos para los algoritmos. En este caso, se ha utilizado la Inteligencia Artificial (\textit{Dall-E 3}) para generar dos imágenes representativas. Se han utilizado los siguientes \textit{prompts}\footnote{Un prompt es una instrucción o pregunta que se le da a un modelo de inteligencia artificial para generar una respuesta o contenido basado en esa indicación.}:
+\begin{itemize}
+	\item Para imagen de grafos: <<Realiza un icono que represente un grafo con nodos y enlaces. Los nodos deben dar sensación de lejanía y deben tener diferentes colores>>.
+	\item Para imagen del \textit{Co-Forest}: <<Realiza un icono que represente un algoritmo de aprendizaje automático basado en \textit{Random Forest}, donde se vea que existen diferentes votos por parte de los árboles>>.
+\end{itemize}
+
+La ventana de subida también tenía un diseño original diferente al producto final (ver figura~\ref{fig:anexos/prototipo subida}). En un principio se plantea la idea de que cuando el usuario sube un archivo, se muestre de inmediato en la página, junto con un resumen del archivo (tamaño, número de columnas y filas, variables categóricas y numéricas, etc) y un gráfico de tarta que representase la distribución de las clases.
+\imagen{anexos/prototipo subida}{Prototipo de página de carga de archivos}{Prototipo de página de carga de archivos}{1}
+
+Este modelo finalmente se realiza dejando únicamente la funcionalidad de visualización de la tabla de datos. La idea de mostrar un resumen del archivo se descarta porque no se ve realmente necesaria (\textit{DataTables} proporciona tablas interactivas) y la idea del gráfico también se descarta porque el usuario tendría que seleccionar cual es la clase para después calcular la distribución, cosa que se cree innecesaria en este paso del proceso.
+
+Por último, el diseño de cómo se dibujan los grafos se basa en ejemplos vistos en la página \url{https://observablehq.com/@d3}. Como se comenta en la sección de aspectos relevantes de la memoria, las simulaciones de grafos se basan en fuerzas reales entre los nodos, lo que puede originar en grafos muy dispersos cuando existen diferentes componentes o subgrafos (caso muy normal en las ejecuciones de \textit{GBILI} y \textit{RGCLI}). Finalmente se decide seguir un diseño centralizado, es decir, basar el grafo en dos fuerzas $x$ e $y$ para cada nodo y buscar parámetros que no compacten ni alejen mucho del cuadro de visualización. Esto se puede ver explicado en \url{https://observablehq.com/@d3/disjoint-force-directed-graph} y representado en la figura~\ref{fig:anexos/prototipo grafos}.
+
+\imagen{anexos/prototipo grafos}{Diseño inicial de grafos}{Diseño inicial de grafos}{1}
+
+
 
 
