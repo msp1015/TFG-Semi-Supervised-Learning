@@ -95,6 +95,10 @@ document.addEventListener('DOMContentLoaded', function () {
     actualizarTabla();
 });
 
+/**
+ * Actualiza la tabla de datos con los datos del fichero subido.
+ * Realiza una petición GET a la ruta '/obtenerDatosTabla' para obtener los datos del fichero.
+ */
 function actualizarTabla() {
 
     const idiomasDataTables = {
@@ -146,6 +150,12 @@ function actualizarTabla() {
         });
 }
 
+/**
+ * Establece el fichero de prueba seleccionado en la sesión.
+ * Mediante una petición POST a la ruta '/establecer_prueba' se envía el nombre del fichero seleccionado.
+ * 
+ * @param {Object} fichero 
+ */
 function establecerFicheroPrueba(fichero) {
     fetch('/establecer_prueba', {
         method: 'POST',

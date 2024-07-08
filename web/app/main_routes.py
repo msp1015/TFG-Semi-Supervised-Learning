@@ -120,8 +120,9 @@ def subida():
 
 @main_bp.route('/obtenerDatosTabla', methods=['GET'])
 def obtenerDatosTabla():
-    """ Obtiene los datos de la tabla del fichero cargado en la sesión y los devuelve en formato JSON
-    
+    """ 
+    Obtiene los datos de la tabla del fichero cargado en la sesión y los devuelve en formato JSON
+
     :return: datos de la tabla en formato JSON
     """
     try:
@@ -133,7 +134,7 @@ def obtenerDatosTabla():
             dataSet[column] = dataSet[column].apply(lambda x: x.decode('utf-8') if isinstance(x, bytes) else x)
         columnas = [{"title": col} for col in dataSet.columns]
         data = dataSet.to_numpy().tolist()
-        
+
         datosTabla = {"columns": columnas, "data": data}
     except Exception as e:
         return jsonify({

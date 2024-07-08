@@ -57,7 +57,6 @@ class Gbili:
         self.grafo = {}
 
         self.etiquetas_etiquetados = etiquetas[:len(datos_e)]
-        # TODO: borrar
         self.etiquetas_modificadas = np.concatenate((self.etiquetas_etiquetados, np.full(len(datos_se), -1)))
 
     def construir_grafo(self):

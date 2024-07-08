@@ -32,7 +32,6 @@ class CoForest:
             random_state (int, optional): semilla para la generación de números
             aleatorios. Por defecto, None.
         """
-        # TODO Completar la documentación de los parámetros
 
         self.n_arboles = n
         self.theta = theta
@@ -46,7 +45,7 @@ class CoForest:
         self.L = None
         self.y_l = None
         self.U = None
-        
+
         if random_state is None:
             # Semilla aleatoria por defecto
             self.rng = np.random.RandomState()
@@ -73,7 +72,7 @@ class CoForest:
         log['iters'] = [[0]] * len(log)
         log['targets'] = [[lab] for lab in y_l]
         log['clfs'] = [['inicio']] * len(log)
-        
+
         rest = pd.DataFrame(U, columns=features)
         rest['iters'] = [[-1] * self.n_arboles for _ in range(len(rest))]
         rest['targets'] = [[-1] * self.n_arboles
@@ -87,7 +86,6 @@ class CoForest:
         specific_stats = {
             f"CLF{i + 1}": pd.DataFrame(columns=stat_columns) for i in range(self.n_arboles)}
 
-        
         # segun los datos en y_l podemos sacar el numero de clases únicas
         self.clases = np.unique(y_l)
         self.L = L
@@ -139,7 +137,6 @@ class CoForest:
                     U_muestras = self.submuestrear(arbol_Hi, U, Wmax)
                     W_actual = 0
                     for x_u in U_muestras:
-                        
                         confianza, clase_mas_votada = self.calcula_confianza(
                             arbol_Hi, U[x_u, :])
                         if confianza > self.theta:

@@ -7,6 +7,18 @@ let predictions = {};
 let selectedNode = null;
 let initialColors = {};
 
+/**
+ * Inicializa los datos para la visualización de grafos a partir de unos datos.
+ * 
+ * Esta función toma un objeto de datos que contiene predicciones, enlaces entre nodos, nodos mismos,
+ * y un mapa de clases. Utiliza esta información para preparar una estructura de datos que será utilizada
+ * para la visualización de grafos. La estructura `dataSteps` se llena con objetos que representan cada paso
+ * en la visualización, donde cada paso incluye los nodos y los enlaces (links) correspondientes a ese paso.
+ * Además, se parsea el mapa de clases para su uso posterior y se establece el número máximo de iteraciones
+ * basado en la longitud del array de enlaces.
+ * 
+ * @param {Object} datos - Objeto que contiene los datos necesarios para inicializar la visualización.
+ */
 function inicializarDatos(datos) {
     predictions = datos.predicciones;
     steps = datos.enlaces;
@@ -29,12 +41,10 @@ function inicializarDatos(datos) {
 let intervalo = null;
 
 /**
- *
  * Se encarga de la reproducción automática de la visualización al
  * pulsar dicho botón.
  *
  * Tiempo: 1 segundo y medio por iteración.
- *
  */
 function reproducir(){
     if (!intervalo){
@@ -54,6 +64,11 @@ function reproducir(){
     }
 }
 
+/**
+ * Resalta los nodos iniciales de una clase específica aumentando su tamaño.
+ * 
+ * @param {string} clase - El nombre de la clase basado en la cual se resaltarán los nodos.
+ */
 function highlightNodosDeClase(clase) {
   node.each(function(d) {
     if (d.class === clase) {
@@ -64,7 +79,10 @@ function highlightNodosDeClase(clase) {
   });
 }
 
-
+/**
+ * Inicializa el grafo y configura la visualización, la leyenda, el zoom, 
+ * la simulación de fuerzas y los eventos asociados.
+ */
 function inicializarGrafo() {
 
     let margin = {top: 10, right: 0, bottom: 60, left: 45},
@@ -160,11 +178,20 @@ function inicializarGrafo() {
     document.getElementById('reproducir').addEventListener('click', () => reproducir());
 }
 
+/**
+ * Actualiza la visualización del grafo cuando se hace zoom.
+ * 
+ * @param {Object} event 
+ */
 function updateChart(event) {
     const transform = event.transform;
     container.attr("transform", transform);
 }
 
+/**
+ * Cambia el paso actual del grafo en la dirección especificada y actualiza la visualización.
+ * @param {number} direction - Dirección del cambio de paso (1 para adelante, -1 para atrás).
+ */
 function changeStep(direction) {
     currentStep += direction;
     if (currentStep < 0) currentStep = 0;
@@ -183,6 +210,11 @@ function changeStep(direction) {
     muestraPaso(currentStep);
 }
 
+/**
+ * Muestra el paso actual en la teoría de la visualización.
+ * 
+ * @param {number} step - Número del paso actual.
+ */
 function muestraPaso(step) {
   for (let i = 0; i <= maxiter; i++) {
     document.getElementById(`step-${i}`).classList.remove('active');
@@ -190,6 +222,11 @@ function muestraPaso(step) {
   document.getElementById(`step-${step}`).classList.add('active');
 }
 
+/**
+ * Actualiza la barra de progreso de la visualización.
+ * 
+ * @param {number} step 
+ */
 function actualizaBarraProgreso(step) {
     let progreso = (step / maxiter) * 100;
     document.getElementById('progreso').style.width = `${progreso}%`;
@@ -197,6 +234,10 @@ function actualizaBarraProgreso(step) {
     document.getElementById("iteracion").innerHTML = traducir(nombreAlgoritmo + "_" + step.toString());
 }
 
+/**
+ * Actualiza la visualización del grafo en función del paso actual
+ * y de las acciones realizadas por el usuario.
+ */
 function updateGraph() {
     const currentData = dataSteps[currentStep];
     const nodes = currentData.nodes;
@@ -265,11 +306,13 @@ function updateGraph() {
         button.disabled = true;
         button.classList.add('disabled');
       }
-    }
-
-    
+    } 
 }
 
+/**
+ * Realiza la inferencia de las etiquetas de los nodos en el grafo.
+ * Mediante una transición, se cambia el color de los nodos en función de las predicciones
+ */
 function inferLabels() {
   var button = document.getElementById('btn-inferencia');
   button.disabled = false;
@@ -291,24 +334,39 @@ function inferLabels() {
   updateGraph();
 }
 
+/**
+ * Inicializa la función de arrastrar nodos en el grafo.
+ * 
+ * @param {Object} event 
+ */
 function dragstarted(event) {
     if (!event.active) simulation.alphaTarget(0.3).restart();
     event.subject.fx = event.subject.x;
     event.subject.fy = event.subject.y;
 }
 
+/**
+ * Función que se ejecuta mientras se arrastra un nodo.
+ * 
+ * @param {Object} event 
+ */
 function dragged(event) {
     event.subject.fx = event.x;
     event.subject.fy = event.y;
 }
 
+/**
+ * Función que se ejecuta al soltar un nodo después de arrastrarlo.
+ * 
+ * @param {Object} event 
+ */
 function dragended(event) {
     if (!event.active) simulation.alphaTarget(0);
     event.subject.fx = null;
     event.subject.fy = null;
 }
 
-/*
+/**
 * Espacio usado para intercambiar estado y visibilidad de los botones
 */
 document.addEventListener('DOMContentLoaded', function () {

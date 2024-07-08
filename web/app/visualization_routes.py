@@ -112,7 +112,6 @@ def parametros_grafos():
 
     constructor = request.form['constructor']
     inferencia = request.form['inferencia']
-    # Estos son los parámetros concretos de Grafos
     params = [
         {"nombre": "constructor", "valor": request.form['constructor']},
         {"nombre": "inferencia", "valor": request.form['inferencia']},
@@ -258,9 +257,17 @@ def parametros_coforest():
 
 def incorporar_clasificadores_inductivos_params(nombre_clasificadores, params):
     """
-    Incluye los parámetros de los propios clasificadores base
-    a la lista de parámetros generales para luego realizar la petición
-    e instanciar los clasificadores con dichos parámetros.
+    Añade los parámetros específicos de los clasificadores inductivos a una lista de parámetros generales.
+
+    Esta función se encarga de leer los parámetros configurables para clasificadores 
+    inductivos desde un archivo JSON, y luego, para cada clasificador especificado en `nombre_clasificadores`,
+    añade sus parámetros a la lista `params`. Los parámetros de cada clasificador se prefijan con 
+    'clasificador{i+1}_' para diferenciarlos en la lista de parámetros.
+
+    Args:
+        nombre_clasificadores (list): Lista de nombres de los clasificadores inductivos a configurar.
+        params (list): Lista de diccionarios a la que se añadirán los parámetros de los clasificadores.
+                       Cada diccionario contiene las claves 'nombre' y 'valor'.
     """
 
     with open(os.path.join(os.path.dirname(__file__), os.path.normpath("static/json/parametros.json"))) as f:
@@ -273,9 +280,20 @@ def incorporar_clasificadores_inductivos_params(nombre_clasificadores, params):
 
 def incorporar_clasificadores_grafos_params(nombre_clasificadores, params):
     """
-    Incluye los parámetros de los propios clasificadores base
-    a la lista de parámetros generales para luego realizar la petición
-    e instanciar los clasificadores con dichos parámetros.
+    Añade los parámetros específicos de los clasificadores basados en grafos e 
+    inferencia a una lista de parámetros generales.
+
+    Esta función lee los parámetros configurables para clasificadores basados 
+    en grafos e inferencia desde un archivo JSON. Luego, para cada clasificador 
+    especificado en `nombre_clasificadores`, añade sus parámetros a la lista `params`.
+    Los parámetros se prefijan con 'inferencia_' o 'constructor_' según el tipo de 
+    clasificador para diferenciarlos en la lista.
+
+    Args:
+        nombre_clasificadores (list): Lista de nombres de los clasificadores 
+                                    de grafos e inferencia a configurar.
+        params (list): Lista de diccionarios a la que se añadirán los parámetros de los
+                    clasificadores. Cada diccionario contiene las claves 'nombre' y 'valor'.
     """
 
     with open(os.path.join(os.path.dirname(__file__), os.path.normpath("static/json/parametros.json"))) as f:

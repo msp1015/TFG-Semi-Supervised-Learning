@@ -536,6 +536,24 @@ def obtener_enlaces_json(grafo):
 
 
 def calcular_reporte(matriz, mapa):
+    """
+    Calcula métricas de clasificación a partir de una matriz de confusión y un mapeo de clases.
+
+    Esta función itera sobre cada clase representada en la matriz de confusión para calcular las métricas
+    de True Positive (TP), False Positive (FP), False Negative (FN), True Negative (TN), Precision, Recall,
+    F1-Score, Accuracy y Error para cada clase. Estas métricas se calculan utilizando las definiciones estándar
+    basadas en los valores de TP, FP, FN y TN extraídos de la matriz de confusión.
+
+    Args:
+        matriz (numpy.ndarray): Matriz de confusión donde cada fila y columna representa una clase.
+                                Los elementos de la diagonal representan los verdaderos positivos,
+                                mientras que los otros elementos representan los errores de clasificación.
+        mapa (dict): Diccionario que mapea los índices de las clases en la matriz a sus nombres o etiquetas reales.
+
+    Returns:
+        dict: Un diccionario donde las claves son los nombres de las clases y los valores son diccionarios
+              con las métricas calculadas para cada clase.
+    """
     metricas = {}
     num_clases = matriz.shape[0]
     

@@ -4,6 +4,12 @@ var mapa_clases = {};
 var metricas_generales = {};
 var metricas_clase = {};
 
+/**
+ * Gestiona la visualización de las estadísticas de inferencia.
+ * Dibuja la matriz de confusión y las métricas generales y por clase.
+ * 
+ * @param {Object} datos 
+ */
 function dibujaEstadisticas(datos) {
     matriz_confusion = datos.confusion_matrix;
     mapa_clases = JSON.parse(datos.mapa);
@@ -33,6 +39,9 @@ function dibujaEstadisticas(datos) {
     crearDropdown();
 }
 
+/**
+ * Crea un dropdown para seleccionar la clase de la que se quieren ver las métricas.
+ */
 function crearDropdown() {
     const selector = d3.select("#selector");
     selector.html("");
@@ -58,6 +67,12 @@ function crearDropdown() {
     actualizarGrafico(); // Mostrar gráfico inicial
 }
 
+/**
+ * Actualiza el gráfico de tarta con las métricas de la clase seleccionada.
+ * Si se selecciona "general", se muestran las métricas generales.
+ * Al seleccionar una clase, se resaltan las celdas de la matriz de confusión
+ * correspondientes a esa clase.
+ */
 function actualizarGrafico() {
     const seleccion = d3.select("#class-selector").node().value;
     const container = d3.select("#metricas");
@@ -180,6 +195,12 @@ function actualizarGrafico() {
     mostrarMetricasClase(container, metricas);
 }
 
+/**
+ * Se encarga de colorear las celdas de la matriz de confusión según la clase seleccionada.
+ * 
+ * @param {string} clase 
+ * @param {string} color 
+ */
 function colorearCeldas(clase, color) {
     const index = Object.keys(mapa_clases).find(key => mapa_clases[key] === clase);
 
@@ -203,6 +224,11 @@ function colorearCeldas(clase, color) {
     }
 }
 
+/**
+ * Muestra las métricas generales cuando se selecciona "general" en el dropdown.
+ * 
+ * @param {Object} container 
+ */
 function mostrarMetricasGenerales(container) {
     const metricsDiv = container.append("div")
         .attr("id", "resultados")
@@ -214,6 +240,12 @@ function mostrarMetricasGenerales(container) {
     });
 }
 
+/**
+ * Muestra las métricas de la clase seleccionada.
+ * 
+ * @param {Object} container 
+ * @param {list} metricas 
+ */
 function mostrarMetricasClase(container, metricas) {
     const metricsDiv = container.append("div")
         .attr("id", "resultados")
@@ -227,6 +259,9 @@ function mostrarMetricasClase(container, metricas) {
     });
 }
 
+/**
+ * Restablece los colores de las celdas de la matriz de confusión.
+ */
 function resetearColores() {
     d3.selectAll("td").style("background-color", "");
 }
