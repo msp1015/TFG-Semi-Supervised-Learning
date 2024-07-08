@@ -970,6 +970,12 @@ function preparardataset_tritraining(datos) {
     return dataset;
 }
 
+/**
+ * Escribir cadena de iteraciones clasificadas.
+ * 
+ * @param {list} iteraciones 
+ * @returns cadena de iteraciones clasificadas
+ */
 function escribir_iteraciones_clasificado(iteraciones) {
     let cadena =  "<span> ("+ traducir('Iteration') + ": ";
     let algo = false;
