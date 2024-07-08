@@ -20,7 +20,7 @@ Para ver el proyecto de la primera versión, consulta el repositorio de [David M
 [![Bootstrap](https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 [![D3](https://img.shields.io/badge/d3-F9A03C?style=for-the-badge&logo=d3.js&logoColor=white)](https://d3js.org/)
 [![Notebook](https://img.shields.io/badge/jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)](https://jupyter.org/)
-
+[![SonarCloud](https://img.shields.io/badge/SonarCloud-F3702A?style=for-the-badge&logo=sonarcloud&logoColor=white)](https://sonarcloud.io/project/overview?id=msp1015_TFG-Semi-Supervised-Learning)
 ## Características
 
 - **Interfaz Intuitiva**: Diseñada para ser fácil de usar, permitiendo a los usuarios visualizar y comprender algoritmos semisupervisados sin necesidad de profundos conocimientos técnicos.
