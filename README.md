@@ -109,7 +109,7 @@ Abra una terminal en su equipo y siga los siguienes pasos:
 
 ## Licencia
 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+Este proyecto está bajo la Licencia BSD-3-Clause. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
 ## Autores
 
